@@ -160,8 +160,7 @@
 <body>
 	<div class="container">
 		<div class="row" id="js_index_row">
-			<div>
-				<h2 id="js_index_text">
+			<div id="js_index_text">
 					<p>
 						<span id="js_index_span">선방</span>에 오신 것을 환영합니다!
 					</p>
@@ -171,7 +170,7 @@
 		</div>
 		<div class="row" id="js_index_row">
 			<div class="col">
-				<a href="/sunbang/views/main/propertyMain.jsp" id="#js_index_a">
+				<a href="propertymain.do" id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon1">
 						<div id="js_index_icon">
 							<p id="js_index_p">
