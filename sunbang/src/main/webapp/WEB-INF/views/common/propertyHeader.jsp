@@ -87,18 +87,18 @@
 		style="min-height: 80px; border-bottom: 1px solid lightgray;">
 		<div class="row">
 			<div class="col" id="js_pheader_logo">
-				<a class="navbar-brand" href="/sunbang/index.jsp"><i
+				<a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp"><i
 					class="fas fa-home"></i>&nbsp;<span>선방</span></a>
 			</div>
 			<div class="col" style="min-width: 200px;">
 				<div class="row">
 					<div class="nav-item" id="js_pheader_tab1">
-						<a class="nav-link" href="/sunbang/views/main/propertyMain.jsp">부동산
+						<a class="nav-link" href="propertymain.do">부동산
 							<span class="sr-only">(current)</span>
 						</a>
 					</div>
 					<div class="nav-item" id="js_pheader_tab2">
-						<a class="nav-link" href="/sunbang/views/guide/interiorGuideList.jsp">인테리어</a>
+						<a class="nav-link" href="interiorMain.do">인테리어</a>
 					</div>
 				</div>
 			</div>

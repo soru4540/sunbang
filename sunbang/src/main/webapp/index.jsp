@@ -4,6 +4,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <title>SUNBANG</title>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -24,8 +26,7 @@
 	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 	crossorigin="anonymous">
-<script type="text/javascript"
-	src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
 #js_index_row {
 	margin: 0 auto;
@@ -181,7 +182,7 @@
 				</a>
 			</div>
 			<div class="col">
-				<a href="/sunbang/views/guide/interiorGuideList.jsp"
+				<a href="interiorMain.do"
 					id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon2">
 						<div id="js_index_icon">
