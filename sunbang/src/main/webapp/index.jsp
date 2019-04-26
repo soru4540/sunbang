@@ -25,7 +25,7 @@
 	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 	crossorigin="anonymous">
 <script type="text/javascript"
-	src="/test/resources/js/jquery-3.3.1.min.js"></script>
+	src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
 #js_index_row {
 	margin: 0 auto;
@@ -169,7 +169,7 @@
 		</div>
 		<div class="row" id="js_index_row">
 			<div class="col">
-				<a href="/test/views/main/propertyMain.jsp" id="#js_index_a">
+				<a href="/sunbang/views/main/propertyMain.jsp" id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon1">
 						<div id="js_index_icon">
 							<p id="js_index_p">
@@ -180,7 +180,7 @@
 				</a>
 			</div>
 			<div class="col">
-				<a href="/test/views/guide/interiorGuideList.jsp" id="#js_index_a">
+				<a href="/sunbang/views/guide/interiorGuideList.jsp" id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon2">
 						<div id="js_index_icon">
 							<p id="js_index_p">
