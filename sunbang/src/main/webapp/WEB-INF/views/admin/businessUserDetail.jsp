@@ -145,7 +145,7 @@ $(function(){
 			<div class="form-group row">
 				<label for="inputcontents" class="col-sm-2 col-form-label">비고</label>
 				<div class="col-sm-10">
-					<div class="form-control" id="contents"></p>
+					<div class="form-control" id="contents">
 					</div>
 				</div>
 			</div>

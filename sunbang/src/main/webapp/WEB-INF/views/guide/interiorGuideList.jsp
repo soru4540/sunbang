@@ -119,7 +119,7 @@
 		</div>
 		<div class="row" id="js_iguide_iconList">
 			<div class="col" id="js_iguide_icon">
-				<a href="#">비용정리<a>
+				<a href="#">비용정리</a>
 			</div>
 			<div class="col" id="js_iguide_icon">
 				<a href="#">셀프 인테리어</a>

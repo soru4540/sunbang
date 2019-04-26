@@ -123,34 +123,34 @@
 
 #js_index_card {
 	width: 205px;
-	margin:0 auto;
+	margin: 0 auto;
 	margin-top: 20px;
 }
 
-#js_index_card a{
+#js_index_card a {
 	color: black;
 	text-decoration: none;
 }
 
-#js_index_card .card-body{
+#js_index_card .card-body {
 	max-height: 200px;
 }
 
-#js_index_card .card-img-top{
+#js_index_card .card-img-top {
 	min-height: 140px;
 }
 
-#pcate{
-	font-size:15px; 
-	margin-bottom:0.5rem;
+#pcate {
+	font-size: 15px;
+	margin-bottom: 0.5rem;
 }
 
-#js_index_ititle{
-	font-weight: bold; 
+#js_index_ititle {
+	font-weight: bold;
 	font-size: 20px;
 }
 
-#js_index_cardList{
+#js_index_cardList {
 	margin: 0 auto;
 }
 </style>
@@ -160,11 +160,13 @@
 <body>
 	<div class="container">
 		<div class="row" id="js_index_row">
-			<div h2 id="js_index_text">
-				<p>
-					<span id="js_index_span">선방</span>에 오신 것을 환영합니다!
-				</p>
-				<p>어떤 일로 오시게 되었나요?</p>
+			<div>
+				<h2 id="js_index_text">
+					<p>
+						<span id="js_index_span">선방</span>에 오신 것을 환영합니다!
+					</p>
+					<p>어떤 일로 오시게 되었나요?</p>
+				</h2>
 			</div>
 		</div>
 		<div class="row" id="js_index_row">
@@ -180,7 +182,8 @@
 				</a>
 			</div>
 			<div class="col">
-				<a href="/sunbang/views/guide/interiorGuideList.jsp" id="#js_index_a">
+				<a href="/sunbang/views/guide/interiorGuideList.jsp"
+					id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon2">
 						<div id="js_index_icon">
 							<p id="js_index_p">
@@ -221,7 +224,8 @@
 						<p class="card-text" id="pcate">투룸</p>
 						<h5 class="card-title">전세 2억4000</h5>
 						<!-- Text -->
-						<p class="card-text">5층, 42.9m², 관리비 5만 💚영등포구청역3분거리#대출,주차가능#풀옵션</p>
+						<p class="card-text">5층, 42.9m², 관리비 5만
+							💚영등포구청역3분거리#대출,주차가능#풀옵션</p>
 					</div>
 				</a>
 			</div>
@@ -234,7 +238,8 @@
 						<p class="card-text" id="pcate">오피스텔 · 당산계룡리슈빌2단지(도시형)</p>
 						<h5 class="card-title">전세 4억</h5>
 						<!-- Text -->
-						<p class="card-text">12층, 47.25m², 관리비 10만 대로변♣고층+남향♣채광최고인집♣주...</p>
+						<p class="card-text">12층, 47.25m², 관리비 10만
+							대로변♣고층+남향♣채광최고인집♣주...</p>
 					</div>
 				</a>
 			</div>
@@ -252,8 +257,7 @@
 				</a>
 			</div>
 			<div class="card" id="js_index_card">
-				<a href="#"> 
-				<img class="card-img-top"
+				<a href="#"> <img class="card-img-top"
 					src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg"
 					alt="Card image cap"> <!-- Card content -->
 					<div class="card-body">
@@ -281,31 +285,33 @@
 		<div class="row" id="js_index_cardList">
 			<!-- card -->
 			<div class="card" id="js_index_card">
-				<a href="#">
-				<img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg" alt="Card image cap"> 
-				<!-- Card content -->
+				<a href="#"> <img class="card-img-top"
+					src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
+					alt="Card image cap"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle" >
-							은은한 핑크빛이 드리운 두 번째 신혼집
-						</h5>
+						<h5 class="card-title" id="js_index_ititle">은은한 핑크빛이 드리운 두 번째
+							신혼집</h5>
 						<!-- Text -->
-						<p class="card-text"><i class="fas fa-user-circle"></i> 집이젛앙</p>
+						<p class="card-text">
+							<i class="fas fa-user-circle"></i> 집이젛앙
+						</p>
 						<p class="card-text" id="pcate">좋아요 164 · 조회 340</p>
 					</div>
 				</a>
-			</div>			
+			</div>
 			<div class="card" id="js_index_card">
 				<a href="#"> <img class="card-img-top"
 					src="https://mdbootstrap.com/img/Photos/Others/images/27.jpg"
 					alt="Card image cap"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle" >
-							온전한 휴식처 나의 집 _ 평범한 일상속의 행복
-						</h5>
+						<h5 class="card-title" id="js_index_ititle">온전한 휴식처 나의 집 _
+							평범한 일상속의 행복</h5>
 						<!-- Text -->
-						<p class="card-text"><i class="fas fa-user-circle"></i> interior오월</p>
+						<p class="card-text">
+							<i class="fas fa-user-circle"></i> interior오월
+						</p>
 						<p class="card-text" id="pcate">좋아요 124 · 조회 356</p>
 					</div>
 				</a>
@@ -316,11 +322,12 @@
 					alt="Card image cap"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle" >
-							밝고 편안한 분위기로 꾸민 25평아트 인테리어
-						</h5>
+						<h5 class="card-title" id="js_index_ititle">밝고 편안한 분위기로 꾸민
+							25평아트 인테리어</h5>
 						<!-- Text -->
-						<p class="card-text"><i class="fas fa-user-circle"></i> 누보디자인</p>
+						<p class="card-text">
+							<i class="fas fa-user-circle"></i> 누보디자인
+						</p>
 						<p class="card-text" id="pcate">좋아요 134 · 조회 180</p>
 					</div>
 				</a>
@@ -331,11 +338,12 @@
 					alt="Card image cap"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle" >
-							'햇살 가득한 여유로움' 37PY 아파트 인테리어
-						</h5>
+						<h5 class="card-title" id="js_index_ititle">'햇살 가득한 여유로움'
+							37PY 아파트 인테리어</h5>
 						<!-- Text -->
-						<p class="card-text"><i class="fas fa-user-circle"></i> 일상을디자인하다</p>
+						<p class="card-text">
+							<i class="fas fa-user-circle"></i> 일상을디자인하다
+						</p>
 						<p class="card-text" id="pcate">좋아요 124 · 조회 460</p>
 					</div>
 				</a>
@@ -346,11 +354,12 @@
 					alt="Card image cap"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle" >
-							곡면 복도가 돋보이는, 차분한 48평 아파트 인테리어
-						</h5>
+						<h5 class="card-title" id="js_index_ititle">곡면 복도가 돋보이는, 차분한
+							48평 아파트 인테리어</h5>
 						<!-- Text -->
-						<p class="card-text"><i class="fas fa-user-circle"></i> 허스크디자인</p>
+						<p class="card-text">
+							<i class="fas fa-user-circle"></i> 허스크디자인
+						</p>
 						<p class="card-text" id="pcate">좋아요 114 · 조회 345</p>
 					</div>
 				</a>
