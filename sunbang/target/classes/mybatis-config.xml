@@ -4,15 +4,33 @@
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<typeAliases>
-		<typeAlias type="org.kh.first.member.model.vo.Member" alias="Member" />
-<!-- 	<typeAlias type="org.kh.first.notice.model.vo.Notice" alias="Notice" />
-		<typeAlias type="org.kh.first.board.model.vo.Board" alias="Board" /> -->
+		<typeAlias type="org.kh.sunbang.realty.model.vo.Realty" alias="Realty" />
+		
+		<typeAlias type="org.kh.sunbang.user.model.vo.User" alias="User" />
+		<typeAlias type="org.kh.sunbang.user.model.vo.Premium" alias="Premium" />
+		
+		<typeAlias type="org.kh.sunbang.chat.model.vo.Chat" alias="Chat" />
+		<typeAlias type="org.kh.sunbang.chat.model.vo.Message" alias="Message" />
+		<typeAlias type="org.kh.sunbang.chat.model.vo.ChatBlock" alias="ChatBlock" />
+		
+		<typeAlias type="org.kh.sunbang.admin.model.vo.Report" alias="Report" />
+		<typeAlias type="org.kh.sunbang.admin.model.vo.Guide" alias="Guide" />
+		
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Board" alias="Board" />
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Post" alias="Post" />
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Marker" alias="Marker" />
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Reply" alias="Reply" />
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Like" alias="Like" />
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Follow" alias="Follow" />
+		
 	</typeAliases>
 	<mappers>
 	<!-- 퀘리문 저장용 매퍼 xml 파일 등록 : 필수 -->
 	<!-- 주의 : 등록된 매퍼 파일 안의 쿼리문 오류가 있으면 톰켓 실행 안 됨. config 파일로 오류로 처리됨. -->
-		<mapper resource="mappers/member-mapper.xml" />
-<!-- 	<mapper resource="mappers/notice-mapper.xml" />
-		<mapper resource="mappers/board-mapper.xml" /> -->
+		<mapper resource="mappers/realty-mapper.xml" />
+		<mapper resource="mappers/user-mapper.xml" />
+		<mapper resource="mappers/chat-mapper.xml" />
+		<mapper resource="mappers/admin-mapper.xml" />
+		<mapper resource="mappers/interior-mapper.xml" />
 	</mappers>
 </configuration>

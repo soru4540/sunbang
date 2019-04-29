@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="realtyMapper">
+
+	<resultMap id="resultRealty" type="Realty">
+		<id property="realty_no" column="realty_no"/>
+		<result property="registdate" column="registdate" />
+		<result property="renewdate" column="renewdate" />
+		<result property="realty_hits" column="realty_hits" />
+		<result property="realty_status" column="realty_status" />
+		<result property="realty_type" column="realty_type" />
+		<result property="building_type" column="building_type" />
+		<result property="road_address" column="road_address" />
+		<result property="land_lot" column="land_lot" />
+		<result property="detail_address" column="detail_address" />
+		
+		<result property="month_lease" column="month_lease" />
+		<result property="deposit" column="deposit" />
+		<result property="payback_deposit_lease" column="payback_deposit_lease" />
+		<result property="purchase" column="purchase" />
+		<result property="residential" column="residential" />
+		<result property="exclusive_area" column="exclusive_area" />
+		<result property="building_layers" column="building_layers" />
+		<result property="realty_layers" column="realty_layers" />
+		<result property="heatting_system" column="heatting_system" />
+		<result property="move_available_date" column="move_available_date" />
+		
+		<result property="management_pay" column="management_pay" />
+		<result property="parking_lot" column="parking_lot" />
+		<result property="elevator" column="elevator" />
+		<result property="builtin" column="builtin" />
+		<result property="allowance_pet" column="allowance_pet" />
+		<result property="balcony" column="balcony" />
+		<result property="loan_availability" column="loan_availability" />
+		<result property="structure" column="structure" />
+		<result property="airconditioner" column="airconditioner" />
+		<result property="laundry_machine" column="laundry_machine" />
+		
+		<result property="bed" column="bed" />
+		<result property="desk" column="desk" />
+		<result property="closet" column="closet" />
+		<result property="tv" column="tv" />
+		<result property="gasrange" column="gasrange" />
+		<result property="shoe_shelf" column="shoe_shelf" />
+		<result property="refrigerator" column="refrigerator" />
+		<result property="induction" column="induction" />
+		<result property="microwave" column="microwave" />
+		<result property="door_lock" column="door_lock" />
+		
+		<result property="bidet" column="bidet" />
+		<result property="realty_detail_title" column="realty_detail_title" />
+		<result property="realty_detail_comment" column="realty_detail_comment" />
+		<result property="realty_image1" column="realty_image1" />
+		<result property="realty_image2" column="realty_image2" />
+		<result property="realty_image3" column="realty_image3" />
+		<result property="realty_image4" column="realty_image4" />
+		<result property="realty_image5" column="realty_image5" />
+		<result property="realty_image6" column="realty_image6" />
+		<result property="realty_image7" column="realty_image7" />
+		
+		<result property="realty_image8" column="realty_image8" />
+		<result property="image360" column="image360" />
+		<result property="user_no" column="user_no" />
+	</resultMap>
+
+	<select id="selectRealtyDetail" parameterType="Realty" resultMap="resultRealty">
+		select * from tb_realty
+		WHERE realty_no = #{realty_no}
+	</select>
+
+
+
+</mapper>

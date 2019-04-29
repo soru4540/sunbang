@@ -108,6 +108,8 @@
 					$("#sh_123room").css("display", "none");
 					$("#sh_op").css("display", "none");
 				}
+				
+				$("#sh_pt").val($("#sh_pt"+i).val());
 			});			
 		});
 		
@@ -120,6 +122,8 @@
 			$("#sh_bt"+i).click(function(){
 				$("#sh_bt"+i).css("background-color", "#61C0BF");
 				$("#sh_bt"+i).css("color", "white");
+				
+				$("#sh_bt").val($("#sh_bt"+i).val());
 			});	
 		});
 	});
@@ -405,21 +409,7 @@
 		});
 	});
 </script>
-<!-- trigger -->
-<!-- <script type="text/javascript">
-	$(function(){
-		$("#sh_pt0").trigger("click");
-		
-		$("#sh_maintenancefee_btn0").trigger("click");
-		$("#sh_parking_btn0").trigger("click");
-		$("#sh_elevator_btn0").trigger("click");
-		$("#sh_builtin_btn0").trigger("click");
-		$("#sh_pet_btn0").trigger("click");
-		$("#sh_veranda_btn0").trigger("click");
-		$("#sh_loan_btn0").trigger("click");
-		$("#sh_structure_btn0").trigger("click");
-	});
-</script> -->
+
 <style type="text/css">
 
 #sh_pi {
@@ -614,7 +604,9 @@ h6 {
 }
 
 #sh_tradei input[type=text],
-#sh_basici input[type=text] {
+#sh_basici input[type=text],
+#sh_tradei input[type=number],
+#sh_basici input[type=number] {
 	width:20%;
 	border: 1px solid #ced4da;
 	border-radius:5px;
@@ -622,7 +614,8 @@ h6 {
 	padding:5px;
 }
 
-#sh_additioni input[type=text] {
+#sh_additioni input[type=text],
+#sh_additioni input[type=number] {
 	border: 1px solid #ced4da;
 	border-radius:5px;
 	height:30.8px;
@@ -675,31 +668,33 @@ h6 {
 					<h6>매물 종류</h6><hr>
 					<div class="row">
 						<div class="col-md-2">종류선택
+						<input type="hidden" id="sh_pt" name="REALTY_TYPE" value="">
 						</div>
 						<div class="col-md-10">
-								<button class="sh_pt_btn" id="sh_pt0">원룸</button>
-								<button class="sh_pt_btn" id="sh_pt1">투룸</button>
-								<button class="sh_pt_btn" id="sh_pt2">쓰리룸</button>
-								<button class="sh_pt_btn" id="sh_pt3">오피스텔</button>
-								<button class="sh_pt_btn" id="sh_pt4">아파트</button>	
+								<input type="button" class="sh_pt_btn" id="sh_pt0" value="원룸">
+								<input type="button" class="sh_pt_btn" id="sh_pt1" value="투룸">
+								<input type="button" class="sh_pt_btn" id="sh_pt2" value="쓰리룸">
+								<input type="button" class="sh_pt_btn" id="sh_pt3" value="오피스텔">
+								<input type="button" class="sh_pt_btn" id="sh_pt4" value="아파트">
 						</div>
 					</div>
 					<div class="row" id="sh_123room">
 						<div class="col-md-2">건물유형
+						<input type="hidden" id="sh_bt" name="BUILDING_TYPE" value="">
 						</div>
 						<div class="col-md-10">
-								<button class="sh_bt_btn" id="sh_bt0">단독주택</button>
-								<button class="sh_bt_btn" id="sh_bt1">다가구주택</button>
-								<button class="sh_bt_btn" id="sh_bt2">빌라/연립/다세대</button>
-								<button class="sh_bt_btn" id="sh_bt3">상가주택</button>
+								<input type="button" class="sh_bt_btn" id="sh_bt0" value="단독주택">
+								<input type="button" class="sh_bt_btn" id="sh_bt1" value="다가구주택">
+								<input type="button" class="sh_bt_btn" id="sh_bt2" value="빌라/연립/다세대">
+								<input type="button" class="sh_bt_btn" id="sh_bt3" value="상가주택">
 						</div>
 					</div>	
 					<div class="row" id="sh_op">
 						<div class="col-md-2">건물유형
 						</div>
 						<div class="col-md-10">
-								<button class="sh_bt_btn" id="sh_bt4">오피스텔</button>
-								<button class="sh_bt_btn" id="sh_bt5">도시생활주택</button>						
+								<input type="button" class="sh_bt_btn" id="sh_bt4" value="오피스텔">
+								<input type="button" class="sh_bt_btn" id="sh_bt5" value="도시생활주택">
 						</div>
 					</div>										
 				</div>
@@ -719,7 +714,7 @@ h6 {
 								</tr>
 								<tr>
 									<td>
-										<input type="text" id="sh_address" placeholder="주소">
+										<input type="text" id="sh_address" name="ROAD_ADDRESS" placeholder="주소">
 									</td>
 									<td>
 										<input type="button" id="postbtn" class="btn btn-sm btn-success" onclick="sh_execDaumPostcode()" value="주소 찾기"><br>
@@ -727,13 +722,13 @@ h6 {
 								</tr>
 								<tr>
 									<td colspan="2">
-										<input type="text" class="tablecontent" id="sh_roadAddress" readonly><br>
-										<input type="text" class="tablecontent" id="sh_jibunAddress" readonly>
+										<input type="text" class="tablecontent" id="sh_roadAddress" name="ROAD_ADDRESS" readonly><br>
+										<input type="text" class="tablecontent" id="sh_jibunAddress" name="LAND_LOT" readonly>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<input type="text" id="sh_detailAddress" placeholder="동 / 호 를 입력해주세요 ex) 102동 304호">
+										<input type="text" id="sh_detailAddress" name="DETAIL_ADDRESS" placeholder="동 / 호 를 입력해주세요 ex) 102동 304호">
 									</td>
 								</tr>														 
 							</table>
@@ -783,20 +778,20 @@ h6 {
 					</div>
 					<div class="row" id="sh_tradei_0">
 						<div class="col-md-10" float="left">
-							<input type="text" name="deposit" placeholder="보증금"> / 
-							<input type="text" name="monthlyrent" placeholder="월세"> 만원
+							<input type="number" name="deposit" placeholder="보증금"> / 
+							<input type="number" name="monthlyrent" placeholder="월세"> 만원
 							<button type="button" id="sh_tradei_0_cancel"><i class="fas fa-times"></i></button>
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_1">
 						<div class="col-md-10">
-							<input type="text" name="lease" placeholder="전세"> 만원
+							<input type="number" name="lease" placeholder="전세"> 만원
 							<button type="button" id="sh_tradei_1_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_2">
 						<div class="col-md-10">
-							<input type="text" name="deal" placeholder="매매"> 만원
+							<input type="number" name="deal" placeholder="매매"> 만원
 							<button type="button" id="sh_tradei_2_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>					
@@ -811,8 +806,8 @@ h6 {
 							건물크기 <br>(1P = 3.3058㎡)
 						</div>
 						<div class="col-md-10">
-							공급면적 <input type="text" id="sh_sarea_p"> 평 <input type="text" id="sh_sarea_m"> ㎡ <hr>
-							전용면적 <input type="text" id="sh_earea_p"> 평 <input type="text" id="sh_earea_m"> ㎡
+							공급면적 <input type="number" id="sh_sarea_p"> 평 <input type="number" id="sh_sarea_m"> ㎡ <hr>
+							전용면적 <input type="number" id="sh_earea_p"> 평 <input type="number" id="sh_earea_m"> ㎡
 						</div>
 					</div>
 					<div class="row">
@@ -820,8 +815,8 @@ h6 {
 							건물층수 / 해당층수
 						</div>
 						<div class="col-md-10">
-							건물층수 <input type="text" placeholder="건물의 총" id="sh_totalbuildingfloor"> 층  <hr>
-							해당층수 <input type="text" placeholder="내가 사는" id="sh_mybuildingfloor"> 층
+							건물층수 <input type="number" placeholder="건물의 총" id="sh_totalbuildingfloor"> 층  <hr>
+							해당층수 <input type="number" placeholder="내가 사는" id="sh_mybuildingfloor"> 층
 						</div>
 					</div>
 					<div class="row">
@@ -861,7 +856,7 @@ h6 {
 						<div class="col-md-10">
 							<button class="sh_maintenancefee_btn" id="sh_maintenancefee_btn0">없음</button>
 							<button class="sh_maintenancefee_btn" id="sh_maintenancefee_btn1">있음</button>
-							<input type="text" id="sh_maintenancefee" placeholder="0원">
+							<input type="number" id="sh_maintenancefee" placeholder="0원">
 						</div>
 					</div>
 					<div class="row">

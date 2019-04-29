@@ -700,7 +700,9 @@ h6 {
 }
 
 #sh_tradei input[type=text],
-#sh_basici input[type=text]{
+#sh_basici input[type=text],
+#sh_tradei input[type=number],
+#sh_basici input[type=number]{
 	width:20%;
 	border: 1px solid #ced4da;
 	border-radius:5px;
@@ -708,7 +710,8 @@ h6 {
 	padding:5px;
 }
 
-#sh_additioni input[type=text] {
+#sh_additioni input[type=text],
+#sh_additioni input[type=number] {
 	border: 1px solid #ced4da;
 	border-radius:5px;
 	height:30.8px;
@@ -907,20 +910,20 @@ h6 {
 					</div>
 					<div class="row" id="sh_tradei_0">
 						<div class="col-md-10" float="left">
-							<input type="text" name="deposit" placeholder="보증금"> / 
-							<input type="text" name="monthlyrent" placeholder="월세"> 만원
+							<input type="number" name="deposit" placeholder="보증금"> / 
+							<input type="number" name="monthlyrent" placeholder="월세"> 만원
 							<button type="button" id="sh_tradei_0_cancel"><i class="fas fa-times"></i></button>
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_1">
 						<div class="col-md-10">
-							<input type="text" name="lease" placeholder="전세"> 만원
+							<input type="number" name="lease" placeholder="전세"> 만원
 							<button type="button" id="sh_tradei_1_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_2">
 						<div class="col-md-10">
-							<input type="text" name="deal" placeholder="매매"> 만원
+							<input type="number" name="deal" placeholder="매매"> 만원
 							<button type="button" id="sh_tradei_2_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>						
@@ -935,8 +938,8 @@ h6 {
 							건물크기 <br>(1P = 3.3058㎡)
 						</div>
 						<div class="col-md-10">
-							공급면적 <input type="text" id="sh_sarea_p"> 평 <input type="text" id="sh_sarea_m"> ㎡ <hr>
-							전용면적 <input type="text" id="sh_earea_p"> 평 <input type="text" id="sh_earea_m"> ㎡
+							공급면적 <input type="number" id="sh_sarea_p"> 평 <input type="number" id="sh_sarea_m"> ㎡ <hr>
+							전용면적 <input type="number" id="sh_earea_p"> 평 <input type="number" id="sh_earea_m"> ㎡
 						</div>
 					</div>
 					<div class="row">
@@ -944,8 +947,8 @@ h6 {
 							건물층수 / 해당층수
 						</div>
 						<div class="col-md-10">
-							건물층수 <input type="text" placeholder="건물의 총" id="sh_totalbuildingfloor"> 층  <hr>
-							해당층수 <input type="text" placeholder="내가 사는" id="sh_mybuildingfloor"> 층
+							건물층수 <input type="number" placeholder="건물의 총" id="sh_totalbuildingfloor"> 층  <hr>
+							해당층수 <input type="number" placeholder="내가 사는" id="sh_mybuildingfloor"> 층
 						</div>
 					</div>
 					<div class="row">
@@ -985,7 +988,7 @@ h6 {
 						<div class="col-md-10">
 							<button class="sh_maintenancefee_btn" id="sh_maintenancefee_btn0">없음</button>
 							<button class="sh_maintenancefee_btn" id="sh_maintenancefee_btn1">있음</button>
-							<input type="text" id="sh_maintenancefee" placeholder="0원">
+							<input type="number" id="sh_maintenancefee" placeholder="0원">
 						</div>
 					</div>
 					<div class="row">

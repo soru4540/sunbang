@@ -10,8 +10,10 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71150a085c893cb9531eb155dbf54998&libraries=services"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+
+<!-- 360도 사진 띄우기 -->
 <script type="text/javascript">
-	//360도 사진 띄우기
+	
 	$(function() {
 		$("#sh_360_btn").click(function(){
 			window.open('r360.do', '360도', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
@@ -46,6 +48,10 @@
 <style type="text/css">
 .carousel-item {
 	cursor: pointer;
+}
+
+#sh_optionicon img {
+	width: 80px;
 }
 
 .modal {
@@ -105,6 +111,23 @@
 
 #sh_360_btn, #sh_chat_btn {
 	background-color: #61C0BF;
+}
+
+
+#sh_changebtn {
+	border-radius:4px;
+	background-color:white;	
+	color:#61C0BF;
+	border: 1px solid #61C0BF;
+	font-size: 12pt;
+	padding:4px 4px;
+}
+
+#sh_changebtn2 {
+	border-radius:4px;
+	background-color:white;	
+	color:#61C0BF;
+	border: 1px solid #61C0BF;
 }
 
 .sh_sidebar {
@@ -199,31 +222,39 @@
 			<div class="col-md-12">
 				<nav class="navbar navbar-default bg-light fixed-bottom"> <!-- 하단바 -->
 					<ul class="nav navbar-nav navbar-left">
-						효창동 / 오피스텔 / 전세 1억 5000만원 / 57.6㎡ / 선방공인중개사무소 김성현
+						${realty.road_address } / ${realty.realty_type } / 전세 1억 5000만원 / ${realty.exclusive_area }평 / 선방공인중개사무소 김성현
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<button type="button" id="sh_chat_btn"
-							class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
+						<button type="button" id="sh_chat_btn" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
 					</ul>
 
 				</nav>  <!-- 하단바 -->
 
 				<div class="row"> <!-- 매물정보 -->
 					<div class="col-md-3">
-						<br>오피스텔 <br>
+						<br>${realty.realty_type }<br>
 						<h3>전세 1억 5000만원</h3>
 					</div>
 					<div class="col-md-2">
 						<br>전용 면적 <br>
-						<h3>57.6㎡</h3>
+						<!-- <h3>57.6㎡</h3> -->
+						<h3>${realty.exclusive_area }평 <button id="sh_changebtn"><i class="fas fa-sync-alt"></i></button></h3>
 					</div>
-					<div class="col-md-5">
-						<br> 
-						<img src="${pageContext.request.contextPath }/files/realty/optionImages/냉장고.png" style="width: 80px"> 
-						<img src="${pageContext.request.contextPath }/files/realty/optionImages/세탁기.png" style="width: 80px"> 
-						<img src="${pageContext.request.contextPath }/files/realty/optionImages/에어컨.png" style="width: 80px"> 
-						<img src="${pageContext.request.contextPath }/files/realty/optionImages/전자레인지.png" style="width: 80px">
-						<img src="${pageContext.request.contextPath }/files/realty/optionImages/전자도어락.png" style="width: 80px">
+					<div class="col-md-5" id="sh_optionicon">
+						<br>
+						<c:if test="${realty.airconditioner != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/에어컨.png"></c:if>
+						<c:if test="${realty.laundry_machine != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/세탁기.png"></c:if>
+						<c:if test="${realty.bed != 0}"></c:if>
+						<c:if test="${realty.desk != 0}"></c:if>
+						<c:if test="${realty.closet != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/옷장.png"></c:if>
+						<c:if test="${realty.tv != 0}"></c:if>
+						<c:if test="${realty.gasrange != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/가스레인지.png"></c:if>
+						<c:if test="${realty.shoe_shelf != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/신발장.png"></c:if>
+						<c:if test="${realty.refrigerator != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/냉장고.png"></c:if>
+						<c:if test="${realty.induction != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/인덕션.png"></c:if>
+						<c:if test="${realty.microwave != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/전자레인지.png"></c:if>
+						<c:if test="${realty.door_lock != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/전자도어락.png"></c:if>
+						<c:if test="${realty.bidet != 0}"></c:if> 
 					</div>
 					<div class="col-md-2" align="right">
 						<br>
@@ -234,10 +265,10 @@
 				<br>
 				<div class="row"> <!-- 조회수 / 찜하기 / 신고 -->
 					<div class="col-md-12">
-						<a><i class="far fa-eye"></i> 1</a> &nbsp;
+						<a><i class="far fa-eye"></i> ${realty.realty_hits }</a> &nbsp;
 						<a><i class="far fa-heart"></i> 1</a> &nbsp;
 						<!-- <i class="fas fa-heart"></i> --> 
-						<a><i class="far fa-angry"></i> 허위매물신고</a>
+						<a href="#"><i class="far fa-angry"></i> 허위매물신고</a>
 					</div>
 				</div> <!-- 조회수 / 찜하기 / 신고 -->
 
@@ -246,46 +277,68 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-3">
-								<b>해당층/건물층 </b> 10층/15층
+								<b>해당층/건물층 </b> ${realty.realty_layers}층/${realty.building_layers}층
 							</div>
 							<div class="col-md-3">
-								<b>전용/계약면적 </b> 28.3 / 38.65㎡
+								<b>전용/계약면적 </b> ${realty.exclusive_area } / ${realty.residential } 평 <button id="sh_changebtn2"><i class="fas fa-sync-alt"></i></button></h3>
 							</div>
 							<div class="col-md-3">
-								<b>난방종류 </b> 개별난방
+								<b>난방종류 </b>
+								<c:if test="${realty.heatting_system == 0 }">중앙난방</c:if>
+								<c:if test="${realty.heatting_system == 1 }">개별난방</c:if>
+								<c:if test="${realty.heatting_system == 2 }">지역난방</c:if>
+								
+								
 							</div>
 							<div class="col-md-3">
-								<b>입주가능일 </b> 즉시 입주 
-							</div>
-						</div>
-						<hr>
-						<div class="row">
-							<div class="col-md-3">
-								<b>관리비 </b> 5만원
-							</div>
-							<div class="col-md-3">
-								<b>주차장 </b> 세대 당 1대
-							</div>
-							<div class="col-md-3">
-								<b>엘리베이터 </b> 있음
-							</div>
-							<div class="col-md-3">
-								<b>빌트인 </b> 있음
+								<b>입주가능일 </b>
+								<c:if test="${realty.registdate == realty.move_available_date }">즉시입주</c:if>
+								<c:if test="${realty.registdate != realty.move_available_date }"> ${realty.move_available_date }</c:if>
 							</div>
 						</div>
 						<hr>
 						<div class="row">
 							<div class="col-md-3">
-								<b>반려동물 </b> 불가능
+								<b>관리비 </b>
+								<c:if test="${realty.management_pay == 0}">없음</c:if>
+								<c:if test="${realty.management_pay != 0}">${realty.management_pay }원</c:if>
 							</div>
 							<div class="col-md-3">
-								<b>베란다/발코니 </b> 있음
+								<b>주차장 </b> 
+								<c:if test="${realty.parking_lot == '0' }">없음</c:if>
+								<c:if test="${realty.parking_lot != '0' }">${realty.parking_lot }</c:if>
 							</div>
 							<div class="col-md-3">
-								<b>전세자금대출 </b> 불가능
+								<b>엘리베이터 </b>
+								<c:if test="${realty.elevator == 0 }">없음</c:if>
+								<c:if test="${realty.elevator != 0 }">있음</c:if>
 							</div>
 							<div class="col-md-3">
-								<b>구조 </b> 복층 1.5룸/주방분리형
+								<b>빌트인 </b> 
+								<c:if test="${realty.builtin == 0 }">없음</c:if>
+								<c:if test="${realty.builtin != 0 }">있음</c:if>
+							</div>
+						</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-3">
+								<b>반려동물 </b>
+								<c:if test="${realty.allowance_pet == 0 }">불가능</c:if>
+								<c:if test="${realty.allowance_pet != 0 }">가능</c:if>
+							</div>
+							<div class="col-md-3">
+								<b>베란다/발코니 </b>
+								<c:if test="${realty.balcony == 0 }">없음</c:if>
+								<c:if test="${realty.balcony != 0 }">있음</c:if>								
+							</div>
+							<div class="col-md-3">
+								<b>전세자금대출 </b> 
+								<c:if test="${realty.loan_availability == 0 }">불가능</c:if>
+								<c:if test="${realty.loan_availability != 0 }">가능</c:if>									
+							</div>
+							<div class="col-md-3">
+								<c:if test="${realty.structure == '0' }"></c:if>
+								<c:if test="${realty.structure != '0' }"><b>구조 </b> ${realty.structure }</c:if>
 							</div>
 						</div>
 						<hr>
@@ -341,19 +394,15 @@
 						</div> <!-- carousel 이미지 -->
 						<div class="row"> <!-- 상세설명 -->
 							<div class="col-md-6" align="center">
-								<br>
-								<h2>신축오피스텔 풀옵션 즉시 입주 가능!</h2>
+								<br><br><br><br><br><br>
+								<h2>${realty.realty_detail_title }</h2>
 							</div>
 							<div class="col-md-6">
-								<br>
-								<h3>안녕하세요 선방입니다.</h3>
-								<br>
-								<p>풀옵션 신축 오피스텔 입니다.</p>
-								<p>역에서 가깝습니다.</p>
-								<p>주변 편의시설이 다양합니다.</p>
-								<p>
-									<a class="btn" href="#">상세정보 »</a>
-								</p>
+								<br><br><br><br><br><br><br>
+								<h4>
+								${realty.realty_detail_comment }
+								</h4>
+								<br><br><br><br><br><br><br>
 							</div>
 						</div> <!-- 상세설명 -->
 						<div class="row" align="center"> <!-- 지도 -->
@@ -405,21 +454,42 @@ var mapContainer = document.getElementById('map'), // 지도를 표시할 div
 // 지도를 생성합니다    
 var map = new daum.maps.Map(mapContainer, mapOption); 
 
-//지도에 표시할 원을 생성합니다
-var circle = new daum.maps.Circle({
-    center : new daum.maps.LatLng(37.54231547578105, 126.9645557963219),  // 원의 중심좌표 입니다 
-    radius: 50, // 미터 단위의 원의 반지름입니다 
-    strokeWeight: 2, // 선의 두께입니다 
-    strokeColor: '#75B8FA', // 선의 색깔입니다
-    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
-    
-    fillColor: '#CFE7FF', // 채우기 색깔입니다
-    fillOpacity: 0.7  // 채우기 불투명도 입니다   
-}); 
+//주소-좌표 변환 객체를 생성합니다
+var geocoder = new daum.maps.services.Geocoder();
 
-// 지도에 원을 표시합니다 
-circle.setMap(map); 
+//주소로 좌표를 검색합니다
+geocoder.addressSearch('${realty.road_address }', function(result, status) {
 
+    // 정상적으로 검색이 완료됐으면 
+     if (status === daum.maps.services.Status.OK) {
+
+        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+
+        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+        map.setCenter(coords);
+
+        //지도에 표시할 원을 생성합니다
+		var circle = new daum.maps.Circle({
+		    center : new daum.maps.LatLng(result[0].y, result[0].x),  // 원의 중심좌표 입니다 
+		    radius: 50, // 미터 단위의 원의 반지름입니다 
+		    strokeWeight: 2, // 선의 두께입니다 
+		    strokeColor: '#75B8FA', // 선의 색깔입니다
+		    strokeOpacity: 1, // 선의 불투명도 입니다 1에서 0 사이의 값이며 0에 가까울수록 투명합니다
+		    
+		    fillColor: '#CFE7FF', // 채우기 색깔입니다
+		    fillOpacity: 0.7  // 채우기 불투명도 입니다   
+		}); 
+		
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new daum.maps.Marker({
+            map: map,
+            position: coords
+        });
+        
+		// 지도에 원을 표시합니다 
+		circle.setMap(map); 
+    } 
+});    
 
 // 장소 검색 객체를 생성합니다
 var ps = new daum.maps.services.Places(map); 
