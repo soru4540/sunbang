@@ -125,16 +125,16 @@
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333" id="js_pheader_dropdown">
 						<c:if test="false"> <!-- 일반회원 -->
-							<a class="dropdown-item" href="#"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
-							<a class="dropdown-item" href="#"><i class="far fa-check-circle"></i> 찜보기</a> 
-							<a class="dropdown-item" href="#"><i class="far fa-heart"></i> 좋아요</a>
-							<a class="dropdown-item" href="#"><i class="far fa-comments"></i> 1:1 상담내역</a>
+							<a class="dropdown-item" href="userupdateview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
+							<a class="dropdown-item" href="mycheckview.do"><i class="far fa-check-circle"></i> 찜보기</a> 
+							<a class="dropdown-item" href="mylikeview.do"><i class="far fa-heart"></i> 좋아요</a>
+							<a class="dropdown-item" href="mychatview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 						</c:if>
 						<c:if test="false"> <!-- 기업회원 -->
-							<a class="dropdown-item" href="#"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
-							<a class="dropdown-item" href="#"><i class="far fa-check-circle"></i> 찜보기</a> 
-							<a class="dropdown-item" href="#"><i class="far fa-heart"></i> 좋아요</a>
-							<a class="dropdown-item" href="#"><i class="far fa-comments"></i> 1:1 상담내역</a>
+							<a class="dropdown-item" href="userupdateview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
+							<a class="dropdown-item" href="mycheckview.do"><i class="far fa-check-circle"></i> 찜보기</a> 
+							<a class="dropdown-item" href="mylikeview.do"><i class="far fa-heart"></i> 좋아요</a>
+							<a class="dropdown-item" href="mychatview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="#"><i class="far fa-copy"></i> 등록 매물 관리</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-award"></i> 프리미엄 서비스</a>
 						</c:if>
@@ -143,7 +143,7 @@
 						</c:if>
 					</div>
 					</c:if> <c:if test="loginUser == null">
-						<a class="nav-link" href="#"> 회원가입 · 로그인&nbsp;</a>
+						<a class="nav-link" href="loginview.do"> 회원가입 · 로그인&nbsp;</a>
 					</c:if>
 				</li>
 			</ul>
