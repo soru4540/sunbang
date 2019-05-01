@@ -98,7 +98,7 @@
 						</a>
 					</div>
 					<div class="nav-item" id="js_pheader_tab2">
-						<a class="nav-link" href="interiorMain.do">인테리어</a>
+						<a class="nav-link" href="interiormain.do">인테리어</a>
 					</div>
 				</div>
 			</div>

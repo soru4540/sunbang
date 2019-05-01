@@ -182,7 +182,7 @@
 				</a>
 			</div>
 			<div class="col">
-				<a href="interiorMain.do"
+				<a href="interiormain.do"
 					id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon2">
 						<div id="js_index_icon">

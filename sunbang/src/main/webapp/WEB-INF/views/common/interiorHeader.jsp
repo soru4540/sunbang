@@ -139,7 +139,7 @@
 						</a>
 					</div>
 					<div class="nav-item" id="js_pheader_tab2">
-						<a class="nav-link" href="interiorMain.do">인테리어</a>
+						<a class="nav-link" href="interiormain.do">인테리어</a>
 					</div>
 				</div>
 			</div>
@@ -165,15 +165,15 @@
 					</div>
 				</li>
 				<li class="nav-item"><a class="nav-link"
-					href="istoryview.do">뉴스피드</a></li>
+					href="islistselect.do">뉴스피드</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="#">글쓰기</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="iboardlist.do?board_type=photograph">사진</a></li>
+					href="iblistselect.do?board_type=photograph">사진</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="iboardlist.do?board_type=housewarming">집들이</a></li>
+					href="iblistselect.do?board_type=housewarming">집들이</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="iboardlist.do?board_type=knowhow">노하우</a></li>
+					href="iblistselect.do?board_type=knowhow">노하우</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">가이드&nbsp;&nbsp;</a></li>
 				<li class="nav-item" id="js_pheader_user"><c:if test="true">
 						<a class="nav-link dropdown-toggle"

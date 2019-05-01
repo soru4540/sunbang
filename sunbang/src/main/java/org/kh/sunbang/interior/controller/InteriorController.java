@@ -9,36 +9,36 @@ public class InteriorController {
 	
 //-------------------------JB PART------------------------------------------------
 	
-	@RequestMapping("interiorMain.do")
+	@RequestMapping("interiormain.do")
 	public String moveInteriorMainView() {
 		return "interior/interiorMain";
 	}
 	
-	@RequestMapping("iboardinsertview.do")
+	@RequestMapping("ibinsertview.do")
 	public String moveBoardInsertView() {
-		return "interior/interiorKnowHowInsert";
+		return "interior/interiorKnowhowInsert";
 	}
 	
-	@RequestMapping("iboardlist.do")
+	@RequestMapping("iblistselect.do")
 	public String selectBoardList(@RequestParam(name="board_type") String board_type) {
 		
 		if(board_type.equals("photograph")) {
-		return "interior/interiorFilter1";
+		return "interior/interiorPhotographList";
 		}else if(board_type.equals("housewarming")) {
-			return "interior/interiorFilter2";
+			return "interior/interiorHousewarmingList";
 		}else {
-			return "interior/interiorFilter3";
+			return "interior/interiorKnowhowList";
 		}
 	}
 		
-	@RequestMapping("istoryview.do")
+	@RequestMapping("islistselect.do")
 	public String selectStoryList() {
-		return "interior/interiorStory";
+		return "interior/interiorStoryList";
 	}
 	
-	@RequestMapping("ifollowView.do")
+	@RequestMapping("iflistselect.do")
 	public String selectFollowList() {
-		return "interior/interiorFollow";
+		return "interior/interiorFollowList";
 	}
 	
 	

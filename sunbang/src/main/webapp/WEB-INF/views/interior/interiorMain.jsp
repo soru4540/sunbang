@@ -197,18 +197,18 @@
 		<br>	
 		<div class="row" id="jb_main_filter">
 			<div class="col-md-3" align="center">
-				<a href="iboardlist.do?board_type=photograph"> <i
+				<a href="iblistselect.do?board_type=photograph"> <i
 					class="fas fa-camera-retro"
 					style="color: #ca9393; font-size: 65px;"></i><br> <br>
 					<h6>사진</h6> <br></a>
 			</div>
 			<div class="col-md-3" align="center">
-				<a href="iboardlist.do?board_type=housewarming"><i class="fas fa-door-open"
+				<a href="iblistselect.do?board_type=housewarming"><i class="fas fa-door-open"
 					style="color: #ca9393; font-size: 65px;"></i><br> <br>
 					<h6>집들이</h6> <br> </a>
 			</div>
 			<div class="col-md-3" align="center">
-				<a href="iboardlist.do?board_type=knowhow"><i class="fas fa-tools"
+				<a href="iblistselect.do?board_type=knowhow"><i class="fas fa-tools"
 					style="color: #ca9393; font-size: 65px;"></i><br> <br>
 					<h6>노하우</h6> <br> </a>
 			</div>
