@@ -65,11 +65,16 @@
 		<result property="user_no" column="user_no" />
 	</resultMap>
 
-	<select id="selectRealtyDetail" parameterType="Realty" resultMap="resultRealty">
+	<select id="selectRealtyDetailView" parameterType="Realty" resultMap="resultRealty">
 		select * from tb_realty
-		WHERE realty_no = #{realty_no}
+		where realty_no = #{realty_no}
 	</select>
-
+	
+	<update id="updateRealtyHits" parameterType="int">
+		update tb_realty
+		set realty_hits = realty_hits + 1
+		where realty_no = #{realty_no}
+	</update>
 
 
 </mapper>

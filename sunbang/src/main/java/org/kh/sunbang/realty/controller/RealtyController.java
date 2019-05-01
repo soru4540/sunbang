@@ -23,34 +23,53 @@ public class RealtyController {
 
 //김성현----------------------------------------------------------------------------
 	@RequestMapping("rdetail.do")
-	public ModelAndView selectRealtyDetail(
+	public ModelAndView selectRealtyDetailView(
 			ModelAndView mv, @RequestParam(name="realty_no") int realty_no) {
 		
-		Realty realty = realtyService.selectRealtyDetail(realty_no);
+		//매물 조회수 증가
+		realtyService.updateRealtyHits(realty_no);
 		
-		mv.addObject("realty", realty);
-		mv.setViewName("realty/realtyDetailView");
+		Realty realty = realtyService.selectRealtyDetailView(realty_no);
+		
+		if(realty != null) {
+			mv.addObject("realty", realty);
+			mv.setViewName("realty/realtyDetailView");
+		}else {
+			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
+			mv.setViewName("common/error");
+		}
+		
 		
 		return mv;
 	}	
 	
 	@RequestMapping("r360.do")
-	public String image360View() {
+	public String selectImage360View() {
 		return "realty/realty360Image";
 	}	
 	
+	@RequestMapping("rinsertview.do")
+	public String insertRealtyView() {
+		return "realty/realtyInsertView";
+	}
+	
 	@RequestMapping("rinsert.do")
-	public String moveRealtyInsertViewPage() {
+	public String insertRealty() {
 		return "realty/realtyInsertView";
 	}
 	
 	@RequestMapping("rmylist.do")
-	public String moveRealtyMyListPage() {
+	public String selectRealtyMyListView() {
 		return "realty/realtyMyListView";
 	}	
 	
+	@RequestMapping("rupdateview.do")
+	public String updateRealtyView() {
+		return "realty/realtyUpdateView";
+	}	
+	
 	@RequestMapping("rupdate.do")
-	public String moveRealtyUpdateViewPage() {
+	public String updateRealty() {
 		return "realty/realtyUpdateView";
 	}	
 }

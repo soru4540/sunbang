@@ -7,8 +7,12 @@ import org.springframework.stereotype.Repository;
 @Repository("realtyDao")
 public class RealtyDao {
 
-	public Realty selectRealtyDetail(SqlSessionTemplate mybatisSession, int realty_no) {
-		return mybatisSession.selectOne("realtyMapper.selectRealtyDetail", realty_no);
+	public Realty selectRealtyDetailView(SqlSessionTemplate mybatisSession, int realty_no) {
+		return mybatisSession.selectOne("realtyMapper.selectRealtyDetailView", realty_no);
+	}
+
+	public int updateRealtyHits(SqlSessionTemplate mybatisSession, int realty_no) {
+		return mybatisSession.update("realtyMapper.updateRealtyHits", realty_no);
 	}
 
 }

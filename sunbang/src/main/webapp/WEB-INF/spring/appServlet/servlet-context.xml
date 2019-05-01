@@ -3,9 +3,11 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -28,19 +30,32 @@
 		class="net.sf.json.spring.web.servlet.view.JsonView">
 	</beans:bean>
 	
-	<context:component-scan base-package="org.kh.sunbang" />
-	
 	<beans:bean
 		class="org.springframework.web.servlet.view.BeanNameViewResolver">
 		<beans:property name="order" value="0"/>
 		<!-- 제일먼저 샐행되도록 순서 지정해야함 -->
 	</beans:bean>
 	
-	<!-- <beans:bean class="org.kh.first.member.model.vo.Member"></beans:bean> -->
-
 	<!-- 파일업로드용 클래스 등록 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	<beans:property name="maxUploadSize" value="10000000"></beans:property>
+	<beans:property name="maxUploadSize" value="20000000"></beans:property>
 	</beans:bean>
+	
+	<context:component-scan base-package="org.kh.sunbang" />
+	
+	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	
 </beans:beans>
+
+
+
+
+
+
+
+
+
+
+

@@ -45,6 +45,56 @@
 		}
 	});
 </script>
+<!-- 평 / ㎡ 변환 -->
+<script type="text/javascript">
+$(function(){
+	$("#sh_changebtn0").on("click", function(){
+		if($("#sh_change0").val() == 0){
+			$("#sh_changenumber0").text("${realty.exclusive_area * 3.3058}");
+			$("#sh_changetext0").text("㎡");
+			$("#sh_change0").val(1);
+		}else{
+			$("#sh_changenumber0").text("${realty.exclusive_area}");
+			$("#sh_changetext0").text("평");
+			$("#sh_change0").val(0);
+		}
+	});
+	
+	$("#sh_changebtn1").on("click", function(){
+		if($("#sh_change1").val() == 0){
+			$("#sh_changenumber1").text("${realty.exclusive_area * 3.3058 }");
+			$("#sh_changenumber2").text("${realty.residential * 3.3058 }");
+			$("#sh_changetext1").text("㎡");
+			$("#sh_change1").val(1);
+		}else{
+			$("#sh_changenumber1").text("${realty.exclusive_area }");
+			$("#sh_changenumber2").text("${realty.residential }");
+			$("#sh_changetext1").text("평");
+			$("#sh_change1").val(0);
+		}
+	});
+});	
+</script>
+<!-- 찜하기 -->
+<script type="text/javascript">
+	$(function(){
+		$("#sh_rpinsert").click(function(){
+			var message = confirm("매물을 찜하기 하시겠습니까?");
+			if(message == true){
+				location.href="rpinsert.do";				
+			}
+		});
+	});
+</script>
+<!-- 허위매물신고 -->
+<script type="text/javascript">
+	$(function(){
+		$("#sh_rrinsert_btn").click(function(){
+			location.href="rrinsert.do";
+		});
+	});
+</script>
+
 <style type="text/css">
 .carousel-item {
 	cursor: pointer;
@@ -54,67 +104,17 @@
 	width: 80px;
 }
 
-.modal {
-	display: none; /* Hidden by default */
-	position: fixed; /* Stay in place */
-	z-index: 1; /* Sit on top */
-	padding-top: 100px; /* Location of the box */
-	left: 0;
-	top: 0;
-	width: 100%; /* Full width */
-	height: 100%; /* Full height */
-	overflow: auto; /* Enable scroll if needed */
-	background-color: rgb(0, 0, 0); /* Fallback color */
-	background-color: rgba(0, 0, 0, 0.8); /* Black w/ opacity */
-}
-
-.modal-content {
-	margin: auto;
-	display: block;
-	width: 90%;
-	max-width: 800px;
-}
-
-#caption {
-	margin: auto;
-	display: block;
-	width: 90%;
-	max-width: 800px;
-	text-align: center;
-	color: #ccc;
-	padding: 10px 0;
-	height: 150px;
-}
-
-.close {
-	position: absolute;
-	top: 15px;
-	right: 35px;
-	color: #f1f1f1;
-	font-size: 40px;
-	font-weight: bold;
-	transition: 0.3s;
-}
-
-.close:hover, .close:focus {
-	color: #bbb;
-	text-decoration: none;
-	cursor: pointer;
-}
-
-/* 100% Image Width on Smaller Screens */
-@media only screen and (max-width: 800px) {
-	.modal-content {
-		width: 100%;
-	}
-}
-
 #sh_360_btn, #sh_chat_btn {
 	background-color: #61C0BF;
 }
 
+#sh_rreportcontent {
+	width:100%;
+	border: 1px solid #ced4da;
+	border-radius:4px;
+}
 
-#sh_changebtn {
+#sh_changebtn0 {
 	border-radius:4px;
 	background-color:white;	
 	color:#61C0BF;
@@ -123,7 +123,7 @@
 	padding:4px 4px;
 }
 
-#sh_changebtn2 {
+#sh_changebtn1 {
 	border-radius:4px;
 	background-color:white;	
 	color:#61C0BF;
@@ -186,10 +186,16 @@
     height: 400px;
 }
 
+#sh_hpr a:link {color:black; cursor:pointer;}
+#sh_hpr a:visited {color:black;text-decoration:none} 	
+#sh_hpr a:active {color:black;text-decoration:none} 
+#sh_hpr a:hover {color:black;text-decoration:none; cursor:pointer;} 
+
+
 .map_wrap, .map_wrap * {margin:0; padding:0;font-family:'Malgun Gothic',dotum,'돋움',sans-serif;font-size:12px;}
 .map_wrap {position:relative;width:100%;height:350px;}
 #category {position:absolute;top:10px;left:10px;border-radius: 5px; border:1px solid #909090;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);background: #fff;overflow: hidden;z-index: 2;}
-#category li {float:left;list-style: none;width:50px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
+#category li {float:left;list-style: none;width:40px;px;border-right:1px solid #acacac;padding:6px 0;text-align: center; cursor: pointer;}
 #category li.on {background: #eee;}
 #category li:hover {background: #ffe6e6;border-left:1px solid #acacac;margin-left: -1px;}
 #category li:last-child{margin-right:0;border-right:0;}
@@ -237,17 +243,21 @@
 					</div>
 					<div class="col-md-2">
 						<br>전용 면적 <br>
-						<!-- <h3>57.6㎡</h3> -->
-						<h3>${realty.exclusive_area }평 <button id="sh_changebtn"><i class="fas fa-sync-alt"></i></button></h3>
+						<h3> 
+						<span id="sh_changenumber0">${realty.exclusive_area }</span>
+						<span id="sh_changetext0">평</span> 
+						<button id="sh_changebtn0"><i class="fas fa-sync-alt"></i></button>
+						</h3>
+						<input type="hidden" id="sh_change0" value=0>
 					</div>
 					<div class="col-md-5" id="sh_optionicon">
 						<br>
 						<c:if test="${realty.airconditioner != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/에어컨.png"></c:if>
 						<c:if test="${realty.laundry_machine != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/세탁기.png"></c:if>
-						<c:if test="${realty.bed != 0}"></c:if>
-						<c:if test="${realty.desk != 0}"></c:if>
+						<c:if test="${realty.bed != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/침대.png"></c:if>
+						<c:if test="${realty.desk != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/책상.png"></c:if>
 						<c:if test="${realty.closet != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/옷장.png"></c:if>
-						<c:if test="${realty.tv != 0}"></c:if>
+						<c:if test="${realty.tv != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/tv.png"></c:if>
 						<c:if test="${realty.gasrange != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/가스레인지.png"></c:if>
 						<c:if test="${realty.shoe_shelf != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/신발장.png"></c:if>
 						<c:if test="${realty.refrigerator != 0}"><img src="${pageContext.request.contextPath }/files/realty/optionImages/냉장고.png"></c:if>
@@ -263,12 +273,41 @@
 					</div>
 				</div> <!-- 매물정보 -->
 				<br>
-				<div class="row"> <!-- 조회수 / 찜하기 / 신고 -->
+				<div class="row" id="sh_hpr"> <!-- 조회수 / 찜하기 / 신고 -->
 					<div class="col-md-12">
 						<a><i class="far fa-eye"></i> ${realty.realty_hits }</a> &nbsp;
-						<a><i class="far fa-heart"></i> 1</a> &nbsp;
-						<!-- <i class="fas fa-heart"></i> --> 
-						<a href="#"><i class="far fa-angry"></i> 허위매물신고</a>
+						<a id="sh_rpinsert"><i class="far fa-bookmark"></i></i> 찜하기</a> &nbsp;
+						<!-- <i class="fas fa-bookmark"></i> --> 
+						<a data-toggle="modal" data-target="#myModal"><i class="far fa-angry"></i> 허위매물신고</a>
+
+						<!-- The Modal -->
+						<div class="modal fade" id="myModal">
+							<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+								<div class="modal-content">
+
+									<!-- Modal Header -->
+									<div class="modal-header">
+										<h4 class="modal-title">허위매물 신고</h4>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+
+									<!-- Modal body -->
+									<div class="modal-body">
+										<p style="color:#006080">매물에 대한 잘못된 정보를 신고해주세요!</p>
+										<p>확인 후 허위매물일 경우 해당 매물은 삭제되거나 이용이 제재됩니다.<br>
+											허위신고일 시 신고자는 법적인 책임을 질 수 있습니다.<br>
+										 	선방은 자체 검수를 통해 허위매물 근절에 노력하고 있습니다.</p><br>
+										<h5> 신고항목 </h5><hr> 	
+										<textarea rows="20" cols="20" id="sh_rreportcontent" placeholder="신고 사유를 작성해주세요"></textarea>
+									</div>
+
+									<!-- Modal footer -->
+									<div class="modal-footer">
+										<button type="button" id="sh_rrinsert_btn" class="btn btn-secondary" data-dismiss="modal">제출</button>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div> <!-- 조회수 / 찜하기 / 신고 -->
 
@@ -277,18 +316,21 @@
 						<hr>
 						<div class="row">
 							<div class="col-md-3">
-								<b>해당층/건물층 </b> ${realty.realty_layers}층/${realty.building_layers}층
+								<b>해당층/건물층 </b> ${realty.realty_layers }층 / ${realty.building_layers }층
 							</div>
 							<div class="col-md-3">
-								<b>전용/계약면적 </b> ${realty.exclusive_area } / ${realty.residential } 평 <button id="sh_changebtn2"><i class="fas fa-sync-alt"></i></button></h3>
+								<b>전용/계약면적 </b> 
+								<span id="sh_changenumber1">${realty.exclusive_area }</span> /
+								<span id="sh_changenumber2">${realty.residential }</span> 
+								<span id="sh_changetext1"> 평 </span>
+								<button id="sh_changebtn1"><i class="fas fa-sync-alt"></i></button>
+								<input type="hidden" id="sh_change1" value=0>
 							</div>
 							<div class="col-md-3">
 								<b>난방종류 </b>
 								<c:if test="${realty.heatting_system == 0 }">중앙난방</c:if>
 								<c:if test="${realty.heatting_system == 1 }">개별난방</c:if>
 								<c:if test="${realty.heatting_system == 2 }">지역난방</c:if>
-								
-								
 							</div>
 							<div class="col-md-3">
 								<b>입주가능일 </b>
@@ -384,11 +426,11 @@
 								</div>
 								<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 								<!-- The Modal -->
-								<div id="sh_img_modal" class="modal">
-									<span class="close">&times;</span> <img class="modal-content"
-										id="sh_img2_1">
+<!-- 								<div id="sh_img_modal" class="modal">
+									<span class="close" style="color:white"><i class="fas fa-times"></i></span> 
+										<img class="modal-content" id="sh_img2_1">
 									<div id="sh_modal_caption"></div>
-								</div>
+								</div> -->
 	
 							</div>
 						</div> <!-- carousel 이미지 -->

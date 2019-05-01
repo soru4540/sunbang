@@ -16,7 +16,12 @@ public class RealtyServiceImpl implements RealtyService {
 	private RealtyDao realtyDao;
 	
 	@Override
-	public Realty selectRealtyDetail(int realty_no) {
-		return realtyDao.selectRealtyDetail(mybatisSession, realty_no);
+	public Realty selectRealtyDetailView(int realty_no) { //매물상세페이지
+		return realtyDao.selectRealtyDetailView(mybatisSession, realty_no);
+	}
+
+	@Override
+	public void updateRealtyHits(int realty_no) { //매물조회수
+		realtyDao.updateRealtyHits(mybatisSession, realty_no);
 	}
 }

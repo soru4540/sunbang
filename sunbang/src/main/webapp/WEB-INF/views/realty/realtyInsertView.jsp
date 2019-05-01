@@ -160,7 +160,7 @@
 				$("#sh_tradei_btn0").css("background-color", "white");
 				$("#sh_tradei_btn0").css("color", "#61C0BF");
 				$("input[name=deposit]").val("");
-				$("input[name=monthlyrent]").val("");
+				$("input[name=month_lease]").val("");
 			}		
 		});
 		
@@ -170,7 +170,7 @@
 				$("#sh_tradei_1").css("display", "none");
 				$("#sh_tradei_btn1").css("background-color", "white");
 				$("#sh_tradei_btn1").css("color", "#61C0BF");
-				$("input[name=lease]").val("");
+				$("input[name=payback_deposit_lease]").val("");
 			}
 		});
 		
@@ -180,7 +180,7 @@
 				$("#sh_tradei_2").css("display", "none");
 				$("#sh_tradei_btn2").css("background-color", "white");
 				$("#sh_tradei_btn2").css("color", "#61C0BF");
-				$("input[name=deal]").val("");
+				$("input[name=purchase]").val("");
 			}
 		});
 		
@@ -647,6 +647,7 @@ h6 {
 </head>
 <body>
 <c:import url="../common/propertyHeader.jsp" /><br>
+<form>
 <div class="container" style="font-family: a고딕12;">
 	<div class="row">
 		<div class="col-md-12">
@@ -771,27 +772,27 @@ h6 {
 							거래 종류
 						</div>
 						<div class="col-md-10">
-							<button class="sh_tradei_btn" id="sh_tradei_btn0">월세</button>
-							<button class="sh_tradei_btn" id="sh_tradei_btn1">전세</button>
-							<button class="sh_tradei_btn" id="sh_tradei_btn2">매매</button>
+							<button type="button" class="sh_tradei_btn" id="sh_tradei_btn0">월세</button>
+							<button type="button" class="sh_tradei_btn" id="sh_tradei_btn1">전세</button>
+							<button type="button" class="sh_tradei_btn" id="sh_tradei_btn2">매매</button>
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_0">
 						<div class="col-md-10" float="left">
-							<input type="number" name="deposit" placeholder="보증금"> / 
-							<input type="number" name="monthlyrent" placeholder="월세"> 만원
+							<input type="number" name="deposit" placeholder="보증금" min="0"> / 
+							<input type="number" name="month_lease" placeholder="월세" min="0"> 원
 							<button type="button" id="sh_tradei_0_cancel"><i class="fas fa-times"></i></button>
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_1">
 						<div class="col-md-10">
-							<input type="number" name="lease" placeholder="전세"> 만원
+							<input type="number" name="payback_deposit_lease" placeholder="전세" min="0"> 원
 							<button type="button" id="sh_tradei_1_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_2">
 						<div class="col-md-10">
-							<input type="number" name="deal" placeholder="매매"> 만원
+							<input type="number" name="purchase" placeholder="매매" min="0"> 원
 							<button type="button" id="sh_tradei_2_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>					
@@ -806,8 +807,8 @@ h6 {
 							건물크기 <br>(1P = 3.3058㎡)
 						</div>
 						<div class="col-md-10">
-							공급면적 <input type="number" id="sh_sarea_p"> 평 <input type="number" id="sh_sarea_m"> ㎡ <hr>
-							전용면적 <input type="number" id="sh_earea_p"> 평 <input type="number" id="sh_earea_m"> ㎡
+							공급면적 <input type="number" id="sh_sarea_p" min="0"> 평 <input type="text" id="sh_sarea_m" min="0"> ㎡ <hr>
+							전용면적 <input type="number" id="sh_earea_p" min="0"> 평 <input type="text" id="sh_earea_m" min="0"> ㎡
 						</div>
 					</div>
 					<div class="row">
@@ -837,9 +838,9 @@ h6 {
 							입주 가능일
 						</div>
 						<div class="col-md-10">
-							<button class="sh_moveindate_btn" id="sh_moveindate_0">즉시 입주</button>
-							<button class="sh_moveindate_btn" id="sh_moveindate_1">날짜 협의</button>
-							<button class="sh_moveindate_btn" id="sh_moveindate_2">날짜 선택</button>
+							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_0" value="0">즉시 입주</button>
+							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_1" value="0">날짜 협의</button>
+							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_2" value="0">날짜 선택</button>
 							<input type="date" id="sh_moveindate_3">
 						</div>
 					</div>
@@ -854,8 +855,8 @@ h6 {
 							관리비
 						</div>
 						<div class="col-md-10">
-							<button class="sh_maintenancefee_btn" id="sh_maintenancefee_btn0">없음</button>
-							<button class="sh_maintenancefee_btn" id="sh_maintenancefee_btn1">있음</button>
+							<button type="button" class="sh_maintenancefee_btn" id="sh_maintenancefee_btn0">없음</button>
+							<button type="button" class="sh_maintenancefee_btn" id="sh_maintenancefee_btn1">있음</button>
 							<input type="number" id="sh_maintenancefee" placeholder="0원">
 						</div>
 					</div>
@@ -864,8 +865,8 @@ h6 {
 							주차여부
 						</div>
 						<div class="col-md-10">
-							<button class="sh_parking_btn" id="sh_parking_btn0">불가능</button>
-							<button class="sh_parking_btn" id="sh_parking_btn1">가능</button>	
+							<button type="button" class="sh_parking_btn" id="sh_parking_btn0">불가능</button>
+							<button type="button" class="sh_parking_btn" id="sh_parking_btn1">가능</button>	
 							<input type="text" id="sh_parking" placeholder="option : ex)세대 당 1대">					
 						</div>
 					</div>
@@ -874,8 +875,8 @@ h6 {
 							엘리베이터
 						</div>
 						<div class="col-md-10">
-							<button class="sh_elevator_btn" id="sh_elevator_btn0">없음</button>
-							<button class="sh_elevator_btn" id="sh_elevator_btn1">있음</button>						
+							<button type="button" class="sh_elevator_btn" id="sh_elevator_btn0">없음</button>
+							<button type="button" class="sh_elevator_btn" id="sh_elevator_btn1">있음</button>						
 						</div>
 					</div>
 					<div class="row">
@@ -883,8 +884,8 @@ h6 {
 							빌트인
 						</div>
 						<div class="col-md-10">
-							<button class="sh_builtin_btn" id="sh_builtin_btn0">없음</button>
-							<button class="sh_builtin_btn" id="sh_builtin_btn1">있음</button>						
+							<button type="button" class="sh_builtin_btn" id="sh_builtin_btn0">없음</button>
+							<button type="button" class="sh_builtin_btn" id="sh_builtin_btn1">있음</button>						
 						</div>
 					</div>
 					<div class="row">
@@ -892,8 +893,8 @@ h6 {
 							반려동물
 						</div>
 						<div class="col-md-10">
-							<button class="sh_pet_btn" id="sh_pet_btn0">불가능</button>
-							<button class="sh_pet_btn" id="sh_pet_btn1">가능</button>						
+							<button type="button" class="sh_pet_btn" id="sh_pet_btn0">불가능</button>
+							<button type="button" class="sh_pet_btn" id="sh_pet_btn1">가능</button>						
 						</div>
 					</div>
 					<div class="row">
@@ -901,8 +902,8 @@ h6 {
 							베란다/발코니
 						</div>
 						<div class="col-md-10">
-							<button class="sh_veranda_btn" id="sh_veranda_btn0">없음</button>
-							<button class="sh_veranda_btn" id="sh_veranda_btn1">있음</button>						
+							<button type="button" class="sh_veranda_btn" id="sh_veranda_btn0">없음</button>
+							<button type="button" class="sh_veranda_btn" id="sh_veranda_btn1">있음</button>						
 						</div>
 					</div>
 					<div class="row">
@@ -910,8 +911,8 @@ h6 {
 							전세자금대출
 						</div>
 						<div class="col-md-10">
-							<button class="sh_loan_btn" id="sh_loan_btn0">불가능</button>
-							<button class="sh_loan_btn" id="sh_loan_btn1">가능</button>						
+							<button type="button" class="sh_loan_btn" id="sh_loan_btn0">불가능</button>
+							<button type="button" class="sh_loan_btn" id="sh_loan_btn1">가능</button>						
 						</div>
 					</div>
 					<div class="row">
@@ -919,10 +920,10 @@ h6 {
 							구조
 						</div>
 						<div class="col-md-10">
-							<button class="sh_structure_btn" id="sh_structure_btn0">해당사항없음</button>
-							<button class="sh_structure_btn" id="sh_structure_btn1">복층</button>
-							<button class="sh_structure_btn" id="sh_structure_btn2">1.5룸/주방분리형</button>
-							<button class="sh_structure_btn" id="sh_structure_btn3">다락방</button>													
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn0">해당사항없음</button>
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn1">복층</button>
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn2">1.5룸/주방분리형</button>
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn3">다락방</button>													
 						</div>
 					</div>
 					<div class="row">
@@ -930,20 +931,20 @@ h6 {
 							옵션항목
 						</div>
 						<div class="col-md-10">
-							<button class="sh_option_btn" id="sh_option_btn0">없음</button>
-							<button class="sh_option_btn" id="sh_option_btn1">에어컨</button>
-							<button class="sh_option_btn" id="sh_option_btn2">세탁기</button>
-							<button class="sh_option_btn" id="sh_option_btn3">침대</button>
-							<button class="sh_option_btn" id="sh_option_btn4">책상</button>
-							<button class="sh_option_btn" id="sh_option_btn5">옷장</button>
-							<button class="sh_option_btn" id="sh_option_btn6">TV</button>
-							<button class="sh_option_btn" id="sh_option_btn7">가스레인지</button>
-							<button class="sh_option_btn" id="sh_option_btn8">신발장</button>
-							<button class="sh_option_btn" id="sh_option_btn9">냉장고</button>
-							<button class="sh_option_btn" id="sh_option_btn10">인덕션</button>
-							<button class="sh_option_btn" id="sh_option_btn11">전자레인지</button>
-							<button class="sh_option_btn" id="sh_option_btn12">전자도어락</button>
-							<button class="sh_option_btn" id="sh_option_btn13">비데</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn0">없음</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn1">에어컨</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn2">세탁기</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn3">침대</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn4">책상</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn5">옷장</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn6">TV</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn7">가스레인지</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn8">신발장</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn9">냉장고</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn10">인덕션</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn11">전자레인지</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn12">전자도어락</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn13">비데</button>
 						</div>
 					</div>
 				</div>
@@ -983,8 +984,8 @@ placeholder="
 					<h6>사진 등록</h6><hr>
 					<div class="row" id="sh_phototype"> <!-- photo type 선택 -->
 						<div class="col-md-12">
-							<button class="sh_phototype_btn" id="sh_phototype_btn0">일반사진</button>
-							<button class="sh_phototype_btn" id="sh_phototype_btn1">360°사진</button>	
+							<button type="button" class="sh_phototype_btn" id="sh_phototype_btn0">일반사진</button>
+							<button type="button" class="sh_phototype_btn" id="sh_phototype_btn1">360°사진</button>	
 						</div>
 					</div>
 					<div class="row" id="sh_commonphotoform"> <!-- 일반 사진 등록 -->
@@ -1003,7 +1004,7 @@ placeholder="
 										<h6>실 사진 최소 2장, 총 8장까지 사진 등록이 가능합니다.</h6>
 										<h6>불필요한 정보가 있는 매물은 비공개 처리 됩니다.</h6>
 										<br>
-										drag & drop <i class="far fa-copy"></i> 
+										이미지를 업로드해주세요 <i class="far fa-copy"></i> 
 									</div>
 								</div>
 							</div>					
@@ -1027,7 +1028,7 @@ placeholder="
 										<h6>찍으신 사진을 저장 후 사진 파일을 올려주시면 됩니다.</h6>
 										<h6>불필요한 정보가 있는 매물은 비공개 처리 됩니다.</h6>
 										<br>
-										drag & drop <i class="far fa-copy"></i> 
+										이미지를 업로드해주세요 <i class="far fa-copy"></i> 
 									</div>
 								</div>
 							</div>					
@@ -1038,7 +1039,7 @@ placeholder="
 			<br><br>
 			<div class="row"> <!-- 동의 / 매물 등록 -->
 				<div class="col-md-12" align="center">
-<form>				    
+				    
 					<div class="custom-control custom-checkbox">
 					  <input type="checkbox" class="custom-control-input" id="customCheck1" required>
 					  <label class="custom-control-label" for="customCheck1">매물관리규정을 확인하였으며, 입력한 정보는 실제 매물과 다름이 없습니다.</label>
