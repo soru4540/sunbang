@@ -30,11 +30,16 @@ public class InteriorController {
 			return "interior/interiorKnowhowList";
 		}
 	}
-		
+	
+	@RequestMapping("inlistselect.do")
+	public String selectNewsFeedList() {
+		return "interior/interiorNewsFeedList";
+	}
+	
 	@RequestMapping("islistselect.do")
 	public String selectStoryList() {
 		return "interior/interiorStoryList";
-	}
+	}	
 	
 	@RequestMapping("iflistselect.do")
 	public String selectFollowList() {
