@@ -93,7 +93,7 @@
 									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/profile.PNG">
 								</div>
 								<br>
-								<a class="font-weight-bold">한서은천재짱짱뿡뿡</a> <br><a href="iflistselect.do"><span
+								<a class="font-weight-bold">한서은천재짱짱뿡뿡</a> <br><a href="iflistselect.do?user_no=1"><span
 									style="font-family: a고딕14; opacity: 0.5;">팔로우 : 78 팔로잉 :
 									17</span></a><br>
 								<br>
