@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>           
 <!DOCTYPE html>
 <html>
 <head>
@@ -228,7 +229,7 @@ $(function(){
 			<div class="col-md-12">
 				<nav class="navbar navbar-default bg-light fixed-bottom"> <!-- 하단바 -->
 					<ul class="nav navbar-nav navbar-left">
-						${realty.road_address } / ${realty.realty_type } / 전세 1억 5000만원 / ${realty.exclusive_area }평 / 선방공인중개사무소 김성현
+						${realty.road_address } / ${realty.realty_type } / 월세 <fmt:formatNumber value="${realty.month_lease }" groupingUsed="true" /> 원 / ${realty.exclusive_area }평 / 선방공인중개사무소 김성현
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<button type="button" id="sh_chat_btn" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
@@ -239,7 +240,7 @@ $(function(){
 				<div class="row"> <!-- 매물정보 -->
 					<div class="col-md-3">
 						<br>${realty.realty_type }<br>
-						<h3>전세 1억 5000만원</h3>
+						<h3>월세 <fmt:formatNumber value="${realty.month_lease }" groupingUsed="true" /> 원</h3>
 					</div>
 					<div class="col-md-2">
 						<br>전용 면적 <br>
@@ -297,7 +298,7 @@ $(function(){
 										<p>확인 후 허위매물일 경우 해당 매물은 삭제되거나 이용이 제재됩니다.<br>
 											허위신고일 시 신고자는 법적인 책임을 질 수 있습니다.<br>
 										 	선방은 자체 검수를 통해 허위매물 근절에 노력하고 있습니다.</p><br>
-										<h5> 신고항목 </h5><hr> 	
+										<h5> 신고내용 </h5><hr> 	
 										<textarea rows="20" cols="20" id="sh_rreportcontent" placeholder="신고 사유를 작성해주세요"></textarea>
 									</div>
 

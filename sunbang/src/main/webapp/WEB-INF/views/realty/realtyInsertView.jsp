@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>        
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>     
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,31 +17,6 @@
     function sh_execDaumPostcode() {
         new daum.Postcode({
             oncomplete: function(data) {
-            	
-                var addr = data.address; // 최종 주소 변수
-
-                // 주소 정보를 해당 필드에 넣는다.
-                document.getElementById("sh_roadAddress").value = addr;
-                // 주소로 상세 정보를 검색
-                geocoder.addressSearch(data.address, function(results, status) {
-                    // 정상적으로 검색이 완료됐으면
-                    if (status === daum.maps.services.Status.OK) {
-
-                        var result = results[0]; //첫번째 결과의 값을 활용
-
-                        // 해당 주소에 대한 좌표를 받아서
-                        var coords = new daum.maps.LatLng(result.y, result.x);
-                        // 지도를 보여준다.
-                        mapContainer.style.display = "block";
-                        //mapd 삭제
-                        document.getElementById("mapd").style.display = 'none';
-                        map.relayout();
-                        // 지도 중심을 변경한다.
-                        map.setCenter(coords);
-                        // 마커를 결과값으로 받은 위치로 옮긴다.
-                        marker.setPosition(coords)
-                    }
-                });
             	
                 var roadAddr = data.roadAddress; // 도로명 주소 변수
                 var extraRoadAddr = ''; // 참고 항목 변수
@@ -64,17 +40,43 @@
                 if(data.autoRoadAddress) {
                     var expRoadAddr = data.autoRoadAddress + extraRoadAddr;
                     guideTextBox.innerHTML = '(예상 도로명 주소 : ' + expRoadAddr + ')';
+                    document.getElementById("sh_roadAddress").value = expRoadAddr;
                     guideTextBox.style.display = 'block';
 
                 } else if(data.autoJibunAddress) {
                     var expJibunAddr = data.autoJibunAddress;
                     guideTextBox.innerHTML = '(예상 지번 주소 : ' + expJibunAddr + ')';
+                    document.getElementById("sh_jibunAddress").value = expJibunAddr;
                     guideTextBox.style.display = 'block';
                     
                 } else {
-                    //guideTextBox.innerHTML = '';
-                    //guideTextBox.style.display = 'none';
+                    guideTextBox.innerHTML = '';
+                    guideTextBox.style.display = 'none';
                 }
+                
+                // 주소 정보를 해당 필드에 넣는다.
+                document.getElementById("sh_roadAddress").value = roadAddr;
+                // 주소로 상세 정보를 검색
+                geocoder.addressSearch(data.address, function(results, status) {
+                    // 정상적으로 검색이 완료됐으면
+                    if (status === daum.maps.services.Status.OK) {
+
+                        var result = results[0]; //첫번째 결과의 값을 활용
+
+                        // 해당 주소에 대한 좌표를 받아서
+                        var coords = new daum.maps.LatLng(result.y, result.x);
+                        // 지도를 보여준다.
+                        mapContainer.style.display = "block";
+                        //mapd 삭제
+                        document.getElementById("mapd").style.display = 'none';
+                        map.relayout();
+                        // 지도 중심을 변경한다.
+                        map.setCenter(coords);
+                        // 마커를 결과값으로 받은 위치로 옮긴다.
+                        marker.setPosition(coords)
+                    }
+                });
+                
             }
         }).open();
     }
@@ -109,7 +111,7 @@
 					$("#sh_op").css("display", "none");
 				}
 				
-				$("#sh_pt").val($("#sh_pt"+i).val());
+				$("#sh_pt_value").val($("#sh_pt"+i).val());
 			});			
 		});
 		
@@ -123,7 +125,7 @@
 				$("#sh_bt"+i).css("background-color", "#61C0BF");
 				$("#sh_bt"+i).css("color", "white");
 				
-				$("#sh_bt").val($("#sh_bt"+i).val());
+				$("#sh_bt_value").val($("#sh_bt"+i).val());
 			});	
 		});
 	});
@@ -183,7 +185,6 @@
 				$("input[name=purchase]").val("");
 			}
 		});
-		
 	});
 </script>
 <!-- 기본정보/건물크기 -->
@@ -228,12 +229,21 @@
 		});
 	});
 </script>
+<!-- 난방종류 -->
+<script type="text/javascript">
+	$(function(){
+		$("#sh_heattingsystem").on("change", function(){
+			$("#sh_heattingsystem_value").val($("#sh_heattingsystem option:selected").val());
+		});
+	});
+</script>
 <!-- 기본정보/입주 가능일 -->
 <script type="text/javascript">
 	$(function(){
 		$("#sh_moveindate_3").css("display", "none");
 		
 		$(".sh_moveindate_btn").each(function(i){
+			
 			$(".sh_moveindate_btn").click(function(){
 				$("#sh_moveindate_"+i).css("background-color", "white");
 				$("#sh_moveindate_"+i).css("color", "#61C0BF");
@@ -243,10 +253,17 @@
 			$("#sh_moveindate_"+i).click(function(){
 				$("#sh_moveindate_"+i).css("background-color", "#61C0BF");
 				$("#sh_moveindate_"+i).css("color", "white");
+				$("#sh_moveindate_3").val("");
 				
 				if(i == 2){
 					$("#sh_moveindate_3").css("display", "");
 				}
+				
+				$("#sh_moveindate_3").on("change", function(){
+					$("#sh_madate").val($("#sh_moveindate_3").val());
+				});
+				
+				$("#sh_madate").val($("#sh_moveindate_"+i).val());
 			});
 		});
 	});
@@ -255,78 +272,147 @@
 <script type="text/javascript">
 	$(function(){
 		$(".sh_option_btn").each(function(i){
+			//관리비
+			$("#sh_maintenancefee_value").css("display", "none");
+			$("#sh_maintenancefee_won").css("display", "none");
+			$("#sh_management_pay").val(0);
+			$("#sh_maintenancefee_btn0").css("background-color", "#61C0BF");
+			$("#sh_maintenancefee_btn0").css("color", "white");
 			
-			$("#sh_maintenancefee").css("display", "none");
 			$("#sh_maintenancefee_btn"+i).click(function(){
 				$(".sh_maintenancefee_btn").css("background-color", "white");
 				$(".sh_maintenancefee_btn").css("color", "#61C0BF");
-				$("#sh_maintenancefee").css("display", "none");
+				$("#sh_maintenancefee_value").css("display", "none");
+				$("#sh_maintenancefee_won").css("display", "none");
 				
 				$("#sh_maintenancefee_btn"+i).css("background-color", "#61C0BF");
 				$("#sh_maintenancefee_btn"+i).css("color", "white");
 				
 				if(i == 1){
-					$("#sh_maintenancefee").css("display", "");
+					$("#sh_maintenancefee_value").css("display", "");
+					$("#sh_maintenancefee_won").css("display", "");
 				}
+				
+				$("#sh_maintenancefee_value").on("change", function(){
+					$("#sh_management_pay").val($("#sh_maintenancefee_value").val());
+				});
+				
+				$("#sh_management_pay").val($("#sh_maintenancefee_btn"+i).val());
 			});
 			
-			$("#sh_parking").css("display", "none");
+			//주차여부
+			$("#sh_parking_value").css("display", "none");
+			$("#sh_parking_lot").val(0);
+			$("#sh_parking_btn0").css("background-color", "#61C0BF");
+			$("#sh_parking_btn0").css("color", "white");
+			
 			$("#sh_parking_btn"+i).click(function(){
 				$(".sh_parking_btn").css("background-color", "white");
 				$(".sh_parking_btn").css("color", "#61C0BF");
-				$("#sh_parking").css("display", "none");
+				$("#sh_parking_value").css("display", "none");
 				
 				$("#sh_parking_btn"+i).css("background-color", "#61C0BF");
 				$("#sh_parking_btn"+i).css("color", "white");
 				
 				if(i == 1){
-					$("#sh_parking").css("display", "");
-				}				
+					$("#sh_parking_value").css("display", "");
+				}
+				
+				$("#sh_parking_value").on("change", function(){
+					$("#sh_parking_lot").val($("#sh_parking_value").val());
+				});
+				
+				$("#sh_parking_lot").val($("#sh_parking_btn"+i).val());
+				
 			});
+			
+			//엘리베이터
+			$("#sh_elevator").val(0);
+			$("#sh_elevator_btn0").css("background-color", "#61C0BF");
+			$("#sh_elevator_btn0").css("color", "white");	
 			
 			$("#sh_elevator_btn"+i).click(function(){
 				$(".sh_elevator_btn").css("background-color", "white");
 				$(".sh_elevator_btn").css("color", "#61C0BF");
 				$("#sh_elevator_btn"+i).css("background-color", "#61C0BF");
-				$("#sh_elevator_btn"+i).css("color", "white");				
+				$("#sh_elevator_btn"+i).css("color", "white");	
+				
+				$("#sh_elevator").val($("#sh_elevator_btn"+i).val());
 			});
+			
+			//빌트인
+			$("#sh_builtin").val(0);
+			$("#sh_builtin_btn0").css("background-color", "#61C0BF");
+			$("#sh_builtin_btn0").css("color", "white");
+			
 			
 			$("#sh_builtin_btn"+i).click(function(){
 				$(".sh_builtin_btn").css("background-color", "white");
 				$(".sh_builtin_btn").css("color", "#61C0BF");
 				$("#sh_builtin_btn"+i).css("background-color", "#61C0BF");
-				$("#sh_builtin_btn"+i).css("color", "white");				
+				$("#sh_builtin_btn"+i).css("color", "white");
+				
+				$("#sh_builtin").val($("#sh_builtin_btn"+i).val());
 			});
+			
+			//반려동물
+			$("#sh_allowance_pet").val(0);
+			$("#sh_pet_btn0").css("background-color", "#61C0BF");
+			$("#sh_pet_btn0").css("color", "white");
 			
 			$("#sh_pet_btn"+i).click(function(){
 				$(".sh_pet_btn").css("background-color", "white");
 				$(".sh_pet_btn").css("color", "#61C0BF");
 				$("#sh_pet_btn"+i).css("background-color", "#61C0BF");
-				$("#sh_pet_btn"+i).css("color", "white");				
+				$("#sh_pet_btn"+i).css("color", "white");	
+				
+				$("#sh_allowance_pet").val($("#sh_pet_btn"+i).val());
 			});
+			
+			//베란다/발코니
+			$("#sh_balcony").val(0);
+			$("#sh_veranda_btn0").css("background-color", "#61C0BF");
+			$("#sh_veranda_btn0").css("color", "white");
 			
 			$("#sh_veranda_btn"+i).click(function(){
 				$(".sh_veranda_btn").css("background-color", "white");
 				$(".sh_veranda_btn").css("color", "#61C0BF");
 				$("#sh_veranda_btn"+i).css("background-color", "#61C0BF");
-				$("#sh_veranda_btn"+i).css("color", "white");				
+				$("#sh_veranda_btn"+i).css("color", "white");		
+				
+				$("#sh_balcony").val($("#sh_veranda_btn"+i).val());
 			});
+			
+			//전세자금대출
+			$("#sh_loan_availability").val(0);
+			$("#sh_loan_btn0").css("background-color", "#61C0BF");
+			$("#sh_loan_btn0").css("color", "white");
 			
 			$("#sh_loan_btn"+i).click(function(){
 				$(".sh_loan_btn").css("background-color", "white");
 				$(".sh_loan_btn").css("color", "#61C0BF");
 				$("#sh_loan_btn"+i).css("background-color", "#61C0BF");
-				$("#sh_loan_btn"+i).css("color", "white");				
+				$("#sh_loan_btn"+i).css("color", "white");	
+				
+				$("#sh_loan_availability").val($("#sh_loan_btn"+i).val());
 			});
+			
+			//구조
+			$("#sh_structure").val(0);
+			$("#sh_structure_btn0").css("background-color", "#61C0BF");
+			$("#sh_structure_btn0").css("color", "white");			
 			
 			$("#sh_structure_btn"+i).click(function(){
 				$(".sh_structure_btn").css("background-color", "white");
 				$(".sh_structure_btn").css("color", "#61C0BF");
 				$("#sh_structure_btn"+i).css("background-color", "#61C0BF");
-				$("#sh_structure_btn"+i).css("color", "white");				
+				$("#sh_structure_btn"+i).css("color", "white");	
+				
+				$("#sh_structure").val($("#sh_structure_btn"+i).val());
 			});
 			
 			//옵션항목
+			
 			$(".sh_option_btn").val(0);
 			$("#sh_option_btn0").val(1);
 			$("#sh_option_btn0").css("background-color", "#61C0BF");
@@ -356,9 +442,9 @@
 					   $("#sh_option_btn11").val() == 0 &&
 					   $("#sh_option_btn12").val() == 0 &&
 					   $("#sh_option_btn13").val() == 0){
-						$("#sh_option_btn0").val(1);
-						$("#sh_option_btn0").css("background-color", "#61C0BF");
-						$("#sh_option_btn0").css("color", "white");
+					   $("#sh_option_btn0").val(1);
+					   $("#sh_option_btn0").css("background-color", "#61C0BF");
+					   $("#sh_option_btn0").css("color", "white");
 					}
 					
 				}else if($("#sh_option_btn"+i).val() == 0){
@@ -410,7 +496,183 @@
 	});
 </script>
 
+<!-- 중간정검용 확인 function (삭제 예정) -->
+<script type="text/javascript">
+	$(function(){
+		$("#psubmit").click(function(){
+			console.log("확인");
+			console.log("매물종류 : " + $('input[name=realty_type]').val());
+			console.log("건물유형 : " + $('input[name=building_type]').val());
+			console.log("도로명주소 : " + $('input[name=road_address]').val());
+			console.log("지번주소 : " + $('input[name=land_lot]').val());
+			console.log("상세주소 : " + $('input[name=detail_address]').val());
+			console.log("월세 : " + $('input[name=month_lease]').val());
+			console.log("보증금 : " + $('input[name=deposit]').val());
+			console.log("전세 : " + $('input[name=payback_deposit_lease]').val());
+			console.log("매매 : " + $('input[name=purchase]').val());
+			console.log("공급면적 : " + $('input[name=residential]').val());
+			
+			console.log("전용면적 : " + $('input[name=exclusive_area]').val());
+			console.log("건물층수 : " + $('input[name=building_layers]').val());
+			console.log("해당층수 : " + $('input[name=realty_layers]').val());
+			console.log("난방종류 : " + $('input[name=heatting_system]').val());
+			console.log("입주가능일 : " + $('input[name=move_available_date]').val());
+			console.log("관리비 : " + $('input[name=management_pay]').val());
+			console.log("주차여부 : " + $('input[name=parking_lot]').val());
+			console.log("엘리베이터 : " + $('input[name=elevator]').val());
+			console.log("빌트인 : " + $('input[name=builtin]').val());
+			console.log("반려동물 : " + $('input[name=allowance_pet]').val());
+			  
+			console.log("베란다/발코니 : " + $('input[name=balcony]').val());
+			console.log("전세자금대출 : " + $('input[name=loan_availability]').val());
+			console.log("구조 : " + $('input[name=structure]').val());
+			console.log("에어컨 : " + $('button[name=airconditioner]').val());
+			console.log("세탁기 : " + $('button[name=laundry_machine]').val());
+			console.log("침대 : " + $('button[name=bed]').val());
+			console.log("책상 : " + $('button[name=desk]').val());
+			console.log("옷장 : " + $('button[name=closet]').val());
+			console.log("TV : " + $('button[name=tv]').val());
+			console.log("가스레인지 : " + $('button[name=gasrange]').val());
+
+			console.log("신발장 : " + $('button[name=shoe_shelf]').val());
+			console.log("냉장고 : " + $('button[name=refrigerator]').val());
+			console.log("인덕션 : " + $('button[name=induction]').val());
+			console.log("전자레인지 : " + $('button[name=microwave]').val());
+			console.log("전자도어락 : " + $('button[name=door_lock]').val());
+			console.log("비데 : " + $('button[name=bidet]').val());
+			console.log("상세정보제목 : " + $('input[name=realty_detail_title]').val());
+			console.log("상세정보설명 : " + $('textarea[name=realty_detail_comment]').val());
+			console.log("일반사진1 : " + $('input[name=realty_image1]').val());
+			console.log("일반사진 2: " + $('input[name=realty_image2]').val());
+			
+			console.log("일반사진3 : " + $('input[name=realty_image3]').val());
+			console.log("일반사진4 : " + $('input[name=realty_image4]').val());
+			console.log("일반사진5 : " + $('input[name=realty_image5]').val());
+			console.log("일반사진6 : " + $('input[name=realty_image6]').val());
+			console.log("일반사진7 : " + $('input[name=realty_image7]').val());
+			console.log("일반사진8 : " + $('input[name=realty_image8]').val());
+			console.log("360도사진 : " + $('input[name=image360]').val());
+			console.log("회원번호 : " + $('input[name=user_no]').val());
+		});
+	});
+</script>
+<!--  required -->
+<script type="text/javascript">
+$(function(){
+	//close
+	$("#sh_required_close").click(function(){
+		$("#sh_required").css("display", "none");
+	});
+	//제출버튼 클릭 시
+	$("#psubmit").click(function(){
+		//매물종류
+		if($('input[name=realty_type]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 매물종류를 선택하셔야 합니다.");
+			
+			var offset = $('#sh_pt').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		}
+		
+		//주소
+		else if($('input[name=road_address]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 주소를 입력하셔야 합니다.");
+			
+			var offset = $('#sh_li_title').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		}
+		else if($('input[name=detail_address]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 상세주소를 입력하셔야 합니다.");
+			
+			var offset = $('#sh_li_title').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		}
+		
+		//거래종류
+		else if($('input[name=month_lease]').val() == "" &&
+		   $('input[name=deposit]').val() == ""	&&
+		   $('input[name=payback_deposit_lease]').val() == "" &&
+		   $('input[name=purchase]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 거래종류를 1개 이상 입력하셔야 합니다.");
+			
+			var offset = $('#sh_tradei').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		} 
+		
+		//공급면적
+		else if($('input[name=residential]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 공급면적을 입력하셔야 합니다.");
+			
+			var offset = $('#sh_basici').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+			
+			$("input[name=residential]").focus();
+		}
+		
+		//난방종류
+		else if($('input[name=heatting_system]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 난방종류를 선택하셔야 합니다.");
+			
+			var offset = $('#sh_heattingsystem').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		}
+		
+		//입주 가능일
+		else if($('input[name=move_available_date]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 입주가능일을 선택하셔야 합니다.");
+			
+			var offset = $('#sh_moveindate').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		}
+		
+		else if($('input[name=move_available_date]').val() == "2"){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("날짜를 선택하셔야 합니다.");
+			
+			var offset = $('#sh_moveindate').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+		}
+		
+		//checkbox
+		else if($("#customCheck1").is(":checked") == false){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 매물관리 규정 확인과 실제 매물과 다름이 없다는 것에 동의하셔야 합니다.");
+		}
+		
+		else{
+			alert("성공");
+			$("#sh_realty_form").submit();
+		}
+	});			
+});
+
+</script>
+
 <style type="text/css">
+
+#sh_required {
+	display: none;
+	position: fixed;
+	z-index: 3;
+	color: #0c5460;
+	background-color: #d1ecf1;
+	border-color: #bee5eb;
+	border-radius: 5px;
+	margin-left: 55%;
+    margin-right: 3%;
+    padding: 15px;
+}
+
+#sh_required_close {
+	float: right;
+	cursor: pointer;
+}
 
 #sh_pi {
         margin: 10px;
@@ -647,8 +909,12 @@ h6 {
 </head>
 <body>
 <c:import url="../common/realtyHeader.jsp" /><br>
-<form>
+<form id="sh_realty_form" action="rinsert.do" method="post">
 <div class="container" style="font-family: a고딕12;">
+  	<div id="sh_required"><!-- required alert -->
+   		<strong>필수!</strong> <span id="sh_required_text"></span>&nbsp;&nbsp;&nbsp;
+   		<span id="sh_required_close"><i class="fas fa-times"></i></span>
+	</div><!-- required alert -->
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row"> <!-- 매물 등록 -->
@@ -669,7 +935,7 @@ h6 {
 					<h6>매물 종류</h6><hr>
 					<div class="row">
 						<div class="col-md-2">종류선택
-						<input type="hidden" id="sh_pt" name="REALTY_TYPE" value="">
+						<input type="hidden" id="sh_pt_value" name="realty_type">
 						</div>
 						<div class="col-md-10">
 								<input type="button" class="sh_pt_btn" id="sh_pt0" value="원룸">
@@ -681,7 +947,7 @@ h6 {
 					</div>
 					<div class="row" id="sh_123room">
 						<div class="col-md-2">건물유형
-						<input type="hidden" id="sh_bt" name="BUILDING_TYPE" value="">
+						<input type="hidden" id="sh_bt_value" name="building_type">
 						</div>
 						<div class="col-md-10">
 								<input type="button" class="sh_bt_btn" id="sh_bt0" value="단독주택">
@@ -710,12 +976,12 @@ h6 {
 							<table>
 								<tr>
 									<td colspan="2">
-										<a>도로명, 건물명, 지번에 대해 통합검색이 가능합니다.</a>									
+										<a>도로명, 지번에 대해 통합검색이 가능합니다.</a>									
 									</td>
 								</tr>
 								<tr>
 									<td>
-										<input type="text" id="sh_address" name="ROAD_ADDRESS" placeholder="주소">
+										<input type="text" id="sh_address" placeholder="주소">
 									</td>
 									<td>
 										<input type="button" id="postbtn" class="btn btn-sm btn-success" onclick="sh_execDaumPostcode()" value="주소 찾기"><br>
@@ -723,13 +989,14 @@ h6 {
 								</tr>
 								<tr>
 									<td colspan="2">
-										<input type="text" class="tablecontent" id="sh_roadAddress" name="ROAD_ADDRESS" readonly><br>
-										<input type="text" class="tablecontent" id="sh_jibunAddress" name="LAND_LOT" readonly>
+										<input type="text" class="tablecontent" id="sh_roadAddress" name="road_address" readonly><br>
+										<input type="text" class="tablecontent" id="sh_jibunAddress" name="land_lot" readonly>
+										<span id="guide" style="color:#999;display:none"></span>
 									</td>
 								</tr>
 								<tr>
 									<td colspan="2">
-										<input type="text" id="sh_detailAddress" name="DETAIL_ADDRESS" placeholder="동 / 호 를 입력해주세요 ex) 102동 304호">
+										<input type="text" id="sh_detailAddress" name="detail_address" placeholder="동/호 를 입력해주세요 ex) 102동 304호">
 									</td>
 								</tr>														 
 							</table>
@@ -807,8 +1074,8 @@ h6 {
 							건물크기 <br>(1P = 3.3058㎡)
 						</div>
 						<div class="col-md-10">
-							공급면적 <input type="number" id="sh_sarea_p" min="0"> 평 <input type="text" id="sh_sarea_m" min="0"> ㎡ <hr>
-							전용면적 <input type="number" id="sh_earea_p" min="0"> 평 <input type="text" id="sh_earea_m" min="0"> ㎡
+							공급면적 <input type="number" id="sh_sarea_p" name="residential" min="0"> 평 <input type="text" id="sh_sarea_m" min="0"> ㎡ <hr>
+							전용면적 <input type="number" id="sh_earea_p" name="exclusive_area" min="0"> 평 <input type="text" id="sh_earea_m" min="0"> ㎡
 						</div>
 					</div>
 					<div class="row">
@@ -816,8 +1083,8 @@ h6 {
 							건물층수 / 해당층수
 						</div>
 						<div class="col-md-10">
-							건물층수 <input type="number" placeholder="건물의 총" id="sh_totalbuildingfloor"> 층  <hr>
-							해당층수 <input type="number" placeholder="내가 사는" id="sh_mybuildingfloor"> 층
+							건물층수 <input type="number" placeholder="건물의 총" id="sh_totalbuildingfloor" name="building_layers"> 층  <hr>
+							해당층수 <input type="number" placeholder="내가 사는" id="sh_mybuildingfloor" name="realty_layers"> 층
 						</div>
 					</div>
 					<div class="row">
@@ -825,22 +1092,24 @@ h6 {
 							난방종류
 						</div>
 						<div class="col-md-10">
-							<select class="custom-select">
+							<input type="hidden" id="sh_heattingsystem_value" name="heatting_system">
+							<select class="custom-select" id="sh_heattingsystem">
 								<option>난방 종류 선택</option>
-								<option>중앙난방</option>
-								<option>개별난방</option>
-								<option>지역난방</option>
+								<option value="0">중앙난방</option>
+								<option value="1">개별난방</option>
+								<option value="2">지역난방</option>
 							</select>
 						</div>
 					</div>
 					<div class="row" id="sh_moveindate">
 						<div class="col-md-2">
 							입주 가능일
+							<input type="hidden" id="sh_madate" name="move_available_date">
 						</div>
 						<div class="col-md-10">
 							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_0" value="0">즉시 입주</button>
-							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_1" value="0">날짜 협의</button>
-							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_2" value="0">날짜 선택</button>
+							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_1" value="1">날짜 협의</button>
+							<button type="button" class="sh_moveindate_btn" id="sh_moveindate_2" value="2">날짜 선택</button>
 							<input type="date" id="sh_moveindate_3">
 						</div>
 					</div>
@@ -853,77 +1122,85 @@ h6 {
 					<div class="row">
 						<div class="col-md-2">
 							관리비
+							<input type="hidden" id="sh_management_pay" name="management_pay">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_maintenancefee_btn" id="sh_maintenancefee_btn0">없음</button>
-							<button type="button" class="sh_maintenancefee_btn" id="sh_maintenancefee_btn1">있음</button>
-							<input type="number" id="sh_maintenancefee" placeholder="0원">
+							<button type="button" class="sh_maintenancefee_btn" id="sh_maintenancefee_btn0" value="0">없음</button>
+							<button type="button" class="sh_maintenancefee_btn" id="sh_maintenancefee_btn1" value="1">있음</button>
+							<input type="number" id="sh_maintenancefee_value" placeholder="0"><span id="sh_maintenancefee_won"> 원</span>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							주차여부
+							<input type="hidden" id="sh_parking_lot" name="parking_lot">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_parking_btn" id="sh_parking_btn0">불가능</button>
-							<button type="button" class="sh_parking_btn" id="sh_parking_btn1">가능</button>	
-							<input type="text" id="sh_parking" placeholder="option : ex)세대 당 1대">					
+							<button type="button" class="sh_parking_btn" id="sh_parking_btn0" value="0">불가능</button>
+							<button type="button" class="sh_parking_btn" id="sh_parking_btn1" value="1">가능</button>	
+							<input type="text" id="sh_parking_value" placeholder="option : ex)세대 당 1대">					
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							엘리베이터
+							<input type="hidden" id="sh_elevator" name="elevator">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_elevator_btn" id="sh_elevator_btn0">없음</button>
-							<button type="button" class="sh_elevator_btn" id="sh_elevator_btn1">있음</button>						
+							<button type="button" class="sh_elevator_btn" id="sh_elevator_btn0" value="0">없음</button>
+							<button type="button" class="sh_elevator_btn" id="sh_elevator_btn1" value="1">있음</button>						
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							빌트인
+							<input type="hidden" id="sh_builtin" name="builtin">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_builtin_btn" id="sh_builtin_btn0">없음</button>
-							<button type="button" class="sh_builtin_btn" id="sh_builtin_btn1">있음</button>						
+							<button type="button" class="sh_builtin_btn" id="sh_builtin_btn0" value="0">없음</button>
+							<button type="button" class="sh_builtin_btn" id="sh_builtin_btn1" value="1">있음</button>						
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							반려동물
+							<input type="hidden" id="sh_allowance_pet" name="allowance_pet">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_pet_btn" id="sh_pet_btn0">불가능</button>
-							<button type="button" class="sh_pet_btn" id="sh_pet_btn1">가능</button>						
+							<button type="button" class="sh_pet_btn" id="sh_pet_btn0" value="0">불가능</button>
+							<button type="button" class="sh_pet_btn" id="sh_pet_btn1" value="1">가능</button>						
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							베란다/발코니
+							<input type="hidden" id="sh_balcony" name="balcony">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_veranda_btn" id="sh_veranda_btn0">없음</button>
-							<button type="button" class="sh_veranda_btn" id="sh_veranda_btn1">있음</button>						
+							<button type="button" class="sh_veranda_btn" id="sh_veranda_btn0" value="0">없음</button>
+							<button type="button" class="sh_veranda_btn" id="sh_veranda_btn1" value="1">있음</button>						
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							전세자금대출
+							<input type="hidden" id="sh_loan_availability" name="loan_availability">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_loan_btn" id="sh_loan_btn0">불가능</button>
-							<button type="button" class="sh_loan_btn" id="sh_loan_btn1">가능</button>						
+							<button type="button" class="sh_loan_btn" id="sh_loan_btn0" value="0">불가능</button>
+							<button type="button" class="sh_loan_btn" id="sh_loan_btn1" value="1">가능</button>						
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-md-2">
 							구조
+							<input type="hidden" id="sh_structure" name="structure">
 						</div>
 						<div class="col-md-10">
-							<button type="button" class="sh_structure_btn" id="sh_structure_btn0">해당사항없음</button>
-							<button type="button" class="sh_structure_btn" id="sh_structure_btn1">복층</button>
-							<button type="button" class="sh_structure_btn" id="sh_structure_btn2">1.5룸/주방분리형</button>
-							<button type="button" class="sh_structure_btn" id="sh_structure_btn3">다락방</button>													
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn0" value="0">해당사항없음</button>
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn1" value="1">복층</button>
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn2" value="2">1.5룸/주방분리형</button>
+							<button type="button" class="sh_structure_btn" id="sh_structure_btn3" value="3">다락방</button>													
 						</div>
 					</div>
 					<div class="row">
@@ -932,19 +1209,19 @@ h6 {
 						</div>
 						<div class="col-md-10">
 							<button type="button" class="sh_option_btn" id="sh_option_btn0">없음</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn1">에어컨</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn2">세탁기</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn3">침대</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn4">책상</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn5">옷장</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn6">TV</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn7">가스레인지</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn8">신발장</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn9">냉장고</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn10">인덕션</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn11">전자레인지</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn12">전자도어락</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn13">비데</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn1" name="airconditioner">에어컨</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn2" name="laundry_machine">세탁기</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn3" name="bed">침대</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn4" name="desk">책상</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn5" name="closet">옷장</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn6" name="tv">TV</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn7" name="gasrange">가스레인지</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn8" name="shoe_shelf">신발장</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn9" name="refrigerator">냉장고</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn10" name="induction">인덕션</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn11" name="microwave">전자레인지</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn12" name="door_lock">전자도어락</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn13" name="bidet">비데</button>
 						</div>
 					</div>
 				</div>
@@ -958,7 +1235,7 @@ h6 {
 							제목
 						</div>
 						<div class="col-md-10">
-							<input type="text" id="sh_detaili_title" placeholder="ex) 강남역에서 5분거리, 편의시설이 다양한 신축건물입니다.">
+							<input type="text" id="sh_detaili_title" name="realty_detail_title" placeholder="ex) 강남역에서 5분거리, 편의시설이 다양한 신축건물입니다.">
 						</div>
 					</div>
 					<div class="row">
@@ -966,7 +1243,7 @@ h6 {
 							상세 설명
 						</div>
 						<div class="col-md-10">							
-<textarea rows="20" cols="30"id="sh_detaili_textarea"  
+<textarea rows="20" cols="30" id="sh_detaili_textarea" name="realty_detail_comment"  
 placeholder=" 
 
 - 방 정보와 관련없는 홍보성 정보는 입력하실 수 없습니다. (홈페이지 주소, 블로그, SNS, 메신저 ID, 전화번호, 이메일 등)
@@ -994,7 +1271,7 @@ placeholder="
 								<div class="col-md-12">
 									<div class="custom-file">
 									  <input type="file" class="custom-file-input" id="customFile">
-									  <label class="custom-file-label" for="customFile">Choose file</label>
+									  <label class="custom-file-label" for="customFile">이미지 파일 첨부하기</label>
 									</div>
 								</div>
 							</div>
@@ -1016,7 +1293,7 @@ placeholder="
 								<div class="col-md-12">
 									<div class="custom-file">
 									  <input type="file" class="custom-file-input" id="customFile">
-									  <label class="custom-file-label" for="customFile">Choose file</label>
+									  <label class="custom-file-label" for="customFile">이미지 파일 첨부하기</label>
 									</div>
 								</div>
 							</div>
@@ -1025,7 +1302,7 @@ placeholder="
 									<div class="sh_file_preveal">
 										<h6><b>360°사진 제작하기</b></h6>
 										<h6>'구글 스트리트 뷰' 앱으로 본인의 집을 찍으세요.</h6>
-										<h6>찍으신 사진을 저장 후 사진 파일을 올려주시면 됩니다.</h6>
+										<h6>찍으신 사진을 저장 후 사진 파일을 올려주시면 됩니다. (1장만 등록가능)</h6>
 										<h6>불필요한 정보가 있는 매물은 비공개 처리 됩니다.</h6>
 										<br>
 										이미지를 업로드해주세요 <i class="far fa-copy"></i> 
@@ -1041,13 +1318,13 @@ placeholder="
 				<div class="col-md-12" align="center">
 				    
 					<div class="custom-control custom-checkbox">
-					  <input type="checkbox" class="custom-control-input" id="customCheck1" required>
+					  <input type="checkbox" class="custom-control-input" id="customCheck1">
 					  <label class="custom-control-label" for="customCheck1">매물관리규정을 확인하였으며, 입력한 정보는 실제 매물과 다름이 없습니다.</label>
 					</div>				    
 				  <br><br>
 					<div align="center">
 				  	  <input type="reset" id="preset" value="취소">
-					  <input type="submit" id="psubmit" value="매물 등록">
+					  <input type="button" id="psubmit" value="매물 등록">
 					</div>
 				</div>
 			</div>  <!-- 동의 / 매물 등록 -->

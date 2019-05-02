@@ -204,7 +204,7 @@ $(window).scroll(function() {
 								<div class="col-md-12">
 									<input type="button" class="sh_myroomlist_btn" id="sh_myroomList_progress4" value="검수중">
 									<input type="button" class="sh_myroomlist_btn" value="수정">
-									<input type="button" class="sh_myroomlist_btn" value="삭제">	
+									<!-- <input type="button" class="sh_myroomlist_btn" value="삭제"> -->	
 								</div>
 							</div>
 						</div>																		
@@ -287,7 +287,7 @@ $(window).scroll(function() {
 								<div class="col-md-12">
 									<input type="button" class="sh_myroomlist_btn" id="sh_myroomList_progress4" value="검수중">
 									<input type="button" class="sh_myroomlist_btn" value="수정">
-									<input type="button" class="sh_myroomlist_btn" value="삭제">	
+									<!-- <input type="button" class="sh_myroomlist_btn" value="삭제"> -->	
 								</div>
 							</div>
 						</div>																		
