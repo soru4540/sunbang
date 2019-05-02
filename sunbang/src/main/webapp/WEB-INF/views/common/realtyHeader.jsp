@@ -93,7 +93,7 @@
 			<div class="col" style="min-width: 200px;">
 				<div class="row">
 					<div class="nav-item" id="js_pheader_tab1">
-						<a class="nav-link" href="propertymain.do">부동산
+						<a class="nav-link" href="realtymain.do">부동산
 							<span class="sr-only">(current)</span>
 						</a>
 					</div>
@@ -139,7 +139,7 @@
 							<a class="dropdown-item" href="#"><i class="fas fa-award"></i> 프리미엄 서비스</a>
 						</c:if>
 						<c:if test="true"> <!-- 관리자 -->
-							<a class="dropdown-item" href="/sunbang/views/admin/adminPage.jsp"><i class="fas fa-user-edit"></i> 관리자 페이지</a>
+							<a class="dropdown-item" href="adminPage.do"><i class="fas fa-user-edit"></i> 관리자 페이지</a>
 						</c:if>
 					</div>
 					</c:if> <c:if test="loginUser == null">

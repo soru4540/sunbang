@@ -104,7 +104,7 @@
 </style>
 </head>
 <body>
-	<c:import url="../common/propertyHeader.jsp"></c:import>
+	<c:import url="../common/realtyHeader.jsp"></c:import>
 	<div class="container" id="js_pguide_con">
 		<div class="row" id="js_pguide_info">
 			<div class="col">

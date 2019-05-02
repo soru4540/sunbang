@@ -10,7 +10,7 @@
 </style>
 </head>
 <body>
-	<c:import url="../common/propertyHeader.jsp"></c:import>
+	<c:import url="../common/realtyHeader.jsp"></c:import>
 	<c:import url="../common/adminHeader.jsp"></c:import>
 	<div style="min-height: 960px;">
 		

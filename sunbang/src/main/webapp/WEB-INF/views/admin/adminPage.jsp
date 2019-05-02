@@ -46,9 +46,15 @@
 	
 }
 </style>
+<!-- <script type="text/javascript">
+$(function() {
+	
+})
+</script> -->
 </head>
 <body>
-	<c:import url="../common/propertyHeader.jsp"></c:import>
+
+	<c:import url="../common/realtyHeader.jsp"></c:import>
 	<c:import url="../common/adminHeader.jsp"></c:import>
 	<div class="container" style="min-height: 960px;">
 		<div style="margin-top: 50px;">

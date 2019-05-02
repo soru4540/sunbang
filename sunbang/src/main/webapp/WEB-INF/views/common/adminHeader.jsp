@@ -23,7 +23,7 @@
 					aria-expanded="false"> 신고 처리 </a>
 					<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"
 						style="top: 45px;">
-						<a class="dropdown-item" href="/sunbang/views/admin/reportManagementP.jsp">부동산</a> 
+						<a class="dropdown-item" href="/sunbang/views/admin/reportManagementR.jsp">부동산</a> 
 						<a class="dropdown-item" href="/sunbang/views/admin/reportManagementI.jsp">인테리어</a> 
 						<a class="dropdown-item" href="/sunbang/views/admin/reportManagementU.jsp">회원</a>
 					</div></li>

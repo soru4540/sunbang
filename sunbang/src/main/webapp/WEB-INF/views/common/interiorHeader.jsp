@@ -134,7 +134,7 @@
 			<div class="col" style="min-width: 200px;">
 				<div class="row">
 					<div class="nav-item" id="js_pheader_tab1">
-						<a class="nav-link" href="propertymain.do">부동산 <span
+						<a class="nav-link" href="realtymain.do">부동산 <span
 							class="sr-only">(current)</span>
 						</a>
 					</div>

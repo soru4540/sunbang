@@ -89,7 +89,7 @@
 	<div class="container-fluid">
 
 			
-		<c:import url="../common/propertyHeader.jsp"></c:import>
+		<c:import url="../common/realtyHeader.jsp"></c:import>
 		
 
 		<div class="row">

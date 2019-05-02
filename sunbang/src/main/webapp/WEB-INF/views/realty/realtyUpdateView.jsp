@@ -742,7 +742,7 @@ h6 {
 
 </head>
 <body>
-<c:import url="../common/propertyHeader.jsp" /><br>
+<c:import url="../common/realtyHeader.jsp" /><br>
 <div class="container" style="font-family: a고딕12;">
 	<div class="row">
 		<div class="col-md-12">

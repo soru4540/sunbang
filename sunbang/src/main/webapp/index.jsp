@@ -26,7 +26,8 @@
 	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 	crossorigin="anonymous">
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
 #js_index_row {
 	margin: 0 auto;
@@ -162,16 +163,15 @@
 	<div class="container">
 		<div class="row" id="js_index_row">
 			<div id="js_index_text">
-					<p>
-						<span id="js_index_span">선방</span>에 오신 것을 환영합니다!
-					</p>
-					<p>어떤 일로 오시게 되었나요?</p>
-				</h2>
+				<p>
+					<span id="js_index_span">선방</span>에 오신 것을 환영합니다!
+				</p>
+				<p>어떤 일로 오시게 되었나요?</p>
 			</div>
 		</div>
 		<div class="row" id="js_index_row">
 			<div class="col">
-				<a href="propertymain.do" id="#js_index_a">
+				<a href="realtymain.do" id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon1">
 						<div id="js_index_icon">
 							<p id="js_index_p">
@@ -182,8 +182,7 @@
 				</a>
 			</div>
 			<div class="col">
-				<a href="interiormain.do"
-					id="#js_index_a">
+				<a href="interiormain.do" id="#js_index_a">
 					<div class="shadow-sm p-3 rounded" id="js_index_icon2">
 						<div id="js_index_icon">
 							<p id="js_index_p">
@@ -195,6 +194,7 @@
 			</div>
 		</div>
 		<hr id="js_index_hr">
+		
 		<!-- 인기 부동산 -->
 		<div id="js_index_row">
 			<p id="js_index_title">부동산</p>
@@ -270,6 +270,7 @@
 				</a>
 			</div>
 		</div>
+		
 		<!-- 부동산 보러가기 버튼 -->
 		<div id="js_index_row">
 			<button type="button" class="btn btn-success"
@@ -277,6 +278,7 @@
 				보러가기</button>
 		</div>
 		<hr id="js_index_hr">
+		
 		<!-- 인기 인테리어 -->
 		<div id="js_index_row">
 			<p id="js_index_title">인테리어</p>
@@ -365,6 +367,7 @@
 				</a>
 			</div>
 		</div>
+		
 		<!-- 인테리어 보러가기 버튼 -->
 		<div id="js_index_row">
 			<button type="button" class="btn btn-danger"

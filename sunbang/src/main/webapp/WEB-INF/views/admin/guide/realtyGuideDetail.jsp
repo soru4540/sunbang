@@ -42,7 +42,7 @@
 
 </head>
 <body>
-	<c:import url="../common/propertyHeader.jsp"></c:import>
+	<c:import url="../common/realtyHeader.jsp"></c:import>
 	<div class="container" style="min-height: 960px; margin-top: 60px;">
 		<div class="row">
 			<div class="col-sm-9">

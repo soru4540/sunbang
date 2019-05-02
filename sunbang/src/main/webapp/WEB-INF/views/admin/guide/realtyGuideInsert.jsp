@@ -38,7 +38,7 @@
 </style>
 </head>
 <body>
-	<c:import url="../common/propertyHeader.jsp"></c:import>
+	<c:import url="../common/realtyHeader.jsp"></c:import>
 	<div class="container" id="js_pginsert_con">
 		<div class="row">
 			<p id="js_pginsert_title">부동산 가이드 등록</p>

@@ -57,7 +57,7 @@ border:1px solid black;
 </style>
 </head>
 <body>
-<c:import url="../common/propertyHeader.jsp"/>
+<c:import url="../common/realtyHeader.jsp"/>
 
 <!-- 회원탈퇴 모달 -->
 <div class="modal fade" id="userdel" style="padding-top:10%;"><div class="modal-dialog"><div class="modal-content">
