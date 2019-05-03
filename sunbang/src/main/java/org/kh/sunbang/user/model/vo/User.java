@@ -25,7 +25,7 @@ public class User implements java.io.Serializable{
 	private int business_user_no;	//기업회원번호
 	private String office_name;	//중개사무소명
 	private String office_regist_no;	//중개등록번호
-	private int business_license_no;	//사업자등록번호
+	private long business_license_no;	//사업자등록번호
 	private String office_address;	//중개사무소주소
 	private String office_phone;		//대표전화번호
 	private String status_agreement;	//가입승인상태
@@ -36,7 +36,7 @@ public class User implements java.io.Serializable{
 	public User(int user_no, String user_type, String user_profile, String user_id, String nickname, String user_name,
 			String email, String phone, String password, Date join_date, Date update_date, int user_status,
 			String reason_leave, int login_num, int business_user_no, String office_name, String office_regist_no,
-			int business_license_no, String office_address, String office_phone, String status_agreement,
+			long business_license_no, String office_address, String office_phone, String status_agreement,
 			String premium_status) {
 		super();
 		this.user_no = user_no;
@@ -219,11 +219,11 @@ public class User implements java.io.Serializable{
 		this.office_regist_no = office_regist_no;
 	}
 
-	public int getBusiness_license_no() {
+	public Long getBusiness_license_no() {
 		return business_license_no;
 	}
 
-	public void setBusiness_license_no(int business_license_no) {
+	public void setBusiness_license_no(long business_license_no) {
 		this.business_license_no = business_license_no;
 	}
 

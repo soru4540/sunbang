@@ -27,6 +27,7 @@
 	<result property="office_phone" column="office_phone"/>
 	<result property="status_agreement" column="status_agreement"/>
 	<result property="premium_status" column="premium_status"/>
+	<result property="user_no" column="user_no"/>
 </resultMap>
 
 <resultMap type="Premium" id="resultPremium">
@@ -41,7 +42,7 @@
 
 <select id="selectLoginId" parameterType="User" resultType="User">
 	select * from tb_user
-	where user_id=#{user_id};
+	where user_id=#{user_id}
 </select>
 
 <select id="selectLoginPwd" parameterType="User" resultType="User">
@@ -49,19 +50,19 @@
 	<when test="user_type.equals('매도인') or user_type.equals('공인중개사')">
 	select * from tb_business
 	join tb_user using(user_no)
-	where user_id=#{user_id} and password=#{password};
+	where user_id=#{user_id} and password=#{password}
 	</when>
 	<otherwise>
 	select * from tb_user
-	where user_id=#{user_id} and password=#{password};
+	where user_id=#{user_id} and password=#{password}
 	</otherwise>
 </choose>
 </select>
 
-<update id="updateLoginNum" parameterType="_int">
+<update id="updateLoginNum" parameterType="User">
 	update tb_user
 	set login_num = #{login_num}
-	where user_no=#{user_no};
+	where user_no=#{user_no}
 </update>
 
 

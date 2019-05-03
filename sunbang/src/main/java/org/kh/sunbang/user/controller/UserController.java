@@ -3,6 +3,7 @@ package org.kh.sunbang.user.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,37 +50,47 @@ public class UserController {
 	} 
 	
 	@RequestMapping(value="ulogin.do", method=RequestMethod.POST)
-	public String login(User user, HttpSession session, @RequestParam(name="logincheck") boolean logincheck, SessionStatus status, HttpServletResponse response, Model model) throws IOException{
+	public String login(User user, HttpSession session, /*@RequestParam(name="logincheck") String logincheck,*/ SessionStatus status, HttpServletResponse response, Model model) throws IOException{
 		User loginUser = userService.selectLoginId(user);
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		if(loginUser != null) {
-		loginUser = userService.selectLoginPwd(loginUser);
 		
-			if(loginUser != null) {
+		if(loginUser != null) {
+		user.setUser_type(loginUser.getUser_type());
+		user.setLogin_num(loginUser.getLogin_num());
+		user.setUser_no(loginUser.getUser_no());
+		User loginUserPwd = userService.selectLoginPwd(user);
+			if(loginUserPwd != null) {
+				loginUser.setLogin_num(0);
+				int result = userService.updateLoginNum(loginUser);
+				
+				if(result > 0) {
+					session.setAttribute("loginUser", loginUser);
+					status.setComplete();
+						return "forward:propertymain.do";
+				}else {
+					out.print("<script> location.href='uloginview.do';  alert('시도횟수 수정안됨');</script>");
+					out.flush();
+					out.close();
+				}
+			}else {
 				loginUser.setLogin_num(loginUser.getLogin_num() + 1);
 				int result = userService.updateLoginNum(loginUser);
 				
 				if(result > 0) {
-				
-					return null;
+					out.print("<script> location.href='uloginview.do'; alert('비밀번호 틀림');</script>");
+					out.flush();
+					out.close();
 				}else {
-					
-				}
-			}else {
-				loginUser.setLogin_num(0);
-				int result = userService.updateLoginNum(loginUser);
-					
-				if(result > 0) {
-					session.setAttribute("loginUser", loginUser);
-					status.setComplete();
-						return "forward:uloginview.do";
-				}else {
-					
+					out.print("<script> location.href='uloginview.do'; alert('시도횟수 수정안됨');</script>");
+					out.flush();
+					out.close();
 				}
 			}
 		}else {
-			return null;
+			out.println("<script> location.href='uloginview.do'; alert('아이디 틀림');</script>");
+			out.flush();
+			out.close();
 			
 		}
 		return null;
@@ -86,8 +98,14 @@ public class UserController {
 	} 
 
 	@RequestMapping("ulogout.do")
-	public String logout(){
-		return null;
+	public String logout(HttpServletRequest request,@RequestParam(name="uri") String ReUri){
+		HttpSession session = request.getSession(false);
+		
+		if(session != null) {
+			session.invalidate();
+		}
+		
+		return "forward:uloginview.do";
 	} 
 	
 	@RequestMapping("uinsert.do")

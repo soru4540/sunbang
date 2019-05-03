@@ -25,6 +25,7 @@
 	href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 	crossorigin="anonymous">
+	<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
 #js_pheader_body {
 	font-family: a고딕11;
@@ -175,11 +176,13 @@
 				<li class="nav-item"><a class="nav-link"
 					href="iblistselect.do?board_type=knowhow">노하우</a></li>
 				<li class="nav-item"><a class="nav-link" href="#">가이드&nbsp;&nbsp;</a></li>
-				<li class="nav-item" id="js_pheader_user"><c:if test="true">
+				<li class="nav-item" id="js_pheader_user"><c:if test="${!empty loginUser}">
 						<a class="nav-link dropdown-toggle"
 							id="navbarDropdownMenuLink-333" data-toggle="dropdown"
-							aria-haspopup="true" aria-expanded="false"> <i
-							class="fas fa-user"></i>&nbsp;USER
+							aria-haspopup="true" aria-expanded="false">
+							<c:if test="${!empty loginUser.user_profile }"><img src="sunbang/files/user/userImages/${loginUser.user_profile }"></c:if> 
+							<c:if test="${empty loginUser.user_profile }"><i class="fas fa-user"></i></c:if>
+							&nbsp;${loginUser.nickname }
 						</a>
 						<div class="dropdown-menu dropdown-menu-right dropdown-default"
 							aria-labelledby="navbarDropdownMenuLink-333"
@@ -192,9 +195,10 @@
 								1:1 상담내역</a> <a class="dropdown-item" href="#"><i
 								class="far fa-copy"></i> 등록 매물 관리</a> <a class="dropdown-item"
 								href="#"><i class="fas fa-award"></i> 프리미엄 서비스</a>
+								<a class="dropdown-item" href="ulogout.do?uri=${pageContext.request.requestURL }"> 로그아웃</a>
 						</div>
-					</c:if> <c:if test="loginUser == null">
-						<a class="nav-link" href="loginview.do"> 회원가입 · 로그인&nbsp;</a>
+					</c:if> <c:if test="${empty loginUser}">
+						<a class="nav-link" href="uloginview.do"> 회원가입 · 로그인&nbsp;</a>
 					</c:if></li>
 
 			</ul>

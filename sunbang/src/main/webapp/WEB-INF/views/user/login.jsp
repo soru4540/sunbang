@@ -244,7 +244,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			<div class="mb-3" align="center"><span class="font-weight-bold fa-2x"><i class="fas fa-home" style="background:#61C0BF; color:white; padding:2%; border-radius: 5px;"></i> 선방</span></div>
 			<form action="ulogin.do" method="post"><div class="form-group"><input type="text" class="form-control ucon form-control ucon-lg" name="user_id" placeholder="아이디" style="border-bottom:0;"><input type="password" class="form-control ucon form-control ucon-lg" name="password" placeholder="비밀번호"></div>
 			<div class="form-group"><input type="submit" class="btn btn-block btn-lg btn-green" value="로그인"></div>
-			<div style="font-size: 13px;"><input type="checkbox" name="logincheck"> 로그인 상태 유지</div></form>
+			<div style="font-size: 13px;"><input type="checkbox" > 로그인 상태 유지</div></form>
 			<div class="d-flex justify-content-between mb-3 mt-3" style="border-top:1px solid #ddd; padding-top:5%;">
 				<div class="btn btn-lgreen" data-toggle="modal" data-target="#findId">아이디 찾기</div>
 				<div class="btn btn-lgreen ml-2 mr-2"  data-toggle="modal" data-target="#findPwd">비밀번호 찾기</div>
