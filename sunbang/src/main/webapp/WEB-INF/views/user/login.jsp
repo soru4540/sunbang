@@ -135,7 +135,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 </style>
 </head>
 <body>
-<c:import url="../common/propertyHeader.jsp"/>
+<c:import url="../common/realtyHeader.jsp"/>
 
 <!-- 아이디 찾기 모달 -->
  <div class="modal fade" id="findId"><div class="modal-dialog" ><div class="modal-content">

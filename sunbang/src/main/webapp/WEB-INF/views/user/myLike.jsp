@@ -67,7 +67,7 @@ padding: 1% !important;
 </style>
 </head>
 <body>
-<c:import url="../common/propertyHeader.jsp"/>
+<c:import url="../common/realtyHeader.jsp"/>
 
 <div class="container">
 	<div class="row" style="margin-top:10%; padding-bottom:10%;">

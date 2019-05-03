@@ -124,7 +124,7 @@ color:#777 !important;
 </style>
 </head>
 <body>
-<c:import url="../common/propertyHeader.jsp"/>
+<c:import url="../common/realtyHeader.jsp"/>
 
  <div class="modal fade" id="myModal"><div class="modal-dialog"><div class="modal-content">
         <div class="modal-header border-0""><h5 class="modal-title">메모</h5><button type="button" class="close" data-dismiss="modal">×</button></div>
