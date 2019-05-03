@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="adminMapper">
+
+	<resultMap id="resultReport" type="report">
+		<id property="report_no" column="report_no" />
+		<result property="report_system" column="report_system" />
+		<result property="category" column="category" />
+		<result property="reported_board" column="reported_board" />
+		<result property="contents_no" column="contents_no" />
+		<result property="contents" column="contents" />
+		<result property="report_date" column="report_date" />
+		<result property="handle_date" column="handle_date" />
+		<result property="report_status" column="report_status" />
+		<result property="user_no" column="user_no" />
+	</resultMap>
+
+	<resultMap id="resultGuide" type="guide">
+		<id property="guide_no" column="guide_no" />
+		<result property="guide_system" column="guide_system" />
+		<result property="category" column="category" />
+		<result property="title" column="title" />
+		<result property="thumbnail" column="thumbnail" />
+		<result property="guide_image1" column="guide_image1" />
+		<result property="guide_image2" column="guide_image2" />
+		<result property="guide_image3" column="guide_image3" />
+		<result property="guide_image4" column="guide_image4" />
+		<result property="guide_image5" column="guide_image5" />
+		<result property="guide_status" column="guide_status" />
+	</resultMap>
+
+
+	<select id="selectUnHandledList" parameterType="report"
+		resultMap="resultReport">
+		select * from tb_report where report_status = 0
+	</select>
+	
+</mapper>

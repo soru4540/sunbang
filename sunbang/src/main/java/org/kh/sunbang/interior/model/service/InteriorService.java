@@ -8,7 +8,7 @@ import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Marker;
 import org.kh.sunbang.interior.model.vo.Post;
 import org.kh.sunbang.interior.model.vo.Reply;
-import org.kh.sunbang.user.vo.User;
+import org.kh.sunbang.user.model.vo.User;
 
 public interface InteriorService {
 	//추상메소드만 멤버로 가짐

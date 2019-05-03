@@ -56,7 +56,7 @@ margin-left:10%;
 </style>
 </head>
 <body>
-<c:import url="../common/realtyHeader.jsp"/>
+<c:import url="../common/propertyHeader.jsp"/>
 
 <div class="container-fluid"><div class="row"><div class="col-lg-1"></div><div class="col-12 col-lg-10" style="padding-bottom:10%;">
 	<div class="row" style="margin-top: 10%; background:rgb(253, 253, 253);"><div class="d-flex flex-wrap">

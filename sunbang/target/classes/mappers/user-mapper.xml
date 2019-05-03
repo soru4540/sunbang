@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+
+<resultMap type="User" id="resultUser">
+	<id property="user_no" column="user_no"/>
+	<result property="user_type" column="user_type"/>
+	<result property="user_profile" column="user_profile"/>
+	<result property="user_id" column="user_id"/>
+	<result property="nickname" column="nickname"/>
+	<result property="user_name" column="user_name"/>
+	<result property="email" column="email"/>
+	<result property="phone" column="phone"/>
+	<result property="password" column="password"/>
+	<result property="join_date" column="join_date"/>
+	<result property="update_date" column="update_date"/>
+	<result property="user_status" column="user_status"/>
+	<result property="reason_leave" column="reason_leave"/>
+	<result property="login_num" column="login_num"/>
+	<result property="business_user_no" column="business_user_no"/>
+	<result property="office_name" column="office_name"/>
+	<result property="office_regist_no" column="office_regist_no"/>
+	<result property="business_license_no" column="business_license_no"/>
+	<result property="office_address" column="office_address"/>
+	<result property="office_phone" column="office_phone"/>
+	<result property="status_agreement" column="status_agreement"/>
+	<result property="premium_status" column="premium_status"/>
+</resultMap>
+
+<resultMap type="Premium" id="resultPremium">
+	<id property="charge_no" column="charge_no"/>
+	<result property="charge_date" column="charge_date"/>
+	<result property="expiration_date" column="expiration_date"/>
+	<result property="charged_payment" column="charged_payment"/>
+	<result property="charged_status" column="charged_status"/>
+	<result property="refund_date" column="refund_date"/>
+	<result property="business_user_no" column="business_user_no"/>
+</resultMap>
+
+<select id="selectLoginId" parameterType="User" resultType="User">
+	select * from tb_user
+	where user_id=#{user_id};
+</select>
+
+<select id="selectLoginPwd" parameterType="User" resultType="User">
+<choose>
+	<when test="user_type.equals('매도인') or user_type.equals('공인중개사')">
+	select * from tb_business
+	join tb_user using(user_no)
+	where user_id=#{user_id} and password=#{password};
+	</when>
+	<otherwise>
+	select * from tb_user
+	where user_id=#{user_id} and password=#{password};
+	</otherwise>
+</choose>
+</select>
+
+<update id="updateLoginNum" parameterType="_int">
+	update tb_user
+	set login_num = #{login_num}
+	where user_no=#{user_no};
+</update>
+
+
+</mapper>

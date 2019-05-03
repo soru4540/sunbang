@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="chatMapper">
+
+<resultMap type="Chat" id="resultChat">
+<result property="chat_no" column="chat_no"/>
+<result property="user_no" column="user_no"/>
+<result property="chat_name" column="chat_name"/>
+<result property="chat_type" column="chat_type"/>
+<result property="alert_status" column="alert_status"/>
+<result property="join_time" column="join_time"/>
+<result property="away_time" column="away_time"/>
+<result property="check_join" column="check_join"/>
+<result property="realty_no" column="realty_no"/>
+</resultMap>
+
+
+<resultMap type="Message" id="resultMessage">
+<id property="message_no" column="message_no" />
+<result property="message" column="message"/>
+<result property="message_image" column="message_image"/>
+<result property="origin_filename" column="origin_filename"/>
+<result property="renew_filename" column="renew_filename"/>
+<result property="post_time" column="post_time"/>
+<result property="chat_no" column="chat_no"/>
+<result property="user_no" column="user_no"/>
+</resultMap>
+
+
+<resultMap type="ChatBlock" id="resultChatBlock">
+<id property="block_no" column="block_no"/>
+<result property="block_user" column="block_user"/>
+<result property="block_time" column="block_time"/>
+<result property="user_no" column="user_no"/>
+</resultMap>
+</mapper>
