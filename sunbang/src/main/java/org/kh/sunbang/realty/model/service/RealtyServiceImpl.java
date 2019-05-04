@@ -1,5 +1,7 @@
 package org.kh.sunbang.realty.model.service;
 
+import java.util.ArrayList;
+
 import org.kh.sunbang.realty.model.dao.RealtyDao;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -23,5 +25,10 @@ public class RealtyServiceImpl implements RealtyService {
 	@Override
 	public void updateRealtyHits(int realty_no) { //매물조회수
 		realtyDao.updateRealtyHits(mybatisSession, realty_no);
+	}
+	
+	@Override
+	public ArrayList<Realty> selectMarkerList() {
+		return realtyDao.selectMarkerList(mybatisSession);
 	}
 }

@@ -75,6 +75,10 @@
 		set realty_hits = realty_hits + 1
 		where realty_no = #{realty_no}
 	</update>
-
+	
+	<select id="selectMarkerList"  resultMap="resultRealty" useCache="true">
+		select * from tb_realty
+	</select>
+	
 
 </mapper>

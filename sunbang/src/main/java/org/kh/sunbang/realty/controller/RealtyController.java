@@ -2,6 +2,7 @@ package org.kh.sunbang.realty.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.kh.sunbang.realty.model.service.RealtyService;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +28,16 @@ public class RealtyController {
 	public String movePropertyMainMethod() {
 		
 		return "realty/realtyMain";
+	}
+	
+	@RequestMapping(value="rmarkers.do")
+	@ResponseBody
+	public ArrayList<Realty> selectMarkerList(){
+		
+		ArrayList<Realty> mlist =  new ArrayList<Realty>();
+		mlist = realtyService.selectMarkerList();
+		
+		return mlist;
 	}
 
 //김성현----------------------------------------------------------------------------

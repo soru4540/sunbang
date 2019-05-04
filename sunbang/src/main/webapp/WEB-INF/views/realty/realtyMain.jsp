@@ -10,7 +10,7 @@
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <title>main</title>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55d7db7b289215b9986b37fed37910b7"></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55d7db7b289215b9986b37fed37910b7&libraries=services,clusterer,drawing"></script>
 <style type="text/css">
 #hj_dropdownmenu {
 	text-align: left;
@@ -82,6 +82,35 @@
 	font-size: 16px;
 }
 </style>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	
+	$.ajax({
+		url: "rmarkers.do",
+		type:"get",
+		dataType:"json",
+		success:function(data){
+			var jsonStr = JSON.stringify(data);
+			var json = JSON.parse(jsonStr);
+			console.log(jsonStr);
+			console.log(json);
+			var address = "";
+			var name = "";
+			for( var i in json) {
+				
+				address = decodeURIComponent(json[i].road_address).replace(/\+/gi, " ");
+				name = decodeURIComponent(json[i].land_lot).replace(/\+/gi, " ");
+				console.log(address);
+				
+				setMarker(address, name);
+				
+			}//for
+		}//function
+	});//ajax
+});//ready
+</script>
+
 
 </head>
 <body>
@@ -329,6 +358,9 @@
 		<div class="row">
 			<div class="col-md-9" style="padding-right: 0px; padding-left: 0;">
 				<div id="map" style="width: 100%; height: 800px;"></div>
+				
+			</div><!--  지도를 표시할 div! -->
+			
 				<script>
 				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 			    mapOption = { 
@@ -339,8 +371,50 @@
 
 					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
 					var map = new daum.maps.Map(mapContainer, mapOption);
-				</script>
-			</div>
+				
+					
+					function setMarker(a, b){
+						var address = a;
+						var name = b;
+						var geocoder = new daum.maps.services.Geocoder();
+
+						// 주소로 좌표를 검색합니다
+						geocoder.addressSearch(address, function(result, status) {
+
+						    // 정상적으로 검색이 완료됐으면 
+						     if (status === daum.maps.services.Status.OK) {
+						        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+								
+						        // 결과값으로 받은 위치를 마커로 표시합니다
+						        var marker = new daum.maps.Marker({
+						            map: map,
+						            position: coords
+						        });
+
+						        // 인포윈도우로 장소에 대한 설명을 표시합니다
+						        var infowindow = new daum.maps.InfoWindow({
+						            content: '<div style="width:150px;text-align:center;padding:6px 0;">'+name+'</div>'
+						        });
+									        
+						     // 마커에 마우스오버 이벤트를 등록합니다
+						        daum.maps.event.addListener(marker, 'mouseover', function() {
+						          // 마커에 마우스오버 이벤트가 발생하면 인포윈도우를 마커위에 표시합니다
+						            infowindow.open(map, marker);
+						        });
+
+						        // 마커에 마우스아웃 이벤트를 등록합니다
+						        daum.maps.event.addListener(marker, 'mouseout', function() {
+						            // 마커에 마우스아웃 이벤트가 발생하면 인포윈도우를 제거합니다
+						            infowindow.close();
+						        });
+
+						        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+						        map.setCenter(coords);
+						    } 
+						});
+						}	
+				</script>			
+			
 			<div class="col-md-3"
 				style="background-color: #EEEEEE; text-align: center; padding-left: 0; padding-right: 0;">
 				<div
