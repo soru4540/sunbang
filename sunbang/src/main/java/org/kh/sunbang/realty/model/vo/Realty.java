@@ -29,7 +29,7 @@ public class Realty implements java.io.Serializable {
 	private int	building_layers;			//건물층수
 	private int	realty_layers;				//해당층수
 	private int	heatting_system;			//난방종류
-	private Date move_available_date;		//입주가능일
+	private String move_available_date;		//입주가능일
 	private int	management_pay;				//관리비
 	private String parking_lot;				//주차여부
 	private int	elevator;					//엘리베이터
@@ -67,7 +67,7 @@ public class Realty implements java.io.Serializable {
 	public Realty(int realty_no, Date registdate, Date renewdate, int realty_hits, String realty_status,
 			String realty_type, String building_type, String road_address, String land_lot, String detail_address,
 			int month_lease, int deposit, int payback_deposit_lease, int purchase, int residential, int exclusive_area,
-			int building_layers, int realty_layers, int heatting_system, Date move_available_date, int management_pay,
+			int building_layers, int realty_layers, int heatting_system, String move_available_date, int management_pay,
 			String parking_lot, int elevator, int builtin, int allowance_pet, int balcony, int loan_availability,
 			String structure, int airconditioner, int laundry_machine, int bed, int desk, int closet, int tv,
 			int gasrange, int shoe_shelf, int refrigerator, int induction, int microwave, int door_lock, int bidet,
@@ -282,11 +282,11 @@ public class Realty implements java.io.Serializable {
 		this.heatting_system = heatting_system;
 	}
 
-	public Date getMove_available_date() {
+	public String getMove_available_date() {
 		return move_available_date;
 	}
 
-	public void setMove_available_date(Date move_available_date) {
+	public void setMove_available_date(String move_available_date) {
 		this.move_available_date = move_available_date;
 	}
 
@@ -580,5 +580,4 @@ public class Realty implements java.io.Serializable {
 				+ realty_image6 + ", realty_image7=" + realty_image7 + ", realty_image8=" + realty_image8
 				+ ", image360=" + image360 + ", user_no=" + user_no + "]";
 	}
-	
 }

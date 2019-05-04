@@ -161,8 +161,8 @@
 				$("#sh_tradei_0").css("display", "none");
 				$("#sh_tradei_btn0").css("background-color", "white");
 				$("#sh_tradei_btn0").css("color", "#61C0BF");
-				$("input[name=deposit]").val("");
-				$("input[name=month_lease]").val("");
+				$("input[name=deposit]").val(0);
+				$("input[name=month_lease]").val(0);
 			}		
 		});
 		
@@ -172,7 +172,7 @@
 				$("#sh_tradei_1").css("display", "none");
 				$("#sh_tradei_btn1").css("background-color", "white");
 				$("#sh_tradei_btn1").css("color", "#61C0BF");
-				$("input[name=payback_deposit_lease]").val("");
+				$("input[name=payback_deposit_lease]").val(0);
 			}
 		});
 		
@@ -182,7 +182,7 @@
 				$("#sh_tradei_2").css("display", "none");
 				$("#sh_tradei_btn2").css("background-color", "white");
 				$("#sh_tradei_btn2").css("color", "#61C0BF");
-				$("input[name=purchase]").val("");
+				$("input[name=purchase]").val(0);
 			}
 		});
 	});
@@ -495,6 +495,12 @@
 		});
 	});
 </script>
+<!-- 사진 등록 2 -->
+<script type="text/javascript">
+$(function() {
+
+});
+</script>
 
 <!-- 중간정검용 확인 function (삭제 예정) -->
 <script type="text/javascript">
@@ -591,10 +597,10 @@ $(function(){
 		}
 		
 		//거래종류
-		else if($('input[name=month_lease]').val() == "" &&
-		   $('input[name=deposit]').val() == ""	&&
-		   $('input[name=payback_deposit_lease]').val() == "" &&
-		   $('input[name=purchase]').val() == ""){
+		else if($('input[name=month_lease]').val() == 0 &&
+		   $('input[name=deposit]').val() == 0	&&
+		   $('input[name=payback_deposit_lease]').val() == 0 &&
+		   $('input[name=purchase]').val() == 0){
 			$("#sh_required").css("display", "block");
 			$('#sh_required_text').text("매물을 등록하실려면 거래종류를 1개 이상 입력하셔야 합니다.");
 			
@@ -603,7 +609,7 @@ $(function(){
 		} 
 		
 		//공급면적
-		else if($('input[name=residential]').val() == ""){
+		else if($('input[name=residential]').val() == 0){
 			$("#sh_required").css("display", "block");
 			$('#sh_required_text').text("매물을 등록하실려면 공급면적을 입력하셔야 합니다.");
 			
@@ -612,6 +618,39 @@ $(function(){
 			
 			$("input[name=residential]").focus();
 		}
+		
+		//전용면적
+		else if($('input[name=exclusive_area]').val() == 0){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 전용면적을 입력하셔야 합니다.");
+			
+			var offset = $('#sh_basici').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+			
+			$("input[name=exclusive_area]").focus();
+		}		
+		
+		//건물층수
+		else if($('input[name=building_layers]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 건물층수를 입력하셔야 합니다.");
+			
+			var offset = $('#sh_basici').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+			
+			$("input[name=building_layers]").focus();
+		}
+		
+		//건물층수
+		else if($('input[name=realty_layers]').val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("매물을 등록하실려면 해당층수를 입력하셔야 합니다.");
+			
+			var offset = $('#sh_basici').offset();
+			$("html, body").animate({scrollTop:offset.top},500);
+			
+			$("input[name=realty_layers]").focus();
+		}			
 		
 		//난방종류
 		else if($('input[name=heatting_system]').val() == ""){
@@ -656,6 +695,32 @@ $(function(){
 
 <style type="text/css">
 
+input[type="file"] {
+  display: block;
+}
+.imageThumb {
+  max-height: 75px;
+  border: 2px solid;
+  padding: 1px;
+  cursor: pointer;
+}
+.pip {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+}
+.remove {
+  display: block;
+  background: #444;
+  border: 1px solid black;
+  color: white;
+  text-align: center;
+  cursor: pointer;
+}
+.remove:hover {
+  background: white;
+  color: black;
+}
+
 #sh_required {
 	display: none;
 	position: fixed;
@@ -683,7 +748,8 @@ $(function(){
         border-radius: 5px;
 }
 
-.sh_file_preveal {
+.sh_file_preveal,
+.sh_file_thumbnail {
         text-align: center;
         padding: 60px;
         font-size: 20px;
@@ -909,7 +975,7 @@ h6 {
 </head>
 <body>
 <c:import url="../common/realtyHeader.jsp" /><br>
-<form id="sh_realty_form" action="rinsert.do" method="post">
+<form id="sh_realty_form" action="rinsert.do" method="post" enctype="multipart/form-data">
 <div class="container" style="font-family: a고딕12;">
   	<div id="sh_required"><!-- required alert -->
    		<strong>필수!</strong> <span id="sh_required_text"></span>&nbsp;&nbsp;&nbsp;
@@ -1045,21 +1111,30 @@ h6 {
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_0">
+						<div class="col-md-2">
+							보증금 / 월세
+						</div>					
 						<div class="col-md-10" float="left">
-							<input type="number" name="deposit" placeholder="보증금" min="0"> / 
-							<input type="number" name="month_lease" placeholder="월세" min="0"> 원
+							<input type="number" name="deposit" placeholder="보증금" min="0" value="0"> / 
+							<input type="number" name="month_lease" placeholder="월세" min="0" value="0"> 원
 							<button type="button" id="sh_tradei_0_cancel"><i class="fas fa-times"></i></button>
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_1">
+						<div class="col-md-2">
+							전세
+						</div>					
 						<div class="col-md-10">
-							<input type="number" name="payback_deposit_lease" placeholder="전세" min="0"> 원
+							<input type="number" name="payback_deposit_lease" placeholder="전세" min="0" value="0"> 원
 							<button type="button" id="sh_tradei_1_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>
 					<div class="row" id="sh_tradei_2">
+						<div class="col-md-2">
+							매매
+						</div>					
 						<div class="col-md-10">
-							<input type="number" name="purchase" placeholder="매매" min="0"> 원
+							<input type="number" name="purchase" placeholder="매매" min="0" value="0"> 원
 							<button type="button" id="sh_tradei_2_cancel"><i class="fas fa-times"></i></button>						
 						</div>
 					</div>					
@@ -1074,8 +1149,8 @@ h6 {
 							건물크기 <br>(1P = 3.3058㎡)
 						</div>
 						<div class="col-md-10">
-							공급면적 <input type="number" id="sh_sarea_p" name="residential" min="0"> 평 <input type="text" id="sh_sarea_m" min="0"> ㎡ <hr>
-							전용면적 <input type="number" id="sh_earea_p" name="exclusive_area" min="0"> 평 <input type="text" id="sh_earea_m" min="0"> ㎡
+							공급면적 <input type="number" id="sh_sarea_p" name="residential" min="0" value="0"> 평 <input type="text" id="sh_sarea_m" min="0" value="0"> ㎡ <hr>
+							전용면적 <input type="number" id="sh_earea_p" name="exclusive_area" min="0" value="0"> 평 <input type="text" id="sh_earea_m" min="0" value="0"> ㎡
 						</div>
 					</div>
 					<div class="row">
@@ -1270,14 +1345,14 @@ placeholder="
 							<div class="row">
 								<div class="col-md-12">
 									<div class="custom-file">
-									  <input type="file" class="custom-file-input" id="customFile">
-									  <label class="custom-file-label" for="customFile">이미지 파일 첨부하기</label>
+									  <input type="file" id="sh_realty_image" name="realty_image[]" accept="image/*" multiple="multiple">
+									  <!-- <label class="custom-file-label" for="sh_realty_image">이미지 파일 첨부하기</label> -->
 									</div>
 								</div>
 							</div>
 							<div class="row">
 								<div class="col-md-12">
-									<div class="sh_file_preveal">
+									<div class="sh_file_preveal" id="sh_file_preveal_0">
 										<h6>실 사진 최소 2장, 총 8장까지 사진 등록이 가능합니다.</h6>
 										<h6>불필요한 정보가 있는 매물은 비공개 처리 됩니다.</h6>
 										<br>
