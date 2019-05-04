@@ -239,7 +239,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 				 
 <!-- 로그인 -->
 		<div class="col-12" id="loginfront">
-			<div class="mb-5 d-flex justify-content-around"><a class="maindiv" href="propertymain.do"><div style="width:100px; height:100px; border-radius:5px; background:#61C0BF; color:white; text-align:center;"><b style="line-height:100px;">부동산</b></div></a>
+			<div class="mb-5 d-flex justify-content-around"><a class="maindiv" href="realtymain.do"><div style="width:100px; height:100px; border-radius:5px; background:#61C0BF; color:white; text-align:center;"><b style="line-height:100px;">부동산</b></div></a>
 																			<a class="maindiv" href="interiorMain.do"><div style="width:100px; height:100px; border-radius:5px; background:#FFB6B9; color:white; text-align:center;"><b style="line-height:100px;">인테리어</b></div></a></div>
 			<div class="mb-3" align="center"><span class="font-weight-bold fa-2x"><i class="fas fa-home" style="background:#61C0BF; color:white; padding:2%; border-radius: 5px;"></i> 선방</span></div>
 			<form action="ulogin.do" method="post"><div class="form-group"><input type="text" class="form-control ucon form-control ucon-lg" name="user_id" placeholder="아이디" style="border-bottom:0;"><input type="password" class="form-control ucon form-control ucon-lg" name="password" placeholder="비밀번호"></div>

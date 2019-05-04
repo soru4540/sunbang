@@ -67,7 +67,7 @@ public class UserController {
 				if(result > 0) {
 					session.setAttribute("loginUser", loginUser);
 					status.setComplete();
-						return "forward:propertymain.do";
+						return "forward:realtymain.do";
 				}else {
 					out.print("<script> location.href='uloginview.do';  alert('시도횟수 수정안됨');</script>");
 					out.flush();
