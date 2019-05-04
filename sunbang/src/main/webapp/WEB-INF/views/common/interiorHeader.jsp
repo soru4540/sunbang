@@ -168,7 +168,7 @@
 				<li class="nav-item"><a class="nav-link"
 					href="inlistselect.do?user_no=1">뉴스피드</a></li>
 				<li class="nav-item"><a class="nav-link"
-					href="#">글쓰기</a></li>
+					href="iwritepage.do">글쓰기</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="iblistselect.do?board_type=photograph">사진</a></li>
 				<li class="nav-item"><a class="nav-link"
