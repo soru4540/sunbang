@@ -2,6 +2,7 @@ package org.kh.sunbang.realty.model.service;
 
 import java.util.ArrayList;
 
+import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.dao.RealtyDao;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -17,9 +18,21 @@ public class RealtyServiceImpl implements RealtyService {
 	@Autowired
 	private RealtyDao realtyDao;
 	
+//성현---------------------------------------------------------------------------------------------------------------------	
+	
 	@Override
 	public Realty selectRealtyDetailView(int realty_no) { //매물상세페이지
 		return realtyDao.selectRealtyDetailView(mybatisSession, realty_no);
+	}
+	
+	@Override
+	public int selectDibsCount(int realty_no) { //매물상세페이지 : 찜 count
+		return realtyDao.selectDibsCount(mybatisSession, realty_no);
+	}
+	
+	@Override
+	public int selectDibsCheck(Dibs dibs) { //매물상세페이지 : 찜 check
+		return realtyDao.selectDibsCheck(mybatisSession, dibs);
 	}
 
 	@Override
@@ -28,7 +41,20 @@ public class RealtyServiceImpl implements RealtyService {
 	}
 	
 	@Override
+	public int insertRealty(Realty realty) {
+		int result = realtyDao.insertRealty(mybatisSession, realty);
+		return result;
+	}
+	
+	
+//형진---------------------------------------------------------------------------------------------------------------
+	
+	@Override
 	public ArrayList<Realty> selectMarkerList() {
 		return realtyDao.selectMarkerList(mybatisSession);
 	}
+
+
+
+
 }

@@ -39,7 +39,7 @@
 	<!-- 파일업로드용 클래스 등록 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
-	<beans:property name="maxUploadSize" value="20000000"></beans:property>
+	<beans:property name="maxUploadSize" value="52428800"></beans:property>
 	</beans:bean>
 	
 	<context:component-scan base-package="org.kh.sunbang" />

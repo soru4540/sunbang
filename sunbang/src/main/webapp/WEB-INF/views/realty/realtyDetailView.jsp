@@ -14,10 +14,13 @@
 
 <!-- 360도 사진 띄우기 -->
 <script type="text/javascript">
-	
 	$(function() {
+		if( ${realty.image360 == null }){
+			$("#sh_360_btn").css("display", "none");
+		}
+		
 		$("#sh_360_btn").click(function(){
-			window.open('r360.do', '360도', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
+			window.open('r360.do?image360=${realty.image360 }', '360도', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
 		});
 	});
 </script>
@@ -79,13 +82,46 @@ $(function(){
 <!-- 찜하기 -->
 <script type="text/javascript">
 	$(function(){
-		$("#sh_rpinsert").click(function(){
+		var realty_no = ${realty.realty_no };
+		$.ajax({
+			url: "rdcount.do",
+			type: "post",
+			data: {realty_no: realty_no},
+			success: function(result){
+				$("#sh_rdcount").html(result);
+			}
+		});
+		
+		var dibs = new Object();
+		dibs.user_no = ${loginUser.user_no };
+		dibs.realty_no = ${realty.realty_no };
+		console.log(dibs);
+		$.ajax({
+			url: "rdcheck.do",
+			type: "post",
+			data: JSON.stringify(dibs),
+			contentType: "application/json; charset=utf-8",
+			success: function(result){
+				if(result == 0){
+					$("#sh_dibs_uncheck").css("display", "");
+				}else{
+					$("#sh_dibs_check").css("display", "");
+				}
+			}
+		});			
+		
+		$("#sh_rdinsert").click(function(){
 			var message = confirm("매물을 찜하기 하시겠습니까?");
 			if(message == true){
-				location.href="rpinsert.do";				
+				location.href="rpinsert.do?user_no=${loginUser.user_no}&realty_no=${realty.realty_no}";
 			}
 		});
 	});
+</script>
+<script type="text/javascript">
+$(function(){
+	
+});
 </script>
 <!-- 허위매물신고 -->
 <script type="text/javascript">
@@ -277,8 +313,11 @@ $(function(){
 				<div class="row" id="sh_hpr"> <!-- 조회수 / 찜하기 / 신고 -->
 					<div class="col-md-12">
 						<a><i class="far fa-eye"></i> ${realty.realty_hits }</a> &nbsp;
-						<a id="sh_rpinsert"><i class="far fa-bookmark"></i></i> 찜하기</a> &nbsp;
-						<!-- <i class="fas fa-bookmark"></i> --> 
+						<a id="sh_rdinsert">
+							<i class="far fa-bookmark" id="sh_dibs_uncheck" style="display:none"></i> 
+							<i class="fas fa-bookmark" id="sh_dibs_check" style="display:none"></i>
+							<span id="sh_rdcount"></span>
+						</a> &nbsp;
 						<a data-toggle="modal" data-target="#myModal"><i class="far fa-angry"></i> 허위매물신고</a>
 
 						<!-- The Modal -->
@@ -404,8 +443,8 @@ $(function(){
 									<div class="carousel-inner" id="carousel-inner">
 										<div class="carousel-item active">
 											<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" />
-											<div class="carousel-caption">
-												<button type="button" id="sh_360_btn" class="btn btn-sm btn-success">360° <!-- <i class="fas fa-camera"></i> --> <i class="far fa-images"></i></button>
+											<div class="carousel-caption" id="sh_360_caption">
+												<button type="button" id="sh_360_btn" class="btn btn-sm btn-success">360° <i class="far fa-images"></i></button>
 											</div>
 										</div>
 										<div class="carousel-item">

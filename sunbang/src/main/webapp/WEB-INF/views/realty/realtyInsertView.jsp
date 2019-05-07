@@ -469,8 +469,15 @@
 <!-- 사진 등록 -->
 <script type="text/javascript">
 	$(function(){
+		$(".sh_phototype_btn").css("background-color", "white");
+		$(".sh_phototype_btn").css("color", "#61C0BF");	
+		$("#sh_phototype_btn0").css("background-color", "#61C0BF");
+		$("#sh_phototype_btn0").css("color", "white");
+		
 		$("#sh_commonphotoform").css("display", "none");
 		$("#sh_360photoform").css("display", "none");
+		$("#sh_commonphotoform").css("display", "");
+		
 		
 		$("#sh_phototype_btn0").click(function(){
 			$(".sh_phototype_btn").css("background-color", "white");
@@ -498,7 +505,133 @@
 <!-- 사진 등록 2 -->
 <script type="text/javascript">
 $(function() {
+	$(".realty_image").each(function(i){
+		$("#sh_realty_image_row"+i).css("display","none");
+		$("#sh_realty_image_row0").css("display","");
+		
+        $(".sh_pip").css("display", "none");
+        $(".sh_remove").css("display", "none");
+        
+        $("#sh_file_thumbnail_0").css("display", "none");
+		
+		$("#sh_realty_image"+i).on("change", function(e){
+			//$("#sh_realty_image_row"+i).css("display","none");
+			$("#sh_realty_image_row"+(i+1)).css("display","");
 
+			$("#sh_file_preveal_0").css("display","none");
+			$("#sh_file_thumbnail_0").css("display", "");
+			//alert($("#sh_realty_image"+i).val());
+			
+			var strFile = $("#sh_realty_image"+i).val();
+			var lastIndex = strFile.lastIndexOf('\\');
+			var strFileName = strFile.substring(lastIndex + 1, strFile.length);
+			$("#sh_realty_image_name"+i).val(strFileName);
+			
+			if($("#sh_realty_image"+i).val() == ""){
+				document.querySelector('#sh_file_thumbnail_preview'+i).src = "" ;
+		        $("#sh_pip"+i).css("display", "none");
+		        $("#sh_remove"+i).css("display", "none");
+		        $("#sh_realty_image_name"+i).val("파일선택");
+			}
+			
+			
+			$("#sh_remove"+i).click(function() {
+				document.querySelector('#sh_file_thumbnail_preview'+i).src = "" ;
+				$("#sh_realty_image"+i).val("");
+				$("#sh_realty_image_name"+i).val("파일선택");
+		        $("#sh_pip"+i).css("display", "none");
+		        $("#sh_remove"+i).css("display", "none");
+		        
+				if($("#sh_realty_image0").val() == "" &&
+				   $("#sh_realty_image1").val() == "" &&
+				   $("#sh_realty_image2").val() == "" &&
+				   $("#sh_realty_image3").val() == "" &&
+				   $("#sh_realty_image4").val() == "" &&
+				   $("#sh_realty_image5").val() == "" &&
+				   $("#sh_realty_image6").val() == "" &&
+				   $("#sh_realty_image7").val() == "" ){
+					$("#sh_file_preveal_0").css("display","");
+					$("#sh_file_thumbnail_0").css("display", "none");
+				}
+			});
+		});
+		
+		var file = document.querySelector("#sh_realty_image"+i);
+
+		file.onchange = function () { 
+		    var fileList = file.files ;
+		    
+		    // 읽기
+		    var reader = new FileReader();
+		    reader.readAsDataURL(fileList [0]);
+
+		    //로드 한 후
+		    reader.onload = function  () {
+		        document.querySelector('#sh_file_thumbnail_preview'+i).src = reader.result ;
+		        $("#sh_pip"+i).css("display", "");
+		        $("#sh_remove"+i).css("display", "");
+		    }; 
+		}; 		
+	});
+
+
+});
+</script>
+<!-- 사진등록 3 -->
+<script type="text/javascript">
+$(function(){
+    $(".sh_360pip").css("display", "none");
+    $(".sh_360remove").css("display", "none");
+    
+    $("#sh_file_thumbnail_1").css("display", "none");
+	
+	$("#sh_360_image").on("change", function(e){
+
+		$("#sh_file_preveal_1").css("display","none");
+		$("#sh_file_thumbnail_1").css("display", "");
+		
+		var strFile = $("#sh_360_image").val();
+		var lastIndex = strFile.lastIndexOf('\\');
+		var strFileName = strFile.substring(lastIndex + 1, strFile.length);
+		$("#sh_360_image_name").val(strFileName);
+		
+		if($("#sh_360_image").val() == ""){
+			document.querySelector('#sh_360file_thumbnail_preview').src = "" ;
+	        $("#sh_360pip").css("display", "none");
+	        $("#sh_360remove").css("display", "none");
+	        $("#sh_360_image_name").val("파일선택");
+		}
+		
+		$("#sh_360remove").click(function() {
+			document.querySelector('#sh_360file_thumbnail_preview').src = "" ;
+			$("#sh_360_image").val("");
+			$("#sh_360_image_name").val("파일선택");
+	        $("#sh_360pip").css("display", "none");
+	        $("#sh_360remove").css("display", "none");
+	        
+			if($("#sh_360_image").val() == "" ){
+				$("#sh_file_preveal_1").css("display","");
+				$("#sh_file_thumbnail_1").css("display", "none");
+			}
+		});
+	});
+	
+	var file = document.querySelector("#sh_360_image");
+
+	file.onchange = function () { 
+	    var fileList = file.files ;
+	    
+	    // 읽기
+	    var reader = new FileReader();
+	    reader.readAsDataURL(fileList [0]);
+
+	    //로드 한 후
+	    reader.onload = function  () {
+	        document.querySelector('#sh_360file_thumbnail_preview').src = reader.result ;
+	        $("#sh_360pip").css("display", "");
+	        $("#sh_360remove").css("display", "");
+	    }; 
+	}; 	
 });
 </script>
 
@@ -695,30 +828,54 @@ $(function(){
 
 <style type="text/css">
 
-input[type="file"] {
-  display: block;
+#sh_commonphotoform label,
+#sh_360photoform label {
+	background-color:#61C0BF;	
+	color:white;
+	padding:8px 8px;
+	margin: 8px;
+	border: 1px solid #61C0BF;
+	border-radius:4px;
+	font-size:10pt;
+	text-align:center;
+	cursor:pointer
 }
-.imageThumb {
-  max-height: 75px;
-  border: 2px solid;
-  padding: 1px;
+
+.sh_realty_image_name,
+.sh_360_image_name {
+	display: inline-block;
+	border-radius:4px;
+	background-color:white;	
+	padding:8px 8px;
+	width: 50%;
+	color:#61C0BF;
+	border: 1px solid #61C0BF;
+	font-size:10pt;
+}
+
+.sh_file_thumbnail_preview,
+.sh_360file_thumbnail_preview {
+  max-height: 200px;
+  border: 1px solid #f2f2f2;
   cursor: pointer;
 }
-.pip {
+.sh_pip,
+.sh_360pip {
   display: inline-block;
-  margin: 10px 10px 0 0;
+  margin: 5px 5px 0 0;
 }
-.remove {
+.sh_remove,
+.sh_360remove {
   display: block;
-  background: #444;
-  border: 1px solid black;
+  background: #c8e9e9;
   color: white;
   text-align: center;
   cursor: pointer;
 }
-.remove:hover {
-  background: white;
-  color: black;
+
+.sh_remove:hover,
+.sh_360remove:hover {
+  background: #61C0BF;
 }
 
 #sh_required {
@@ -748,8 +905,7 @@ input[type="file"] {
         border-radius: 5px;
 }
 
-.sh_file_preveal,
-.sh_file_thumbnail {
+.sh_file_preveal {
         text-align: center;
         padding: 60px;
         font-size: 20px;
@@ -758,6 +914,15 @@ input[type="file"] {
         background-color:rgba(0,0,0, 0.01);
         width:100%;
         height: 300px;
+}
+
+.sh_file_thumbnail {
+        text-align: left;
+        padding: 60px;
+        border: 1px solid #f2f2f2;
+        border-radius: 5px;
+        background-color:rgba(0,0,0, 0.01);
+        width:100%;
 }
 
 #map {
@@ -910,7 +1075,7 @@ input[type="file"] {
     border-radius: 2px;
 } 
 
-h6 {
+#sh_realty_form h6 {
 	text-align:center;
 	outline: none;
 }
@@ -976,6 +1141,7 @@ h6 {
 <body>
 <c:import url="../common/realtyHeader.jsp" /><br>
 <form id="sh_realty_form" action="rinsert.do" method="post" enctype="multipart/form-data">
+<input type="hidden" name="user_no" value="${loginUser.user_no}">
 <div class="container" style="font-family: a고딕12;">
   	<div id="sh_required"><!-- required alert -->
    		<strong>필수!</strong> <span id="sh_required_text"></span>&nbsp;&nbsp;&nbsp;
@@ -1342,14 +1508,20 @@ placeholder="
 					</div>
 					<div class="row" id="sh_commonphotoform"> <!-- 일반 사진 등록 -->
 						<div class="col-md-12">
-							<div class="row">
+	 
+						<c:forEach var="i" begin="0" end="7">
+							<div class="row" id="sh_realty_image_row${i}">
 								<div class="col-md-12">
 									<div class="custom-file">
-									  <input type="file" id="sh_realty_image" name="realty_image[]" accept="image/*" multiple="multiple">
-									  <!-- <label class="custom-file-label" for="sh_realty_image">이미지 파일 첨부하기</label> -->
+									  <input type="text" id="sh_realty_image_name${i}" class="sh_realty_image_name" value="파일선택" readonly>
+									  <label for="sh_realty_image${i}">사진 올리기 <i class="far fa-copy"></i></label>
+									  <input type="file" class="realty_image" id="sh_realty_image${i}" name="realty_image[]" accept="image/*" style="display:none">
 									</div>
 								</div>
 							</div>
+							
+						</c:forEach>	
+							<br>
 							<div class="row">
 								<div class="col-md-12">
 									<div class="sh_file_preveal" id="sh_file_preveal_0">
@@ -1360,6 +1532,18 @@ placeholder="
 									</div>
 								</div>
 							</div>					
+							<div class="row">
+								<div class="col-md-12">
+									<div class="sh_file_thumbnail" id="sh_file_thumbnail_0" align="left">
+										<c:forEach var="j" begin="0" end="7">
+										<span class="sh_pip" id="sh_pip${j}">
+											<img id="sh_file_thumbnail_preview${j}" class="sh_file_thumbnail_preview"><br>
+											<span id="sh_remove${j}" class="sh_remove">삭제하기 x</span>
+										</span>
+										</c:forEach>	
+									</div>									
+								</div>
+							</div>		
 						</div>
 					</div>
 					<div class="row" id="sh_360photoform"> <!-- 360도 사진 등록 -->
@@ -1367,14 +1551,16 @@ placeholder="
 							<div class="row">
 								<div class="col-md-12">
 									<div class="custom-file">
-									  <input type="file" class="custom-file-input" id="customFile">
-									  <label class="custom-file-label" for="customFile">이미지 파일 첨부하기</label>
+									  <input type="text" id="sh_360_image_name" class="sh_360_image_name" value="파일선택" readonly>
+									  <label for="sh_360_image">사진 올리기 <i class="far fa-copy"></i></label>
+									  <input type="file" class="sh_360_image" id="sh_360_image" name="sh_360_image" accept="image/*" style="display:none">
 									</div>
 								</div>
 							</div>
+							<br>
 							<div class="row">
 								<div class="col-md-12">
-									<div class="sh_file_preveal">
+									<div class="sh_file_preveal" id="sh_file_preveal_1">
 										<h6><b>360°사진 제작하기</b></h6>
 										<h6>'구글 스트리트 뷰' 앱으로 본인의 집을 찍으세요.</h6>
 										<h6>찍으신 사진을 저장 후 사진 파일을 올려주시면 됩니다. (1장만 등록가능)</h6>
@@ -1383,7 +1569,18 @@ placeholder="
 										이미지를 업로드해주세요 <i class="far fa-copy"></i> 
 									</div>
 								</div>
-							</div>					
+							</div>	
+							<div class="row">
+								<div class="col-md-12">
+									<div class="sh_file_thumbnail" id="sh_file_thumbnail_1" align="center">
+										<span class="sh_360pip" id="sh_360pip">
+											<img id="sh_360file_thumbnail_preview" class="sh_360file_thumbnail_preview"><br>
+											<span id="sh_360remove" class="sh_360remove">삭제하기 <i class="fas fa-times"></i> </span>
+										</span>
+									</div>									
+								</div>
+							</div>								
+											
 						</div>
 					</div>												
 				</div>

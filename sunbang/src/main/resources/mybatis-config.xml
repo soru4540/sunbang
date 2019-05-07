@@ -5,6 +5,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="org.kh.sunbang.realty.model.vo.Realty" alias="Realty" />
+		<typeAlias type="org.kh.sunbang.dibs.model.vo.Dibs" alias="Dibs" />
 		
  		<typeAlias type="org.kh.sunbang.user.model.vo.User" alias="User" />
 		<typeAlias type="org.kh.sunbang.user.model.vo.Premium" alias="Premium" />
@@ -13,7 +14,7 @@
 		<typeAlias type="org.kh.sunbang.chat.model.vo.Message" alias="Message" />
 		<typeAlias type="org.kh.sunbang.chat.model.vo.ChatBlock" alias="ChatBlock" />
 		
-<!-- 		<typeAlias type="org.kh.sunbang.admin.model.vo.Report" alias="Report" />
+ 		<typeAlias type="org.kh.sunbang.admin.model.vo.Report" alias="Report" />
 		<typeAlias type="org.kh.sunbang.admin.model.vo.Guide" alias="Guide" />
 		
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Board" alias="Board" />
@@ -21,7 +22,7 @@
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Marker" alias="Marker" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Reply" alias="Reply" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Like" alias="Like" />
-		<typeAlias type="org.kh.sunbang.interior.model.vo.Follow" alias="Follow" /> -->
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Follow" alias="Follow" /> 
 		
 	</typeAliases>
 	<mappers>
@@ -30,7 +31,7 @@
 		<mapper resource="mappers/realty-mapper.xml" />
 		<mapper resource="mappers/user-mapper.xml" />
 		<mapper resource="mappers/chat-mapper.xml" />
-		<!-- <mapper resource="mappers/admin-mapper.xml" />
-		<mapper resource="mappers/interior-mapper.xml" /> -->
+		<mapper resource="mappers/admin-mapper.xml" />
+		<mapper resource="mappers/interior-mapper.xml" />
 	</mappers>
 </configuration>
