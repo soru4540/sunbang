@@ -4,6 +4,36 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="interiorMapper">
 
+<resultMap type="BoardFull" id="resultBoardFull">
+	<id property="board_no" column="board_no"/>
+		<result property="board_type" column="board_type" />
+		<result property="space" column="space" />
+		<result property="housing_type" column="housing_type" />
+		<result property="category1" column="category1" />
+		<result property="category2" column="category2" />
+		<result property="category3" column="category3" />
+		<result property="floor_area" column="floor_area" />
+		<result property="color1" column="color1" />
+		<result property="color2" column="color2" />
+		<result property="color3" column="color3" />
+		<result property="board_title" column="board_title" />
+		<result property="budget" column="budget" />
+		<result property="style" column="style" />
+		<result property="board_hits" column="board_hits" />
+		<result property="board_date" column="board_date" />
+		<result property="board_status" column="board_status" />
+		<result property="user_no" column="user_no" />	
+		<result property="post_no" column="post_no"/>
+        <result property="post_keyword" column="post_keyword" />
+        <result property="post_data" column="post_data" />
+        <result property="post_contents" column="post_contents" />
+        <result property="marker_no" column="marker_no"/>
+        <result property="product_image" column="product_image" />
+        <result property="cordi_x" column="cordi_x" />
+        <result property="cordi_y" column="cordi_y" />
+        <result property="product_url" column="product_url" />     
+</resultMap>
+
 <resultMap type="Board" id="resultBoard">
 	<id property="board_no" column="board_no"/>
 		<result property="board_type" column="board_type" />
@@ -62,6 +92,18 @@
      <result property="follower_no" column="follower_no" />
       <result property="user_no" column="user_no" />    
 </resultMap>
+
+<select id="selectHbTop1" resultMap="resultBoardFull">
+select board_no,post_no,board_hits,post_keyword,post_data,user_no
+from(select rownum, board_no,post_no,board_hits,post_keyword,post_data, user_no from tb_board
+full join tb_post using(board_no)
+full join tb_marker using(post_no)
+order by board_hits desc, post_no)
+where rownum =1
+</select>
+
+
+
 
 
 </mapper>

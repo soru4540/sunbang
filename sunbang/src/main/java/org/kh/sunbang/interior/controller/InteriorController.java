@@ -1,11 +1,19 @@
 package org.kh.sunbang.interior.controller;
 
-import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
+import java.io.PrintWriter;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.json.simple.JSONObject;
+import org.kh.sunbang.interior.model.service.InteriorService;
 import org.kh.sunbang.interior.model.vo.Board;
+import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Reply;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +21,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class InteriorController {
+	
+   @Autowired
+   private InteriorService interiorService;
 	
 //-------------------------JB PART------------------------------------------------
 	
@@ -22,6 +33,45 @@ public class InteriorController {
 		mv.setViewName("interior/interiorMain");
 		return mv;
 	}
+	
+	@RequestMapping("ihtop1select.do")
+	public void selectHbTop1(BoardFull boardfull, HttpServletResponse response) {				
+		boardfull = interiorService.selectHbTop1();
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = null;
+		try {
+			 out = response.getWriter();
+			 JSONObject job = new JSONObject();
+			 job.put("board_no", boardfull.getBoard_no());
+			 job.put("post_no", boardfull.getPost_no());
+			 job.put("board_hits", boardfull.getPost_keyword());
+			 job.put("post_data", boardfull.getPost_data());
+			 job.put("user_no", boardfull.getUser_no());
+			 out.write(job.toJSONString());		
+		
+		} catch (IOException e) {			
+			e.printStackTrace();
+		}finally {
+			 out.flush();
+			 out.close();
+		}				 
+	}
+	
+	@RequestMapping("iktop4select.do")
+	public void selectKbTop4(BoardFull boardfull, HttpServletResponse response) {		
+		
+	}
+	
+	@RequestMapping("ihtop3select.do")
+	public void selectHbTop3(BoardFull boardfull, HttpServletResponse response) {		
+		
+	}
+	
+	@RequestMapping("iptop8select.do")
+	public void selectPbTop8(BoardFull boardfull, HttpServletResponse response) {		
+		
+	}
+	
 	
 	@RequestMapping("isearch.do")
 	public ModelAndView selectInteriorSearch(ModelAndView mv,@RequestParam(name="keyword") String keyword) {
@@ -157,7 +207,7 @@ public class InteriorController {
 	@RequestMapping("iwritepage.do")
 	public String moveWritePage() {
 		
-		return "interiorWritePage";
+		return "interior/interiorWritePage";
 	}
 	
 	@RequestMapping("ibinsertview.do")

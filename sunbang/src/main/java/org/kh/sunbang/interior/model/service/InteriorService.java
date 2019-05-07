@@ -3,6 +3,7 @@ package org.kh.sunbang.interior.model.service;
 import java.util.ArrayList;
 
 import org.kh.sunbang.interior.model.vo.Board;
+import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Marker;
@@ -16,7 +17,7 @@ public interface InteriorService {
 	
 //--------------------jb------------------------------------------------//
 	
-	Board selectHbTop1();
+	BoardFull selectHbTop1();
 	ArrayList<Board> selectKbTop4();
 	ArrayList<Board> selectHbTop3();
 	ArrayList<Board> selectPbTop8(); 
