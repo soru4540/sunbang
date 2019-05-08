@@ -214,7 +214,8 @@
 	$(function(){
 		$("#sh_mybuildingfloor").on("change", function(){
  			if(Number($("#sh_mybuildingfloor").val()) > Number($("#sh_totalbuildingfloor").val()) || $("#sh_mybuildingfloor").val().length > $("#sh_totalbuildingfloor").val().length){
-				alert("해당층수가 건물층수보다 클 수 없습니다.");
+				$("#sh_required").css("display", "block");
+				$('#sh_required_text').text("해당층수가 건물층수보다 클 수 없습니다.");
 				$("#sh_mybuildingfloor").val("");
 				$("#sh_mybuildingfloor").focus();
 			} 
@@ -222,7 +223,8 @@
 		
 		$("#sh_totalbuildingfloor").on("change", function(){
  			if(Number($("#sh_mybuildingfloor").val()) > Number($("#sh_totalbuildingfloor").val()) || $("#sh_mybuildingfloor").val().length > $("#sh_totalbuildingfloor").val().length){
-				alert("건물층수가 해당층수보다 작을 수 없습니다.");
+				$("#sh_required").css("display", "block");
+				$('#sh_required_text').text("건물층수가 해당층수보다 작을 수 없습니다.");
 				$("#sh_totalbuildingfloor").val("");
 				$("#sh_totalbuildingfloor").focus();
 			} 
@@ -412,8 +414,9 @@
 			});
 			
 			//옵션항목
-			
 			$(".sh_option_btn").val(0);
+			$(".sh_option_btn_value").val(0);
+			
 			$("#sh_option_btn0").val(1);
 			$("#sh_option_btn0").css("background-color", "#61C0BF");
 			$("#sh_option_btn0").css("color", "white");
@@ -426,6 +429,7 @@
 				
 				if($("#sh_option_btn"+i).val() == 1){
 					$("#sh_option_btn"+i).val(0);
+					$("#sh_option_btn_value"+i).val(0);
 					$("#sh_option_btn"+i).css("background-color", "white");
 					$("#sh_option_btn"+i).css("color", "#61C0BF");
 					
@@ -449,19 +453,20 @@
 					
 				}else if($("#sh_option_btn"+i).val() == 0){
 					$("#sh_option_btn"+i).val(1);
+					$("#sh_option_btn_value"+i).val(1);
 					$("#sh_option_btn"+i).css("background-color", "#61C0BF");
 					$("#sh_option_btn"+i).css("color", "white");
 				}
+				
  				if(i == 0){
 					$(".sh_option_btn").css("background-color", "white");
 					$(".sh_option_btn").css("color", "#61C0BF");	
 	 				$("#sh_option_btn0").css("background-color", "#61C0BF");
 					$("#sh_option_btn0").css("color", "white");
 					$(".sh_option_btn").val(0);
+					$(".sh_option_btn_value").val(0);
 					$("#sh_option_btn0").val(1);
 				} 
-			//alert($("#sh_option_btn"+i).val());
-			//alert($("#sh_option_btn0").val());
 			});
 		});
 	});
@@ -665,20 +670,20 @@ $(function(){
 			console.log("베란다/발코니 : " + $('input[name=balcony]').val());
 			console.log("전세자금대출 : " + $('input[name=loan_availability]').val());
 			console.log("구조 : " + $('input[name=structure]').val());
-			console.log("에어컨 : " + $('button[name=airconditioner]').val());
-			console.log("세탁기 : " + $('button[name=laundry_machine]').val());
-			console.log("침대 : " + $('button[name=bed]').val());
-			console.log("책상 : " + $('button[name=desk]').val());
-			console.log("옷장 : " + $('button[name=closet]').val());
-			console.log("TV : " + $('button[name=tv]').val());
-			console.log("가스레인지 : " + $('button[name=gasrange]').val());
+			console.log("에어컨 : " + $('input[name=airconditioner]').val());
+			console.log("세탁기 : " + $('input[name=laundry_machine]').val());
+			console.log("침대 : " + $('input[name=bed]').val());
+			console.log("책상 : " + $('input[name=desk]').val());
+			console.log("옷장 : " + $('input[name=closet]').val());
+			console.log("TV : " + $('input[name=tv]').val());
+			console.log("가스레인지 : " + $('input[name=gasrange]').val());
 
-			console.log("신발장 : " + $('button[name=shoe_shelf]').val());
-			console.log("냉장고 : " + $('button[name=refrigerator]').val());
-			console.log("인덕션 : " + $('button[name=induction]').val());
-			console.log("전자레인지 : " + $('button[name=microwave]').val());
-			console.log("전자도어락 : " + $('button[name=door_lock]').val());
-			console.log("비데 : " + $('button[name=bidet]').val());
+			console.log("신발장 : " + $('input[name=shoe_shelf]').val());
+			console.log("냉장고 : " + $('input[name=refrigerator]').val());
+			console.log("인덕션 : " + $('input[name=induction]').val());
+			console.log("전자레인지 : " + $('input[name=microwave]').val());
+			console.log("전자도어락 : " + $('input[name=door_lock]').val());
+			console.log("비데 : " + $('input[name=bidet]').val());
 			console.log("상세정보제목 : " + $('input[name=realty_detail_title]').val());
 			console.log("상세정보설명 : " + $('textarea[name=realty_detail_comment]').val());
 			console.log("일반사진1 : " + $('input[name=realty_image1]').val());
@@ -704,6 +709,12 @@ $(function(){
 	});
 	//제출버튼 클릭 시
 	$("#psubmit").click(function(){
+		
+		//상세설명 <br>로 변환
+		var str = $("#sh_detaili_textarea").val(); 
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+		$("#sh_detaili_textarea").val(str); 
+		
 		//매물종류
 		if($('input[name=realty_type]').val() == ""){
 			$("#sh_required").css("display", "block");
@@ -1450,19 +1461,33 @@ $(function(){
 						</div>
 						<div class="col-md-10">
 							<button type="button" class="sh_option_btn" id="sh_option_btn0">없음</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn1" name="airconditioner">에어컨</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn2" name="laundry_machine">세탁기</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn3" name="bed">침대</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn4" name="desk">책상</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn5" name="closet">옷장</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn6" name="tv">TV</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn7" name="gasrange">가스레인지</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn8" name="shoe_shelf">신발장</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn9" name="refrigerator">냉장고</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn10" name="induction">인덕션</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn11" name="microwave">전자레인지</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn12" name="door_lock">전자도어락</button>
-							<button type="button" class="sh_option_btn" id="sh_option_btn13" name="bidet">비데</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn1">에어컨</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn2">세탁기</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn3">침대</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn4">책상</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn5">옷장</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn6">TV</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn7">가스레인지</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn8">신발장</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn9">냉장고</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn10">인덕션</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn11">전자레인지</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn12">전자도어락</button>
+							<button type="button" class="sh_option_btn" id="sh_option_btn13">비데</button>
+							
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value1" name="airconditioner">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value2" name="laundry_machine">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value3" name="bed">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value4" name="desk">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value5" name="closet">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value6" name="tv">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value7" name="gasrange">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value8" name="shoe_shelf">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value9" name="refrigerator">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value10" name="induction">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value11" name="microwave">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value12" name="door_lock">
+							<input type="hidden" class="sh_option_btn_value" id="sh_option_btn_value13" name="bidet">
 						</div>
 					</div>
 				</div>

@@ -15,7 +15,7 @@
 <!-- 360도 사진 띄우기 -->
 <script type="text/javascript">
 	$(function() {
-		if( ${realty.image360 == null }){
+		if( ${ realty.image360 == null }){
 			$("#sh_360_btn").css("display", "none");
 		}
 		
@@ -24,30 +24,9 @@
 		});
 	});
 </script>
-<!-- 모달창 띄우기 -->
+<!-- 기업회원 정보 띄우기 -->
 <script type="text/javascript">
-	$(function() {
-		// Get the modal
-		var modal = document.getElementById('sh_img_modal');
 
-		// Get the image and insert it inside the modal - use its "alt" text as a sh_modal_caption
-		var img = document.getElementById('sh_img1_1');
-		var modalImg = document.getElementById("sh_img2_1");
-		var captionText = document.getElementById("sh_modal_caption");
-		img.onclick = function() {
-			modal.style.display = "block";
-			modalImg.src = this.src;
-			captionText.innerHTML = this.alt;
-		}
-
-		// Get the <span> element that closes the modal
-		var span = document.getElementsByClassName("close")[0];
-
-		// When the user clicks on <span> (x), close the modal
-		span.onclick = function() {
-			modal.style.display = "none";
-		}
-	});
 </script>
 <!-- 평 / ㎡ 변환 -->
 <script type="text/javascript">
@@ -104,34 +83,131 @@ $(function(){
 			success: function(result){
 				if(result == 0){
 					$("#sh_dibs_uncheck").css("display", "");
+					$("#sh_dibs_value").val(0);
 				}else{
 					$("#sh_dibs_check").css("display", "");
+					$("#sh_dibs_value").val(1);
 				}
 			}
-		});			
+		});	
+		
 		
 		$("#sh_rdinsert").click(function(){
-			var message = confirm("매물을 찜하기 하시겠습니까?");
-			if(message == true){
-				location.href="rpinsert.do?user_no=${loginUser.user_no}&realty_no=${realty.realty_no}";
-			}
-		});
-	});
-</script>
-<script type="text/javascript">
-$(function(){
-	
-});
+			if($("#sh_dibs_value").val() == 0){
+				var message = confirm("매물을 찜하기 하시겠습니까?");
+				if(message == true){
+					$.ajax({
+						url: "rdinsert.do",
+						type: "post",
+						data: JSON.stringify(dibs),
+						contentType: "application/json; charset=utf-8",
+						success: function(result){
+							if(result == 1){
+								$("#sh_dibs_uncheck").css("display", "none");
+								$("#sh_dibs_check").css("display", "");
+							}else{
+								$("#sh_dibs_uncheck").css("display", "");
+								$("#sh_dibs_check").css("display", "none");
+							}
+							
+							$("#sh_dibs_value").val(1);
+							
+							$.ajax({
+								url: "rdcount.do",
+								type: "post",
+								data: {realty_no: realty_no},
+								success: function(result){
+									$("#sh_rdcount").html(result);
+								}
+							});
+						} //success
+					});	//ajax
+				} //if
+			}else{
+				alert("찜하기가 취소되었습니다.");
+				$.ajax({
+					url: "rddelete.do",
+					type: "post",
+					data: JSON.stringify(dibs),
+					contentType: "application/json; charset=utf-8",
+					success: function(result){
+						if(result == 1){
+							$("#sh_dibs_uncheck").css("display", "");
+							$("#sh_dibs_check").css("display", "none");
+						}else{
+							$("#sh_dibs_uncheck").css("display", "none");
+							$("#sh_dibs_check").css("display", "");
+						}
+						
+						$("#sh_dibs_value").val(0);
+						
+						$.ajax({
+							url: "rdcount.do",
+							type: "post",
+							data: {realty_no: realty_no},
+							success: function(result){
+								$("#sh_rdcount").html(result);
+							}
+						});
+					} //success
+				});	//ajax				
+			} //else
+		}); //click
+	}); //document.ready
 </script>
 <!-- 허위매물신고 -->
 <script type="text/javascript">
 	$(function(){
+		
+		var report = new Object();
+		report.user_no = ${loginUser.user_no };
+		report.realty_no = ${realty.realty_no };
+		report.contents = $("#sh_rreportcontent").val();
+		
+		$.ajax({
+			url: "rrcheck.do",
+			type: "post",
+			data: JSON.stringify(report),
+			contentType: "application/json; charset=utf-8",
+			success: function(result){
+				if(result == 0){
+					$("#sh_report").css("display", "");
+				}else{
+					$("#sh_report").css("display", "none");
+				}
+			}
+		});		
+		
 		$("#sh_rrinsert_btn").click(function(){
-			location.href="rrinsert.do";
+			//신고내용 <br>로 변환
+			var str = $("#sh_rreportcontent").val(); 
+			str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+			$("#sh_rreportcontent").val(str); 
+
+			$.ajax({
+				url: "rrinsert.do",
+				type: "post",
+				data: JSON.stringify(report),
+				contentType: "application/json; charset=utf-8",
+				success: function(result){
+					if(result == 1){
+						alert("신고가 완료되었습니다.");
+						$("#sh_report").css("display", "none");
+					}
+				}
+			});				
+			
 		});
 	});
 </script>
-
+<!-- 상세설명 </br>처리 -->
+<script type="text/javascript">
+	$(function(){
+		var str = $('#sh_detaili_textarea').val();
+		str = str.split('<br/>').join("\r\n");
+		$('#sh_detaili_textarea').val(str);
+	});	
+</script>
 <style type="text/css">
 .carousel-item {
 	cursor: pointer;
@@ -139,6 +215,10 @@ $(function(){
 
 #sh_optionicon img {
 	width: 80px;
+}
+
+#sh_report{
+	color: #b30000;
 }
 
 #sh_360_btn, #sh_chat_btn {
@@ -265,7 +345,18 @@ $(function(){
 			<div class="col-md-12">
 				<nav class="navbar navbar-default bg-light fixed-bottom"> <!-- 하단바 -->
 					<ul class="nav navbar-nav navbar-left">
-						${realty.road_address } / ${realty.realty_type } / 월세 <fmt:formatNumber value="${realty.month_lease }" groupingUsed="true" /> 원 / ${realty.exclusive_area }평 / 선방공인중개사무소 김성현
+						${realty.road_address } / ${realty.realty_type } / 
+						<c:if test="${realty.month_lease != 0 }">
+							월세 <fmt:formatNumber value="${realty.month_lease }" groupingUsed="true" /> 원 : 보증금 <fmt:formatNumber value="${realty.deposit }" groupingUsed="true" /> 원 /
+						</c:if>
+						<c:if test="${realty.payback_deposit_lease != 0 }">
+							전세 <fmt:formatNumber value="${realty.payback_deposit_lease }" groupingUsed="true" /> 원 /
+						</c:if>
+						<c:if test="${realty.purchase != 0 }">
+							매매  <fmt:formatNumber value="${realty.purchase }" groupingUsed="true" /> 원 /
+						</c:if>
+						${realty.exclusive_area }평 / 
+						선방공인중개사무소 김성현
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<button type="button" id="sh_chat_btn" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
@@ -276,7 +367,16 @@ $(function(){
 				<div class="row"> <!-- 매물정보 -->
 					<div class="col-md-3">
 						<br>${realty.realty_type }<br>
-						<h3>월세 <fmt:formatNumber value="${realty.month_lease }" groupingUsed="true" /> 원</h3>
+						<c:if test="${realty.month_lease != 0 }">
+							<h5>월세 <fmt:formatNumber value="${realty.month_lease }" groupingUsed="true" /> 원 <br> 
+								보증금 <fmt:formatNumber value="${realty.deposit }" groupingUsed="true" /> 원</h5>
+						</c:if>
+						<c:if test="${realty.payback_deposit_lease != 0 }">
+							<h5>전세 <fmt:formatNumber value="${realty.payback_deposit_lease }" groupingUsed="true" /> 원</h5>
+						</c:if>
+						<c:if test="${realty.purchase != 0 }">
+							<h5>매매 <fmt:formatNumber value="${realty.purchase }" groupingUsed="true" /> 원</h5>
+						</c:if>
 					</div>
 					<div class="col-md-2">
 						<br>전용 면적 <br>
@@ -313,15 +413,19 @@ $(function(){
 				<div class="row" id="sh_hpr"> <!-- 조회수 / 찜하기 / 신고 -->
 					<div class="col-md-12">
 						<a><i class="far fa-eye"></i> ${realty.realty_hits }</a> &nbsp;
+						
+						<input type="hidden" id="sh_dibs_value">
 						<a id="sh_rdinsert">
 							<i class="far fa-bookmark" id="sh_dibs_uncheck" style="display:none"></i> 
 							<i class="fas fa-bookmark" id="sh_dibs_check" style="display:none"></i>
 							<span id="sh_rdcount"></span>
 						</a> &nbsp;
-						<a data-toggle="modal" data-target="#myModal"><i class="far fa-angry"></i> 허위매물신고</a>
+						<c:if test="${not empty loginUser }">
+							<a data-toggle="modal" data-target="#sh_reportModal" id="sh_report"><i class="far fa-angry"></i> 허위매물신고</a>
+						</c:if>
 
 						<!-- The Modal -->
-						<div class="modal fade" id="myModal">
+						<div class="modal fade" id="sh_reportModal">
 							<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
 								<div class="modal-content">
 
@@ -374,8 +478,9 @@ $(function(){
 							</div>
 							<div class="col-md-3">
 								<b>입주가능일 </b>
-								<c:if test="${realty.registdate == realty.move_available_date }">즉시입주</c:if>
-								<c:if test="${realty.registdate != realty.move_available_date }"> ${realty.move_available_date }</c:if>
+								<c:if test="${realty.move_available_date == '0' }">즉시 입주</c:if>
+								<c:if test="${realty.move_available_date == '1' }">날짜 협의</c:if>
+								<c:if test="${realty.move_available_date != '0' && realty.move_available_date != '1'}"> ${realty.move_available_date }</c:if>
 							</div>
 						</div>
 						<hr>
@@ -383,12 +488,14 @@ $(function(){
 							<div class="col-md-3">
 								<b>관리비 </b>
 								<c:if test="${realty.management_pay == 0}">없음</c:if>
-								<c:if test="${realty.management_pay != 0}">${realty.management_pay }원</c:if>
+								<c:if test="${realty.management_pay == 1}">가능</c:if>
+								<c:if test="${realty.management_pay != 0 && realty.management_pay != 1}">${realty.management_pay }원</c:if>
 							</div>
 							<div class="col-md-3">
 								<b>주차장 </b> 
 								<c:if test="${realty.parking_lot == '0' }">없음</c:if>
-								<c:if test="${realty.parking_lot != '0' }">${realty.parking_lot }</c:if>
+								<c:if test="${realty.parking_lot == '1' }">가능</c:if>
+								<c:if test="${realty.parking_lot != '0' && realty.parking_lot != '1'}">${realty.parking_lot }</c:if>
 							</div>
 							<div class="col-md-3">
 								<b>엘리베이터 </b>
@@ -420,7 +527,9 @@ $(function(){
 							</div>
 							<div class="col-md-3">
 								<c:if test="${realty.structure == '0' }"></c:if>
-								<c:if test="${realty.structure != '0' }"><b>구조 </b> ${realty.structure }</c:if>
+								<c:if test="${realty.structure == '1' }"><b>구조 </b> 복층</c:if>
+								<c:if test="${realty.structure == '2' }"><b>구조 </b> 1.5룸/주방분리형</c:if>
+								<c:if test="${realty.structure == '3' }"><b>구조 </b> 다락방</c:if>
 							</div>
 						</div>
 						<hr>
@@ -432,58 +541,170 @@ $(function(){
 					<div class="col-md-9">
 						<div class="row" id="sh_carousel" style="background-color:rgba(0,0,0, 0.01);">  <!-- carousel 이미지 -->
 							<div align="center" class="col-md-12">
-								<div class="carousel slide" id="carousel-621227">
+								<div class="carousel slide" id="sh_realty_images">
 									<ol class="carousel-indicators">
-										<li data-slide-to="0" data-target="#carousel-621227"></li>
-										<li data-slide-to="1" data-target="#carousel-621227"></li>
-										<li data-slide-to="2" data-target="#carousel-621227"></li>
-										<li data-slide-to="3" data-target="#carousel-621227"
-											class="active"></li>
+										<c:if test="${not empty realty.realty_image1 }">
+											<li data-slide-to="0" data-target="#sh_realty_images" class="active"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image2 }">
+											<li data-slide-to="1" data-target="#sh_realty_images"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image3 }">
+											<li data-slide-to="2" data-target="#sh_realty_images"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image4 }">
+											<li data-slide-to="3" data-target="#sh_realty_images"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image5 }">
+											<li data-slide-to="4" data-target="#sh_realty_images"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image6 }">
+											<li data-slide-to="5" data-target="#sh_realty_images"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image7 }">
+											<li data-slide-to="6" data-target="#sh_realty_images"></li>
+										</c:if>
+										<c:if test="${not empty realty.realty_image8 }">
+											<li data-slide-to="7" data-target="#sh_realty_images"></li>
+										</c:if>
+
 									</ol>
 									<div class="carousel-inner" id="carousel-inner">
-										<div class="carousel-item active">
-											<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" />
-											<div class="carousel-caption" id="sh_360_caption">
-												<button type="button" id="sh_360_btn" class="btn btn-sm btn-success">360° <i class="far fa-images"></i></button>
+										<c:if test="${not empty realty.realty_image1 }">
+											<div class="carousel-item active" data-toggle="modal" data-target="#sh_realty_modal1">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image1 }" />
+												<div class="carousel-caption" id="sh_360_caption">
+													<button type="button" id="sh_360_btn" class="btn btn-sm btn-success">360° <i class="far fa-images"></i></button>
+												</div>
 											</div>
-										</div>
-										<div class="carousel-item">
-											<img id="sh_img1_1" class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample2.png" />
-										</div>
-										<div class="carousel-item">
-											<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" />
-										</div>
-										<div class="carousel-item">
-											<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample3.png" />
-										</div>
+											<div class="modal fade" id="sh_realty_modal1">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image1 }" />
+														</div>
+													</div>
+												</div>
+											</div>												
+										</c:if>	
+										<c:if test="${not empty realty.realty_image2 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal2">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image2 }" />
+											</div>
+											<div class="modal fade" id="sh_realty_modal2">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image2 }" />
+														</div>
+													</div>
+												</div>
+											</div>												
+										</c:if>
+										<c:if test="${not empty realty.realty_image3 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal3">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image3 }" />
+											</div>	
+											<div class="modal fade" id="sh_realty_modal3">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image3 }" />
+														</div>
+													</div>
+												</div>
+											</div>																					
+										</c:if>										
+										<c:if test="${not empty realty.realty_image4 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal4">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image4 }" />
+											</div>	
+											<div class="modal fade" id="sh_realty_modal4">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image4 }" />
+														</div>
+													</div>
+												</div>
+											</div>																					
+										</c:if>	
+										<c:if test="${not empty realty.realty_image5 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal5">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image5 }" />
+											</div>	
+											<div class="modal fade" id="sh_realty_modal5">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image5 }" />
+														</div>
+													</div>
+												</div>
+											</div>																					
+										</c:if>	
+										<c:if test="${not empty realty.realty_image6 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal6">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image6 }" />
+											</div>		
+											<div class="modal fade" id="sh_realty_modal6">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image6 }" />
+														</div>
+													</div>
+												</div>
+											</div>																				
+										</c:if>	
+										<c:if test="${not empty realty.realty_image7 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal7">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image7 }" />
+											</div>	
+											<div class="modal fade" id="sh_realty_modal7">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image7 }" />
+														</div>
+													</div>
+												</div>
+											</div>																					
+										</c:if>	
+										<c:if test="${not empty realty.realty_image8 }">
+											<div class="carousel-item" data-toggle="modal" data-target="#sh_realty_modal8">
+												<img class="d-block" src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image8 }" />
+											</div>	
+											<div class="modal fade" id="sh_realty_modal8">
+												<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-body">
+															<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image8 }" />
+														</div>
+													</div>
+												</div>
+											</div>																					
+										</c:if>	
 									</div>
-									<a class="carousel-control-prev" href="#carousel-621227"
+									<a class="carousel-control-prev" href="#sh_realty_images"
 										data-slide="prev"><span class="carousel-control-prev-icon"></span>
 										<span class="sr-only">Previous</span></a> <a
-										class="carousel-control-next" href="#carousel-621227"
+										class="carousel-control-next" href="#sh_realty_images"
 										data-slide="next"><span class="carousel-control-next-icon"></span>
 										<span class="sr-only">Next</span></a>
 								</div>
-								<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-								<!-- The Modal -->
-<!-- 								<div id="sh_img_modal" class="modal">
-									<span class="close" style="color:white"><i class="fas fa-times"></i></span> 
-										<img class="modal-content" id="sh_img2_1">
-									<div id="sh_modal_caption"></div>
-								</div> -->
-	
 							</div>
 						</div> <!-- carousel 이미지 -->
 						<div class="row"> <!-- 상세설명 -->
 							<div class="col-md-6" align="center">
-								<br><br><br><br><br><br>
+								<br><br><br><br>
 								<h2>${realty.realty_detail_title }</h2>
 							</div>
 							<div class="col-md-6">
-								<br><br><br><br><br><br><br>
-								<h4>
-								${realty.realty_detail_comment }
-								</h4>
+								<br><br><br><br>
+								<h5>
+								<span id="sh_detaili_textarea">${realty.realty_detail_comment }</span>
+								</h5>
 								<br><br><br><br><br><br><br>
 							</div>
 						</div> <!-- 상세설명 -->
@@ -758,7 +979,7 @@ function changeCategoryClass(el) {
 						</div>
 					<div class="col-md-3">
 						<div class="sh_sidebar"> <!-- 사이드바 -->
-						  <a class="active" href="#home"><i class="fas fa-paint-roller"></i>&nbsp;&nbsp;인테리어추천</a>
+						  <a class="active" href="interiormain.do"><i class="fas fa-paint-roller"></i>&nbsp;&nbsp;인테리어추천</a>
 						  <div class="row" id="sh_recommendinterior"> <!-- 추천 인테리어 -->
 						  	<div class="col-md-12">
 						  		<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" class="sh_recommendinterior_img">

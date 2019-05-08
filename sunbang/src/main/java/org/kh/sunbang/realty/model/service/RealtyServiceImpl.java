@@ -2,6 +2,7 @@ package org.kh.sunbang.realty.model.service;
 
 import java.util.ArrayList;
 
+import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.dao.RealtyDao;
 import org.kh.sunbang.realty.model.vo.Realty;
@@ -34,11 +35,32 @@ public class RealtyServiceImpl implements RealtyService {
 	public int selectDibsCheck(Dibs dibs) { //매물상세페이지 : 찜 check
 		return realtyDao.selectDibsCheck(mybatisSession, dibs);
 	}
+	
+	@Override
+	public int insertDibs(Dibs dibs) { //매물상세페이지 : 찜 insert
+		return realtyDao.insertDibs(mybatisSession, dibs);
+	}
 
+	@Override
+	public int deleteDibs(Dibs dibs) { //매물상세페이지 : 찜 delete
+		return realtyDao.deleteDibs(mybatisSession, dibs);
+	}
+	
+	@Override
+	public int selectRealtyReportCheck(Report report) { //매물상세페이지 : 신고 check
+		return realtyDao.selectRealtyReportCheck(mybatisSession, report);
+	}
+	
+	@Override
+	public int insertRealtyReport(Report report) { //매물상세페이지 : 신고 insert
+		return realtyDao.insertRealtyReport(mybatisSession, report);
+	}
+	
 	@Override
 	public void updateRealtyHits(int realty_no) { //매물조회수
 		realtyDao.updateRealtyHits(mybatisSession, realty_no);
 	}
+	
 	
 	@Override
 	public int insertRealty(Realty realty) {
@@ -53,6 +75,9 @@ public class RealtyServiceImpl implements RealtyService {
 	public ArrayList<Realty> selectMarkerList() {
 		return realtyDao.selectMarkerList(mybatisSession);
 	}
+
+
+
 
 
 

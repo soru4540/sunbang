@@ -20,12 +20,12 @@ public class Realty implements java.io.Serializable {
 	private String road_address;			//도로명주소
 	private String land_lot;				//지번주소
 	private String detail_address;			//상세주소
-	private int month_lease;				//월세
-	private int	deposit;					//보증금
-	private int	payback_deposit_lease;		//전세
-	private int	purchase;					//매매
-	private int	residential;				//공급면적
-	private int	exclusive_area;				//전용면적
+	private long month_lease;				//월세
+	private long deposit;					//보증금
+	private long payback_deposit_lease;		//전세
+	private long purchase;					//매매
+	private long residential;				//공급면적
+	private long exclusive_area;			//전용면적
 	private int	building_layers;			//건물층수
 	private int	realty_layers;				//해당층수
 	private int	heatting_system;			//난방종류
@@ -66,14 +66,15 @@ public class Realty implements java.io.Serializable {
 
 	public Realty(int realty_no, Date registdate, Date renewdate, int realty_hits, String realty_status,
 			String realty_type, String building_type, String road_address, String land_lot, String detail_address,
-			int month_lease, int deposit, int payback_deposit_lease, int purchase, int residential, int exclusive_area,
-			int building_layers, int realty_layers, int heatting_system, String move_available_date, int management_pay,
-			String parking_lot, int elevator, int builtin, int allowance_pet, int balcony, int loan_availability,
-			String structure, int airconditioner, int laundry_machine, int bed, int desk, int closet, int tv,
-			int gasrange, int shoe_shelf, int refrigerator, int induction, int microwave, int door_lock, int bidet,
-			String realty_detail_title, String realty_detail_comment, String realty_image1, String realty_image2,
-			String realty_image3, String realty_image4, String realty_image5, String realty_image6,
-			String realty_image7, String realty_image8, String image360, int user_no) {
+			long month_lease, long deposit, long payback_deposit_lease, long purchase, long residential,
+			long exclusive_area, int building_layers, int realty_layers, int heatting_system,
+			String move_available_date, int management_pay, String parking_lot, int elevator, int builtin,
+			int allowance_pet, int balcony, int loan_availability, String structure, int airconditioner,
+			int laundry_machine, int bed, int desk, int closet, int tv, int gasrange, int shoe_shelf, int refrigerator,
+			int induction, int microwave, int door_lock, int bidet, String realty_detail_title,
+			String realty_detail_comment, String realty_image1, String realty_image2, String realty_image3,
+			String realty_image4, String realty_image5, String realty_image6, String realty_image7,
+			String realty_image8, String image360, int user_no) {
 		super();
 		this.realty_no = realty_no;
 		this.registdate = registdate;
@@ -210,51 +211,51 @@ public class Realty implements java.io.Serializable {
 		this.detail_address = detail_address;
 	}
 
-	public int getMonth_lease() {
+	public long getMonth_lease() {
 		return month_lease;
 	}
 
-	public void setMonth_lease(int month_lease) {
+	public void setMonth_lease(long month_lease) {
 		this.month_lease = month_lease;
 	}
 
-	public int getDeposit() {
+	public long getDeposit() {
 		return deposit;
 	}
 
-	public void setDeposit(int deposit) {
+	public void setDeposit(long deposit) {
 		this.deposit = deposit;
 	}
 
-	public int getPayback_deposit_lease() {
+	public long getPayback_deposit_lease() {
 		return payback_deposit_lease;
 	}
 
-	public void setPayback_deposit_lease(int payback_deposit_lease) {
+	public void setPayback_deposit_lease(long payback_deposit_lease) {
 		this.payback_deposit_lease = payback_deposit_lease;
 	}
 
-	public int getPurchase() {
+	public long getPurchase() {
 		return purchase;
 	}
 
-	public void setPurchase(int purchase) {
+	public void setPurchase(long purchase) {
 		this.purchase = purchase;
 	}
 
-	public int getResidential() {
+	public long getResidential() {
 		return residential;
 	}
 
-	public void setResidential(int residential) {
+	public void setResidential(long residential) {
 		this.residential = residential;
 	}
 
-	public int getExclusive_area() {
+	public long getExclusive_area() {
 		return exclusive_area;
 	}
 
-	public void setExclusive_area(int exclusive_area) {
+	public void setExclusive_area(long exclusive_area) {
 		this.exclusive_area = exclusive_area;
 	}
 
@@ -580,4 +581,5 @@ public class Realty implements java.io.Serializable {
 				+ realty_image6 + ", realty_image7=" + realty_image7 + ", realty_image8=" + realty_image8
 				+ ", image360=" + image360 + ", user_no=" + user_no + "]";
 	}
+	
 }

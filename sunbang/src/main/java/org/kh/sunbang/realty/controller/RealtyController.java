@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.service.RealtyService;
 import org.kh.sunbang.realty.model.vo.Realty;
@@ -106,8 +107,6 @@ public class RealtyController {
 		dibs.setUser_no(user_no);
 		dibs.setRealty_no(realty_no);
 		
-		System.out.println(user_no + ", " + realty_no);
-		
 		int dibsCheck = realtyService.selectDibsCheck(dibs);
 		String sdibsCheck = Integer.toString(dibsCheck);
 		
@@ -121,17 +120,119 @@ public class RealtyController {
 		}
 	}	
 	
+	@RequestMapping(value="rdinsert.do", method=RequestMethod.POST)
+	public void insertDibs(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		int user_no = ((Long)job.get("user_no")).intValue();
+		int realty_no = ((Long)job.get("realty_no")).intValue();
+		
+		Dibs dibs = new Dibs();
+		dibs.setUser_no(user_no);
+		dibs.setRealty_no(realty_no);
+		
+		int result = realtyService.insertDibs(dibs);
+		String sresult = Integer.toString(result);
+		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
+	
+	@RequestMapping(value="rddelete.do", method=RequestMethod.POST)
+	public void deleteDibs(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		int user_no = ((Long)job.get("user_no")).intValue();
+		int realty_no = ((Long)job.get("realty_no")).intValue();
+		
+		Dibs dibs = new Dibs();
+		dibs.setUser_no(user_no);
+		dibs.setRealty_no(realty_no);
+		
+		int result = realtyService.deleteDibs(dibs);
+		String sresult = Integer.toString(result);
+		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}	
+	
+	@RequestMapping(value="rrcheck.do", method=RequestMethod.POST)
+	public void selectRealtyReportCheck(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		int user_no = ((Long)job.get("user_no")).intValue();
+		int realty_no = ((Long)job.get("realty_no")).intValue();
+		
+		Report report = new Report();
+		report.setUser_no(user_no);
+		report.setContents_no(realty_no);
+		
+		int reportCheck = realtyService.selectRealtyReportCheck(report);
+		String sreportCheck = Integer.toString(reportCheck);
+		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sreportCheck);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@RequestMapping(value="rrinsert.do", method=RequestMethod.POST)
+	public void insertRealtyReport(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		int user_no = ((Long)job.get("user_no")).intValue();
+		int realty_no = ((Long)job.get("realty_no")).intValue();
+		String contents = (String)job.get("contents");
+		
+		Report report = new Report();
+		report.setUser_no(user_no);
+		report.setContents_no(realty_no);
+		report.setContents(contents);
+		
+		int result = realtyService.insertRealtyReport(report);
+		String sresult = Integer.toString(result);
+		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}
+	
 	@RequestMapping("rinsertview.do")
 	public String insertRealtyView() {
 		return "realty/realtyInsertView";
 	}
 	
 	@RequestMapping(value="rinsert.do", method=RequestMethod.POST)
-	public String insertRealty(Realty realty, MultipartHttpServletRequest mtfRequest, Model model, 
+	public String insertRealty(Realty realty, MultipartHttpServletRequest mtpRequest, Model model, 
 			@RequestParam(name="sh_360_image", required=false) MultipartFile image360) {
-        List<MultipartFile> fileList = mtfRequest.getFiles("realty_image[]");
+        List<MultipartFile> fileList = mtpRequest.getFiles("realty_image[]");
         
-        String path = mtfRequest.getSession().getServletContext()
+        String path = mtpRequest.getSession().getServletContext()
 				.getRealPath("files/realty/realtyNormalImages");
 
         int i = 0;
@@ -169,7 +270,7 @@ public class RealtyController {
 		
         //360이미지 
         if(image360 != null) {
-        	String path360 = mtfRequest.getSession().getServletContext().getRealPath("files/realty/realty360Images");
+        	String path360 = mtpRequest.getSession().getServletContext().getRealPath("files/realty/realty360Images");
         	String save360File = path360 + "\\" + System.currentTimeMillis() + image360.getOriginalFilename();
         	try {
         		if(image360.getOriginalFilename() != "" && image360.getSize() != 0) {
