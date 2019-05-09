@@ -115,8 +115,10 @@
 			<ul class="navbar-nav mr-auto"
 				style="margin: 0 auto; margin-right: 0 !important;">
 				<li class="nav-item"><a class="nav-link" href="#">집찾기</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">집내놓기</a></li>
-				<li class="nav-item"><a class="nav-link" href="/sunbang/views/guide/propertyGuideList.jsp">부동산가이드</a></li>
+				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">
+					<li class="nav-item"><a class="nav-link" href="rinsertview.do">집내놓기</a></li>
+				</c:if>
+				<li class="nav-item"><a class="nav-link" href="aglistselect.do?guide_system=realty">부동산가이드</a></li>
 				<li class="nav-item"><a class="nav-link" href="/sunbang/views/admin/premiumPayment.jsp">프리미엄&nbsp;&nbsp;</a></li>
 				<li class="nav-item" id="js_pheader_user">
 				<c:if test="${!empty loginUser}">
@@ -138,7 +140,7 @@
 							<a class="dropdown-item" href="mycheckview.do"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="mylikeview.do"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="mychatview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
-							<a class="dropdown-item" href="#"><i class="far fa-copy"></i> 등록 매물 관리</a>
+							<a class="dropdown-item" href="rmylist.do?user_no=${loginUser.user_no }"><i class="far fa-copy"></i> 등록 매물 관리</a>
 							<a class="dropdown-item" href="#"><i class="fas fa-award"></i> 프리미엄 서비스</a>
 							<a class="dropdown-item" href="ulogout.do?uri=${pageContext.request.requestURL }"> 로그아웃</a>
 						</c:if>
