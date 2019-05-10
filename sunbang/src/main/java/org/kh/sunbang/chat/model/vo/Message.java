@@ -13,14 +13,16 @@ public class Message implements java.io.Serializable{
 	private String message_image;	//이미지
 	private String origin_filename;	//파일원본명
 	private String renew_filename;	//파일수정명
-	private Date post_time;	//등록시간
+	private String post_time;	//등록시간
 	private int chat_no;	//채팅방번호
 	private int user_no;	//회원번호
+	private String nickname; //닉네임
+	private String user_profile; //프로필
 	
 	public Message() {}
 
 	public Message(int message_no, String message, String message_image, String origin_filename, String renew_filename,
-			Date post_time, int chat_no, int user_no) {
+			String post_time, int chat_no, int user_no, String nickname, String user_profile) {
 		super();
 		this.message_no = message_no;
 		this.message = message;
@@ -30,6 +32,8 @@ public class Message implements java.io.Serializable{
 		this.post_time = post_time;
 		this.chat_no = chat_no;
 		this.user_no = user_no;
+		this.nickname = nickname;
+		this.user_profile = user_profile;
 	}
 
 	public int getMessage_no() {
@@ -72,11 +76,11 @@ public class Message implements java.io.Serializable{
 		this.renew_filename = renew_filename;
 	}
 
-	public Date getPost_time() {
+	public String getPost_time() {
 		return post_time;
 	}
 
-	public void setPost_time(Date post_time) {
+	public void setPost_time(String post_time) {
 		this.post_time = post_time;
 	}
 
@@ -96,6 +100,22 @@ public class Message implements java.io.Serializable{
 		this.user_no = user_no;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public String getUser_profile() {
+		return user_profile;
+	}
+
+	public void setUser_profile(String user_profile) {
+		this.user_profile = user_profile;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -104,9 +124,10 @@ public class Message implements java.io.Serializable{
 	public String toString() {
 		return "Message [message_no=" + message_no + ", message=" + message + ", message_image=" + message_image
 				+ ", origin_filename=" + origin_filename + ", renew_filename=" + renew_filename + ", post_time="
-				+ post_time + ", chat_no=" + chat_no + ", user_no=" + user_no + "]";
+				+ post_time + ", chat_no=" + chat_no + ", user_no=" + user_no + ", nickname=" + nickname
+				+ ", user_profile=" + user_profile + "]";
 	}
-	
+
 	
 
 }

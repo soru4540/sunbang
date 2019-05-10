@@ -26,6 +26,8 @@
 <result property="post_time" column="post_time"/>
 <result property="chat_no" column="chat_no"/>
 <result property="user_no" column="user_no"/>
+<result property="nickname" column="nickname"/>
+<result property="user_profile" column="user_profile"/>
 </resultMap>
 
 
@@ -35,4 +37,23 @@
 <result property="block_time" column="block_time"/>
 <result property="user_no" column="user_no"/>
 </resultMap>
+
+
+<select id="selectMyListFilterChat" parameterType="_int" resultMap="resultChat">
+SELECT CHAT_NO, USER_NO ,CHAT_NAME ,CHAT_TYPE ,ALERT_STATUS ,TO_CHAR(JOIN_TIME, 'YY/MM/DD/HH24/MI/SS') JOIN_TIME, TO_CHAR(AWAY_TIME, 'YY/MM/DD/HH24/MI/SS') AWAY_TIME,CHECK_JOIN, REALTY_NO
+FROM TB_CHAT
+JOIN TB_USER USING(USER_NO)
+WHERE USER_NO = #{userno} AND USER_STATUS IN(0, 1, 2 ,4)
+</select>
+
+<select id="selectListMessage" parameterType="_int" resultMap="resultMessage">
+SELECT MESSAGE_NO, MESSAGE, MESSAGE_IMAGE, ORIGIN_FILENAME, RENEW_FILENAME, TO_CHAR(POST_TIME,  'HH24:MI') POST_TIME, CHAT_NO, USER_NO, NICKNAME, USER_PROFILE
+FROM TB_MESSAGE
+JOIN TB_USER USING(USER_NO)
+WHERE CHAT_NO = #{chatno}
+</select>
+
+
+
+
 </mapper>

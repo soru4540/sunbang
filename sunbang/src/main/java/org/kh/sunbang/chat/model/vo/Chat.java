@@ -1,6 +1,7 @@
 package org.kh.sunbang.chat.model.vo;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 import org.springframework.stereotype.Component;
 
@@ -13,15 +14,16 @@ public class Chat implements java.io.Serializable{
 	private String chat_name;	//채팅방제목
 	private String chat_type;	//채팅방분류
 	private String alert_status;	//알람상태
-	private Date	 join_time;	//입장시간
-	private Date away_time;	//퇴장시간
+	private String join_time;	//입장시간
+	private String away_time;	//퇴장시간
 	private String check_join;	//입장여부
 	private int realty_no;	//매물번호
+	private String chat_user; //채팅방 참여 유저
 	
 	public Chat() {}
 
-	public Chat(int chat_no, int user_no, String chat_name, String chat_type, String alert_status, Date join_time,
-			Date away_time, String check_join, int realty_no) {
+	public Chat(int chat_no, int user_no, String chat_name, String chat_type, String alert_status, String join_time,
+			String away_time, String check_join, int realty_no, String chat_user) {
 		super();
 		this.chat_no = chat_no;
 		this.user_no = user_no;
@@ -32,6 +34,7 @@ public class Chat implements java.io.Serializable{
 		this.away_time = away_time;
 		this.check_join = check_join;
 		this.realty_no = realty_no;
+		this.chat_user = chat_user;
 	}
 
 	public int getChat_no() {
@@ -74,19 +77,19 @@ public class Chat implements java.io.Serializable{
 		this.alert_status = alert_status;
 	}
 
-	public Date getJoin_time() {
+	public String getJoin_time() {
 		return join_time;
 	}
 
-	public void setJoin_time(Date join_time) {
+	public void setJoin_time(String join_time) {
 		this.join_time = join_time;
 	}
 
-	public Date getAway_time() {
+	public String getAway_time() {
 		return away_time;
 	}
 
-	public void setAway_time(Date away_time) {
+	public void setAway_time(String away_time) {
 		this.away_time = away_time;
 	}
 
@@ -106,6 +109,14 @@ public class Chat implements java.io.Serializable{
 		this.realty_no = realty_no;
 	}
 
+	public String getChat_user() {
+		return chat_user;
+	}
+
+	public void setChat_user(String chat_user) {
+		this.chat_user = chat_user;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -114,8 +125,13 @@ public class Chat implements java.io.Serializable{
 	public String toString() {
 		return "Chat [chat_no=" + chat_no + ", user_no=" + user_no + ", chat_name=" + chat_name + ", chat_type="
 				+ chat_type + ", alert_status=" + alert_status + ", join_time=" + join_time + ", away_time=" + away_time
-				+ ", check_join=" + check_join + ", realty_no=" + realty_no + "]";
+				+ ", check_join=" + check_join + ", realty_no=" + realty_no + ", chat_user=" + chat_user + "]";
 	}
+
+
+
+
+
 	
 	
 	

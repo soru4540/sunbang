@@ -11,11 +11,11 @@ public interface ChatService {
 	String insertChat(Chat chat);
 	int deleteChat(int chat_no);
 	ArrayList<Chat> selectListFilterChat();
-	ArrayList<Chat> selectMyListFilterChat();
+	ArrayList<Chat> selectMyListFilterChat(int userno);
 	int selectCheckChat(int chat_no);
 	int insertMessage(Message message);
 	int deleteMessage(int message_no);
-	ArrayList<Message> selectListMessage();
+	ArrayList<Message> selectListMessage(int chatno);
 	ArrayList<ChatBlock> selectMylistChatBlock();
 	String insertChatBlock(ChatBlock chatBlock);
 	String deleteChatBlock(int block_no);

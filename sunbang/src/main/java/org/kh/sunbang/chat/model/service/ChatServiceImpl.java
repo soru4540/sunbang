@@ -20,6 +20,22 @@ public class ChatServiceImpl implements ChatService{
 	private ChatDao chatDao;
 
 	@Override
+	public ArrayList<Chat> selectListFilterChat() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<Chat> selectMyListFilterChat(int userno) {
+		return chatDao.selectMyListFilterChat(mybatisSession, userno);
+	}
+	
+	@Override
+	public ArrayList<Message> selectListMessage(int chatno) {
+		return chatDao.selectListMessage(mybatisSession, chatno);
+	}
+	
+	@Override
 	public String insertChat(Chat chat) {
 		// TODO Auto-generated method stub
 		return null;
@@ -29,18 +45,6 @@ public class ChatServiceImpl implements ChatService{
 	public int deleteChat(int chat_no) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public ArrayList<Chat> selectListFilterChat() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<Chat> selectMyListFilterChat() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -59,12 +63,6 @@ public class ChatServiceImpl implements ChatService{
 	public int deleteMessage(int message_no) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
-
-	@Override
-	public ArrayList<Message> selectListMessage() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
