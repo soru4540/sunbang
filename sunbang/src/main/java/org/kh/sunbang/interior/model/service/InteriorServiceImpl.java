@@ -187,11 +187,23 @@ public class InteriorServiceImpl implements InteriorService{
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	
-		
-	
-	
+    /*
+	//게시판등록
+   @Override
+	public int insertBoard(Board board) {		
+	return  interiorDao.insertBoard(session, board);
+	}
+	//게시판번호 불러오기	
+	@Override
+	public int selectBoardNo(int user_no) {		
+		return interiorDao.selectBoardNo(session, user_no);
+	}
+	//게시물등록
+	@Override
+	public int insertPost(Post post) {	
+		return interiorDao.insertPost(session, post);
+	}
+	*/
 	//--------------------se------------------------------------------------//
 	
 	@Override

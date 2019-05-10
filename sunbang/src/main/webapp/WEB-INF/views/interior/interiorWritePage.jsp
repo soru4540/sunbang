@@ -17,7 +17,7 @@
 	<div class="container" style="text-align: center; height: 480px;">
 		<div class="row" style="text-align: center;">
 			<div class="col">			
-				<a href="ibinsertview.do"  style="color: #888;" >
+				<a href="ibinsertview.do?board_type=photograph"  style="color: #888;" >
 				<h5 style="font-weight:bold;">사진</h5>
 				<img src="${pageContext.request.contextPath}/resources/images/camera.png" style="width: 40%;">
 				<br>
@@ -37,7 +37,7 @@
 			</div>
 			
 			<div class="col">
-				<a href=""  style="color: #888;">
+				<a href="ibinsertview.do?board_type=knowhow"  style="color: #888;">
 				<h5 style="font-weight:bold; color: #888;">노하우</h5>
 					<img src="${pageContext.request.contextPath}/resources/images/tip.png" style="width: 40%;">
 				<br>
