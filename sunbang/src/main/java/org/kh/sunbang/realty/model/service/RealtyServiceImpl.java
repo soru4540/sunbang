@@ -76,6 +76,12 @@ public class RealtyServiceImpl implements RealtyService {
 		return realtyDao.selectMarkerList(mybatisSession);
 	}
 
+	@Override
+	public ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno) {
+		return realtyDao.selectRealtyList(mybatisSession, realtyno);
+	}
+
+
 
 
 

@@ -57,8 +57,14 @@ public class RealtyDao {
 		return (ArrayList<Realty>)list;
 	}
 
-
-
+	public ArrayList<Realty> selectRealtyList(SqlSessionTemplate mybatisSession, ArrayList<Integer> realtyno) {
+		ArrayList<Realty> realtyList = new ArrayList<Realty>();
+		for(int i=0; i<realtyno.size(); i++) {
+		Realty realty = mybatisSession.selectOne("realtyMapper.selectRealtyList",realtyno.get(i));
+		realtyList.add(realty);
+		}
+		return realtyList;
+	}
 
 
 

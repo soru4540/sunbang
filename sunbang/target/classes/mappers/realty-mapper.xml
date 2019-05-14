@@ -63,6 +63,27 @@
 		<result property="realty_image8" column="realty_image8" />
 		<result property="image360" column="image360" />
 		<result property="user_no" column="user_no" />
+	
+	</resultMap>
+
+	<resultMap id="resultDibs" type="Dibs">
+		<result property="dibs_no" column="dibs_no" />
+		<result property="memo" column="memo" />
+		<result property="user_no" column="user_no" />
+		<result property="realty_no" column="realty_no" />
+	</resultMap>
+	
+	<resultMap id="resultReport" type="report">
+		<id property="report_no" column="report_no" />
+		<result property="report_system" column="report_system" />
+		<result property="category" column="category" />
+		<result property="reported_board" column="reported_board" />
+		<result property="contents_no" column="contents_no" />
+		<result property="contents" column="contents" />
+		<result property="report_date" column="report_date" />
+		<result property="handle_date" column="handle_date" />
+		<result property="report_status" column="report_status" />
+		<result property="user_no" column="user_no" />
 	</resultMap>
 
 	<select id="selectRealtyDetailView" parameterType="Realty" resultMap="resultRealty">
@@ -70,15 +91,60 @@
 		where realty_no = #{realty_no}
 	</select>
 	
+	<select id="selectDibsCount" parameterType="int" resultType="int">
+		select count(*) from tb_dibs
+		where realty_no = #{realty_no}
+	</select>
+	
+	<select id="selectDibsCheck" parameterType="Dibs" resultType="int">
+		select count(*) from tb_dibs
+		where realty_no = #{realty_no} and user_no = #{user_no}		
+	</select>
+	
+	<insert id="insertDibs" parameterType="Dibs">
+		insert into tb_dibs
+		values (dibs_seq.nextval, #{memo,jdbcType=VARCHAR}, #{user_no}, #{realty_no})
+	</insert>
+	
+	<delete id="deleteDibs" parameterType="Dibs">
+		delete from tb_dibs
+		where realty_no = #{realty_no} and user_no = #{user_no}
+	</delete>
+	
+	<select id="selectRealtyReportCheck" parameterType="Report" resultType="int">
+		select count(*) from tb_report
+		where user_no = #{user_no} and contents_no = #{contents_no}
+	</select>
+	
+	<insert id="insertRealtyReport" parameterType="Report">
+		insert into tb_report
+		values (report_seq.nextval, 'realty', 'realty', 0, #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
+	</insert>
+	
 	<update id="updateRealtyHits" parameterType="int">
 		update tb_realty
 		set realty_hits = realty_hits + 1
 		where realty_no = #{realty_no}
 	</update>
 	
+	<insert id="insertRealty" parameterType="Realty" useGeneratedKeys="true">
+		insert into tb_realty
+		values (realty_seq.nextval, default, default, default, default, #{realty_type}, #{building_type,jdbcType=VARCHAR}, #{road_address}, #{land_lot}, #{detail_address},
+		        #{month_lease,jdbcType=INTEGER}, #{deposit,jdbcType=INTEGER}, #{payback_deposit_lease,jdbcType=INTEGER}, #{purchase,jdbcType=INTEGER}, #{residential,jdbcType=INTEGER}, #{exclusive_area,jdbcType=INTEGER}, #{building_layers}, #{realty_layers}, #{heatting_system}, #{move_available_date},
+		        #{management_pay,jdbcType=INTEGER}, #{parking_lot,jdbcType=VARCHAR}, #{elevator}, #{builtin}, #{allowance_pet}, #{balcony}, #{loan_availability}, #{structure}, #{airconditioner}, #{laundry_machine},
+		        #{bed}, #{desk}, #{closet}, #{tv}, #{gasrange}, #{shoe_shelf}, #{refrigerator}, #{induction}, #{microwave}, #{door_lock},
+		        #{bidet}, #{realty_detail_title,jdbcType=VARCHAR}, #{realty_detail_comment,jdbcType=VARCHAR}, #{realty_image1,jdbcType=VARCHAR}, #{realty_image2,jdbcType=VARCHAR}, #{realty_image3,jdbcType=VARCHAR}, #{realty_image4,jdbcType=VARCHAR}, #{realty_image5,jdbcType=VARCHAR}, #{realty_image6,jdbcType=VARCHAR}, #{realty_image7,jdbcType=VARCHAR},
+		        #{realty_image8,jdbcType=VARCHAR}, #{image360,jdbcType=VARCHAR}, #{user_no})
+	</insert>
+	
+	
 	<select id="selectMarkerList"  resultMap="resultRealty" useCache="true">
 		select * from tb_realty
 	</select>
 	
+	<select id="selectRealtyList" parameterType="int" resultMap="resultRealty">
+		select * from tb_realty where realty_no = #{realty_no}
+	</select>
+
 
 </mapper>

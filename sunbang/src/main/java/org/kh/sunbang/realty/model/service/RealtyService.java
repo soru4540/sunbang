@@ -24,5 +24,6 @@ public interface RealtyService {
 	//형진---------------------------------------------------------------------------------------------------------------
 	
 	ArrayList<Realty> selectMarkerList();
+	ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno);
 
 }

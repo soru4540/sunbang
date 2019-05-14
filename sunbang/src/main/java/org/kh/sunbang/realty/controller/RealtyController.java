@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -36,19 +37,38 @@ public class RealtyController {
 //형진----------------------------------------------------------------------------	
 	
 	@RequestMapping(value="realtymain.do")
-	public String movePropertyMainMethod() {
+	public ModelAndView movePropertyMainMethod(ModelAndView mv) {
+
+		ArrayList<Realty> rlist =  new ArrayList<Realty>();
+		rlist = realtyService.selectMarkerList();
 		
-		return "realty/realtyMain";
+		if(rlist != null) {
+			mv.addObject("realtymain", rlist);
+			mv.setViewName("realty/realtyMain");
+		}else {
+			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
 	}
 	
-	@RequestMapping(value="rmarkers.do")
+	@RequestMapping(value="rlist.do", method=RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<Realty> selectMarkerList(){
+	public ArrayList<Realty> test6Method(@RequestBody String param) throws ParseException{
+		JSONParser jparser = new JSONParser();
+		JSONArray jarr = (JSONArray)jparser.parse(param);
+		ArrayList<Integer> realtyno = new ArrayList<Integer>();
+		for(int i = 0; i < jarr.size(); i++) {
+			JSONObject jr = new JSONObject();
+			jr.put(i, jarr.get(i));
+			String a = jr.get(i).toString();
+			realtyno.add(Integer.parseInt(a));
+		}
 		
-		ArrayList<Realty> mlist =  new ArrayList<Realty>();
-		mlist = realtyService.selectMarkerList();
+		ArrayList<Realty> rlist = realtyService.selectRealtyList(realtyno);
 		
-		return mlist;
+			return rlist;
 	}
 
 //성현----------------------------------------------------------------------------
