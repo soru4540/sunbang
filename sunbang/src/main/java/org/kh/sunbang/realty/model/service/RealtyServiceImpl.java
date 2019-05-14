@@ -19,7 +19,7 @@ public class RealtyServiceImpl implements RealtyService {
 	@Autowired
 	private RealtyDao realtyDao;
 	
-//성현---------------------------------------------------------------------------------------------------------------------	
+	//성현---------------------------------------------------------------------------------------------------------------------	
 	
 	@Override
 	public Realty selectRealtyDetailView(int realty_no) { //매물상세페이지
@@ -61,11 +61,30 @@ public class RealtyServiceImpl implements RealtyService {
 		realtyDao.updateRealtyHits(mybatisSession, realty_no);
 	}
 	
-	
 	@Override
-	public int insertRealty(Realty realty) {
+	public int insertRealty(Realty realty) { //매물등록
 		int result = realtyDao.insertRealty(mybatisSession, realty);
 		return result;
+	}
+
+	@Override
+	public ArrayList<Realty> selectRealtyMyListView(int user_no) { //내 방 리스트
+		return realtyDao.selectRealtyMyListView(mybatisSession, user_no);
+	}
+	
+	@Override
+	public int updateRealtyMyListDelete(Realty realty) { //내 방 리스트 삭제 
+		return realtyDao.updateRealtyMyListDelete(mybatisSession, realty);
+	}
+	
+	@Override
+	public int updateRealtyStatus(Realty realty) { //매물 상태 수정
+		return realtyDao.updateRealtyStatus(mybatisSession, realty);
+	}
+	
+	@Override
+	public int updateRealty(Realty realty) { //매물 수정
+		return realtyDao.updateRealty(mybatisSession, realty);
 	}
 	
 	

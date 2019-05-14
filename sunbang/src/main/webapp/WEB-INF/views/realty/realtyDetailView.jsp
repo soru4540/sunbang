@@ -12,6 +12,25 @@
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71150a085c893cb9531eb155dbf54998&libraries=services"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 
+<!-- 매물상태별 출력변화 -->
+<script type="text/javascript">
+	$(function(){
+		if(${realty.realty_status == '광고중'}){
+			$("#sh_realty_status").css("background-color", "#61C0BF");
+		}
+		if(${realty.realty_status == '계약진행중'}){
+			$("#sh_realty_status").css("background-color", "#347f7c");
+		}
+		if(${realty.realty_status == '거래완료'}){
+			$("#sh_realty_status").css("background-color", "#333333");
+			$("#sh_realty_status").css("color", "white");
+		}
+		if(${realty.realty_status == '검수중'}){
+			$("#sh_realty_status").css("background-color", "#ff6666");
+			$("#sh_realty_status").css("color", "white");
+		}
+	});
+</script>
 <!-- 360도 사진 띄우기 -->
 <script type="text/javascript">
 	$(function() {
@@ -74,7 +93,7 @@ $(function(){
 		var dibs = new Object();
 		dibs.user_no = ${loginUser.user_no };
 		dibs.realty_no = ${realty.realty_no };
-		console.log(dibs);
+
 		$.ajax({
 			url: "rdcheck.do",
 			type: "post",
@@ -181,7 +200,7 @@ $(function(){
 		$("#sh_rrinsert_btn").click(function(){
 			//신고내용 <br>로 변환
 			var str = $("#sh_rreportcontent").val(); 
-			str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 			$("#sh_rreportcontent").val(str); 
 
 			$.ajax({
@@ -208,7 +227,28 @@ $(function(){
 		$('#sh_detaili_textarea').val(str);
 	});	
 </script>
+
 <style type="text/css">
+
+#sh_realtydetail_hide,
+#sh_realtydetail_delete {
+	margin: 5px;
+	padding: 5px;
+	text-align: center;
+	font-size: 20pt;
+	border: 1px solid #f2f2f2;
+	border-radius: 5px;
+	color:#595959;
+}
+
+#sh_realty_status {
+	width: 100%;
+	margin: 1px;
+	padding: 5px;
+	border-radius: 5px;
+	font-weight: bold;
+}
+
 .carousel-item {
 	cursor: pointer;
 }
@@ -254,6 +294,7 @@ $(function(){
   height: 100%;
   position: relative;
   background-color:#f2f2f2;
+  border-radius: 5px;
 }
 
 .sh_sidebar a {
@@ -263,13 +304,8 @@ $(function(){
   text-decoration: none;
 }
  
-.sh_sidebar a.active {
+#sh_recommendinterior_title {
   background-color: #61C0BF;
-  color: white;
-}
-
-.sh_sidebar a:hover:not(.active) {
-  background-color: #555;
   color: white;
 }
 
@@ -301,6 +337,10 @@ $(function(){
 #sh_carousel .d-block {
     width: auto;
     height: 400px;
+}
+
+#sh_carousel {
+	background-color:rgba(0,0,0, 0.01);
 }
 
 #sh_hpr a:link {color:black; cursor:pointer;}
@@ -337,10 +377,32 @@ $(function(){
 .placeinfo .jibun {color:#999;font-size:11px;margin-top:0;}
 
 </style>
+
 </head>
 <body>
 <c:import url="../common/realtyHeader.jsp" /><br>
-	<div class="container">
+	<div class="container" style="font-family: a고딕12;">
+	<c:if test="${realty.realty_status == '숨기기' }">
+		<div class="row" id="sh_realtydetail_hide">
+			<div class="col-md-12">
+				<hr><br><br>
+				등록자에 의해서 숨겨진 매물입니다.
+				<br><br><br><br><hr>
+			</div>
+		</div>
+	</c:if>
+	
+	<c:if test="${realty.realty_status == '삭제' || realty.realty_status == '완전삭제'}">
+		<div class="row" id="sh_realtydetail_delete">
+			<div class="col-md-12">
+				<hr><br><br>
+				등록자에 의해서 삭제된 매물입니다.
+				<br><br><br><br><hr>
+			</div>
+		</div>
+	</c:if>
+	
+	<c:if test="${realty.realty_status != '숨기기' && realty.realty_status != '삭제' && realty.realty_status != '완전삭제' }">
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-default bg-light fixed-bottom"> <!-- 하단바 -->
@@ -454,7 +516,13 @@ $(function(){
 						</div>
 					</div>
 				</div> <!-- 조회수 / 찜하기 / 신고 -->
-
+				
+				<div class="row" id="sh_realty_status">
+					<div class="col-md-12">
+						${realty.realty_status }
+					</div>
+				</div>
+				
 				<div class="row"> <!-- 기본정보/추가정보 -->
 					<div class="col-md-12">
 						<hr>
@@ -488,7 +556,7 @@ $(function(){
 							<div class="col-md-3">
 								<b>관리비 </b>
 								<c:if test="${realty.management_pay == 0}">없음</c:if>
-								<c:if test="${realty.management_pay == 1}">가능</c:if>
+								<c:if test="${realty.management_pay == 1}">있음</c:if>
 								<c:if test="${realty.management_pay != 0 && realty.management_pay != 1}">${realty.management_pay }원</c:if>
 							</div>
 							<div class="col-md-3">
@@ -539,7 +607,7 @@ $(function(){
 				<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 				<div class="row">
 					<div class="col-md-9">
-						<div class="row" id="sh_carousel" style="background-color:rgba(0,0,0, 0.01);">  <!-- carousel 이미지 -->
+						<div class="row" id="sh_carousel">  <!-- carousel 이미지 -->
 							<div align="center" class="col-md-12">
 								<div class="carousel slide" id="sh_realty_images">
 									<ol class="carousel-indicators">
@@ -741,6 +809,7 @@ $(function(){
 										        </li>      
 										    </ul>
 										</div>								
+<!-- 위치정보 -->
 <script>
 // 마커를 클릭했을 때 해당 장소의 상세정보를 보여줄 커스텀오버레이입니다
 var placeOverlay = new daum.maps.CustomOverlay({zIndex:1}), 
@@ -976,10 +1045,11 @@ function changeCategoryClass(el) {
 	
 							</div>
 						</div><br><br>  <!-- 지도 -->
-						</div>
+					<br><br>	
+					</div>
 					<div class="col-md-3">
 						<div class="sh_sidebar"> <!-- 사이드바 -->
-						  <a class="active" href="interiormain.do"><i class="fas fa-paint-roller"></i>&nbsp;&nbsp;인테리어추천</a>
+						  <a class="active" id="sh_recommendinterior_title" href="interiormain.do"><i class="fas fa-paint-roller"></i>&nbsp;&nbsp;인테리어추천</a>
 						  <div class="row" id="sh_recommendinterior"> <!-- 추천 인테리어 -->
 						  	<div class="col-md-12">
 						  		<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" class="sh_recommendinterior_img">
@@ -1018,6 +1088,7 @@ function changeCategoryClass(el) {
 				</div>
 			</div>
 		</div>
+	</c:if>
 	</div>
 	<br>
 	<br>

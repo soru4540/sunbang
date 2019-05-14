@@ -71,7 +71,7 @@ public class RealtyController {
 			return rlist;
 	}
 
-//성현----------------------------------------------------------------------------
+	//성현----------------------------------------------------------------------------
 	@RequestMapping("rdetail.do")
 	public ModelAndView selectRealtyDetailView(
 			ModelAndView mv, @RequestParam(name="realty_no") int realty_no) {
@@ -256,7 +256,7 @@ public class RealtyController {
 				.getRealPath("files/realty/realtyNormalImages");
 
         int i = 0;
-        String[] saveFiles = new String[9];
+        String[] saveFiles = new String[8];
         for (MultipartFile mf : fileList) {
         	
             String originFileName = mf.getOriginalFilename(); // 원본 파일 명
@@ -307,7 +307,7 @@ public class RealtyController {
 		System.out.println(realty);
 		
 		if(realtyService.insertRealty(realty) > 0) {
-			//return "redirect:rdetail?realty_no=" + realty.getRealty_no();
+			//return "redirect:rdetail.do?realty_no=" + realty.getRealty_no();
 			return "realty/realtyMain";
 		}else {
 			model.addAttribute("message", "매물 등록에 실패하였습니다.");
@@ -316,17 +316,183 @@ public class RealtyController {
 	}
 	
 	@RequestMapping("rmylist.do")
-	public String selectRealtyMyListView() {
-		return "realty/realtyMyListView";
+	public ModelAndView selectRealtyMyListView(
+			ModelAndView mv, @RequestParam(name="user_no") int user_no) {
+		
+		ArrayList<Realty> realtyList = realtyService.selectRealtyMyListView(user_no);
+		if(realtyList != null) {
+			mv.addObject("realtyList", realtyList);
+			mv.setViewName("realty/realtyMyListView");			
+		}else {
+			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
+			mv.setViewName("common/error");			
+		}
+		
+		return mv;
 	}	
+	
+	@RequestMapping(value="rmdelete.do", method=RequestMethod.POST)
+	public void updateRealtyMyListDelete(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);	
+		
+		String realty_status = (String)job.get("realty_status");
+		String realty_detail_comment = (String)job.get("realty_detail_comment");
+		int realty_no = Integer.parseInt(job.get("realty_no").toString());
+		
+		Realty realty = new Realty();
+		realty.setRealty_status(realty_status);
+		realty.setRealty_detail_comment(realty_detail_comment);
+		realty.setRealty_no(realty_no);
+		
+		int result = realtyService.updateRealtyMyListDelete(realty);
+		String sresult = Integer.toString(result);
+		
+		response.setContentType("text/html; charset=utf-8");	
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
+	}
 	
 	@RequestMapping("rupdateview.do")
-	public String updateRealtyView() {
-		return "realty/realtyUpdateView";
+	public ModelAndView selectRealtyUpdateView(
+			ModelAndView mv, @RequestParam(name="realty_no") int realty_no){
+		
+		Realty realty = realtyService.selectRealtyDetailView(realty_no);
+		
+		if(realty != null) {
+			mv.addObject("realty", realty);
+			mv.setViewName("realty/realtyUpdateView");
+		}else {
+			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
+			mv.setViewName("common/error");
+		}
+		
+		return mv;
 	}	
 	
-	@RequestMapping("rupdate.do")
-	public String updateRealty() {
-		return "realty/realtyUpdateView";
-	}	
+	@RequestMapping(value="rsupdate.do", method=RequestMethod.POST)
+	public void updateRealtyStatus(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		int realty_no = ((Long)job.get("realty_no")).intValue();
+		String realty_status = (String)job.get("realty_status");
+		
+		Realty realty = new Realty();
+		realty.setRealty_no(realty_no);
+		realty.setRealty_status(realty_status);
+		
+		int result = realtyService.updateRealtyStatus(realty);
+		String sresult = Integer.toString(result);
+		
+		response.setContentType("text/html; charset=utf-8");	
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@RequestMapping(value="rupdate.do", method=RequestMethod.POST)
+	public String updateRealty(Realty realty, MultipartHttpServletRequest mtpRequest, Model model) throws IllegalStateException, IOException {
+		
+		MultipartFile updatefile0 = mtpRequest.getFile("realty_update_image0");
+		MultipartFile updatefile1 = mtpRequest.getFile("realty_update_image1");
+		MultipartFile updatefile2 = mtpRequest.getFile("realty_update_image2");
+		MultipartFile updatefile3 = mtpRequest.getFile("realty_update_image3");
+		MultipartFile updatefile4 = mtpRequest.getFile("realty_update_image4");
+		MultipartFile updatefile5 = mtpRequest.getFile("realty_update_image5");
+		MultipartFile updatefile6 = mtpRequest.getFile("realty_update_image6");
+		MultipartFile updatefile7 = mtpRequest.getFile("realty_update_image7");
+		
+		MultipartFile image360 = mtpRequest.getFile("sh_360_image");
+		
+		String path = mtpRequest.getSession().getServletContext().getRealPath("files/realty/realtyNormalImages");
+        	
+    	if(realty.getRealty_image1().isEmpty() && updatefile0.getOriginalFilename() != "" && updatefile0.getSize() != 0) {
+    		String saveFile0 = path+ "\\" + System.currentTimeMillis() + updatefile0.getOriginalFilename();
+    		updatefile0.transferTo(new File(saveFile0));
+    		realty.setRealty_image1(saveFile0.substring(saveFile0.lastIndexOf("\\")+1));
+    	}
+        	
+    	if(realty.getRealty_image2().isEmpty() && updatefile1.getOriginalFilename() != "" && updatefile1.getSize() != 0) {
+    		String saveFile1 = path+ "\\" + System.currentTimeMillis() + updatefile1.getOriginalFilename();
+    		updatefile1.transferTo(new File(saveFile1));
+    		realty.setRealty_image2(saveFile1.substring(saveFile1.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image3().isEmpty() && updatefile2.getOriginalFilename() != "" && updatefile2.getSize() != 0) {
+    		String saveFile2 = path+ "\\" + System.currentTimeMillis() + updatefile2.getOriginalFilename();
+    		updatefile2.transferTo(new File(saveFile2));
+    		realty.setRealty_image3(saveFile2.substring(saveFile2.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image4().isEmpty() && updatefile3.getOriginalFilename() != "" && updatefile3.getSize() != 0) {
+    		String saveFile3 = path+ "\\" + System.currentTimeMillis() + updatefile3.getOriginalFilename();
+    		updatefile3.transferTo(new File(saveFile3));
+    		realty.setRealty_image4(saveFile3.substring(saveFile3.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image5().isEmpty() && updatefile4.getOriginalFilename() != "" && updatefile4.getSize() != 0) {
+    		String saveFile4 = path+ "\\" + System.currentTimeMillis() + updatefile4.getOriginalFilename();
+    		updatefile4.transferTo(new File(saveFile4));
+    		realty.setRealty_image5(saveFile4.substring(saveFile4.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image6().isEmpty() && updatefile5.getOriginalFilename() != "" && updatefile5.getSize() != 0) {
+    		String saveFile5 = path+ "\\" + System.currentTimeMillis() + updatefile5.getOriginalFilename();
+    		updatefile5.transferTo(new File(saveFile5));
+    		realty.setRealty_image6(saveFile5.substring(saveFile5.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image7().isEmpty() && updatefile6.getOriginalFilename() != "" && updatefile6.getSize() != 0) {
+    		String saveFile6 = path+ "\\" + System.currentTimeMillis() + updatefile6.getOriginalFilename();
+    		updatefile6.transferTo(new File(saveFile6));
+    		realty.setRealty_image7(saveFile6.substring(saveFile6.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image8().isEmpty() && updatefile7.getOriginalFilename() != "" && updatefile7.getSize() != 0) {
+    		String saveFile7 = path+ "\\" + System.currentTimeMillis() + updatefile7.getOriginalFilename();
+    		updatefile7.transferTo(new File(saveFile7));
+    		realty.setRealty_image8(saveFile7.substring(saveFile7.lastIndexOf("\\")+1));
+    	}
+		
+        //360이미지 
+        if(realty.getImage360().isEmpty()) {
+        	realty.setImage360(null);
+        }
+        
+        if(image360 != null) {
+        	String path360 = mtpRequest.getSession().getServletContext().getRealPath("files/realty/realty360Images");
+        	String save360File = path360 + "\\" + System.currentTimeMillis() + image360.getOriginalFilename();
+        	try {
+        		if(image360.getOriginalFilename() != "" && image360.getSize() != 0) {
+        			image360.transferTo(new File(save360File));
+        			realty.setImage360(save360File.substring(save360File.lastIndexOf("\\")+1));
+        		}
+        	} catch (IllegalStateException e) {
+        		e.printStackTrace();
+        	} catch (IOException e) {
+        		e.printStackTrace();
+        	}
+        }
+        
+        System.out.println(realty);
+		
+        int result = realtyService.updateRealty(realty);
+        if(result > 0) {
+        	return "redirect:rmylist.do?user_no=" + realty.getUser_no();
+        }else {
+			model.addAttribute("message", "매물 수정에 실패하였습니다.");
+			return "common/error";
+		}
+	}
 }

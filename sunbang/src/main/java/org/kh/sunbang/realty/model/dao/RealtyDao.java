@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 @Repository("realtyDao")
 public class RealtyDao {
 
-//성현---------------------------------------------------------------------------------------------------------------------		
+	//성현---------------------------------------------------------------------------------------------------------------------		
 	
 	public Realty selectRealtyDetailView(SqlSessionTemplate mybatisSession, int realty_no) {
 		return mybatisSession.selectOne("realtyMapper.selectRealtyDetailView", realty_no);
@@ -48,6 +48,23 @@ public class RealtyDao {
 	
 	public int insertRealty(SqlSessionTemplate mybatisSession, Realty realty) {
 		return mybatisSession.insert("realtyMapper.insertRealty", realty);
+	}
+	
+	public ArrayList<Realty> selectRealtyMyListView(SqlSessionTemplate mybatisSession, int user_no) {
+		List<Realty> realtylist = mybatisSession.selectList("realtyMapper.selectRealtyMyListView", user_no);
+		return (ArrayList<Realty>)realtylist;
+	}
+	
+	public int updateRealtyMyListDelete(SqlSessionTemplate mybatisSession, Realty realty) {
+		return mybatisSession.update("realtyMapper.updateRealtyMyListDelete", realty);
+	}
+	
+	public int updateRealtyStatus(SqlSessionTemplate mybatisSession, Realty realty) {
+		return mybatisSession.update("realtyMapper.updateRealtyStatus", realty);
+	}
+	
+	public int updateRealty(SqlSessionTemplate mybatisSession, Realty realty) {
+		return mybatisSession.update("realtyMapper.updateRealty", realty);
 	}
 	
 //형진---------------------------------------------------------------------------------------------------------------	

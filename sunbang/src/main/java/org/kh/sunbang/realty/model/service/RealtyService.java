@@ -8,7 +8,7 @@ import org.kh.sunbang.realty.model.vo.Realty;
 
 public interface RealtyService {
 	
-//성현---------------------------------------------------------------------------------------------------------------------	
+	//성현---------------------------------------------------------------------------------------------------------------------	
 	Realty selectRealtyDetailView(int realty_no);
 	
 	int selectDibsCount(int realty_no);
@@ -20,6 +20,12 @@ public interface RealtyService {
 	void updateRealtyHits(int realty_no);
 	
 	int insertRealty(Realty realty);
+	
+	ArrayList<Realty> selectRealtyMyListView(int user_no);
+	int updateRealtyMyListDelete(Realty realty);
+	
+	int updateRealtyStatus(Realty realty);
+	int updateRealty(Realty realty);
 	
 	//형진---------------------------------------------------------------------------------------------------------------
 	

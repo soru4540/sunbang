@@ -712,7 +712,7 @@ $(function(){
 		
 		//상세설명 <br>로 변환
 		var str = $("#sh_detaili_textarea").val(); 
-		str = str.replace(/(?:\r\n|\r|\n)/g, '<br />');
+		str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 		$("#sh_detaili_textarea").val(str); 
 		
 		//매물종류
@@ -829,8 +829,8 @@ $(function(){
 		}
 		
 		else{
-			alert("성공");
 			$("#sh_realty_form").submit();
+			alert("매물 등록에 성공하였습니다.");
 		}
 	});			
 });
