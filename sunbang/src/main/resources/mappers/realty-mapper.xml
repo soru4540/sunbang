@@ -142,9 +142,8 @@
 		select * from tb_realty
 	</select>
 	
-		    
-	<select id="selectMarkerList"  resultMap="resultRealty" useCache="true">
-		select * from tb_realty
+	<select id="selectRealtyList" parameterType="int" resultMap="resultRealty">
+		select * from tb_realty where realty_no = #{realty_no}
 	</select>
 
 </mapper>
