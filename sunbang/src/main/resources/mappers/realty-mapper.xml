@@ -142,6 +142,9 @@
 		select * from tb_realty
 	</select>
 	
-
+		    
+	<select id="selectMarkerList"  resultMap="resultRealty" useCache="true">
+		select * from tb_realty
+	</select>
 
 </mapper>
