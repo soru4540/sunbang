@@ -1,11 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="shortcut icon" type="image⁄x-icon"
+	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>선방</title>
 <script type="text/javascript" src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <script>
@@ -30,6 +33,44 @@ $(function(){
 	$(".widthreset").click(function(){
 		$("#userback").css("width", "500px");
 	})
+	
+	function failbar(message){
+		$("#loginfailbar").show().html(message);
+		
+	}
+	
+	$("#loginbtn").click(function(){
+		$.ajax({
+		url: "ulogin.do",
+		type: "post",
+		data: $("#loginform").serialize(),
+		dataType: "text",
+		success: function(response){
+			$("#loginid").val("");
+			$("#loginpwd").val("");
+			if(response == "success"){
+				var page = "realtymain.do";
+				if('${param.pageuri}'.substring(9, '${param.pageuri}'.length) != "ulogout.do" ){
+				page = '${param.pageuri}'.substring(9, '${param.pageuri}'.length);
+				}
+				location.href=page;
+			}
+			if(response == "idfail"){
+				failbar("아이디가 틀렸습니다 다시 입력해주세요.");
+			}
+			if(response == "pwdfail"){
+				failbar("패스워드가 틀렸습니다 다시 입력해주세요.");
+			}
+			if(response == "countfail"){
+				console.log("로그인시도횟수 실패");
+			}
+		},
+		error: function(){
+			alert("로그인실패");
+			$("#loginid").val("");
+			$("#loginpwd").val("");
+		}});
+	});
 });
 </script>
 <style>
@@ -242,9 +283,10 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			<div class="mb-5 d-flex justify-content-around"><a class="maindiv" href="realtymain.do"><div style="width:100px; height:100px; border-radius:5px; background:#61C0BF; color:white; text-align:center;"><b style="line-height:100px;">부동산</b></div></a>
 																			<a class="maindiv" href="interiorMain.do"><div style="width:100px; height:100px; border-radius:5px; background:#FFB6B9; color:white; text-align:center;"><b style="line-height:100px;">인테리어</b></div></a></div>
 			<div class="mb-3" align="center"><span class="font-weight-bold fa-2x"><i class="fas fa-home" style="background:#61C0BF; color:white; padding:2%; border-radius: 5px;"></i> 선방</span></div>
-			<form action="ulogin.do" method="post"><div class="form-group"><input type="text" class="form-control ucon form-control ucon-lg" name="user_id" placeholder="아이디" style="border-bottom:0;"><input type="password" class="form-control ucon form-control ucon-lg" name="password" placeholder="비밀번호"></div>
-			<div class="form-group"><input type="submit" class="btn btn-block btn-lg btn-green" value="로그인"></div>
-			<div style="font-size: 13px;"><input type="checkbox" > 로그인 상태 유지</div></form>
+			<form id="loginform"><div class="form-group"><input type="text" id="loginid" class="form-control ucon form-control ucon-lg" name="user_id" placeholder="아이디" style="border-bottom:0;"><input type="password" id="loginpwd" class="form-control ucon form-control ucon-lg" name="password" placeholder="비밀번호"></div>
+			<div id="loginfailbar" class="form-group" style="display:none; font-size:14px; padding: 0 5%; color:red">아이디가 틀렸습니다</div>
+			<div class="form-group"><input type="button" id="loginbtn" class="btn btn-block btn-lg btn-green" value="로그인"></div>
+			<div style="font-size: 13px;"><input type="checkbox" name="logincheck"> 로그인 상태 유지</div></form>
 			<div class="d-flex justify-content-between mb-3 mt-3" style="border-top:1px solid #ddd; padding-top:5%;">
 				<div class="btn btn-lgreen" data-toggle="modal" data-target="#findId">아이디 찾기</div>
 				<div class="btn btn-lgreen ml-2 mr-2"  data-toggle="modal" data-target="#findPwd">비밀번호 찾기</div>

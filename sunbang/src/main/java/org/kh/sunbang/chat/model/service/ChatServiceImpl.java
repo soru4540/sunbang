@@ -55,20 +55,32 @@ public class ChatServiceImpl implements ChatService{
 
 	@Override
 	public int insertMessage(Message message) {
-		// TODO Auto-generated method stub
-		return 0;
+		return chatDao.insertMessage(mybatisSession, message);
+	}
+	
+	@Override
+	public int insertMessageImg(Message message) {
+		return chatDao.insertMessageImg(mybatisSession, message);
+	}
+	
+	@Override
+	public int insertMessageFile(Message message) {
+		return chatDao.insertMessageFile(mybatisSession, message);
 	}
 
 	@Override
 	public int deleteMessage(int message_no) {
-		// TODO Auto-generated method stub
-		return 0;
+		return chatDao.deleteMessage(mybatisSession, message_no);
 	}
 
 	@Override
-	public ArrayList<ChatBlock> selectMylistChatBlock() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<ChatBlock> selectMylistChatBlock(int userno) {
+		return chatDao.selectMylistChatBlock(mybatisSession, userno);
+	}
+	
+	@Override
+	public ArrayList<Chat> selectListChatUser(int chatno) {
+		return chatDao.selectListChatUser(mybatisSession, chatno);
 	}
 
 	@Override
@@ -100,4 +112,7 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
+
 }

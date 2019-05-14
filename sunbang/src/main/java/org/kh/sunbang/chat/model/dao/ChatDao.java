@@ -25,6 +25,11 @@ public class ChatDao {
 		return (ArrayList<Message>)list;
 	}
 	
+	public ArrayList<Chat> selectListChatUser(SqlSessionTemplate session, int chatno) {
+		List<Chat> list = session.selectList("chatMapper.selectListChatUser", chatno);
+		return (ArrayList<Chat>)list;
+	};
+	
 	public String insertChat(SqlSessionTemplate session, Chat chat){
 		return null;};
 	
@@ -35,13 +40,24 @@ public class ChatDao {
 		return chat_no;};
 	
 	public int insertMessage(SqlSessionTemplate session, Message message){
-		return 0;};
+		return session.insert("chatMapper.insertMessage", message);
+	}
+	
+	public int insertMessageImg(SqlSessionTemplate session, Message message) {
+		return session.insert("chatMapper.insertMessageImg", message);
+	}
+	
+	public int insertMessageFile(SqlSessionTemplate session, Message message) {
+		return session.insert("chatMapper.insertMessageFile", message);
+	}
 	
 	public int deleteMessage(SqlSessionTemplate session, int message_no){
-		return message_no;};
+		return session.delete("chatMapper.deleteMessage", message_no);};
 	
-	public ArrayList<ChatBlock> selectMylistChatBlock(SqlSessionTemplate session){
-		return null;};
+	public ArrayList<ChatBlock> selectMylistChatBlock(SqlSessionTemplate session, int userno){
+		List<ChatBlock> list = session.selectList("chatMapper.selectMylistChatBlock", userno);
+		return (ArrayList<ChatBlock>)list;
+		}
 	
 	public String insertChatBlock(SqlSessionTemplate session, ChatBlock chatBlock){
 		return null;};
@@ -56,5 +72,8 @@ public class ChatDao {
 		return null;};
 	
 	public String updateAlert(SqlSessionTemplate session, Chat chat){
-		return null;};
+		return null;}
+
+
+
 }

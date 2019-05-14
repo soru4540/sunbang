@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 
 @Controller
@@ -50,7 +51,8 @@ public class UserController {
 	} 
 	
 	@RequestMapping(value="ulogin.do", method=RequestMethod.POST)
-	public String login(User user, HttpSession session, /*@RequestParam(name="logincheck") String logincheck,*/ SessionStatus status, HttpServletResponse response, Model model) throws IOException{
+	@ResponseBody
+	public void login(User user, HttpSession session, /*@RequestParam(name="logincheck") String logincheck,*/ SessionStatus status, HttpServletResponse response) throws IOException{
 		User loginUser = userService.selectLoginId(user);
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
@@ -67,45 +69,43 @@ public class UserController {
 				if(result > 0) {
 					session.setAttribute("loginUser", loginUser);
 					status.setComplete();
-						return "forward:realtymain.do";
-				}else {
-					out.print("<script> location.href='uloginview.do';  alert('시도횟수 수정안됨');</script>");
+					out.append("success");
 					out.flush();
-					out.close();
+				}else {
+					out.append("countfail");
+					out.flush();
 				}
 			}else {
 				loginUser.setLogin_num(loginUser.getLogin_num() + 1);
 				int result = userService.updateLoginNum(loginUser);
 				
 				if(result > 0) {
-					out.print("<script> location.href='uloginview.do'; alert('비밀번호 틀림');</script>");
+					out.append("pwdfail");
 					out.flush();
-					out.close();
 				}else {
-					out.print("<script> location.href='uloginview.do'; alert('시도횟수 수정안됨');</script>");
+					out.append("countfail");
 					out.flush();
-					out.close();
 				}
 			}
 		}else {
-			out.println("<script> location.href='uloginview.do'; alert('아이디 틀림');</script>");
+			out.append("idfail");
 			out.flush();
-			out.close();
-			
 		}
-		return null;
-		
+		out.close();
 	} 
 
 	@RequestMapping("ulogout.do")
-	public String logout(HttpServletRequest request,@RequestParam(name="uri") String ReUri){
+	public void logout(HttpServletRequest request,@RequestParam(name="uri") int ReUri, HttpServletResponse response) throws IOException{
 		HttpSession session = request.getSession(false);
+		PrintWriter out =response.getWriter();
 		
 		if(session != null) {
 			session.invalidate();
 		}
-		
-		return "forward:uloginview.do";
+		if(ReUri == 1) {
+			out.println("<script>location.href='realtymain.do'</script>");
+		}else if(ReUri == 2)
+			out.println("<script>location.href='interiormain.do'</script>");
 	} 
 	
 	@RequestMapping("uinsert.do")

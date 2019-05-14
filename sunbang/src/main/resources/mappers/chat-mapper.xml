@@ -14,6 +14,8 @@
 <result property="away_time" column="away_time"/>
 <result property="check_join" column="check_join"/>
 <result property="realty_no" column="realty_no"/>
+<result property="nickname" column="nickname"/>
+<result property="user_profile" column="user_profile"/>
 </resultMap>
 
 
@@ -47,12 +49,42 @@ WHERE USER_NO = #{userno} AND USER_STATUS IN(0, 1, 2 ,4)
 </select>
 
 <select id="selectListMessage" parameterType="_int" resultMap="resultMessage">
-SELECT MESSAGE_NO, MESSAGE, MESSAGE_IMAGE, ORIGIN_FILENAME, RENEW_FILENAME, TO_CHAR(POST_TIME,  'HH24:MI') POST_TIME, CHAT_NO, USER_NO, NICKNAME, USER_PROFILE
+SELECT MESSAGE_NO, MESSAGE, MESSAGE_IMAGE, ORIGIN_FILENAME, RENEW_FILENAME, TO_CHAR(POST_TIME,  'AM HH:MI') POST_TIME, CHAT_NO, USER_NO, NICKNAME, USER_PROFILE
 FROM TB_MESSAGE
 JOIN TB_USER USING(USER_NO)
 WHERE CHAT_NO = #{chatno}
+ORDER BY MESSAGE_NO
 </select>
 
+<select id="selectMylistChatBlock" parameterType="_int" resultMap="resultChatBlock">
+SELECT BLOCK_NO, BLOCK_USER, TO_CHAR(BLOCK_TIME, 'MM')||'월'||TO_CHAR(BLOCK_TIME, 'DD')||'일' BLOCK_TIME, CB.USER_NO, NICKNAME, USER_PROFILE
+FROM TB_CHATBLOCK CB
+JOIN TB_USER U ON(U.USER_NO = CB.BLOCK_USER)
+WHERE CB.USER_NO = #{userno}
+</select>
+
+<select id="selectListChatUser" parameterType="_int" resultMap="resultChat">
+SELECT CHAT_NO, USER_NO, NICKNAME, USER_PROFILE
+FROM TB_CHAT
+JOIN TB_USER USING (USER_NO)
+WHERE CHAT_NO =#{chatno}
+</select>
+
+<insert id="insertMessage" parameterType="Message">
+INSERT INTO TB_MESSAGE(MESSAGE_NO, MESSAGE, POST_TIME, CHAT_NO, USER_NO) VALUES(MESSAGE_SEQ.NEXTVAL, #{message}, DEFAULT, #{chat_no}, #{user_no})
+</insert>
+
+<insert id="insertMessageImg" parameterType="Message">
+INSERT INTO TB_MESSAGE(MESSAGE_NO, MESSAGE_IMAGE, POST_TIME, CHAT_NO, USER_NO) VALUES(MESSAGE_SEQ.NEXTVAL, #{message_image}, DEFAULT, #{chat_no}, #{user_no})
+</insert>
+
+<insert id="insertMessageFile" parameterType="Message">
+INSERT INTO TB_MESSAGE(MESSAGE_NO, ORIGIN_FILENAME, RENEW_FILENAME, POST_TIME, CHAT_NO, USER_NO) VALUES(MESSAGE_SEQ.NEXTVAL, #{origin_filename}, #{renew_filename}, DEFAULT, #{chat_no}, #{user_no})
+</insert>
+
+<delete id="deleteMessage" parameterType="_int">
+DELETE TB_MESSAGE WHERE MESSAGE_NO = #{message_no}
+</delete>
 
 
 
