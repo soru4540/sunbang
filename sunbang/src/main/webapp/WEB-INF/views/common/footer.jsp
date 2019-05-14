@@ -9,7 +9,7 @@
 <body style="max-height: 376px;">
 	<!-- Footer -->
 	<footer class="page-footer font-small mdb-color lighten-3 pt-4"
-		style="background-color: #f0f1f163">
+		style="background-color: #fafafa">
 
 		<!-- Footer Links -->
 		<div class="container text-center text-md-left">
@@ -21,13 +21,9 @@
 				<div class="col-md-4 col-lg-3 mr-auto my-md-4 my-0 mt-4 mb-1">
 
 					<!-- Content -->
-					<h5 class="font-weight-bold text-uppercase mb-4">Footer
-						Content</h5>
-					<p>Here you can use rows and columns here to organize your
-						footer content.</p>
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-						Fugit amet numquam iure provident voluptate esse quasi, veritatis
-						totam voluptas nostrum.</p>
+					<h5 class="font-weight-bold text-uppercase mb-4">About SUNBANG</h5>
+					<p style="font-family: a고딕13; margin-right:auto! important;" >우리는 원탑 부동산&인테리어 플랫폼 ‘선방’을 통해 집을 선택하고, 꾸미는 방식까지 새롭게 정의합니다. 이를 통해 누구나
+						쉽고 재미있게 자신의 공간을 만들어가는 문화가 널리 퍼지기를 꿈꿉니다.</p>
 
 				</div>
 				<!-- Grid column -->
@@ -77,12 +73,12 @@
 					<ul class="list-unstyled">
 						<li>
 							<p>
-								<i class="fas fa-home mr-3"></i> New York, NY 10012, US
+								<i class="fas fa-home mr-3"></i>Seoul, Republic of Korea
 							</p>
 						</li>
 						<li>
 							<p>
-								<i class="fas fa-envelope mr-3"></i> info@example.com
+								<i class="fas fa-envelope mr-3"></i> sunbangFamily@kh.com
 							</p>
 						</li>
 						<li>
