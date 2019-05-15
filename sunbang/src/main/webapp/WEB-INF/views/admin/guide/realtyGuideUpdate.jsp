@@ -5,21 +5,55 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image⁄x-icon"
+	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
-<script type="text/javascript" src="../se2/js/service/HuskyEZCreator.js"
-	charset="utf-8"></script>
+<script type="text/javascript"
+	src="/sunbang/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript"
 	src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	$(function() {
-		var oEditors = [];
-		nhn.husky.EZCreator.createInIFrame({
-			oAppRef : oEditors,
-			elPlaceHolder : "ir1",
-			sSkinURI : "../se2/SmartEditor2Skin.html",
-			fCreator : "createSEditor2"
-		});
-	})
+$(function() {
+	//전역변수
+	var obj = [];
+	//스마트에디터 프레임생성
+	nhn.husky.EZCreator.createInIFrame({
+		oAppRef : obj,
+		elPlaceHolder : "contents",
+		sSkinURI : "<%=request.getContextPath()%>/resources/editor/SmartEditor2Skin.html",
+		htParams : {
+			// 툴바 사용 여부
+			bUseToolbar : true,
+			// 입력창 크기 조절바 사용 여부
+			bUseVerticalResizer : true,
+			// 모드 탭(Editor | HTML | TEXT) 사용 여부
+			bUseModeChanger : true,
+		}
+	});
+	//전송버튼
+    $("#savebutton").click(function(){
+        //id가 smarteditor인 textarea에 에디터에서 대입
+        obj.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
+        var guide_system = document.ginsertform.guide_system.value;
+		var category = document.ginsertform.category.value;
+		var title = document.ginsertform.title.value;
+		var thumbnail = document.ginsertform.thumbnail.value;
+		var contents = document.ginsertform.contents.value;
+		if (title == "") {
+			alert("제목을 입력하세요.");
+			document.ginsertform.title.focus;
+			return;
+		}
+		if (thumbnail == "") {
+			alert("썸네일을 업로드하세요.");
+			document.ginsertform.thumbnail.focus;
+			return;
+		}
+        //폼 submit
+        document.ginsertform.action = "aginsert.do";
+        $("#ginsertform").submit();
+    })
+});
 </script>
 <style type="text/css">
 #js_pginsert_con {
@@ -38,7 +72,7 @@
 </style>
 </head>
 <body>
-	<c:import url="../common/realtyHeader.jsp"></c:import>
+	<c:import url="../../common/realtyHeader.jsp"></c:import>
 	<div class="container" id="js_pginsert_con">
 		<div class="row">
 			<p id="js_pginsert_title">부동산 가이드 수정</p>
@@ -66,7 +100,7 @@
 			<div class="form-group" style="height:100%;">
 				<label for="exampleFormControlTextarea1">내용입력</label>
 				<div style="height:100%;">
-					<textarea name="ir1" id="ir1" rows="20" cols="100">
+					<textarea name="contents" id="contents" rows="20" cols="100">
 					<pre>
 자 그럼 본격적으로 부동산 등기부등본 쉽게 보는 법을 알아보겠습니다.
 
@@ -79,8 +113,6 @@
 부동산 등기부등본은 토지등기부등본과 건물등기부등본이 있으며,
 건물등기부등본은 아파트와 같은 집합건물등기부등본과 일반건물등기부등본으로 나눠집니다.
 
-
-<img src="/sunbang/resources/images/pgdetail1.jpg">
 (등기부등본의 구성)
 
 
@@ -106,13 +138,13 @@
 			</div>
 			<div class="row">
 				<div class="col" style="text-align: right;">
-					<input class="btn btn-primary btn-sm" type="submit" value="등록">
+					<input class="btn btn-primary btn-sm" id="savebutton" value="등록">
 				</div>
 				<button type="button" class="btn btn-outline-info btn-sm"
 								onclick="history.go(-1);">목록으로</button>
 			</div>
 		</form>
 	</div>
-	<c:import url="../common/footer.jsp"></c:import>
+	<c:import url="../../common/footer.jsp"></c:import>
 </body>
 </html>

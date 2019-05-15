@@ -11,17 +11,12 @@ public class Guide implements java.io.Serializable {
 	private String category;
 	private String title;
 	private String thumbnail;
-	private String guide_image1;
-	private String guide_image2;
-	private String guide_image3;
-	private String guide_image4;
-	private String guide_image5;
+	private String contents;
 	private int guide_status;
 	
 	public Guide() {}
 
-	public Guide(int guide_no, String guide_system, String category, String title, String thumbnail,
-			String guide_image1, String guide_image2, String guide_image3, String guide_image4, String guide_image5,
+	public Guide(int guide_no, String guide_system, String category, String title, String thumbnail, String contents,
 			int guide_status) {
 		super();
 		this.guide_no = guide_no;
@@ -29,11 +24,7 @@ public class Guide implements java.io.Serializable {
 		this.category = category;
 		this.title = title;
 		this.thumbnail = thumbnail;
-		this.guide_image1 = guide_image1;
-		this.guide_image2 = guide_image2;
-		this.guide_image3 = guide_image3;
-		this.guide_image4 = guide_image4;
-		this.guide_image5 = guide_image5;
+		this.contents = contents;
 		this.guide_status = guide_status;
 	}
 
@@ -77,44 +68,12 @@ public class Guide implements java.io.Serializable {
 		this.thumbnail = thumbnail;
 	}
 
-	public String getGuide_image1() {
-		return guide_image1;
+	public String getContents() {
+		return contents;
 	}
 
-	public void setGuide_image1(String guide_image1) {
-		this.guide_image1 = guide_image1;
-	}
-
-	public String getGuide_image2() {
-		return guide_image2;
-	}
-
-	public void setGuide_image2(String guide_image2) {
-		this.guide_image2 = guide_image2;
-	}
-
-	public String getGuide_image3() {
-		return guide_image3;
-	}
-
-	public void setGuide_image3(String guide_image3) {
-		this.guide_image3 = guide_image3;
-	}
-
-	public String getGuide_image4() {
-		return guide_image4;
-	}
-
-	public void setGuide_image4(String guide_image4) {
-		this.guide_image4 = guide_image4;
-	}
-
-	public String getGuide_image5() {
-		return guide_image5;
-	}
-
-	public void setGuide_image5(String guide_image5) {
-		this.guide_image5 = guide_image5;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 
 	public int getGuide_status() {
@@ -132,11 +91,8 @@ public class Guide implements java.io.Serializable {
 	@Override
 	public String toString() {
 		return "Guide [guide_no=" + guide_no + ", guide_system=" + guide_system + ", category=" + category + ", title="
-				+ title + ", thumbnail=" + thumbnail + ", guide_image1=" + guide_image1 + ", guide_image2="
-				+ guide_image2 + ", guide_image3=" + guide_image3 + ", guide_image4=" + guide_image4 + ", guide_image5="
-				+ guide_image5 + ", guide_status=" + guide_status + "]";
+				+ title + ", thumbnail=" + thumbnail + ", contents=" + contents + ", guide_status=" + guide_status
+				+ "]";
 	}
-	
-	
 	
 }

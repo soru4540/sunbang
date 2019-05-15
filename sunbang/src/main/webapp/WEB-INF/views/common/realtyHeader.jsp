@@ -121,7 +121,7 @@
 					<li class="nav-item"><a class="nav-link" href="rinsertview.do">집내놓기</a></li>
 				</c:if>
 				<li class="nav-item"><a class="nav-link" href="aglistselect.do?guide_system=realty">부동산가이드</a></li>
-				<li class="nav-item"><a class="nav-link" href="/sunbang/views/admin/premiumPayment.jsp">프리미엄&nbsp;&nbsp;</a></li>
+				<li class="nav-item"><a class="nav-link" href="paymentPage.do">프리미엄&nbsp;&nbsp;</a></li>
 				<li class="nav-item" id="js_pheader_user">
 				<c:if test="${!empty loginUser}">
 					<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 
@@ -143,7 +143,6 @@
 							<a class="dropdown-item" href="mylikeview.do"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="rmylist.do?user_no=${loginUser.user_no }"><i class="far fa-copy"></i> 등록 매물 관리</a>
-							<a class="dropdown-item" href="#"><i class="fas fa-award"></i> 프리미엄 서비스</a>
 							<a class="dropdown-item" href="ulogout.do?uri=1"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_no == 0 }"> <!-- 관리자 -->
