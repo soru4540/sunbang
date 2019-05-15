@@ -9,6 +9,8 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <title>main</title>
+<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/bootstrap-slider.js"></script>
+<link href="${pageContext.request.contextPath }/resources/css/bootstrap-slider.css" rel="stylesheet">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
@@ -541,7 +543,7 @@ $(document).ready(function() {
 					<div id="house">
 						<div id="hj_houseImages"></div>
 						<div id="hj_houseDetail">
-							<h1>조회된 결과가 없다 이말이야</h1>
+							
 						</div>
 					</div>
 				</div>
