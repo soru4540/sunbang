@@ -21,8 +21,7 @@
 		<result property="style" column="style" />
 		<result property="board_hits" column="board_hits" />
 		<result property="board_date" column="board_date" />
-		<result property="board_status" column="board_status" />
-		<result property="user_no" column="user_no" />	
+		<result property="board_status" column="board_status" />		
 		<result property="post_no" column="post_no"/>
         <result property="post_keyword" column="post_keyword" />
         <result property="post_data" column="post_data" />
@@ -31,7 +30,14 @@
         <result property="product_image" column="product_image" />
         <result property="cordi_x" column="cordi_x" />
         <result property="cordi_y" column="cordi_y" />
-        <result property="product_url" column="product_url" />     
+        <result property="product_url" column="product_url" />
+        <result property="user_no" column="user_no" />	
+        <result property="user_profile" column="user_profile" />
+        <result property="nickname" column="nickname" />
+        <result property="user_name" column="user_name" /> 
+        <result property="like_count" column="like_count" /> 
+        <result property="follow_count" column="follow_count" /> 
+        
 </resultMap>
 
 <resultMap type="Board" id="resultBoard">
@@ -93,13 +99,77 @@
       <result property="user_no" column="user_no" />    
 </resultMap>
 
+<resultMap type="Ipaging" id="resultIpaging">
+    <id property="page" column="page"/>
+    <result property="start_num" column="start_num" />
+    <result property="end_num" column="end_num" />    
+    <result property="board_type" column="board_type" />
+    <result property="user_no" column="user_no" />    
+</resultMap>
+
+
 <select id="selectHbTop1" resultMap="resultBoardFull">
-select board_no,post_no,board_hits,post_keyword,post_data,user_no
-from(select rownum, board_no,post_no,board_hits,post_keyword,post_data, user_no from tb_board
-full join tb_post using(board_no)
-full join tb_marker using(post_no)
-order by board_hits desc, post_no)
+select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)
+      and board_type='housewarming'            
+order by board_hits desc, like_count desc, board_no desc
+)
 where rownum =1
+</select>
+
+<select id="selectKbTop4" resultMap="resultBoardFull">
+<![CDATA[ select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)
+      and board_type='knowhow'            
+order by board_hits desc, like_count desc, board_no desc
+)
+where rownum <5 ]]>
+</select>
+
+<select id="selectHbTop3" resultMap="resultBoardFull">
+<![CDATA[ select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+from (select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)
+      and board_type='housewarming'            
+order by board_hits desc, like_count desc, board_no desc
+)
+where rownum <4 ]]>
+</select>
+
+<select id="selectPbTop8" resultMap="resultBoardFull">
+<![CDATA[ select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+from (select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)
+      and board_type='photograph'            
+order by board_hits desc, like_count desc, board_no desc
+)
+where rownum <9 ]]>
 </select>
 
 <!-- 게시판등록 -->
@@ -124,5 +194,39 @@ select board_no from tb_board where user_no = #{user_no} and rownum = 1 order by
 insert into tb_post values(post_seq.nextval,#{post_keyword},#{post_data,jdbcType=VARCHAR},#{post_contents,jdbcType=VARCHAR},#{board_no})
 </insert>
 
+<!-- 게시판리스트 카운트 -->
+<select id="selectListCount" parameterType="string" resultType="_int">
+select count(board_no) from tb_board where board_type = #{board_type}
+</select>
+
+<!-- 게시판리스트 출력 -->
+<select id="selectBoardList" parameterType="Ipaging" resultMap="resultBoardFull">
+<![CDATA[ select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)
+      and board_type= #{board_type}            
+)where rnum >= #{start_num} and rnum <= #{end_num} ]]>
+</select>
+
+<!-- 좋아요 체크 리스트 출력 -->
+<select id="selectLikeCheck" parameterType="_int" resultMap="resultLike">
+select * from tb_like where user_no= #{user_no} 
+</select>
+
+<!-- 좋아요 등록 -->
+<insert id="insertLike" parameterType="Like">
+insert into tb_like values(like_seq.nextval,#{user_no},#{board_no})
+</insert>
+
+<!-- 좋아요 삭제 -->
+<delete id="deleteLike" parameterType="Like">
+delete from tb_like where user_no=#{user_no} and board_no=#{board_no}
+</delete>
 
 </mapper>

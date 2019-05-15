@@ -120,6 +120,14 @@
 </head>
 <body>
 	<c:import url="../common/interiorHeader.jsp" />
+	<script type="text/javascript">
+	function goHousewarming(){
+		location.href="iblistselect.do?board_type=housewarming";	
+	}
+	function goPhotograph(){
+		location.href="iblistselect.do?board_type=photograph";		
+	}	
+	</script>
 	<br>
 	<br>
 	<br>
@@ -128,8 +136,8 @@
 		<div class="row">
 			<div class="col-md-8">
 				<a href="#"><div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/sample1.PNG"
-							style="width: 100%; height: 455px;">
+					 	<img id="js_htop1" src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop1.post_data}"
+							style="width: 100%; height: 455px;"> 
 					</div></a>
 			</div>
 			<div class="col-md-4">
@@ -143,7 +151,7 @@
 					</ol>
 					<div class="carousel-inner">
 						<div class="carousel-item active">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/sample2.PNG"
+							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(0).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>First Thumbnail label</h4>
@@ -153,7 +161,7 @@
 							</div>
 						</div>
 						<div class="carousel-item">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/sample3.PNG"
+							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(1).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>Second Thumbnail label</h4>
@@ -163,7 +171,7 @@
 							</div>
 						</div>
 						<div class="carousel-item">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/sample4.PNG"
+							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(2).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>Third Thumbnail label</h4>
@@ -173,7 +181,7 @@
 							</div>
 						</div>
 						<div class="carousel-item">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/sample4.PNG"
+							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(3).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>Third Thumbnail label</h4>
@@ -227,43 +235,43 @@
 				<h3>오늘의 NEW</h3>
 			</div>
 			<div class="col-md-6" align="right">
-				<button type="button" class="jb_main_btn">more</button>
+				<input type="button" class="jb_main_btn" value="more" onclick="goHousewarming();">
 			</div>
 		</div>
 		<div class="row" id="jb_main_new">
 			<div class="col-md-4">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop3.get(0).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
-					<h5>좋아하는 사진</h5>
+					<h5>${hbtop3.get(0).board_title}</h5>
 					<h6>
-						<i class="far fa-user-circle"></i>&nbsp;myId123
+						<i class="far fa-user-circle"></i>&nbsp;${hbtop3.get(0).nickname}
 					</h6>
 				</a>
 			</div>
 			<div class="col-md-4">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new2.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop3.get(1).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
-					<h5>좋아하는 집들이</h5>
+					<h5>${hbtop3.get(1).board_title}</h5>
 					<h6>
-						<i class="far fa-user-circle"></i>&nbsp;myId123
+						<i class="far fa-user-circle"></i>&nbsp;${hbtop3.get(1).nickname}
 					</h6>
 				</a>
 			</div>
 			<div class="col-md-4">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new3.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop3.get(2).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
-					<h5>좋아하는 노하우</h5>
+					<h5>${hbtop3.get(2).board_title}</h5>
 					<h6>
-						<i class="far fa-user-circle"></i>&nbsp;myId123
+						<i class="far fa-user-circle"></i>&nbsp;${hbtop3.get(2).nickname}
 					</h6>
 				</a>
 			</div>
@@ -276,14 +284,14 @@
 				<h3>오늘의 BEST</h3>
 			</div>
 			<div class="col-md-6" align="right">
-				<button type="button" class="jb_main_btn">more</button>
+				<input type="button" class="jb_main_btn" value="more" onclick="goPhotograph();">
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best1.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(0).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -291,7 +299,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best2.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(1).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -299,7 +307,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best3.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(2).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -307,7 +315,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best4.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(3).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -318,7 +326,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best5.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(4).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -326,7 +334,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best6.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(5).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -334,7 +342,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best7.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(6).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
@@ -342,7 +350,7 @@
 			<div class="col-md-3">
 				<a href="#">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/best8.PNG"
+						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(7).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>

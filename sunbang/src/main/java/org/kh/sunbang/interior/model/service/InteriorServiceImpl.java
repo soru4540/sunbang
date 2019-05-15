@@ -6,6 +6,7 @@ import org.kh.sunbang.interior.model.dao.InteriorDao;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
+import org.kh.sunbang.interior.model.vo.Ipaging;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Marker;
 import org.kh.sunbang.interior.model.vo.Post;
@@ -26,28 +27,25 @@ public class InteriorServiceImpl implements InteriorService{
 
 	
 //--------------------jb------------------------------------------------//	
-	
+		
 	@Override
 	public BoardFull selectHbTop1() {		
 		return interiorDao.selectHbTop1(session);
 	}
 
 	@Override
-	public ArrayList<Board> selectKbTop4() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<BoardFull> selectKbTop4() {
+		return interiorDao.selectKbTop4(session);
 	}
 
 	@Override
-	public ArrayList<Board> selectHbTop3() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<BoardFull> selectHbTop3() {
+		return interiorDao.selectHbTop3(session);	
 	}
 
 	@Override
-	public ArrayList<Board> selectPbTop8() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<BoardFull> selectPbTop8() {
+		return interiorDao.selectPbTop8(session);	
 	}
 
 	@Override
@@ -64,14 +62,12 @@ public class InteriorServiceImpl implements InteriorService{
 
 	@Override
 	public int selectListCount(String board_type) {
-		// TODO Auto-generated method stub
-		return 0;
+	     return interiorDao.selectListCount(session, board_type);
 	}
 
 	@Override
-	public ArrayList<Board> selectBoardList(String board_type) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<BoardFull> selectBoardList(Ipaging ipaging) {		
+		return interiorDao.selectBoardList(session, ipaging);
 	}
 
 	@Override
@@ -112,20 +108,17 @@ public class InteriorServiceImpl implements InteriorService{
 
 	@Override
 	public ArrayList<Like> selectLikeCheck(int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+		return interiorDao.selectLikeCheck(session, user_no);
 	}
 
 	@Override
-	public int insertLike(Like like) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int insertLike(Like like) {		
+		return interiorDao.insertLike(session, like);
 	}
 
 	@Override
-	public int deleteLike(Like like) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteLike(Like like) {		
+		return interiorDao.deleteLike(session, like);
 	}
 
 	@Override

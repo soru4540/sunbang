@@ -25,6 +25,7 @@
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Reply" alias="Reply" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Like" alias="Like" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Follow" alias="Follow" /> 
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Ipaging" alias="Ipaging" /> 
 		
 	</typeAliases>
 	<mappers>

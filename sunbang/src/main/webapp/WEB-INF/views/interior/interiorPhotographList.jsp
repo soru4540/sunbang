@@ -185,9 +185,147 @@
 			$("#jb_filter1_filter5").click(function() {
 				$(".jb_filter1_item").css("display", "none");
 				$("#jb_filter1_items5").css("display", "");
-			});
+			});					
+			
+		});			
+		
+		
+		function changeLike1(i){	
+			if($("#likekey"+i).val()==1){		
+				$(function(){				
+					$.ajax({						
+						url: "ildelete.do",
+						data: {user_no: 2, board_no: $("#like"+i).val()},
+						type: "post",
+						success: function(){
+							$("#1like"+i).css("display","none");		
+							$("#2like"+i).css("display","");
+							$("#likekey"+i).val(0);
+						},
+						error: function(){
+						}
+					});
+		        });	
+			}else if($("#likekey"+i).val()==0){			
+                $(function(){
+                	$.ajax({
+						url: "ilinsert.do",
+						data: {user_no:2,board_no: $("#like"+i).val()},
+						type: "post",
+						success: function(){
+							$("#1like"+i).css("display","none");		
+							$("#2like"+i).css("display","");		
+							$("#likekey"+i).val(1);
+						},
+						error: function(){
+						}
+					});
+				});									
+			}
+		}
+		
+		function changeLike2(i){						
+			if($("#likekey"+i).val()==1){					
+			$(function(){
+				$.ajax({
+					url: "ildelete.do",
+					data: {user_no: 2,board_no: $("#like"+i).val()},
+					type: "post",
+					success: function(){
+						$("#2like"+i).css("display","none");
+						$("#1like"+i).css("display","");			
+						$("#likekey"+i).val(0);
+					},
+					error: function(){
+					}
+				});
+	        });	
+			}else if($("#likekey"+i).val()==0){						
+				$(function(){					
+					$.ajax({
+						url: "ilinsert.do",
+						data: {user_no: 2,board_no: $("#like"+i).val()},
+						type: "post",
+						success: function(){
+							$("#2like"+i).css("display","none");			
+							$("#1like"+i).css("display","");			
+							$("#likekey"+i).val(1);
+						},
+						error: function(){
+						}
+					});
+				});
+			}
+		}
 
+		var page = 1;  //페이징과 같은 방식이라고 생각하면 된다. 
+		 
+		$(function(){  //페이지가 로드되면 데이터를 가져오고 page를 증가시킨다.
+		     getList(page);
+		     page++;
+		}); 
+		 
+		$(window).scroll(function(){   //스크롤이 최하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.
+		    if(page != 0){
+			if( $(window).scrollTop() >= $(document).height() - $(window).height()){
+		          getList(page);
+		           page++;   
+		     } 
+		    }
 		});
+		 
+		function getList(pagenum){		
+		    $.ajax({
+		        type : "post",  
+		        dataType : "json", 
+		        data : {board_type: "photograph" ,page : pagenum, user_no: 2},
+		        url : "ipaging.do",
+		        success : function(returnData) {		        
+		        	var objStr = JSON.stringify(returnData);	
+					var jsonObj = JSON.parse(objStr);							
+						var value = $("#list").html();
+						 if (jsonObj.end_num == jsonObj.total_num){
+							 page = 0;
+						 }
+			            if (jsonObj.start_num<=jsonObj.total_num){			            	
+			            	if(jsonObj.iblist.length>0){
+			            	if(pagenum==1){
+			            	var list_no = 0;
+			            	}else {
+			            		var list_no = 16 + ((pagenum-2)*8);				            	
+			            	}
+			            	for(var i in jsonObj.iblist){				           
+			            	value += "<div class='col-md-3'>"
+			            				+"<h6 align='left'>"
+			            			    +"<i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname
+			            				+"</h6>"
+			            				+"<a href='#'> <img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
+			            				+"<h5 align='center'>";			            				
+			            				var count = 0
+			            				  for(var k in jsonObj.illist){
+			            				     if(jsonObj.illist[k].board_no == jsonObj.iblist[i].board_no){
+			            				     value += "<input type='hidden' id='like"+list_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='likekey"+list_no+"' value='1'><i class='fas fa-heart' id='1like"+list_no+"' onclick='changeLike1("+list_no+");' style='color:#eb3a47;'></i>"
+			            				                +"<i class='far fa-heart' id='2like"+list_no+"' onclick='changeLike2("+list_no+");' style='display:none;color:black;'></i>&nbsp;&nbsp;&nbsp;&nbsp;";    						            							
+			            			         count = 1;
+			            				     }			            			    
+			            				  }
+			            				  if(count != 1){
+			            				  value += "<input type='hidden' id='like"+list_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='likekey"+list_no+"' value='0'><i class='far fa-heart' id='1like"+list_no+"' onclick='changeLike1("+list_no+");' value='0'></i>"
+			            				  +"<i class='fas fa-heart' id='2like"+list_no+"' onclick='changeLike2("+list_no+");' value='1' style='display:none;color:#eb3a47;'></i>&nbsp;&nbsp;&nbsp;&nbsp;";	
+			            				  }			            							            		
+			                 value += "<a href='#'><i class='far fa-comment'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-size: large; opacity: 0.4;''>조회 : "+jsonObj.iblist[i].board_hits+"</span>"
+			            	           +"</h5><h5 align='center'>"+jsonObj.iblist[i].board_title+"</h5></div>";
+			                 list_no++;                        
+			            	}
+			            	$("#list").html(value);
+			            	         		          			           
+			            	}
+			            } 
+			    },error: function(){
+							}
+		    });		    
+		} 
+ 
 	</script>
 	<br>
 	<br>
@@ -263,266 +401,36 @@
 		<br>
 		<div class="row">
 			<div class="col-md-12">
-				<button type="button" class="jb_filter_btn">
+				<button type="button" class="jb_filter_btn" id="jb_filter_btn1">
 					<span style="color: #fff;">정렬</span>&nbsp;<span>ⓧ</span>
 				</button>
 				&nbsp;&nbsp;
-				<button type="button" class="jb_filter_btn">
+				<button type="button" class="jb_filter_btn" id="jb_filter_btn2">
 					<span style="color: #fff;">공간</span>&nbsp;<span>ⓧ</span>
 				</button>
 				&nbsp;&nbsp;
-				<button type="button" class="jb_filter_btn">
+				<button type="button" class="jb_filter_btn" id="jb_filter_btn3">
 					<span style="color: #fff;">평수</span>&nbsp;<span>ⓧ</span>
 				</button>
 				&nbsp;&nbsp;
-				<button type="button" class="jb_filter_btn">
+				<button type="button" class="jb_filter_btn" id="jb_filter_btn4">
 					<span style="color: #fff;">컬러</span>&nbsp;<span>ⓧ</span>
 				</button>
 				&nbsp;&nbsp;
-				<button type="button" class="jb_filter_btn">
+				<button type="button" class="jb_filter_btn" id="jb_filter_btn5">
 					<span style="color: #fff;">제품정보</span>&nbsp;<span>ⓧ</span>
 				</button>
 			</div>
 		</div>
-		<hr color="#ff9198">
-		<br>
-		<div class="row">
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best1.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best2.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best3.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best4.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
+		<hr color="#ff9198">			
+		<br>	
+		<div class="row" id="list">
+
 		</div>
 		<br>
-		<div class="row">
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best5.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best6.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best7.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best8.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-		</div>
+	
 		<br>
-		<div class="row">
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best1.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best2.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best3.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best4.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best5.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best6.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best7.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-			<div class="col-md-3">
-				<h6 align="left">
-					<i class="far fa-user-circle"></i>&nbsp;myId123
-				</h6>
-				<a href="#"> <img src="${pageContext.request.contextPath }/files/interior/interiorMain/best8.PNG"
-					class="jb_filter1_img"><br>
-					<h5 align="center">
-						<a href="#"><i class="far fa-heart"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<a
-							href="#"><i class="far fa-comment"></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span
-							style="font-size: large; opacity: 0.4;">조회 : 30</span>
-					</h5>
-					<h5 align="center">좋아하는 인테리어</h5>
-				</a>
-			</div>
-		</div>
-		<br>
-		<div class="row">
+		<div class="row">                               
 			<div class="col-md-12">
 				<a id="MOVE_TOP_BTN" href="#" style="color: #000;">TOP</a>
 			</div>

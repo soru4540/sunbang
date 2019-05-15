@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
+import org.kh.sunbang.interior.model.vo.Ipaging;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Marker;
 import org.kh.sunbang.interior.model.vo.Post;
@@ -18,9 +19,9 @@ public interface InteriorService {
 //--------------------jb------------------------------------------------//
 	
 	BoardFull selectHbTop1();
-	ArrayList<Board> selectKbTop4();
-	ArrayList<Board> selectHbTop3();
-	ArrayList<Board> selectPbTop8(); 
+	ArrayList<BoardFull> selectKbTop4();
+	ArrayList<BoardFull> selectHbTop3();
+	ArrayList<BoardFull> selectPbTop8(); 
 	int selectSearchListCount(String keyword);
 	ArrayList<Board> selectSearchList(String keyword); 
 /*	int insertBoard(Board board);
@@ -36,7 +37,7 @@ public interface InteriorService {
 	int deletePost(int post_no);
 	int deleteMarker(int marker_no);*/
 	int selectListCount(String board_type);
-	ArrayList<Board> selectBoardList(String board_type);
+	ArrayList<BoardFull> selectBoardList(Ipaging ipaging);
 	int selectList1Count(String board_type);
 	ArrayList<Board> selectBoardFilter1List(ArrayList<String> keyword); 
 	int selectList2Count(String board_type);
