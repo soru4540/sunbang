@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-<title>선방</title>
+<title>SUNBANG</title>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71150a085c893cb9531eb155dbf54998&libraries=services"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
@@ -31,6 +31,17 @@
 		}
 	});
 </script>
+<!-- 수정하기 -->
+<script type="text/javascript">
+	$(function(){
+		$("#sh_update_btn").click(function(){
+			var message = confirm("수정하기 페이지로 이동하시겠습니까?");
+			if(message == true){
+				location.href="rupdateview.do?realty_no=${realty.realty_no }";
+			}
+		});
+	});
+</script>
 <!-- 360도 사진 띄우기 -->
 <script type="text/javascript">
 	$(function() {
@@ -38,7 +49,8 @@
 			$("#sh_360_btn").css("display", "none");
 		}
 		
-		$("#sh_360_btn").click(function(){
+		$("#sh_360_btn").click(function(e){
+			e.stopPropagation();
 			window.open('r360.do?image360=${realty.image360 }', '360도', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
 		});
 	});
@@ -249,6 +261,12 @@ $(function(){
 	font-weight: bold;
 }
 
+#sh_premium_style {
+	float:right;
+	font-weight: normal;
+	color:white;
+}
+
 .carousel-item {
 	cursor: pointer;
 }
@@ -261,7 +279,22 @@ $(function(){
 	color: #b30000;
 }
 
-#sh_360_btn, #sh_chat_btn {
+#sh_360_btn, #sh_chat_btn_1, #sh_chat_btn_2 {
+	background-color: #61C0BF;
+}
+
+#sh_update_btn {
+	width: 100%;
+	color: #61C0BF;
+	border: 1px solid #61C0BF;
+	border-radius: 5px;
+	margin: 1px;
+	padding: 5px;
+	cursor:pointer;
+}
+
+#sh_update_btn:hover {
+	color: white;
 	background-color: #61C0BF;
 }
 
@@ -391,7 +424,6 @@ $(function(){
 			</div>
 		</div>
 	</c:if>
-	
 	<c:if test="${realty.realty_status == '삭제' || realty.realty_status == '완전삭제'}">
 		<div class="row" id="sh_realtydetail_delete">
 			<div class="col-md-12">
@@ -418,10 +450,10 @@ $(function(){
 							매매  <fmt:formatNumber value="${realty.purchase }" groupingUsed="true" /> 원 /
 						</c:if>
 						${realty.exclusive_area }평 / 
-						선방공인중개사무소 김성현
+						${user.office_name } ${user.user_name } 
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
-						<button type="button" id="sh_chat_btn" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
+						<button type="button" id="sh_chat_btn_1" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
 					</ul>
 
 				</nav>  <!-- 하단바 -->
@@ -467,8 +499,13 @@ $(function(){
 					</div>
 					<div class="col-md-2" align="right">
 						<br>
-						<b>선방공인중개사무소</b><br><i class="fas fa-award"></i> 김성현
-						<button type="button" id="sh_chat_btn" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
+						 
+						<b>${user.office_name }</b><br>
+						<c:if test="${user.premium_status == 'Y' }">
+						<i class="fas fa-award"></i> 
+						</c:if>
+						${user.user_name }
+						<button type="button" id="sh_chat_btn_2" class="btn btn-sm btn-success">상담하기 <i class="far fa-comment-dots"></i></button>
 					</div>
 				</div> <!-- 매물정보 -->
 				<br>
@@ -520,8 +557,19 @@ $(function(){
 				<div class="row" id="sh_realty_status">
 					<div class="col-md-12">
 						${realty.realty_status }
+						<c:if test="${user.premium_status == 'Y' }">
+						<span id="sh_premium_style">선방에서 인증한 프리미엄 회원의 매물입니다.</span>
+						</c:if>
 					</div>
 				</div>
+				<c:if test="${loginUser.user_no == realty.user_no }">
+					<br>
+					<div class="row" id="sh_update_btn">
+						<div class="col-md-12">
+							수정하기
+						</div>
+					</div>	
+				</c:if>
 				
 				<div class="row"> <!-- 기본정보/추가정보 -->
 					<div class="col-md-12">

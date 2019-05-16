@@ -6,6 +6,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.dao.RealtyDao;
 import org.kh.sunbang.realty.model.vo.Realty;
+import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,16 @@ public class RealtyServiceImpl implements RealtyService {
 	@Override
 	public Realty selectRealtyDetailView(int realty_no) { //매물상세페이지
 		return realtyDao.selectRealtyDetailView(mybatisSession, realty_no);
+	}
+	
+	@Override
+	public User selectUserInfo(int user_no) { //매물상세페이지 :등록자 정보
+		return realtyDao.selectUserInfo(mybatisSession, user_no);
+	}
+	
+	@Override
+	public int selectRealtyNo(int user_no) { //등록한 매물번호 가져오기
+		return realtyDao.selectRealtyNo(mybatisSession, user_no);
 	}
 	
 	@Override
@@ -63,8 +74,7 @@ public class RealtyServiceImpl implements RealtyService {
 	
 	@Override
 	public int insertRealty(Realty realty) { //매물등록
-		int result = realtyDao.insertRealty(mybatisSession, realty);
-		return result;
+		return realtyDao.insertRealty(mybatisSession, realty);
 	}
 
 	@Override
@@ -99,6 +109,7 @@ public class RealtyServiceImpl implements RealtyService {
 	public ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno) {
 		return realtyDao.selectRealtyList(mybatisSession, realtyno);
 	}
+
 
 
 

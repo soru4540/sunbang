@@ -16,6 +16,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.service.RealtyService;
 import org.kh.sunbang.realty.model.vo.Realty;
+import org.kh.sunbang.user.model.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,9 +81,11 @@ public class RealtyController {
 		realtyService.updateRealtyHits(realty_no);
 		
 		Realty realty = realtyService.selectRealtyDetailView(realty_no);
+		User user = realtyService.selectUserInfo(realty.getUser_no());
 		
 		if(realty != null) {
 			mv.addObject("realty", realty);
+			mv.addObject("user", user);
 			mv.setViewName("realty/realtyDetailView");
 		}else {
 			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
@@ -307,8 +310,13 @@ public class RealtyController {
 		System.out.println(realty);
 		
 		if(realtyService.insertRealty(realty) > 0) {
-			//return "redirect:rdetail.do?realty_no=" + realty.getRealty_no();
-			return "realty/realtyMain";
+			
+			int user_no = realty.getUser_no();
+			System.out.println(realty.getUser_no());
+			System.out.println(user_no);
+			int realty_no = realtyService.selectRealtyNo(user_no);
+			
+			return "redirect:rdetail.do?realty_no=" + realty_no;
 		}else {
 			model.addAttribute("message", "매물 등록에 실패하였습니다.");
 			return "common/error";

@@ -97,12 +97,6 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String insertPremium(Premium premium) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public String updatePremium(int business_user_no) {
 		// TODO Auto-generated method stub
 		return null;
@@ -136,6 +130,12 @@ public class UserServiceImpl implements UserService{
 	public int deleteLike(Like like) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+	
+	//김성현--------------------------------------------------------------
+	@Override
+	public int insertPremium(Premium premium) { //결제 등록
+		return userDao.insertPremium(mybatisSession, premium);
 	}
 
 }

@@ -5,11 +5,14 @@ import java.util.ArrayList;
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.vo.Realty;
+import org.kh.sunbang.user.model.vo.User;
 
 public interface RealtyService {
 	
 	//성현---------------------------------------------------------------------------------------------------------------------	
 	Realty selectRealtyDetailView(int realty_no);
+	User selectUserInfo(int user_no);
+	int selectRealtyNo(int user_no);
 	
 	int selectDibsCount(int realty_no);
 	int selectDibsCheck(Dibs dibs);
@@ -31,5 +34,7 @@ public interface RealtyService {
 	
 	ArrayList<Realty> selectMarkerList();
 	ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno);
+
+
 
 }

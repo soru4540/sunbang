@@ -92,13 +92,6 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
-	
-	public String insertPremium(SqlSessionTemplate session, Premium premium) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 	public String updatePremium(SqlSessionTemplate session, int business_user_no) {
 		// TODO Auto-generated method stub
@@ -133,5 +126,11 @@ public class UserDao {
 	public int deleteLike(SqlSessionTemplate session, Like like) {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	
+	//성현------------------------------------
+	public int insertPremium(SqlSessionTemplate mybatisSession, Premium premium) {
+		return mybatisSession.insert("userMapper.insertPremium", premium);
 	}
 }

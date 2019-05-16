@@ -129,6 +129,11 @@
 				var result = confirm("정말로 삭제하시겠습니까?\n삭제 시 값을 변경하실 수 없습니다.");
 				if(result == false){
 					return false;
+				}else{
+					var rresult = confirm("내 방 관리로 이동하시겠습니까?");
+					if(rresult == true){
+						location.href="rmylist.do?user_no="+ ${loginUser.user_no};
+					}
 				}
 			}
 			
@@ -1138,7 +1143,7 @@ $(function(){
 		//checkbox
 		else if($("#customCheck1").is(":checked") == false){
 			$("#sh_required").css("display", "block");
-			$('#sh_required_text').text("매물을 등록하실려면 매물관리 규정 확인과 실제 매물과 다름이 없다는 것에 동의하셔야 합니다.");
+			$('#sh_required_text').text("매물을 수정하실려면 매물관리 규정 확인과 실제 매물과 다름이 없다는 것에 동의하셔야 합니다.");
 		}
 		
 		else{
@@ -1157,6 +1162,7 @@ $(function(){
 			}
 			
 			$("#sh_realty_form").submit();
+			alert("매물정보가 수정되었습니다.");
 		}
 	});			
 });
@@ -1586,7 +1592,7 @@ $(function(){
 						</div>
 					</div>					
 				</div>
-			</div>  <!-- 매물 등록 -->
+			</div>  <!-- 매물 수정 -->
 			<br><br>
 			<c:if test="${realty.realty_status != '검수중' }">
 			<div class="row" id="sh_product_progress"> <!-- 매물 상태 수정 -->
@@ -2064,17 +2070,17 @@ placeholder="
 							<button type="button" class="sh_phototype_btn" id="sh_phototype_btn1">360°사진</button>	
 						</div>
 					</div>
-					<div class="row" id="sh_commonphotoform"> <!-- 일반 사진 등록 -->
+					<div class="row" id="sh_commonphotoform"> <!-- 일반 사진 수정 -->
 						<div class="col-md-12">
 						
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image0" name="realty_image1" value="${realty.realty_image1}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image1" name="realty_image2" value="${realty.realty_image2}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image2" name="realty_image3" value="${realty.realty_image3}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image3" name="realty_image4" value="${realty.realty_image4}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image4" name="realty_image5" value="${realty.realty_image5}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image5" name="realty_image6" value="${realty.realty_image6}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image6" name="realty_image7" value="${realty.realty_image7}"><br>
-							<input type="text" class="sh_load_realty_image" id="sh_load_realty_image7" name="realty_image8" value="${realty.realty_image8}"><br>
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image0" name="realty_image1" value="${realty.realty_image1}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image1" name="realty_image2" value="${realty.realty_image2}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image2" name="realty_image3" value="${realty.realty_image3}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image3" name="realty_image4" value="${realty.realty_image4}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image4" name="realty_image5" value="${realty.realty_image5}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image5" name="realty_image6" value="${realty.realty_image6}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image6" name="realty_image7" value="${realty.realty_image7}">
+							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image7" name="realty_image8" value="${realty.realty_image8}">
 							
 						<c:forEach var="i" begin="0" end="7">
 							<div class="row" id="sh_realty_image_row${i}">
@@ -2114,10 +2120,10 @@ placeholder="
 						</div>
 					</div>
 					
-					<div class="row" id="sh_360photoform"> <!-- 360도 사진 등록 -->
+					<div class="row" id="sh_360photoform"> <!-- 360도 사진 수정 -->
 						<div class="col-md-12">
 						
-						<input type="text" id="sh_load_image360" name="image360" value="${realty.image360 }">
+						<input type="hidden" id="sh_load_image360" name="image360" value="${realty.image360 }">
 						
 							<div class="row">
 								<div class="col-md-12">
@@ -2155,9 +2161,9 @@ placeholder="
 						</div>
 					</div>												
 				</div>
-			</div> <!-- 사진 등록 -->
+			</div> <!-- 사진 수정 -->
 			<br><br>
-			<div class="row"> <!-- 동의 / 매물 등록 -->
+			<div class="row"> <!-- 동의 / 매물 수정 -->
 				<div class="col-md-12" align="center">
 				    
 					<div class="custom-control custom-checkbox">
@@ -2170,7 +2176,7 @@ placeholder="
 					  <input type="button" id="psubmit" value="매물 수정">
 					</div>
 				</div>
-			</div>  <!-- 동의 / 매물 등록 -->
+			</div>  <!-- 동의 / 매물 수정 -->
 			</div>
 			<br><br><br><br><br><br>
 		</div>

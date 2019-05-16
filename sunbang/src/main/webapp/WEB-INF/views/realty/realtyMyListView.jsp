@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>   
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>        
 <!DOCTYPE html>
 <html>
@@ -183,7 +184,7 @@ $(function(){
 			</div>
 			<div class="row" id="sh_myroomlist"> <!-- 내 방 리스트  -->
 				<div class="col-md-12"><br><br>
-					<h6>내 방 리스트</h6><hr>
+					<h6>내 방 리스트 : 총 ${fn:length(realtyList)} 개</h6><hr>
 					<c:if test="${empty realtyList }">
 					<br><br>
 					<div class="row" id="sh_realtymylistempty">

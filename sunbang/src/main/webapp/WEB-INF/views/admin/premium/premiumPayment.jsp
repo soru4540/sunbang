@@ -5,116 +5,258 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="shortcut icon" type="image⁄x-icon"
-	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
-<script type="text/javascript"
-	src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/jquery-3.3.1.min.js"></script>
+	
+<!-- 결제 api -->
+<script type="text/javascript" src="https://cdn.iamport.kr/js/iamport.payment-1.1.5.js"></script>
+<script>
+function request_pay(){
+	if($("#sh_premium_type").val() == ""){
+		alert("결제상품을 선택하셔야 합니다.");
+		return false;
+	}
+	if(${empty loginUser}){
+		alert("로그인이 필요한 서비스 입니다.");
+		return false;
+	}
+	IMP.init('imp41671884');
+	IMP.request_pay({
+		pg: 'html5_inicis',
+	    merchant_uid : "${loginUser.business_user_no}_"+$("#sh_premium_type").val() + new Date().getTime(),
+	    name : "프리미엄" + $("#sh_premium_type").val() + "일",
+	    amount : $("#sh_charged_payment").val(),
+	    buyer_email : "${loginUser.email }",
+	    buyer_name : "${loginUser.user_name }",
+	    buyer_tel : "${loginUser.phone }"
+	
+	}, function(rsp) {
+	    if ( rsp.success ) {
+			var msg = '결제가 완료되었습니다.';
+			msg += '\n고유ID : ' + rsp.imp_uid;
+			msg += '\n상점 거래ID : ' + rsp.merchant_uid;
+			msg += '\결제 금액 : ' + rsp.paid_amount;
+			msg += '카드 승인번호 : ' + rsp.apply_num; 
+			alert(msg);
+	    	$('#sh_pay_form').submit();
+	    	alert("결제가 완료되었습니다! 선방의 프리미엄 회원이 되신걸 환영합니다.");
+	    	
+		} else {
+	    	var msg = '결제에 실패하였습니다. \n';
+	    	msg += '에러내용 : ' + rsp.error_msg;
+	    	alert(msg);
+		}
+	});	
+}
+
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		$("#sh_30").click(function(){
+			$("#sh_pay_type input[type=button]").css("background-color", "white");
+			$("#sh_pay_type input[type=button]").css("color", "#17A2B8");
+			
+			$("#sh_30").css("background-color", "#17A2B8");
+			$("#sh_30").css("color", "white");
+			
+			$("#sh_pay_result_value").html("프리미엄 30일 권을 선택하셨습니다.");
+			
+			$("#sh_premium_type").val("30");
+			//$("#sh_charged_payment").val("9900");
+			$("#sh_charged_payment").val("100");
+			
+		});
+		
+		$("#sh_90").click(function(){
+			$("#sh_pay_type input[type=button]").css("background-color", "white");
+			$("#sh_pay_type input[type=button]").css("color", "#17A2B8");
+			
+			$("#sh_90").css("background-color", "#17A2B8");
+			$("#sh_90").css("color", "white");
+			
+			$("#sh_pay_result_value").html("프리미엄 90일 권을 선택하셨습니다.");
+			
+			$("#sh_premium_type").val("90");
+			//$("#sh_charged_payment").val("27000");
+			$("#sh_charged_payment").val("200");
+		});
+		
+		$("#sh_180").click(function(){
+			$("#sh_pay_type input[type=button]").css("background-color", "white");
+			$("#sh_pay_type input[type=button]").css("color", "#17A2B8");
+			
+			$("#sh_180").css("background-color", "#17A2B8");
+			$("#sh_180").css("color", "white");
+			
+			$("#sh_pay_result_value").html("프리미엄 180일 권을 선택하셨습니다.");
+			
+			$("#sh_premium_type").val("180");
+			//$("#sh_charged_payment").val("53000");
+			$("#sh_charged_payment").val("300");
+		});
+		
+		$("#sh_365").click(function(){
+			$("#sh_pay_type input[type=button]").css("background-color", "white");
+			$("#sh_pay_type input[type=button]").css("color", "#17A2B8");
+			
+			$("#sh_365").css("background-color", "#17A2B8");
+			$("#sh_365").css("color", "white");
+			
+			$("#sh_pay_result_value").html("프리미엄 365일 권을 선택하셨습니다.");
+			
+			$("#sh_premium_type").val("365");
+			//$("#sh_charged_payment").val("100000");
+			$("#sh_charged_payment").val("400");
+		});
+	});
+</script>	
+	
 <style type="text/css">
-#js_prepay_title {
-	margin-top: 120px;
-	margin-bottom: 100px;
+#sh_pay_title {
 	text-align: center;
 	font-family: a고딕13;
 }
 
-#js_prepay_title h3 {
+#sh_pay_title h3 {
 	padding: 20px;
 	font-family: a고딕15;
 }
 
-#js_prepay_row {
-	margin: 0 auto;
-	text-align: center;
-}
-
-#js_prepay_row .col-sm {
-	width: 200px;
-	height: 120px;
-	margin: 0 auto;
-}
-
-#js_prepay_row .col-sm p {
-	height: 85%;
+#sh_pay_type .col-md-12{
+	padding: 10px;
+	font-family: a고딕13;
+	text-align:center;
 	width: 100%;
-	margin: 10px;
-	padding-top: 35px;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+}
+
+#sh_pay_type input[type=button]{
+	background-color:white;
+	color: #17A2B8;
+	width: 100%;
+	height:100px;
+	border: 2px solid #17A2B8;
 	border-radius: 0.8em 0.8em 0.8em 0.8em;
 	font-family: a고딕13;
 	font-size: 20px;
+	transition-duration: 0.5s
 }
 
-.selectClass {
-	background: #17a2b8;
+#sh_pay_type input[type=button]:hover{
+	background-color:#17A2B8;
 	color: white;
 }
 
-#js_prepay_btn {
-	width: 100%;
-	text-align: center;
-	margin-top: 50px;
-}
-
-#js_prepay_pp{
-	height:30px;
+#sh_pay_result {
+	text-align:center;
+	width: 100%;	
 	font-family: a고딕13;
 	font-size: 18px;
 }
+
+#sh_pay_submit {
+	text-align: center;
+	color: white;	
+	background-color:#17A2B8;
+	border: 1px solid #17A2B8;
+	border-radius: 4px;
+	height: 50px;
+	width:100px;
+}
+
 </style>
 
 </head>
 <body>
-	<c:import url="../../common/realtyHeader.jsp"></c:import>
-	<div class="container" style="min-height: 960px;">
-		<div id="js_prepay_title">
+<c:import url="../../common/realtyHeader.jsp" />
+<br><br><br><br>
+<div class="container">
+	<div class="row" id="sh_pay_title">
+		<div class="col-md-12">
 			<h3>선방 프리미엄 서비스</h3>
 			<h4>프리미엄 매물 소개 + 매물 무제한 등록</h4>
 		</div>
-		<div class="row" id="js_prepay_row">
-			<div class="col-sm" id="1">
-				<p class="btn btn-outline-info">30일</p>
-			</div>
-			<div class="col-sm" id="2">
-				<p class="btn btn-outline-info">90일</p>
-			</div>
-			<div class="col-sm" id="3">
-				<p class="btn btn-outline-info">180일</p>
-			</div>
-			<div class="col-sm" id="4">
-				<p class="btn btn-outline-info">365일</p>
-			</div>
-		</div>
-		<script type="text/javascript">
-			var id;
-			var select;
-			$(".col-sm").click(
-					function() {
-						$("#js_prepay_pp").text("");
-						$("#" + id + " p").addClass("btn btn-outline-info");
-						id = $(this).attr('id');
-						$("#" + id + " p").removeClass();
-						$("#" + id + " p").addClass("selectClass");
-						console.log($("#" + id + " p").text());
-						select = $("#" + id + " p").text();
-						$("#js_prepay_pp").html(
-								"<b id="+id+">" + select + "</b> 을 선택하셨습니다.");
-					});
-		</script>
-		<div id="js_prepay_btn">
-			<p id="js_prepay_pp"></p>
-		</div>
-		<div id="js_prepay_btn">
-			<button type="button" class="btn btn-info" id="payBtn">결제하기</button>
-		</div>
-		<script type="text/javascript">
-			$("#payBtn").click(function() {
-				var select = $("b").attr('id');
-				console.log(select);
-			});
-		</script>
 	</div>
-	<c:import url="../../common/footer.jsp"></c:import>
+	<br><br>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row" id="sh_pay_type">
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="button" id="sh_30" value="30일">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<p id="sh_30_price">9,900 원</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="button" id="sh_90" value="90일">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<span style="color:red; text-decoration:line-through;">
+							<p style="color:grey;">29,700 원</p>
+							</span>
+							<p id="sh_90_price">27,000 원</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="button" id="sh_180" value="180일">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<span style="color:red; text-decoration:line-through;">
+							<p style="color:grey;">59,400 원</p>
+							</span>						
+							<p id="sh_180_price">53,000 원</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="row">
+						<div class="col-md-12">
+							<input type="button" id="sh_365" value="365일">
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<span style="color:red; text-decoration:line-through;">
+							<p style="color:grey;">120,450 원</p>
+							</span>							
+							<p id="sh_365_price">100,000 원</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br><br><br>
+	<div class="row" id="sh_pay_result">
+		<div class="col-md-12">
+			<p id="sh_pay_result_value"></p>
+			<br>
+			<form id="sh_pay_form" action="upinsert.do" method="post" >
+			<input type="hidden" name="premium_type" id="sh_premium_type">
+			<input type="hidden" name="charged_payment" id="sh_charged_payment">
+			<input type="hidden" name="business_user_no" value="${loginUser.business_user_no }"> 
+			<input type="button" id="sh_pay_submit" onclick="request_pay()" value="결제하기">
+			</form>
+		</div>
+	</div>
+</div>
+<br><br><br><br>
+<c:import url="../../common/footer.jsp" />
 </body>
 </html>

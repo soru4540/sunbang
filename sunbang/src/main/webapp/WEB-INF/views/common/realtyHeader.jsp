@@ -119,7 +119,9 @@
 					<li class="nav-item"><a class="nav-link" href="rinsertview.do">집내놓기</a></li>
 				</c:if>
 				<li class="nav-item"><a class="nav-link" href="aglistselect.do?guide_system=realty">부동산가이드</a></li>
-				<li class="nav-item"><a class="nav-link" href="paymentPage.do">프리미엄&nbsp;&nbsp;</a></li>
+				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">
+					<li class="nav-item"><a class="nav-link" href="paymentPage.do">프리미엄&nbsp;&nbsp;</a></li>
+				</c:if>
 				<li class="nav-item" id="js_pheader_user">
 				<c:if test="${!empty loginUser}">
 					<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"> 

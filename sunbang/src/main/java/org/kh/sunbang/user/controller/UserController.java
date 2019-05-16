@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kh.sunbang.user.model.service.UserService;
+import org.kh.sunbang.user.model.vo.Premium;
 import org.kh.sunbang.user.model.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -67,7 +68,7 @@ public class UserController {
 				int result = userService.updateLoginNum(loginUser);
 				
 				if(result > 0) {
-					session.setAttribute("loginUser", loginUser);
+					session.setAttribute("loginUser", loginUserPwd);
 					status.setComplete();
 					out.append("success");
 					out.flush();
@@ -159,10 +160,37 @@ public class UserController {
 	@RequestMapping("upview.do")
 	public String premiumView(){return null;} 
 	
-	@RequestMapping("upinsert.do")
-	public String insertPremium(){return null;} 
 	
 	@RequestMapping("upupdate.do")
 	public String updatePremium(){return null;} 
-	
+
+	// 김성현
+	@RequestMapping(value="upinsert.do", method=RequestMethod.POST)
+	public String insertPremium(Premium premium, HttpServletRequest request,
+			@RequestParam(name="premium_type") String pType, Model model){
+		
+		premium.setCharged_status(pType);
+		
+		if(userService.insertPremium(premium) > 0) {
+			return "realty/realtyMain";
+		}else {
+			model.addAttribute("message", "프리미엄 결제에 실패하였습니다.");
+			return "common/error";
+		}
+	} 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

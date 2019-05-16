@@ -22,7 +22,6 @@ public interface UserService {
 	User selectMyUser(int user_no);
 	int updatePwd(String password);
 	int updateUserOut(int user_no);
-	String insertPremium(Premium premium);
 	String updatePremium(int business_user_no);
 	ArrayList<Realty> selectMyDibs(int user_no);
 	ArrayList<Board> selectMyLike(int user_no);
@@ -30,5 +29,8 @@ public interface UserService {
 	int updateLoginNum(User user);
 	/*int deleteDibs(Dibs dibs);*/
 	int deleteLike(Like like);
+	
+	//김성현----------------------------------------------------
+	int insertPremium(Premium premium);
 	
 }

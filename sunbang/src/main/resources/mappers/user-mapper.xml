@@ -66,4 +66,30 @@
 </update>
 
 
+<!-- 성현///////////////////////////////////////////////////////// -->
+<insert id="insertPremium" parameterType="Premium" useGeneratedKeys="true">
+	insert into tb_premium
+	values (premium_seq.nextval, sysdate, sysdate+#{charged_status}, 
+		   #{charged_payment}, '결제완료', null, #{business_user_no})
+</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 </mapper>

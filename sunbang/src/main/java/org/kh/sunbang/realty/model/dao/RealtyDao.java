@@ -6,6 +6,7 @@ import java.util.List;
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.realty.model.vo.Realty;
+import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +17,14 @@ public class RealtyDao {
 	
 	public Realty selectRealtyDetailView(SqlSessionTemplate mybatisSession, int realty_no) {
 		return mybatisSession.selectOne("realtyMapper.selectRealtyDetailView", realty_no);
+	}
+	
+	public User selectUserInfo(SqlSessionTemplate mybatisSession, int user_no) {
+		return mybatisSession.selectOne("realtyMapper.selectUserInfo", user_no);
+	}
+	
+	public int selectRealtyNo(SqlSessionTemplate mybatisSession, int user_no) {
+		return mybatisSession.selectOne("realtyMapper.selectRealtyNo", user_no);
 	}
 	
 	public int selectDibsCount(SqlSessionTemplate mybatisSession, int realty_no) {
@@ -82,6 +91,7 @@ public class RealtyDao {
 		}
 		return realtyList;
 	}
+
 
 
 
