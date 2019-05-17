@@ -34,9 +34,8 @@ public class UserDao {
 	}
 	
 	
-	public User insertUser(SqlSessionTemplate session, User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertUser(SqlSessionTemplate session, User user) {
+		return session.insert("userMapper.insertUser", user); 
 	}
 
 	
@@ -59,8 +58,7 @@ public class UserDao {
 
 	
 	public int selectCheckId(SqlSessionTemplate session, String user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.selectOne("userMapper.selectCheckId", user_id); 
 	}
 
 	
@@ -92,6 +90,7 @@ public class UserDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 	
 	public String updatePremium(SqlSessionTemplate session, int business_user_no) {
 		// TODO Auto-generated method stub

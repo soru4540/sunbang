@@ -59,11 +59,19 @@
 </choose>
 </select>
 
+<select id="selectCheckId" parameterType="String" resultType="int">
+	select count(*) from tb_user where user_id = #{user_id}
+</select>
+
 <update id="updateLoginNum" parameterType="User">
 	update tb_user
 	set login_num = #{login_num}
 	where user_no=#{user_no}
 </update>
+
+<insert id="insertUser" parameterType="User">
+	INSERT INTO TB_USER VALUES(USER_SEQ.NEXTVAL, #{user_type}, #{user_profile, jdbcType=VARCHAR}, #{user_id}, #{nickname}, #{user_name}, #{email}, #{phone}, #{password}, default, null, default, null, default)
+</insert>
 
 
 <!-- 성현///////////////////////////////////////////////////////// -->

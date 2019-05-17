@@ -132,15 +132,15 @@
 					<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333" id="js_pheader_dropdown">
 						<c:if test="${loginUser.user_type eq '일반회원' }"> <!-- 일반회원 -->
 							<a class="dropdown-item" href="userupdateview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
-							<a class="dropdown-item" href="mycheckview.do"><i class="far fa-check-circle"></i> 찜보기</a> 
-							<a class="dropdown-item" href="mylikeview.do"><i class="far fa-heart"></i> 좋아요</a>
+							<a class="dropdown-item" href="umydibs.do"><i class="far fa-check-circle"></i> 찜보기</a> 
+							<a class="dropdown-item" href="umylike.do"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="ulogout.do?uri=1"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }"> <!-- 기업회원 -->
 							<a class="dropdown-item" href="userupdateview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
-							<a class="dropdown-item" href="mycheckview.do"><i class="far fa-check-circle"></i> 찜보기</a> 
-							<a class="dropdown-item" href="mylikeview.do"><i class="far fa-heart"></i> 좋아요</a>
+							<a class="dropdown-item" href="umydibs.do"><i class="far fa-check-circle"></i> 찜보기</a> 
+							<a class="dropdown-item" href="umylike.do"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="rmylist.do?user_no=${loginUser.user_no }"><i class="far fa-copy"></i> 등록 매물 관리</a>
 							<a class="dropdown-item" href="ulogout.do?uri=1"> 로그아웃</a>
@@ -151,8 +151,8 @@
 						</c:if>
 					</div>
 					</c:if>  <c:if test="${empty loginUser}">
-						<c:url var="loginview" value="uloginview.do"><c:param name="pageuri" value="${requestScope['javax.servlet.forward.request_uri']}" /></c:url>
-						<a class="nav-link" href="${loginview }"> 회원가입 · 로그인&nbsp;</a>
+						<c:url var="loginview" value="uloginview.do"><c:param name="pageuri" value="${requestScope['javax.servlet.forward.servlet_path']}?${requestScope['javax.servlet.forward.query_string']}" /></c:url>
+						<c:if test="${requestScope['javax.servlet.forward.servlet_path'] != '/uloginview.do'}" ><a class="nav-link" href="${loginview }"> 회원가입 · 로그인&nbsp;</a></c:if>
 					</c:if>
 				</li>
 			</ul>

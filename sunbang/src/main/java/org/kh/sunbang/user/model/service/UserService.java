@@ -12,7 +12,7 @@ public interface UserService {
 	
 	User selectLoginId(User user);
 	User selectLoginPwd(User user);
-	User insertUser(User user);
+	int insertUser(User user);
 	String selectFindId(User user);
 	String selectFIndPwd(User user);
 	int updateUser(User user);

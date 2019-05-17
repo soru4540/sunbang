@@ -37,9 +37,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public User insertUser(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertUser(User user) {
+		return userDao.insertUser(mybatisSession, user);
 	}
 
 	@Override
@@ -62,8 +61,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public int selectCheckId(String user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.selectCheckId(mybatisSession, user_id);
 	}
 
 	@Override
