@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71150a085c893cb9531eb155dbf54998&libraries=services"></script>
@@ -360,6 +361,7 @@ $(function(){
 .sh_recommendinterior_img {
 	width:100%;
 	padding:20px;
+	cursor:pointer;
 }
 
 .sh_recommendinterior_content {
@@ -1090,7 +1092,6 @@ function changeCategoryClass(el) {
 </script>										
 									</div>
 								</div>
-	
 							</div>
 						</div><br><br>  <!-- 지도 -->
 					<br><br>	
@@ -1098,39 +1099,23 @@ function changeCategoryClass(el) {
 					<div class="col-md-3">
 						<div class="sh_sidebar"> <!-- 사이드바 -->
 						  <a class="active" id="sh_recommendinterior_title" href="interiormain.do"><i class="fas fa-paint-roller"></i>&nbsp;&nbsp;인테리어추천</a>
-						  <div class="row" id="sh_recommendinterior"> <!-- 추천 인테리어 -->
-						  	<div class="col-md-12">
-						  		<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" class="sh_recommendinterior_img">
-			  					<div class="sh_recommendinterior_content">
-			  					<p><b>건물</b> 오피스텔 / 20평<br>
-			  					   <b>스타일</b> 모던, 내추럴<br>
-			  					   <b>작업</b> 셀프•DIY</p>
-			  					</div>
-						  	</div>   				  	
-						  </div> <!-- 추천 인테리어 -->
+						  
+						  <c:forEach items="${recommenditop5 }" var="recommenditop5" varStatus="status">
 						  
 						  <div class="row" id="sh_recommendinterior"> <!-- 추천 인테리어 -->
 						  	<div class="col-md-12">
-						  		<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" class="sh_recommendinterior_img">
+						  		<input type="hidden" value="${recommenditop5.board_no }">
+						  		<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${recommenditop5.post_data }" 
+						  		     class="sh_recommendinterior_img" onclick="location.href='interiormain.do'">
 			  					<div class="sh_recommendinterior_content">
-			  					<p><b>건물</b> 오피스텔 / 20평<br>
-			  					   <b>스타일</b> 모던, 내추럴<br>
-			  					   <b>작업</b> 셀프•DIY</p>
+			  					<p><b>건물</b> ${recommenditop5.housing_type } / ${recommenditop5.floor_area } 평<br>
+			  					   <b>스타일</b> ${recommenditop5.style }<br>
 			  					</div>
 						  	</div>   				  	
 						  </div> <!-- 추천 인테리어 -->
-						  
-						  <div class="row" id="sh_recommendinterior"> <!-- 추천 인테리어 -->
-						  	<div class="col-md-12">
-						  		<img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png" class="sh_recommendinterior_img">
-			  					<div class="sh_recommendinterior_content">
-			  					<p><b>건물</b> 오피스텔 / 20평<br>
-			  					   <b>스타일</b> 모던, 내추럴<br>
-			  					   <b>작업</b> 셀프•DIY</p>
-			  					</div>
-						  	</div>   				  	
-						  </div> <!-- 추천 인테리어 -->						  						  
 						  						  						  	
+						</c:forEach>
+						
 						</div> <!-- 사이드바 -->						
 					</div>
 				</div>

@@ -110,6 +110,41 @@
 		<result property="status_agreement" column="status_agreement"/>
 		<result property="premium_status" column="premium_status"/>
 	</resultMap>
+	
+	<resultMap type="BoardFull" id="resultBoardFull">
+	<id property="board_no" column="board_no"/>
+		<result property="board_type" column="board_type" />
+		<result property="space" column="space" />
+		<result property="housing_type" column="housing_type" />
+		<result property="category1" column="category1" />
+		<result property="category2" column="category2" />
+		<result property="category3" column="category3" />
+		<result property="floor_area" column="floor_area" />
+		<result property="color1" column="color1" />
+		<result property="color2" column="color2" />
+		<result property="color3" column="color3" />
+		<result property="board_title" column="board_title" />
+		<result property="budget" column="budget" />
+		<result property="style" column="style" />
+		<result property="board_hits" column="board_hits" />
+		<result property="board_date" column="board_date" />
+		<result property="board_status" column="board_status" />		
+		<result property="post_no" column="post_no"/>
+        <result property="post_keyword" column="post_keyword" />
+        <result property="post_data" column="post_data" />
+        <result property="post_contents" column="post_contents" />
+        <result property="marker_no" column="marker_no"/>
+        <result property="product_image" column="product_image" />
+        <result property="cordi_x" column="cordi_x" />
+        <result property="cordi_y" column="cordi_y" />
+        <result property="product_url" column="product_url" />
+        <result property="user_no" column="user_no" />	
+        <result property="user_profile" column="user_profile" />
+        <result property="nickname" column="nickname" />
+        <result property="user_name" column="user_name" /> 
+        <result property="like_count" column="like_count" /> 
+        <result property="follow_count" column="follow_count" /> 
+	</resultMap>
 
 <!-- 성현///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
@@ -122,6 +157,22 @@
 		select * from tb_business
 		join tb_user using(user_no)
 		where user_no=#{user_no}
+	</select>
+	
+	<select id="selectRecommendInteriorTop5" parameterType="BoardFull" resultMap="resultBoardFull">
+		<![CDATA[ select board_no,board_type,board_hits,post_no,post_data, user_no,like_count,housing_type,floor_area,style
+		from (select board_no,board_type,board_hits,post_no,post_data, user_no,nvl(like_count,0) like_count,housing_type,floor_area,style from tb_board
+		left join tb_post using(board_no)
+		left join tb_user using(user_no)
+		left join(select count(user_no) like_count, board_no from tb_like
+		group by board_no) using(board_no)
+		where post_no in (select min(post_no)
+		FROM tb_post
+		group by board_no)
+		and board_type='housewarming'            
+		order by board_hits desc, like_count desc, board_no desc)
+		where rownum < 5 and floor_area <= #{exclusive_area} + 5 and floor_area >= #{exclusive_area} - 5
+		and housing_type like '%' ||  #{realty_type} || '%'	]]>
 	</select>
 	
 	<select id="selectRealtyNo" parameterType="int" resultType="int">
@@ -174,6 +225,11 @@
 		        #{bidet}, #{realty_detail_title,jdbcType=VARCHAR}, #{realty_detail_comment,jdbcType=VARCHAR}, #{realty_image1,jdbcType=VARCHAR}, #{realty_image2,jdbcType=VARCHAR}, #{realty_image3,jdbcType=VARCHAR}, #{realty_image4,jdbcType=VARCHAR}, #{realty_image5,jdbcType=VARCHAR}, #{realty_image6,jdbcType=VARCHAR}, #{realty_image7,jdbcType=VARCHAR},
 		        #{realty_image8,jdbcType=VARCHAR}, #{image360,jdbcType=VARCHAR}, #{user_no})
 	</insert>
+	
+	<select id="selectRealtyCount" parameterType="int" resultType="int">
+		select count(*) from tb_realty
+		where user_no = #{user_no}
+	</select>
 	
 	<select id="selectRealtyMyListView" resultMap="resultRealty" useCache="true">
 		select * from tb_realty

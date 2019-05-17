@@ -81,6 +81,18 @@
 		   #{charged_payment}, '결제완료', null, #{business_user_no})
 </insert>
 
+<update id="updatePremiumStatus" parameterType="User">
+	update tb_business
+	set premium_status = 'Y'
+	where business_user_no = #{business_user_no}	
+</update>
+
+<select id="selectUserNo" parameterType="User" resultType="User">
+	select * from tb_business
+	join tb_user using(user_no)
+	where business_user_no=#{business_user_no}
+</select>
+
 
 
 

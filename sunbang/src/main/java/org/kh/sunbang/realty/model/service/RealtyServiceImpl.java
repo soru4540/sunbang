@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
+import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.dao.RealtyDao;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
@@ -30,6 +31,11 @@ public class RealtyServiceImpl implements RealtyService {
 	@Override
 	public User selectUserInfo(int user_no) { //매물상세페이지 :등록자 정보
 		return realtyDao.selectUserInfo(mybatisSession, user_no);
+	}
+	
+	@Override
+	public ArrayList<BoardFull> selectRecommendInteriorTop5(Realty realty) { //인테리어 추천 top5
+		return realtyDao.selectRecommendInteriorTop5(mybatisSession, realty);
 	}
 	
 	@Override
@@ -78,6 +84,11 @@ public class RealtyServiceImpl implements RealtyService {
 	}
 
 	@Override
+	public int selectRealtyCount(int user_no) { //User가 등록한 매물 갯수 count
+		return realtyDao.selectRealtyCount(mybatisSession, user_no);
+	}
+
+	@Override
 	public ArrayList<Realty> selectRealtyMyListView(int user_no) { //내 방 리스트
 		return realtyDao.selectRealtyMyListView(mybatisSession, user_no);
 	}
@@ -109,6 +120,7 @@ public class RealtyServiceImpl implements RealtyService {
 	public ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno) {
 		return realtyDao.selectRealtyList(mybatisSession, realtyno);
 	}
+
 
 
 

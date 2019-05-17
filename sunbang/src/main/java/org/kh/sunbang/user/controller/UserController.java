@@ -252,8 +252,14 @@ public class UserController {
 			@RequestParam(name="premium_type") String pType, Model model){
 		
 		premium.setCharged_status(pType);
-		
 		if(userService.insertPremium(premium) > 0) {
+
+			int result = userService.updatePremiumStatus(premium.getBusiness_user_no());
+			
+			HttpSession session = request.getSession(false);
+			User loginUser = userService.selectUserNo(premium.getBusiness_user_no());
+			session.setAttribute("loginUser", loginUser);
+			
 			return "realty/realtyMain";
 		}else {
 			model.addAttribute("message", "프리미엄 결제에 실패하였습니다.");

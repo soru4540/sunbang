@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
+import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 
@@ -12,6 +13,7 @@ public interface RealtyService {
 	//성현---------------------------------------------------------------------------------------------------------------------	
 	Realty selectRealtyDetailView(int realty_no);
 	User selectUserInfo(int user_no);
+	ArrayList<BoardFull> selectRecommendInteriorTop5(Realty realty);
 	int selectRealtyNo(int user_no);
 	
 	int selectDibsCount(int realty_no);
@@ -23,6 +25,7 @@ public interface RealtyService {
 	void updateRealtyHits(int realty_no);
 	
 	int insertRealty(Realty realty);
+	int selectRealtyCount(int user_no);
 	
 	ArrayList<Realty> selectRealtyMyListView(int user_no);
 	int updateRealtyMyListDelete(Realty realty);
@@ -34,6 +37,7 @@ public interface RealtyService {
 	
 	ArrayList<Realty> selectMarkerList();
 	ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno);
+	
 
 
 

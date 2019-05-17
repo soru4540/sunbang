@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
+import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -21,6 +22,11 @@ public class RealtyDao {
 	
 	public User selectUserInfo(SqlSessionTemplate mybatisSession, int user_no) {
 		return mybatisSession.selectOne("realtyMapper.selectUserInfo", user_no);
+	}
+	
+	public ArrayList<BoardFull> selectRecommendInteriorTop5(SqlSessionTemplate mybatisSession, Realty realty) {
+		List<BoardFull> recommenditop5 = mybatisSession.selectList("realtyMapper.selectRecommendInteriorTop5", realty);
+		return (ArrayList<BoardFull>)recommenditop5;
 	}
 	
 	public int selectRealtyNo(SqlSessionTemplate mybatisSession, int user_no) {
@@ -59,6 +65,10 @@ public class RealtyDao {
 		return mybatisSession.insert("realtyMapper.insertRealty", realty);
 	}
 	
+	public int selectRealtyCount(SqlSessionTemplate mybatisSession, int user_no) {
+		return mybatisSession.selectOne("realtyMapper.selectRealtyCount", user_no);
+	}
+	
 	public ArrayList<Realty> selectRealtyMyListView(SqlSessionTemplate mybatisSession, int user_no) {
 		List<Realty> realtylist = mybatisSession.selectList("realtyMapper.selectRealtyMyListView", user_no);
 		return (ArrayList<Realty>)realtylist;
@@ -91,6 +101,7 @@ public class RealtyDao {
 		}
 		return realtyList;
 	}
+
 
 
 

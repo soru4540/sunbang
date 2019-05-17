@@ -116,7 +116,7 @@
 				style="margin: 0 auto; margin-right: 0 !important;">
 				<li class="nav-item"><a class="nav-link" href="#">집찾기</a></li>
 				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">
-					<li class="nav-item"><a class="nav-link" href="rinsertview.do">집내놓기</a></li>
+					<li class="nav-item"><a class="nav-link" href="rinsertview.do?user_no=${loginUser.user_no }&premium_status=${loginUser.premium_status}">집내놓기</a></li>
 				</c:if>
 				<li class="nav-item"><a class="nav-link" href="aglistselect.do?guide_system=realty">부동산가이드</a></li>
 				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">

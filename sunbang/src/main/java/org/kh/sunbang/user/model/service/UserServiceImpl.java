@@ -136,4 +136,14 @@ public class UserServiceImpl implements UserService{
 		return userDao.insertPremium(mybatisSession, premium);
 	}
 
+	@Override
+	public int updatePremiumStatus(int business_user_no) { //결제 상태 바꾸기 (N->Y)
+		return userDao.updatePremiumStatus(mybatisSession, business_user_no);
+	}
+
+	@Override
+	public User selectUserNo(int business_user_no) { //결제 후 세션 reload
+		return userDao.selectUserNo(mybatisSession, business_user_no);
+	}
+
 }

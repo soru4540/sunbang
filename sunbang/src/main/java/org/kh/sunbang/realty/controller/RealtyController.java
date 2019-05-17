@@ -14,6 +14,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
+import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.service.RealtyService;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
@@ -82,10 +83,12 @@ public class RealtyController {
 		
 		Realty realty = realtyService.selectRealtyDetailView(realty_no);
 		User user = realtyService.selectUserInfo(realty.getUser_no());
+		ArrayList<BoardFull> recommenditop5 = realtyService.selectRecommendInteriorTop5(realty);
 		
 		if(realty != null) {
 			mv.addObject("realty", realty);
 			mv.addObject("user", user);
+			mv.addObject("recommenditop5", recommenditop5);
 			mv.setViewName("realty/realtyDetailView");
 		}else {
 			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
@@ -246,7 +249,14 @@ public class RealtyController {
 	}
 	
 	@RequestMapping("rinsertview.do")
-	public String insertRealtyView() {
+	public String insertRealtyView(int user_no, String premium_status, Model model, HttpServletResponse response) throws IOException {
+		int realtyCount = realtyService.selectRealtyCount(user_no);
+		
+		if(premium_status.equals("N") && realtyCount > 4) {
+			model.addAttribute("message", "등록할 수 있는 매물의 개수를 초과하였습니다. 더 많은 등록을 원하신다면 프리미엄 서비스를 이용해주세요");
+			return "admin/premium/premiumPayment";
+		}
+		
 		return "realty/realtyInsertView";
 	}
 	
@@ -312,8 +322,6 @@ public class RealtyController {
 		if(realtyService.insertRealty(realty) > 0) {
 			
 			int user_no = realty.getUser_no();
-			System.out.println(realty.getUser_no());
-			System.out.println(user_no);
 			int realty_no = realtyService.selectRealtyNo(user_no);
 			
 			return "redirect:rdetail.do?realty_no=" + realty_no;

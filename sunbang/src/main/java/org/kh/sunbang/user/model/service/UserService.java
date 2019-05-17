@@ -32,5 +32,7 @@ public interface UserService {
 	
 	//김성현----------------------------------------------------
 	int insertPremium(Premium premium);
+	int updatePremiumStatus(int business_user_no);
+	User selectUserNo(int business_user_no);
 	
 }

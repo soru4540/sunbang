@@ -132,4 +132,14 @@ public class UserDao {
 	public int insertPremium(SqlSessionTemplate mybatisSession, Premium premium) {
 		return mybatisSession.insert("userMapper.insertPremium", premium);
 	}
+
+
+	public int updatePremiumStatus(SqlSessionTemplate mybatisSession, int business_user_no) {
+		return mybatisSession.insert("userMapper.updatePremiumStatus", business_user_no);
+	}
+
+
+	public User selectUserNo(SqlSessionTemplate mybatisSession, int business_user_no) {
+		return mybatisSession.selectOne("userMapper.selectUserNo", business_user_no);
+	}
 }

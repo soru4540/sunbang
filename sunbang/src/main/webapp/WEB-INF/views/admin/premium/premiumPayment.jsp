@@ -21,6 +21,10 @@ function request_pay(){
 		alert("로그인이 필요한 서비스 입니다.");
 		return false;
 	}
+	if(${loginUser.premium_status == 'Y'}){
+		alert("프리미엄 상품의 기한이 남아있습니다. 만료 후 결제해 주세요");
+		return false;
+	}
 	IMP.init('imp41671884');
 	IMP.request_pay({
 		pg: 'html5_inicis',
@@ -46,12 +50,21 @@ function request_pay(){
 	    	var msg = '결제에 실패하였습니다. \n';
 	    	msg += '에러내용 : ' + rsp.error_msg;
 	    	alert(msg);
+	    	
+	    	$('#sh_pay_form').submit(); //결제없이 값넘기기 테스트용 삭제해야함
 		}
 	});	
 }
 
 </script>
-
+<!-- 일반회원 매물 등록 5개 초과 시 -->
+<script type="text/javascript">
+	$(function(){
+		if(${message != null}){
+			alert("${message}");
+		}
+	});
+</script>
 <script type="text/javascript">
 	$(function(){
 		$("#sh_30").click(function(){
