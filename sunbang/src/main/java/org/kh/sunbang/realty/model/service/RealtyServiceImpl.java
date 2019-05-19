@@ -109,7 +109,7 @@ public class RealtyServiceImpl implements RealtyService {
 	}
 	
 	
-//형진---------------------------------------------------------------------------------------------------------------
+	//형진---------------------------------------------------------------------------------------------------------------
 	
 	@Override
 	public ArrayList<Realty> selectMarkerList() {
@@ -121,13 +121,11 @@ public class RealtyServiceImpl implements RealtyService {
 		return realtyDao.selectRealtyList(mybatisSession, realtyno);
 	}
 
-
-
-
-
-
-
-
-
+	// 진솔 --------------------------------------------------------------------------------------------------------------
+	
+	@Override
+	public ArrayList<Realty> selectRealtyTop5() {
+		return realtyDao.selectRealtyTop5(mybatisSession);
+	}
 
 }

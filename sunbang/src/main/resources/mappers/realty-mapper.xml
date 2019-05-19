@@ -312,5 +312,16 @@
    <select id="selectRealtyList" parameterType="int" resultMap="resultRealty">
       select * from tb_realty where realty_no = #{realty_no}
    </select>
-
+	
+	<!-- 진솔 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<select id="selectTop5" resultMap="resultRealty" useCache="true">
+		select *
+		from tb_realty where realty_no in (select realty_no
+		from ( select rownum, realty_no
+		from (select (select count(*) from tb_dibs b where realty_no= r.realty_no)
+		count, realty_no from tb_realty r order by 1 desc)
+		where rownum<![CDATA[ <= ]]>5
+		)
+		)
+	</select>
 </mapper>

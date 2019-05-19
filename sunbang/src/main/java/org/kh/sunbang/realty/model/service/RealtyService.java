@@ -38,7 +38,8 @@ public interface RealtyService {
 	ArrayList<Realty> selectMarkerList();
 	ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno);
 	
-
-
+	//진솔---------------------------------------------------------------------------------------------------------------
+	
+	ArrayList<Realty> selectRealtyTop5();
 
 }

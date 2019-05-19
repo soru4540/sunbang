@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-	<link rel="shortcut icon" type="image⁄x-icon"
+<link rel="shortcut icon" type="image⁄x-icon"
 	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
 <link rel="stylesheet"
@@ -158,9 +160,25 @@
 	margin: 0 auto;
 }
 </style>
+<script type="text/javascript">
+$(function(){
+	$.ajax({
+		url : "rtop5.do",
+		type: "post",
+		async: true,
+		success : function(data) {
+			/* 세션으로 받아옴 */
+			/* console.log(data); */
+		},
+		error : function(jqXHR, textstatus, errorthrown) {
+			console.log("error : " + jqXHR + ", " + textstatus + ", "
+					+ errorthrown);
+		}
+	});
+	
+});
+</script>
 </head>
-
-
 <body>
 	<div class="container">
 		<div class="row" id="js_index_row">
@@ -196,83 +214,69 @@
 			</div>
 		</div>
 		<hr id="js_index_hr">
-		
+
 		<!-- 인기 부동산 -->
 		<div id="js_index_row">
 			<p id="js_index_title">부동산</p>
 			<span id="js_index_content">현재 인기 매물 Best5</span>
 		</div>
 		<div class="row" id="js_index_cardList">
-			<!-- card -->
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/1.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<p class="card-text" id="pcate">쓰리룸</p>
-						<h5 class="card-title">전세 2억9000</h5>
-						<!-- Text -->
-						<p class="card-text">2층, 46.2m², 관리비 5만 로얄고층 채광+뷰 제일좋은집♣</p>
+			<c:if test="${!empty rlist}">
+				<c:forEach items="${ rlist }" var="realty" varStatus="status">
+					<!-- card -->
+					<div class="card" id="js_index_card">
+						<a href="rdetail.do?realty_no=${realty.realty_no}"> <img class="card-img-top"
+							src="${pageContext.request.contextPath}/files/realty/realtyNormalImages/${realty.realty_image1}"
+							alt="Card image cap"> <!-- Card content -->
+							<div class="card-body">
+								<!-- Title -->
+								<p class="card-text" id="pcate">${realty.realty_type}</p>
+								<h5 class="card-title">
+									<c:if test="${!empty realty.month_lease}">
+						월세
+						<c:if test="${realty.month_lease > 99999}">
+								${fn:substring(realty.month_lease,0,2)}
+						</c:if>
+										<c:if test="${realty.month_lease > 999999}">
+								${fn:substring(realty.month_lease,0,3)}
+						</c:if>
+						/
+						<c:if test="${realty.deposit > 9999999}">
+								${fn:substring(realty.deposit,0,4)}<br>
+										</c:if>
+										<c:if test="${realty.deposit > 999999999}">
+								${fn:substring(realty.deposit,0,1)}.${fn:substring(realty.deposit,2,4)}<br>
+										</c:if>
+
+									</c:if>
+									<c:if test="${realty.payback_deposit_lease > 0 }">
+							전세 
+							<c:if test="${realty.payback_deposit_lease > 9999999}">
+								${fn:substring(realty.payback_deposit_lease,0,4)}<br>
+										</c:if>
+										<c:if test="${realty.payback_deposit_lease > 999999999}">
+								${fn:substring(realty.payback_deposit_lease,0,1)}.${fn:substring(realty.payback_deposit_lease,2,4)}<br>
+										</c:if>
+									</c:if>
+									<c:if test="${realty.purchase > 0 }">
+							매매 
+							<c:if test="${realty.purchase > 9999999}">
+								${fn:substring(realty.purchase,0,4)}<br>
+										</c:if>
+										<c:if test="${realty.purchase > 999999999}">
+								${fn:substring(realty.purchase,0,1)}.${fn:substring(realty.purchase,2,4)}<br>
+										</c:if>
+									</c:if>
+								</h5>
+								<!-- Text -->
+								<p class="card-text">${realty.realty_detail_title}</p>
+							</div>
+						</a>
 					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/2.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<p class="card-text" id="pcate">투룸</p>
-						<h5 class="card-title">전세 2억4000</h5>
-						<!-- Text -->
-						<p class="card-text">5층, 42.9m², 관리비 5만
-							💚영등포구청역3분거리#대출,주차가능#풀옵션</p>
-					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/3.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<p class="card-text" id="pcate">오피스텔 · 당산계룡리슈빌2단지(도시형)</p>
-						<h5 class="card-title">전세 4억</h5>
-						<!-- Text -->
-						<p class="card-text">12층, 47.25m², 관리비 10만
-							대로변♣고층+남향♣채광최고인집♣주...</p>
-					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/4.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<p class="card-text" id="pcate">투룸</p>
-						<h5 class="card-title">전세 2억5000</h5>
-						<!-- Text -->
-						<p class="card-text">4층, 42.9m², 관리비 5만 ♣전대출가능,당산역2분 완전 역세권♣</p>
-					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/15.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<p class="card-text" id="pcate">투룸</p>
-						<h5 class="card-title">전세 1억5000</h5>
-						<!-- Text -->
-						<p class="card-text">3층, 49.5m², 관리비 8만 ❤️청년대출가능❤️100% 남향~</p>
-					</div>
-				</a>
-			</div>
+				</c:forEach>
+			</c:if>
 		</div>
-		
+
 		<!-- 부동산 보러가기 버튼 -->
 		<div id="js_index_row">
 			<button type="button" class="btn btn-success"
@@ -280,7 +284,7 @@
 				보러가기</button>
 		</div>
 		<hr id="js_index_hr">
-		
+
 		<!-- 인기 인테리어 -->
 		<div id="js_index_row">
 			<p id="js_index_title">인테리어</p>
@@ -369,7 +373,7 @@
 				</a>
 			</div>
 		</div>
-		
+
 		<!-- 인테리어 보러가기 버튼 -->
 		<div id="js_index_row">
 			<button type="button" class="btn btn-danger"

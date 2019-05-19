@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -510,5 +511,13 @@ public class RealtyController {
 			model.addAttribute("message", "매물 수정에 실패하였습니다.");
 			return "common/error";
 		}
+	}
+	
+	//진솔----------------------------------------------------------------------------
+	@RequestMapping(value="rtop5.do", produces="application/json")
+	public @ResponseBody List<Realty> selectRealtyTop5(HttpSession session) throws ParseException{
+		ArrayList<Realty> rlist = realtyService.selectRealtyTop5();
+		session.setAttribute("rlist", rlist);
+	    return rlist;
 	}
 }
