@@ -78,10 +78,22 @@
     <result property="post_no" column="post_no" />      
 </resultMap>
 
+<resultMap type="ReplyFull" id="resultReplyFull">
+   <id property="reply_no" column="reply_no"/>
+    <result property="reply_lev" column="reply_lev" />
+    <result property="origin_reply_no" column="origin_reply_no" />
+    <result property="reply_contents" column="reply_contents" />   
+    <result property="board_no" column="board_no" />   
+    <result property="user_no" column="user_no" />	
+    <result property="user_profile" column="user_profile" />
+    <result property="nickname" column="nickname" />
+    <result property="user_name" column="user_name" />  
+</resultMap>
+
 <resultMap type="Reply" id="resultReply">
    <id property="reply_no" column="reply_no"/>
     <result property="reply_lev" column="reply_lev" />
-    <result property="orgin_reply_no" column="orgin_reply_no" />
+    <result property="origin_reply_no" column="origin_reply_no" />
     <result property="reply_contents" column="reply_contents" />
     <result property="user_no" column="user_no" />
     <result property="board_no" column="board_no" />   
@@ -105,9 +117,18 @@
     <result property="end_num" column="end_num" />    
     <result property="board_type" column="board_type" />
     <result property="user_no" column="user_no" />    
+    <result property="keyword1" column="keyword1"/>
+    <result property="keyword2" column="keyword2" />
+    <result property="keyword3" column="keyword3" />    
+    <result property="keyword4" column="keyword4" />
+    <result property="keyword5" column="keyword5" />   
+    <result property="keyword6" column="keyword6" />
+    <result property="keyword7" column="keyword7" />   
 </resultMap>
 
+<!--  ///////////////////////////////////////////////////////JB/////////////////////////////////////////////////////// -->
 
+<!-- 메인 집들이 top1 -->
 <select id="selectHbTop1" resultMap="resultBoardFull">
 select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
 from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
@@ -124,8 +145,9 @@ order by board_hits desc, like_count desc, board_no desc
 where rownum =1
 </select>
 
+<!-- 메인 노하우 top4 -->
 <select id="selectKbTop4" resultMap="resultBoardFull">
-<![CDATA[ select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
 from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
@@ -137,11 +159,12 @@ where post_no in (SELECT MIN(post_no)
       and board_type='knowhow'            
 order by board_hits desc, like_count desc, board_no desc
 )
-where rownum <5 ]]>
+where <![CDATA[ rownum <5 ]]>
 </select>
 
+<!-- 메인 집들이 top3 -->
 <select id="selectHbTop3" resultMap="resultBoardFull">
-<![CDATA[ select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
 from (select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
@@ -153,11 +176,12 @@ where post_no in (SELECT MIN(post_no)
       and board_type='housewarming'            
 order by board_hits desc, like_count desc, board_no desc
 )
-where rownum <4 ]]>
+where <![CDATA[  rownum <4 ]]>
 </select>
 
+<!-- 메인 사진 top8 -->
 <select id="selectPbTop8" resultMap="resultBoardFull">
-<![CDATA[ select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+ select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
 from (select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
@@ -169,7 +193,7 @@ where post_no in (SELECT MIN(post_no)
       and board_type='photograph'            
 order by board_hits desc, like_count desc, board_no desc
 )
-where rownum <9 ]]>
+where <![CDATA[ rownum <9 ]]>
 </select>
 
 <!-- 게시판등록 -->
@@ -186,7 +210,7 @@ values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{
 
 <!-- 게시판번호 불러오기 -->
 <select id="selectBoardNo" parameterType="_int" resultType="_int">
-select board_no from tb_board where user_no = #{user_no} and rownum = 1 order by board_no desc
+select max(board_no) from tb_board where user_no = #{user_no}
 </select>
 
 <!-- 게시물등록 -->
@@ -199,19 +223,143 @@ insert into tb_post values(post_seq.nextval,#{post_keyword},#{post_data,jdbcType
 select count(board_no) from tb_board where board_type = #{board_type}
 </select>
 
-<!-- 게시판리스트 출력 -->
-<select id="selectBoardList" parameterType="Ipaging" resultMap="resultBoardFull">
-<![CDATA[ select *
-from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+<!-- 사진게시판리스트 출력 -->
+<select id="selectPhotographList" parameterType="Ipaging" resultMap="resultBoardFull">
+select * from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,space, housing_type, category1, category2, category3, floor_area, color1, color2, color3,
+budget,style,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count ,nvl(follow_count,0) follow_count
+from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
 group by board_no) using(board_no)
-where post_no in (SELECT MIN(post_no)
-                  FROM tb_post
-                  GROUP BY board_no)
-      and board_type= #{board_type}            
-)where rnum >= #{start_num} and rnum <= #{end_num} ]]>
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+and board_type= #{board_type} <if test="keyword2 != 'empty'"> and space = #{keyword2} </if>
+    <choose>
+    <when test="keyword3 != 'empty' and keyword3 == '10평미만'"> 
+    <![CDATA[ and floor_area > 10 ]]>     
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '10평대'">   
+    <![CDATA[ and floor_area >= 10 and floor_area < 20 ]]>
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '20평대'">   
+    <![CDATA[ and floor_area >= 20 and floor_area < 30 ]]>
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '30평대'">   
+    <![CDATA[ and floor_area >= 30 and floor_area < 40 ]]>
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '40평대이상'">   
+    <![CDATA[ and floor_area > 40 ]]>
+    </when>
+    </choose>              
+     <if test="keyword4 != 'empty'"> and (color1 = #{keyword4} or color2 = #{keyword4} or color3 = #{keyword4})</if>
+     <choose>
+     <when test="keyword1 != 'empty' and keyword1 == '인기순'">
+     order by board_hits desc, like_count desc
+     </when>          
+     <when test="keyword1 != 'empty' and keyword1 == '팔로우'">
+     order by follow_count desc
+     </when>          
+     </choose>            
+)where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
+</select>
+
+<!-- 집들이게시판리스트 출력 -->
+<select id="selectHousewarmingList" parameterType="Ipaging" resultMap="resultBoardFull">
+select * from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,space, housing_type, category1, category2, category3, floor_area, color1, color2, color3,
+budget,style,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count ,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+and board_type= #{board_type} <if test="keyword2 != 'empty'"> and housing_type = #{keyword2} </if>
+ <choose>
+    <when test="keyword3 != 'empty' and keyword3 == '10평미만'"> 
+    <![CDATA[ and floor_area > 10 ]]>     
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '10평대'">   
+    <![CDATA[ and floor_area >= 10 and floor_area < 20 ]]>
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '20평대'">   
+    <![CDATA[ and floor_area >= 20 and floor_area < 30 ]]>
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '30평대'">   
+    <![CDATA[ and floor_area >= 30 and floor_area < 40 ]]>
+    </when>
+    <when test="keyword3 != 'empty' and keyword3 == '40평대이상'">   
+    <![CDATA[ and floor_area > 40 ]]>
+    </when>
+    </choose>
+     <choose>
+    <when test="keyword4 != 'empty' and keyword4 == '~100만원'"> 
+    <![CDATA[ and budget <= 1000000 ]]>     
+    </when>
+    <when test="keyword4 != 'empty' and keyword4 == '100~200만원'">   
+    <![CDATA[ and budget >= 1000000 and budget <= 2000000 ]]>
+    </when>
+    <when test="keyword4 != 'empty' and keyword4 == '200~300만원'">   
+    <![CDATA[ and budget >= 2000000 and budget <= 3000000 ]]>
+    </when>
+    <when test="keyword4 != 'empty' and keyword4 == '300~500만원'">   
+    <![CDATA[ and budget >= 3000000 and budget <= 5000000 ]]>
+    </when>
+    <when test="keyword4 != 'empty' and keyword4 == '500~1000만원'">   
+    <![CDATA[ and budget >= 5000000 and budget <= 10000000 ]]>
+    </when>
+     <when test="keyword4 != 'empty' and keyword4 == '1000~2000만원'">   
+    <![CDATA[ and budget >= 10000000 and budget <= 20000000 ]]>
+    </when>
+     <when test="keyword4 != 'empty' and keyword4 == '2000~3000만원'">   
+    <![CDATA[ and budget >= 20000000 and budget <= 30000000 ]]>
+    </when>
+     <when test="keyword4 != 'empty' and keyword4 == '3000만원~'">   
+    <![CDATA[ and budget >= 30000000 ]]>
+    </when>
+    </choose>            
+    <if test="keyword5 != 'empty'"> and style = #{keyword5} </if>   
+    <if test="keyword6 != 'empty'"> and (color1 = #{keyword6} or color2 = #{keyword6} or color3 = #{keyword6})</if>
+     <choose>
+     <when test="keyword1 != 'empty' and keyword1 == '조회수'">
+     order by board_hits desc
+     </when>          
+     <when test="keyword1 != 'empty' and keyword1 == '좋아요'">
+     order by like_count desc
+     </when>
+     <when test="keyword1 != 'empty' and keyword1 == '팔로우'">
+     order by follow_count desc
+     </when>            
+     </choose>  
+ ) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
+</select>
+
+<!-- 노하우게시판 리스트 출력 -->
+<select id="selectKnowhowList" parameterType="Ipaging" resultMap="resultBoardFull">
+	select * from (select row_number() over(order by board_no desc) as
+	rnum, board_no,board_title,board_type,board_hits,space, housing_type,
+	category1, category2, category3, floor_area, color1, color2, color3,
+	budget,style,post_no,post_keyword,post_data, user_no,
+	nickname,user_profile,nvl(like_count,0) like_count ,nvl(follow_count,0)
+	follow_count
+	from tb_board
+	left join tb_post using(board_no)
+	left join tb_user using(user_no)
+	left join(select count(follower_no) follow_count,user_no from tb_follow
+	group by user_no) using(user_no)
+	left join(select count(user_no) like_count, board_no from tb_like
+	group by board_no) using(board_no)
+	where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+	and board_type= #{board_type}
+	<if test="keyword1 != 'empty'"> and (category1 = #{keyword1} or category2 = #{keyword1} or category3 = #{keyword1})</if>
+	<if test="keyword2 != 'empty'"> and (category1 = #{keyword2} or category2 = #{keyword2} or category3 = #{keyword2})</if>
+	<if test="keyword3 != 'empty'"> and (category1 = #{keyword3} or category2 = #{keyword3} or category3 = #{keyword3})</if>
+	<if test="keyword4 != 'empty'"> and (category1 = #{keyword4} or category2 = #{keyword4} or category3 = #{keyword4})</if>
+	<if test="keyword5 != 'empty'"> and (category1 = #{keyword5} or category2 = #{keyword5} or category3 = #{keyword5})</if>
+) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>
 
 <!-- 좋아요 체크 리스트 출력 -->
@@ -228,5 +376,43 @@ insert into tb_like values(like_seq.nextval,#{user_no},#{board_no})
 <delete id="deleteLike" parameterType="Like">
 delete from tb_like where user_no=#{user_no} and board_no=#{board_no}
 </delete>
+
+<!-- 댓글 리스트 출력 -->
+<select id="selectReplyList" parameterType="_int" resultMap="resultReplyFull">
+select * from tb_reply
+left join tb_user using (user_no)
+where board_no = #{board_no}
+order by origin_reply_no asc, reply_lev asc, reply_no asc
+</select>
+
+<!-- 댓글 등록 -->
+<insert id="insertReply" parameterType="Reply">
+insert into tb_reply values(reply_seq.nextval,#{reply_lev},<if test="origin_reply_no == 0">reply_seq.currval,</if>
+<if test="origin_reply_no != 0">#{origin_reply_no},</if>#{reply_contents},#{user_no},#{board_no})
+</insert>
+
+<!-- 댓글 삭제 -->
+<delete id="deleteReply" parameterType="_int">
+delete from tb_reply where reply_no = #{reply_no}
+</delete>
+
+<!-- 댓글 수정 -->
+<update id="updateReply" parameterType="Reply">
+update tb_reply set reply_contents = #{reply_contents} where reply_no = #{reply_no}
+</update>
+
+<!-- 유저 팔로우 체크 -->
+<select id="selectCheckFollow" parameterType="Follow" resultType="_int">
+select count(*) from tb_follow
+where user_no = #{user_no} and follower_no = #{follower_no}
+</select>
+
+<!--  ///////////////////////////////////////////////////////SE/////////////////////////////////////////////////////// -->
+
+
+
+<!--  ///////////////////////////////////////////////////////성현/////////////////////////////////////////////////////// -->
+
+
 
 </mapper>
