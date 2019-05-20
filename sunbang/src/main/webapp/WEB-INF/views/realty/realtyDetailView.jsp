@@ -12,7 +12,15 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71150a085c893cb9531eb155dbf54998&libraries=services"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
+<!-- 맨위로 -->
+<script type="text/javascript">
+$(function(){
+	$("#sh_top").click(function(){
+		var offset = $('html').offset();
+		$("html, body").animate({scrollTop:offset.top},500);
+	});
+});
+</script>
 <!-- 매물상태별 출력변화 -->
 <script type="text/javascript">
 	$(function(){
@@ -30,6 +38,10 @@
 			$("#sh_realty_status").css("background-color", "#ff6666");
 			$("#sh_realty_status").css("color", "white");
 		}
+		if(${realty.realty_status == '수정완료'}){
+			$("#sh_realty_status").css("background-color", "#ff6666");
+			$("#sh_realty_status").css("color", "white");
+		}		
 	});
 </script>
 <!-- 수정하기 -->
@@ -55,10 +67,6 @@
 			window.open('r360.do?image360=${realty.image360 }', '360도', 'height=' + screen.height + ',width=' + screen.width + 'fullscreen=yes');
 		});
 	});
-</script>
-<!-- 기업회원 정보 띄우기 -->
-<script type="text/javascript">
-
 </script>
 <!-- 평 / ㎡ 변환 -->
 <script type="text/javascript">
@@ -194,7 +202,6 @@ $(function(){
 		var report = new Object();
 		report.user_no = ${loginUser.user_no };
 		report.realty_no = ${realty.realty_no };
-		report.contents = $("#sh_rreportcontent").val();
 		
 		$.ajax({
 			url: "rrcheck.do",
@@ -216,6 +223,8 @@ $(function(){
 			str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
 			$("#sh_rreportcontent").val(str); 
 
+			report.contents = $("#sh_rreportcontent").val();
+			
 			$.ajax({
 				url: "rrinsert.do",
 				type: "post",
@@ -242,6 +251,27 @@ $(function(){
 </script>
 
 <style type="text/css">
+
+#sh_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+}
+
+@media screen and (min-width: 800px) {
+  #sh_top {
+	position: fixed;
+	top: 85%;
+	left: 90%;
+	width: 5%;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
 
 #sh_realtydetail_hide,
 #sh_realtydetail_delete {
@@ -341,6 +371,7 @@ $(function(){
 #sh_recommendinterior_title {
   background-color: #61C0BF;
   color: white;
+  text-decoration: none;
 }
 
 @media screen and (max-width: 950px) {
@@ -435,8 +466,17 @@ $(function(){
 			</div>
 		</div>
 	</c:if>
+	<c:if test="${realty.realty_status == '검수중' || realty.realty_status == '수정완료'}">
+		<div class="row" id="sh_realtydetail_hide">
+			<div class="col-md-12">
+				<hr><br><br>
+				검수중인 매물입니다.
+				<br><br><br><br><hr>
+			</div>
+		</div>
+	</c:if>	
 	
-	<c:if test="${realty.realty_status != '숨기기' && realty.realty_status != '삭제' && realty.realty_status != '완전삭제' }">
+	<c:if test="${realty.realty_status != '숨기기' && realty.realty_status != '삭제' && realty.realty_status != '완전삭제' && realty.realty_status != '검수중' && realty.realty_status != '수정완료'}">
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-default bg-light fixed-bottom"> <!-- 하단바 -->
@@ -565,7 +605,6 @@ $(function(){
 					</div>
 				</div>
 				<c:if test="${loginUser.user_no == realty.user_no }">
-					<br>
 					<div class="row" id="sh_update_btn">
 						<div class="col-md-12">
 							수정하기
@@ -1122,6 +1161,11 @@ function changeCategoryClass(el) {
 			</div>
 		</div>
 	</c:if>
+	<div class="row" id="sh_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
+		</div>
+	</div>	
 	</div>
 	<br>
 	<br>

@@ -82,7 +82,15 @@
         }).open();
     }
 </script>
-
+<!-- 맨위로 -->
+<script type="text/javascript">
+$(function(){
+	$("#sh_top").click(function(){
+		var offset = $('html').offset();
+		$("html, body").animate({scrollTop:offset.top},500);
+	});
+});
+</script>
 <!-- 매물 종류 -->
 <script type="text/javascript">
 	$(function(){
@@ -521,12 +529,10 @@ $(function() {
         $("#sh_file_thumbnail_0").css("display", "none");
 		
 		$("#sh_realty_image"+i).on("change", function(e){
-			//$("#sh_realty_image_row"+i).css("display","none");
 			$("#sh_realty_image_row"+(i+1)).css("display","");
 
 			$("#sh_file_preveal_0").css("display","none");
 			$("#sh_file_thumbnail_0").css("display", "");
-			//alert($("#sh_realty_image"+i).val());
 			
 			var strFile = $("#sh_realty_image"+i).val();
 			var lastIndex = strFile.lastIndexOf('\\');
@@ -823,6 +829,15 @@ $(function(){
 			$("html, body").animate({scrollTop:offset.top},500);
 		}
 		
+		//사진 최소 등록
+		else if($("#sh_realty_image0").val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("첫번째 사진은 매물의 대표 사진이므로 필수로 등록해야 합니다.");
+			
+			var offset = $('#sh_phototype').offset();
+			$("html, body").animate({scrollTop:offset.top},500);			
+		}
+		
 		//checkbox
 		else if($("#customCheck1").is(":checked") == false){
 			$("#sh_required").css("display", "block");
@@ -830,6 +845,20 @@ $(function(){
 		}
 		
 		else{
+			
+			if($('input[name=month_lease]').val() == ""){
+				$('input[name=month_lease]').val(0)
+			}
+			if($('input[name=deposit]').val() == ""){
+				$('input[name=deposit]').val(0)
+			}
+			if($('input[name=payback_deposit_lease]').val() == ""){
+				$('input[name=payback_deposit_lease]').val(0)
+			}
+			if($('input[name=purchase]').val() == ""){
+				$('input[name=purchase]').val(0)
+			}
+			
 			$("#sh_realty_form").submit();
 			alert("매물 등록에 성공하였습니다.");
 		}
@@ -839,6 +868,27 @@ $(function(){
 </script>
 
 <style type="text/css">
+
+#sh_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+}
+
+@media screen and (min-width: 800px) {
+  #sh_top {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
 
 #sh_commonphotoform label,
 #sh_360photoform label {
@@ -1551,7 +1601,7 @@ placeholder="
 							<div class="row">
 								<div class="col-md-12">
 									<div class="sh_file_preveal" id="sh_file_preveal_0">
-										<h6>실 사진 최소 2장, 총 8장까지 사진 등록이 가능합니다.</h6>
+										<h6>실 사진 최소 1장, 총 8장까지 사진 등록이 가능합니다.</h6>
 										<h6>불필요한 정보가 있는 매물은 비공개 처리 됩니다.</h6>
 										<br>
 										이미지를 업로드해주세요 <i class="far fa-copy"></i> 
@@ -1627,6 +1677,11 @@ placeholder="
 				</div>
 			</div>  <!-- 동의 / 매물 등록 -->
 			<br><br><br><br><br><br>
+		</div>
+	</div>
+	<div class="row" id="sh_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
 		</div>
 	</div>
 </div>

@@ -207,7 +207,7 @@
 	
 	<insert id="insertRealtyReport" parameterType="Report">
 		insert into tb_report
-		values (report_seq.nextval, 'realty', 'realty', 0, #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
+		values (report_seq.nextval, 'realty', '허위매물', null, #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
 	</insert>
 	
 	<update id="updateRealtyHits" parameterType="int">
@@ -228,7 +228,7 @@
 	
 	<select id="selectRealtyCount" parameterType="int" resultType="int">
 		select count(*) from tb_realty
-		where user_no = #{user_no}
+		where user_no = #{user_no} and realty_status != '삭제' and realty_status != '완전삭제'
 	</select>
 	
 	<select id="selectRealtyMyListView" resultMap="resultRealty" useCache="true">

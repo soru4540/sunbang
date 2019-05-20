@@ -14,7 +14,15 @@
 <!-- 주소 api -->
 <script src="//dapi.kakao.com/v2/maps/sdk.js?appkey=71150a085c893cb9531eb155dbf54998&libraries=services"></script>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
+<!-- 맨위로 -->
+<script type="text/javascript">
+$(function(){
+	$("#sh_top").click(function(){
+		var offset = $('html').offset();
+		$("html, body").animate({scrollTop:offset.top},500);
+	});
+});
+</script>
 <!-- 매물 상태 수정 -->
 <script type="text/javascript">
 	$(function(){
@@ -964,6 +972,7 @@ $(function(){
 	$(function(){
 		$("#psubmit").click(function(){
 			console.log("확인");
+			console.log("매물상태 : " + $('#sh_realty_status').val());
 			console.log("매물종류 : " + $('input[name=realty_type]').val());
 			console.log("건물유형 : " + $('input[name=building_type]').val());
 			console.log("도로명주소 : " + $('input[name=road_address]').val());
@@ -1141,6 +1150,15 @@ $(function(){
 			$("html, body").animate({scrollTop:offset.top},500);
 		}
 		
+		//사진 최소 등록
+		else if($("#sh_realty_image0").val() == "" && $("#sh_load_realty_image0").val() == ""){
+			$("#sh_required").css("display", "block");
+			$('#sh_required_text').text("첫번째 사진은 매물의 대표 사진이므로 필수로 등록해야 합니다.");
+			
+			var offset = $('#sh_phototype').offset();
+			$("html, body").animate({scrollTop:offset.top},500);			
+		}
+		
 		//checkbox
 		else if($("#customCheck1").is(":checked") == false){
 			$("#sh_required").css("display", "block");
@@ -1162,6 +1180,10 @@ $(function(){
 				$('input[name=purchase]').val(0)
 			}
 			
+			if($("#sh_realty_status").val() == "검수중"){
+				$("#sh_realty_status").val("수정완료");
+			}
+			
 			$("#sh_realty_form").submit();
 			alert("매물정보가 수정되었습니다.");
 		}
@@ -1172,6 +1194,17 @@ $(function(){
 
 <style type="text/css">
 /* ------------------수정---------------------------- */
+
+#sh_mylist {
+	width:10%;
+	color: white;
+	background-color: #61C0BF;
+	border-radius: 4px;
+	padding:2px;
+	cursor: pointer;	
+	padding:10px;
+	text-decoration: none;
+}
 
 #sh_product_hide {
 	background-color:white;	
@@ -1266,6 +1299,27 @@ $(function(){
 }
 
 /* ------------------수정---------------------------- */
+
+#sh_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+}
+
+@media screen and (min-width: 800px) {
+  #sh_top {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
 
 #sh_commonphotoform label,
 #sh_360photoform label {
@@ -1572,11 +1626,17 @@ $(function(){
 <form id="sh_realty_form" action="rupdate.do" method="post" enctype="multipart/form-data">
 <input type="hidden" name="user_no" value="${loginUser.user_no}">
 <input type="hidden" name="realty_no" value="${realty.realty_no }">
+<input type="hidden" id="sh_realty_status" name="realty_status" value="${realty.realty_status }">
 <div class="container" style="font-family: a고딕12;">
   	<div id="sh_required"><!-- required alert -->
    		<strong>필수!</strong> <span id="sh_required_text"></span>&nbsp;&nbsp;&nbsp;
    		<span id="sh_required_close"><i class="fas fa-times"></i></span>
 	</div><!-- required alert -->
+	<div class="row">
+		<div class="col-md-12">
+			<a href="rmylist.do?user_no=${loginUser.user_no}" id="sh_mylist">내 방 관리...</a>
+		</div>
+	</div>	
 	<div class="row">
 		<div class="col-md-12">
 			<div class="row"> <!-- 매물 수정 -->
@@ -1595,14 +1655,13 @@ $(function(){
 				</div>
 			</div>  <!-- 매물 수정 -->
 			<br><br>
-			<c:if test="${realty.realty_status != '검수중' }">
+			<c:if test="${realty.realty_status != '검수중' && realty.realty_status != '수정완료'}">
 			<div class="row" id="sh_product_progress"> <!-- 매물 상태 수정 -->
 				<div class="col-md-12">
 						<h6>매물 상태 수정</h6><hr>	
 					<div class="row">
 						<div class="col-md-2">
 							매물 상태
-							<input type="hidden" id="sh_realty_status" name="realty_status" value="${realty.realty_status }">
 						</div>
 						<div class="col-md-10">
 							<input type="button" class="sh_product_progress_btn" id="sh_product_hide" value="숨기기">
@@ -2099,7 +2158,7 @@ placeholder="
 							<div class="row">
 								<div class="col-md-12">
 									<div class="sh_file_preveal" id="sh_file_preveal_0">
-										<h6>실 사진 최소 2장, 총 8장까지 사진 등록이 가능합니다.</h6>
+										<h6>실 사진 최소 1장, 총 8장까지 사진 등록이 가능합니다.</h6>
 										<h6>불필요한 정보가 있는 매물은 비공개 처리 됩니다.</h6>
 										<br>
 										이미지를 업로드해주세요 <i class="far fa-copy"></i> 
@@ -2180,6 +2239,11 @@ placeholder="
 			</div>  <!-- 동의 / 매물 수정 -->
 			</div>
 			<br><br><br><br><br><br>
+		</div>
+	</div>
+	<div class="row" id="sh_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
 		</div>
 	</div>
 </div>

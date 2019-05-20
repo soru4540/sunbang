@@ -11,12 +11,19 @@
 <link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
-
+<!-- 맨위로 -->
+<script type="text/javascript">
+$(function(){
+	$("#sh_top").click(function(){
+		var offset = $('html').offset();
+		$("html, body").animate({scrollTop:offset.top},500);
+	});
+});
+</script>
 <!-- 매물상태 별 표시 / 매물삭제 -->
 <script type="text/javascript">
 $(function(){
 	$(".sh_myroomlist_title").each(function(i){
-		
 		
 		if($("#sh_myroomList_progress"+i).val() == "숨기기"){
 			$("#sh_myroomList_progress"+i).css("background-color", "white");
@@ -24,10 +31,10 @@ $(function(){
 			$("#sh_realty_info"+i).css("opacity", "0.4");
 		}
 		
-		if($("#sh_myroomList_progress"+i).val() == "검수중"){
+		if($("#sh_myroomList_progress"+i).val() == "검수중" || $("#sh_myroomList_progress"+i).val() == "수정완료"){
 			$("#sh_myroomList_progress"+i).css("background-color", "#ff6666");
 			$("#sh_myroomList_progress"+i).css("border", "1px solid #ff6666");
-			//$("#sh_realty_info"+i).css("color", "#ff6666");
+			$("#sh_myroomList_progress"+i).val("검수중");
 		}
 		
 		if($("#sh_myroomList_progress"+i).val() == "계약진행중"){
@@ -71,6 +78,28 @@ $(function(){
 </script>
 
 <style type="text/css">
+
+#sh_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+}
+
+@media screen and (min-width: 800px) {
+  #sh_top {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
+
 #sh_myroommanagement {
 	margin: 5px;
 	padding: 5px;
@@ -238,7 +267,7 @@ $(function(){
 										<input type="text" class="sh_myroomlist_status" id="sh_myroomList_progress${index }" value="${realtyList.realty_status }" readonly>
 										<input type="button" class="sh_myroomlist_btn" value="수정" onclick="location.href='rupdateview.do?realty_no=${realtyList.realty_no }'">
 										<input type="hidden" id="sh_realtyno${index }" value="${realtyList.realty_no }">
-										<c:if test="${realtyList.realty_status != '검수중' }">
+										<c:if test="${realtyList.realty_status != '검수중' && realtyList.realty_status != '수정완료'}">
 											<input type="button" class="sh_myroomlist_btn" data-toggle="modal" data-target="#sh_rdeleteModal${index }" id="sh_rdelete${index }" value="삭제">
 										</c:if>
 									</div>
@@ -286,6 +315,11 @@ $(function(){
 		</div>
 	</div>
 	<br><br><br><br><br>
+	<div class="row" id="sh_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
+		</div>
+	</div>
 </div>
 <c:import url="../common/footer.jsp" />
 </body>
