@@ -1,11 +1,15 @@
 package org.kh.sunbang.user.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.Premium;
+import org.kh.sunbang.user.model.vo.Uboard;
+import org.kh.sunbang.user.model.vo.Urealty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +29,11 @@ public class UserDao {
 
 	
 	public User selectLoginPwd(SqlSessionTemplate session, User user) {
-		return session.selectOne("userMapper.selectLoginPwd", user); 
+		User loginUser = session.selectOne("userMapper.selectLoginPwd", user);
+		if(!bcryptPasswordEncoder.matches(user.getPassword(), loginUser.getPassword())) {
+			loginUser = null;
+		}
+		return loginUser;
 	}
 
 	
@@ -35,7 +43,12 @@ public class UserDao {
 	
 	
 	public int insertUser(SqlSessionTemplate session, User user) {
-		return session.insert("userMapper.insertUser", user); 
+		int result =  session.insert("userMapper.insertUser", user);
+		if(!user.getUser_type().equals("일반회원")) {
+		result =  session.insert("userMapper.binsertUser", user);
+		}
+		
+		return result;
 	}
 
 	
@@ -60,7 +73,10 @@ public class UserDao {
 	public int selectCheckId(SqlSessionTemplate session, String user_id) {
 		return session.selectOne("userMapper.selectCheckId", user_id); 
 	}
-
+	
+	public int selectCheckNick(SqlSessionTemplate session, String nickname) {
+		return session.selectOne("userMapper.selectCheckNick", nickname); 
+	}
 	
 	public ArrayList<String> selectOfficeName(SqlSessionTemplate session) {
 		// TODO Auto-generated method stub
@@ -86,9 +102,8 @@ public class UserDao {
 	}
 
 	
-	public int updateUserOut(SqlSessionTemplate session, int user_no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateUserOut(SqlSessionTemplate session, User user) {
+		return session.update("userMapper.updateUserOut", user); 
 	}
 
 	
@@ -98,33 +113,30 @@ public class UserDao {
 	}
 
 	
-	public ArrayList<Realty> selectMyDibs(SqlSessionTemplate session, int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Urealty> selectMyDibs(SqlSessionTemplate session, int user_no) {
+		List<Urealty> list =  session.selectList("userMapper.selectMyDibs", user_no); 
+		return (ArrayList<Urealty>)list;
 	}
 
 	
-	public ArrayList<Board> selectMyLike(SqlSessionTemplate session, int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Uboard> selectMyLike(SqlSessionTemplate session, int user_no) {
+		List<Uboard> list =  session.selectList("userMapper.selectMyLike", user_no); 
+		return (ArrayList<Uboard>)list;
 	}
 
 	
-	public int updateDibsMemo(SqlSessionTemplate session, int dibs_no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDibsMemo(SqlSessionTemplate session, Dibs dibs) {
+		return session.update("userMapper.updateDibsMemo", dibs); 
 	}
 
-	/*
-	public int deleteDibs(SqlSessionTemplate session, Dibs dibs) {
-		// TODO Auto-generated method stub
-		return 0;
-	}*/
+	
+	public int deleteDibs(SqlSessionTemplate session, int dibs_no) {
+		return session.delete("userMapper.deleteDibs", dibs_no); 
+	}
 
 	
-	public int deleteLike(SqlSessionTemplate session, Like like) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteLike(SqlSessionTemplate session, int like_no) {
+		return session.delete("userMapper.deleteLike", like_no); 
 	}
 
 	

@@ -209,9 +209,8 @@ public class ChatController {
 	}
 	
 	@RequestMapping("cmdel.do")
-	public String deleteMessage(HttpServletResponse response, @RequestParam(name="message_no") int message_no){
+	public void deleteMessage(HttpServletResponse response, @RequestParam(name="message_no") int message_no){
 		int result = chatService.deleteMessage(message_no);
-		return null;
 	} 
 	
 	

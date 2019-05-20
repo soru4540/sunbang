@@ -1,20 +1,31 @@
 package org.kh.sunbang.user.controller;
 
-import java.io.File; 
+import java.io.BufferedReader; 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/*import org.apache.commons.mail.DefaultAuthenticator;
+/*import org.apache.commons.mail.DefaultAuthenticator; 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;*/
+import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.user.model.service.UserService;
 import org.kh.sunbang.user.model.vo.Premium;
+import org.kh.sunbang.user.model.vo.Uboard;
+import org.kh.sunbang.user.model.vo.Urealty;
 import org.kh.sunbang.user.model.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -27,6 +38,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import sun.misc.BASE64Encoder;
 
 @Controller
 public class UserController {
@@ -52,21 +67,29 @@ public class UserController {
 	}
 	
 	@RequestMapping("umydibs.do")
-	public String selectMyDibs(){
-		return "user/myDibs";
+	public ModelAndView selectMyDibs(ModelAndView mv, @RequestParam(name="user_no") int user_no){
+		ArrayList<Urealty> urealty = userService.selectMyDibs(user_no);
+		mv.addObject("urealty", urealty);
+		mv.setViewName("user/myDibs");
+		return mv;
 	}
 	
 	@RequestMapping("umylike.do")
-	public String selectMyLike(){
-		return "user/myLike";
+	public ModelAndView selectMyLike(ModelAndView mv, @RequestParam(name="user_no") int user_no){
+		ArrayList<Uboard> uboard = userService.selectMyLike(user_no);
+		mv.addObject("uboard", uboard);
+		mv.setViewName("user/myLike");
+		return mv;
 	} 
 	
 	@RequestMapping(value="ulogin.do", method=RequestMethod.POST)
 	@ResponseBody
-	public void login(User user, HttpSession session, /*@RequestParam(name="logincheck") String logincheck,*/ SessionStatus status, HttpServletResponse response) throws IOException{
-		User loginUser = userService.selectLoginId(user);
+	public void login(User user, HttpSession session, @RequestParam(name="logincheck", required=false) String logincheck, SessionStatus status, HttpServletResponse response) throws IOException{
+		User loginUser = userService.selectLoginId(user); 
+		/*Cookie loginCookie = new Cookie("CookieUser", value);*/
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
+		
 		
 		if(loginUser != null) {
 		user.setUser_type(loginUser.getUser_type());
@@ -76,7 +99,6 @@ public class UserController {
 			if(loginUserPwd != null) {
 				loginUser.setLogin_num(0);
 				int result = userService.updateLoginNum(loginUser);
-				
 				if(result > 0) {
 					session.setAttribute("loginUser", loginUserPwd);
 					status.setComplete();
@@ -120,8 +142,14 @@ public class UserController {
 	} 
 	
 	@RequestMapping(value="uinsert.do", method=RequestMethod.POST)
-	public String insertUser(User user, HttpServletRequest request, Model model, @RequestParam(name="profile", required=false)MultipartFile profile) throws IllegalStateException, IOException{
-		String phone = request.getParameter("phone1")+request.getParameter("phone2")+request.getParameter("phone3");
+	public String insertUser(User user, HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name="profile", required=false)MultipartFile profile) throws IllegalStateException, IOException{
+		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
+		if(request.getParameter("user_type").equals("공인중개사")) {
+			String licenseNo = request.getParameter("license1")+"-"+request.getParameter("license2")+"-"+request.getParameter("license3");
+			String officePhone = request.getParameter("ophone1")+request.getParameter("ophone2")+request.getParameter("ophone3");
+			user.setBusiness_license_no(licenseNo);
+			user.setOffice_phone(officePhone);
+		}
 		String user_profile = null;
 		String savePath = request.getSession().getServletContext().getRealPath("files/user/userImages");
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
@@ -136,14 +164,119 @@ public class UserController {
 		user.setPassword(bcyptPasswordEncoder.encode(user.getPassword()));
 		
 		if(userService.insertUser(user) > 0) {
-			model.addAttribute("message", user.getNickname()+"님 회원가입을 축하드립니다");
-			return "forward:uloginview.do";
+			redirectAttributes.addFlashAttribute("messagetitle", "회원가입성공!");
+			redirectAttributes.addFlashAttribute("message", user.getNickname()+"님 회원가입을 축하드립니다");
+			return "redirect:uloginview.do";
 		}else {
-			model.addAttribute("message", "회원가입이 실패하였습니다");
-			return "forward:uloginview.do";
+			redirectAttributes.addFlashAttribute("message", "회원가입이 실패하였습니다");
+			return "redirect:uloginview.do";
 		}
 		
 	} 
+	
+	@RequestMapping("capkey.do")
+	@ResponseBody
+	public void capchakey(HttpServletResponse response) throws IOException {
+		String clientId = "kTR9HE2jFSzV6E2YixVE";
+		String clientSecret = "zviTx6zlQj";
+		
+		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=0";
+		URL url = new URL(apiURL);
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+		con.setRequestMethod("GET");
+		con.setRequestProperty("X-Naver-Client-Id", clientId);
+		con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+		int responseCode = con.getResponseCode();
+		BufferedReader br;
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		if(responseCode == 200) {
+			br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		}else {
+			br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+		}
+		String inputLine;
+		while((inputLine = br.readLine()) != null) {
+			out.append(inputLine);
+			out.flush();
+		}
+		out.close();
+		br.close();
+	}
+	
+	@RequestMapping("capimage.do")
+	@ResponseBody
+	public void capchaImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String clientId = "kTR9HE2jFSzV6E2YixVE";
+		String clientSecret = "zviTx6zlQj";
+		
+		String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key="+request.getParameter("key");
+		URL url = new URL(apiURL);
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("X-Naver-Client-Id", clientId);
+        con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+        int responseCode = con.getResponseCode();
+        BufferedReader br;
+        response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+        if(responseCode == 200) {
+        	InputStream is = con.getInputStream();
+        	int read = 0;
+        	byte[] bytes = new byte[1024];
+        	String tempname = Long.valueOf(new Date().getTime()).toString();
+        	String savePath = request.getSession().getServletContext().getRealPath("files/user/capchaImages");
+        	File f = new File(savePath +"\\"+tempname + ".jpg");
+        	f.createNewFile();
+        	OutputStream outputStream = new FileOutputStream(f);
+        	while((read = is.read(bytes)) != -1) {
+        		outputStream.write(bytes, 0, read);
+        	}
+        	is.close();
+        	out.append(tempname);
+        	out.flush();
+        }else {
+        	br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+        	String inputLine;
+        	while((inputLine = br.readLine()) != null) {
+        		out.append(inputLine);
+        		out.flush();
+        	}
+        	out.close();
+        	br.close();
+        }
+	}
+	
+	@RequestMapping("capresult.do")
+	@ResponseBody
+	public void capchaResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		String clientId = "kTR9HE2jFSzV6E2YixVE";
+		String clientSecret = "zviTx6zlQj";
+		
+		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=1&key="+request.getParameter("key")+"&value="+request.getParameter("value");
+		
+		URL url = new URL(apiURL);
+		HttpURLConnection con = (HttpURLConnection)url.openConnection();
+        con.setRequestMethod("GET");
+        con.setRequestProperty("X-Naver-Client-Id", clientId);
+        con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+        int responseCode = con.getResponseCode();
+        BufferedReader br;
+        response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+    	if(responseCode == 200) {
+			br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		}else {
+			br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+		}
+    	String inputLine;
+    	while((inputLine = br.readLine()) != null) {
+    		out.append(inputLine);
+    		out.flush();
+    	}
+    	out.close();
+    	br.close();
+	}
 	
 	@RequestMapping("ufindid.do")
 	public String selectFindId(){
@@ -155,6 +288,20 @@ public class UserController {
 	
 	@RequestMapping("uupdate.do")
 	public String updateUser(){return null;} 
+	
+	@RequestMapping("uchecknick.do")
+	@ResponseBody
+	public void selectCheckNick(@RequestParam(name="nickname") String nickname, HttpServletResponse response) throws IOException{
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		if(userService.selectCheckNick(nickname) > 0) {
+		out.append("fail");
+		}else {
+		out.append("success");
+		}
+		out.flush();
+		out.close();} 
 	
 	@RequestMapping("ucheckid.do")
 	@ResponseBody
@@ -171,50 +318,89 @@ public class UserController {
 		out.close();} 
 	
 	//이메일
-		/*@RequestMapping(value="ucheckemail.do", method = RequestMethod.POST)
+	/*	@RequestMapping(value="ucheckemail.do", method = RequestMethod.POST)
 		@ResponseBody
 		public void selectCheckEmail(@RequestParam(name="email") String email, HttpServletResponse response) throws EmailException, IOException{
-			String key = "1"; new TempKey().getKey(50, false);
-			String title = "선방 사이트 이메일 인증을 위한 인증번호가 발급되었습니다";
-			String content = new StringBuffer().
-									append("이메일을 위한 인증번호를 확인하고 입력해주시기바랍니다 인증번호는").
-									append(key).
-									append("입니다").toString();
-			
-		
-			MimeMessage message = sender.createMimeMessage();
-			MimeMessageHelper helper = new MimeMessageHelper(message, true, "utf-8");
-			
-			helper.setFrom("pubemail19@gmail.com", "선방"); //보내는사람
-			helper.setTo(email); //받는사람
-			helper.setSubject(title); // 메일제목
-			helper.setText(content); //메일내용
-			helper.addInline(contentId, dataSource); //파일
-			
-			sender.send(message);
-			HtmlEmail sendEmail = new HtmlEmail();
-			sendEmail.setCharset("utf-8");
-			sendEmail.setStartTLSEnabled(true);
-			sendEmail.setHostName("smtp.gmail.com");
-			sendEmail.setAuthenticator(new DefaultAuthenticator("pubemail19@gmail.com", "email0514"));
-			sendEmail.setFrom("pubemail19@gmail.com", "선방");
-			sendEmail.addTo("mylaughter@naver.com");
-			sendEmail.setSmtpPort(587);
-			sendEmail.setSubject(title);
-			sendEmail.setMsg(content);
-			sendEmail.send();
-			
+			System.out.println(email);
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
-			out.append(key);
+			String num = String.valueOf((int)(Math.floor(Math.random() * (89999)) + 10000));
+			String title = "선방 사이트 이메일 인증을 위한 인증번호가 발급되었습니다";
+			String content = "이메일을 위한 인증번호를 확인하고 입력해주시기바랍니다 인증번호는["+num+"]입니다";
+			
+			HtmlEmail sendEmail = new HtmlEmail();
+			sendEmail.setDebug(true);
+			sendEmail.setCharset("utf-8");
+			sendEmail.setHostName("smtp.naver.com");
+			sendEmail.setSSLOnConnect(true);
+			sendEmail.setStartTLSEnabled(true);
+			sendEmail.setSmtpPort(587);
+			sendEmail.setAuthenticator(new DefaultAuthenticator("public18", "rhddyd0820*"));
+			sendEmail.addTo(email);
+			sendEmail.setFrom("public18@naver.com", "선방", "utf-8");
+			sendEmail.setSubject(num);
+			sendEmail.setHtmlMsg(content);
+			sendEmail.send();
+			
+			out.append(num);
 			out.flush();
 			out.close();
-				
-			
 		}*/
 	
-	@RequestMapping("ucheckphone.do")
-	public String selectCheckPhone(){return null;} 
+	@RequestMapping(value="ucheckphone.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void selectCheckPhone(@RequestParam(name="phone") String phone,HttpServletResponse response) throws IOException{
+		String num = String.valueOf((int)(Math.floor(Math.random() * (89999)) + 10000));
+		System.out.println(num);
+		String msg = "[선방]인증번호는"+num+" 입니다";
+		
+		BASE64Encoder encoder = new BASE64Encoder();
+		String apiURL = "http://sslsms.cafe24.com/sms_sender.php";
+		URL obj = new URL(apiURL);
+		HttpURLConnection con = (HttpURLConnection)obj.openConnection();
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
+		con.setRequestProperty("Accept-Charset", "UTF-8");
+		con.setRequestMethod("POST");
+		con.setRequestProperty("User-Agent", "Mozilla/5.0");
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
+		
+		String postParams =
+				"user_id=" + encoder.encode("".getBytes())
+				+ "&secure=" + encoder.encode("".getBytes())
+				+ "&msg=" + encoder.encode(msg.getBytes())
+				+ "&rphone=" + encoder.encode(phone.getBytes())
+				+ "&sphone1=" + encoder.encode("010".getBytes())
+				+ "&sphone2=" + encoder.encode("9376".getBytes())
+				+ "&sphone3=" + encoder.encode("5037".getBytes())
+				+ "&mode=" + encoder.encode("1".getBytes())
+				+ "&smsType=S";
+		
+		postParams += "&testflag="+encoder.encode("Y".getBytes());
+        
+        con.setDoOutput(true);
+        OutputStream os = con.getOutputStream();
+        os.write(postParams.getBytes());
+        os.flush();
+        os.close();
+        
+        int responseCode = con.getResponseCode();
+        if(responseCode == HttpURLConnection.HTTP_OK) {
+        	BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        	String inputLine;
+        	StringBuffer buf = new StringBuffer();
+        	
+        	while((inputLine = in.readLine()) != null) {
+        		buf.append(inputLine);
+        		out.append(num);
+        		out.flush();
+        	}
+        	out.close();
+        	in.close();
+        	System.err.println(buf.toString());
+        }else {
+        }
+	} 
 	
 	@RequestMapping("uoffice.do")
 	public String officeName(){return null;} 
@@ -225,17 +411,43 @@ public class UserController {
 	@RequestMapping("uupdatepwd.do")
 	public String updatePwd(){return null;} 
 	
-	@RequestMapping("uuserout.do")
-	public String updateUserOut(){return null;} 
+	@RequestMapping(value="uuserout.do", method=RequestMethod.POST)
+	public String updateUserOut(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
+		HttpSession session = request.getSession(false);
+		User user = new User();
+		String reason = request.getParameter("reason1");
+		if(request.getParameter("reason2") != null) {
+			reason = request.getParameter("reason2");
+		}
+		user.setNickname(request.getParameter("nickname"));
+		user.setUser_no(Integer.parseInt(request.getParameter("user_no")));
+		user.setReason_leave(reason);
+		if(userService.updateUserOut(user) > 0) {
+			if(session != null) {
+				session.invalidate();
+			}
+		redirectAttributes.addFlashAttribute("messagetitle", "회원탈퇴성공!");
+		redirectAttributes.addFlashAttribute("message", user.getNickname()+"님 탈퇴하셨습니다");
+		return "redirect:uloginview.do";
+		}else {
+		return "redirect:umyuserview.do";	
+		}
+	} 
 	
-	@RequestMapping("udibsmemo.do")
-	public String updateDibsMemo(){return null;} 
+	@RequestMapping(value="udibsmemo.do", method=RequestMethod.POST)
+	public void updateDibsMemo(HttpServletResponse response, Dibs dibs){
+		int result = userService.updateDibsMemo(dibs);
+	} 
 	
 	@RequestMapping("udeldibs.do")
-	public String deleteDibs(){return null;} 
+	public void deleteDibs(HttpServletResponse response, @RequestParam(name="dibs_no")int dibs_no){
+		int result = userService.deleteDibs(dibs_no);
+	} 
 	
 	@RequestMapping("udellike.do")
-	public String deleteLike(){return null;} 
+	public void deleteLike(HttpServletResponse response, @RequestParam(name="like_no")int like_no){
+		int result = userService.deleteLike(like_no);
+	} 
 
 	
 	// 프리미엄

@@ -8,6 +8,8 @@
 		<typeAlias type="org.kh.sunbang.dibs.model.vo.Dibs" alias="Dibs" />
 		
  		<typeAlias type="org.kh.sunbang.user.model.vo.User" alias="User" />
+ 		<typeAlias type="org.kh.sunbang.user.model.vo.Uboard" alias="Uboard" />
+ 		<typeAlias type="org.kh.sunbang.user.model.vo.Urealty" alias="Urealty" />
 		<typeAlias type="org.kh.sunbang.user.model.vo.Premium" alias="Premium" />
 		
 		<typeAlias type="org.kh.sunbang.chat.model.vo.Chat" alias="Chat" />

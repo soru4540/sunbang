@@ -40,21 +40,62 @@
 	<result property="business_user_no" column="business_user_no"/>
 </resultMap>
 
+<resultMap type="Uboard" id="resultUboard">
+	<result property="board_no" column="board_no"/>
+	<result property="board_type" column="board_type"/>
+	<result property="board_title" column="board_title"/>
+	<result property="like_no" column="like_no"/>
+	<result property="board_hits" column="board_hits"/>
+	<result property="post_no" column="post_no"/>
+	<result property="post_keyword" column="post_keyword"/>
+	<result property="user_no" column="user_no"/>
+	<result property="post_data" column="post_data"/>
+	<result property="user_profile" column="user_profile"/>
+	<result property="nickname" column="nickname"/>
+	<result property="like_count" column="like_count"/>
+	<result property="follow_count" column="follow_count"/>
+</resultMap>
+
+<resultMap type="Urealty" id="resultUrealty">
+	<result property="dibs_no" column="dibs_no"/>
+	<result property="memo" column="memo"/>
+	<result property="realty_no" column="realty_no"/>
+	<result property="move_available_date" column="move_available_date"/>
+	<result property="realty_hits" column="realty_hits"/>
+	<result property="realty_type" column="realty_type"/>
+	<result property="road_address" column="road_address"/>
+	<result property="month_lease" column="month_lease"/>
+	<result property="payback_deposit_lease" column="post_dpayback_deposit_leaseata"/>
+	<result property="residential" column="residential"/>
+	<result property="realty_image1" column="realty_image1"/>
+	<result property="nickname" column="nickname"/>
+	<result property="user_no" column="user_no"/>
+	<result property="user_profile" column="user_profile"/>
+	<result property="dibs_count" column="dibs_count"/>
+	<result property="realty_detail_title" column="realty_detail_title"/>
+</resultMap>
+
 <select id="selectLoginId" parameterType="User" resultType="User">
-	select * from tb_user
-	where user_id=#{user_id}
+select * from tb_user
+where user_id=#{user_id} and user_status != 8
 </select>
 
 <select id="selectLoginPwd" parameterType="User" resultType="User">
 <choose>
 	<when test="user_type.equals('매도인') or user_type.equals('공인중개사')">
-	select * from tb_business
-	join tb_user using(user_no)
-	where user_id=#{user_id} and password=#{password}
+select USER_NO,USER_TYPE,USER_PROFILE,USER_ID,NICKNAME,USER_NAME,EMAIL,PHONE,PASSWORD,
+TO_CHAR(JOIN_DATE, 'YYYY')||'년'|| TO_CHAR(JOIN_DATE, 'MM')||'월'|| TO_CHAR(JOIN_DATE, 'DD')||'일' JOIN_DATE,NVL2(UPDATE_DATE, TO_CHAR(UPDATE_DATE, 'YYYY')||'년'|| TO_CHAR(UPDATE_DATE, 'MM')||'월'|| TO_CHAR(UPDATE_DATE, 'DD')||'일', NULL) UPDATE_DATE,
+USER_STATUS,REASON_LEAVE,LOGIN_NUM,BUSINESS_USER_NO,OFFICE_NAME,OFFICE_REGIST_NO,BUSINESS_LICENSE_NO,OFFICE_ADDRESS,OFFICE_PHONE,STATUS_AGREEMENT,PREMIUM_STATUS
+from tb_business
+join tb_user using(user_no)
+where user_id=#{user_id}
 	</when>
 	<otherwise>
-	select * from tb_user
-	where user_id=#{user_id} and password=#{password}
+select USER_NO,USER_TYPE,USER_PROFILE,USER_ID,NICKNAME,USER_NAME,EMAIL,PHONE,PASSWORD,
+TO_CHAR(JOIN_DATE, 'YYYY')||'년'|| TO_CHAR(JOIN_DATE, 'MM')||'월'|| TO_CHAR(JOIN_DATE, 'DD')||'일' JOIN_DATE,NVL2(UPDATE_DATE, TO_CHAR(UPDATE_DATE, 'YYYY')||'년'|| TO_CHAR(UPDATE_DATE, 'MM')||'월'|| TO_CHAR(UPDATE_DATE, 'DD')||'일', NULL) UPDATE_DATE,
+USER_STATUS,REASON_LEAVE,LOGIN_NUM
+from tb_user
+where user_id=#{user_id}
 	</otherwise>
 </choose>
 </select>
@@ -63,15 +104,68 @@
 	select count(*) from tb_user where user_id = #{user_id}
 </select>
 
+<select id="selectCheckNick" parameterType="String" resultType="int">
+	select count(*) from tb_user where nickname = #{nickname}
+</select>
+
+<select id="selectMyLike" parameterType="_int" resultMap="resultUboard">
+select * from
+(select like_no, sl.board_no, board_title, board_type, board_hits, post_no, post_keyword, post_data, tb_user.user_no, nickname, user_profile, like_count
+from tb_post 
+left join tb_board on(tb_post.board_no = tb_board.board_no)
+left join tb_user on(tb_board.user_no = tb_user.user_no)
+join(select NVL(count(user_no), 0) like_count, board_no, like_no, user_no from tb_like
+group by board_no, like_no, user_no)sl on(sl.board_no = tb_board.board_no)
+where sl.user_no = #{user_no} and post_keyword = 'cover' order by like_no desc)
+</select>
+
+<select id="selectMyDibs" parameterType="_int" resultMap="resultUrealty">
+select * from
+(select dibs_no, memo, realty_no, move_available_date, realty_hits, realty_type, road_address, month_lease, payback_deposit_lease,
+residential, realty_image1, nickname, tb_user.user_no as user_no, user_profile, dibs_count, realty_detail_title
+from tb_realty
+join tb_user on(tb_realty.user_no = tb_user.user_no)
+join (select NVL(count(user_no),0) dibs_count, realty_no, dibs_no, memo, user_no from tb_dibs
+group by realty_no, realty_no, dibs_no, memo, user_no)ds using(realty_no)
+where ds.user_no = #{user_no} order by dibs_no desc)
+</select>
+
 <update id="updateLoginNum" parameterType="User">
 	update tb_user
 	set login_num = #{login_num}
 	where user_no=#{user_no}
 </update>
 
+<update id="updateDibsMemo" parameterType="Dibs">
+	update tb_dibs
+	set memo = #{memo}
+	where dibs_no = #{dibs_no}
+</update>
+
 <insert id="insertUser" parameterType="User">
 	INSERT INTO TB_USER VALUES(USER_SEQ.NEXTVAL, #{user_type}, #{user_profile, jdbcType=VARCHAR}, #{user_id}, #{nickname}, #{user_name}, #{email}, #{phone}, #{password}, default, null, default, null, default)
 </insert>
+
+<insert id="binsertUser" parameterType="User">
+<selectKey keyProperty="user_no" resultType="int" order="BEFORE">
+	select user_no from tb_user where user_id = #{user_id}
+</selectKey>
+INSERT INTO TB_BUSINESS VALUES(BUSINESS_SEQ.NEXTVAL, #{office_name, jdbcType=VARCHAR}, #{office_regist_no, jdbcType=VARCHAR}, #{business_license_no, jdbcType=VARCHAR }, #{office_address, jdbcType=VARCHAR}, #{office_phone, jdbcType=VARCHAR}, default, default, #{user_no})
+</insert>
+
+<update id="updateUserOut" parameterType="User">
+	update tb_user
+	set reason_leave = #{reason_leave}, update_date = sysdate, user_status = 8
+	where user_no = #{user_no}
+</update>
+
+<delete id="deleteLike" parameterType="_int">
+delete from tb_like where like_no = #{like_no}
+</delete>
+
+<delete id="deleteDibs" parameterType="_int">
+delete from tb_dibs where dibs_no = #{dibs_no}
+</delete>
 
 
 <!-- 성현///////////////////////////////////////////////////////// -->

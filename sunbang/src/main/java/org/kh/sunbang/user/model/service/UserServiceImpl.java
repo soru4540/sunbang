@@ -2,11 +2,14 @@ package org.kh.sunbang.user.model.service;
 
 import java.util.ArrayList;
 
+import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.dao.UserDao;
 import org.kh.sunbang.user.model.vo.Premium;
+import org.kh.sunbang.user.model.vo.Uboard;
+import org.kh.sunbang.user.model.vo.Urealty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,6 +66,11 @@ public class UserServiceImpl implements UserService{
 	public int selectCheckId(String user_id) {
 		return userDao.selectCheckId(mybatisSession, user_id);
 	}
+	
+	@Override
+	public int selectCheckNick(String nickname) {
+		return userDao.selectCheckNick(mybatisSession, nickname);
+	}
 
 	@Override
 	public ArrayList<String> selectOfficeName() {
@@ -89,9 +97,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public int updateUserOut(int user_no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateUserOut(User user) {
+		return userDao.updateUserOut(mybatisSession, user);
 	}
 
 	@Override
@@ -101,33 +108,28 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public ArrayList<Realty> selectMyDibs(int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Urealty> selectMyDibs(int user_no) {
+		return userDao.selectMyDibs(mybatisSession, user_no);
 	}
 
 	@Override
-	public ArrayList<Board> selectMyLike(int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<Uboard> selectMyLike(int user_no) {
+		return userDao.selectMyLike(mybatisSession, user_no);
 	}
 
 	@Override
-	public int updateDibsMemo(int dibs_no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updateDibsMemo(Dibs dibs) {
+		return userDao.updateDibsMemo(mybatisSession, dibs);
 	}
 
-	/*@Override
-	public int deleteDibs(Dibs dibs) {
-		// TODO Auto-generated method stub
-		return 0;
-	}*/
+	@Override
+	public int deleteDibs(int dibs_no) {
+		return userDao.deleteDibs(mybatisSession, dibs_no);
+	}
 
 	@Override
-	public int deleteLike(Like like) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteLike(int like_no) {
+		return userDao.deleteLike(mybatisSession, like_no);
 	}
 	
 	//김성현--------------------------------------------------------------

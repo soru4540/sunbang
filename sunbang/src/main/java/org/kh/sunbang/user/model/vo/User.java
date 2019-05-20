@@ -17,26 +17,26 @@ public class User implements java.io.Serializable{
 	private String email;			//이메일
 	private String phone;			//전화번호
 	private String password;		//비밀번호
-	private Date join_date;		//가입일
-	private Date update_date;	//수정일
+	private String join_date;		//가입일
+	private String update_date;	//수정일
 	private int user_status;		//회원등급
 	private String reason_leave;	//탈퇴사유
 	private int login_num;		//로그인시도횟수
 	private int business_user_no;	//기업회원번호
 	private String office_name;	//중개사무소명
 	private String office_regist_no;	//중개등록번호
-	private long business_license_no;	//사업자등록번호
+	private String business_license_no;	//사업자등록번호
 	private String office_address;	//중개사무소주소
 	private String office_phone;		//대표전화번호
 	private String status_agreement;	//가입승인상태
 	private String premium_status;	//프리미엄여부
 
 	public User() {}
-	
+
 	public User(int user_no, String user_type, String user_profile, String user_id, String nickname, String user_name,
-			String email, String phone, String password, Date join_date, Date update_date, int user_status,
+			String email, String phone, String password, String join_date, String update_date, int user_status,
 			String reason_leave, int login_num, int business_user_no, String office_name, String office_regist_no,
-			long business_license_no, String office_address, String office_phone, String status_agreement,
+			String business_license_no, String office_address, String office_phone, String status_agreement,
 			String premium_status) {
 		super();
 		this.user_no = user_no;
@@ -64,7 +64,7 @@ public class User implements java.io.Serializable{
 	}
 
 	public User(int user_no, String user_type, String user_profile, String user_id, String nickname, String user_name,
-			String email, String phone, String password, Date join_date, Date update_date, int user_status,
+			String email, String phone, String password, String join_date, String update_date, int user_status,
 			String reason_leave, int login_num) {
 		super();
 		this.user_no = user_no;
@@ -155,19 +155,19 @@ public class User implements java.io.Serializable{
 		this.password = password;
 	}
 
-	public Date getJoin_date() {
+	public String getJoin_date() {
 		return join_date;
 	}
 
-	public void setJoin_date(Date join_date) {
+	public void setJoin_date(String join_date) {
 		this.join_date = join_date;
 	}
 
-	public Date getUpdate_date() {
+	public String getUpdate_date() {
 		return update_date;
 	}
 
-	public void setUpdate_date(Date update_date) {
+	public void setUpdate_date(String update_date) {
 		this.update_date = update_date;
 	}
 
@@ -219,11 +219,11 @@ public class User implements java.io.Serializable{
 		this.office_regist_no = office_regist_no;
 	}
 
-	public Long getBusiness_license_no() {
+	public String getBusiness_license_no() {
 		return business_license_no;
 	}
 
-	public void setBusiness_license_no(long business_license_no) {
+	public void setBusiness_license_no(String business_license_no) {
 		this.business_license_no = business_license_no;
 	}
 
@@ -274,6 +274,7 @@ public class User implements java.io.Serializable{
 				+ office_address + ", office_phone=" + office_phone + ", status_agreement=" + status_agreement
 				+ ", premium_status=" + premium_status + "]";
 	}
+
 	
 	
 	
