@@ -114,20 +114,22 @@ select * from
 from tb_post 
 left join tb_board on(tb_post.board_no = tb_board.board_no)
 left join tb_user on(tb_board.user_no = tb_user.user_no)
-join(select NVL(count(user_no), 0) like_count, board_no, like_no, user_no from tb_like
-group by board_no, like_no, user_no)sl on(sl.board_no = tb_board.board_no)
-where sl.user_no = #{user_no} and post_keyword = 'cover' order by like_no desc)
+join(select NVL(count(user_no), 0) like_count, board_no from tb_like
+group by board_no)sl on(sl.board_no = tb_board.board_no)
+join tb_like on(tb_like.board_no = tb_board.board_no)
+where tb_like.user_no = #{user_no} and post_keyword = 'cover' order by like_no desc)
 </select>
 
 <select id="selectMyDibs" parameterType="_int" resultMap="resultUrealty">
 select * from
-(select dibs_no, memo, realty_no, move_available_date, realty_hits, realty_type, road_address, month_lease, payback_deposit_lease,
+(select dibs_no, memo, tb_dibs.realty_no, move_available_date, realty_hits, realty_type, road_address, month_lease, payback_deposit_lease,
 residential, realty_image1, nickname, tb_user.user_no as user_no, user_profile, dibs_count, realty_detail_title
 from tb_realty
 join tb_user on(tb_realty.user_no = tb_user.user_no)
-join (select NVL(count(user_no),0) dibs_count, realty_no, dibs_no, memo, user_no from tb_dibs
-group by realty_no, realty_no, dibs_no, memo, user_no)ds using(realty_no)
-where ds.user_no = #{user_no} order by dibs_no desc)
+join (select NVL(count(user_no),0) dibs_count, realty_no from tb_dibs
+group by realty_no, realty_no)ds on(ds.realty_no = tb_realty.realty_no)
+join tb_dibs on (tb_dibs.realty_no = tb_realty.realty_no)
+where tb_dibs.user_no = #{user_no} order by dibs_no desc)
 </select>
 
 <update id="updateLoginNum" parameterType="User">
