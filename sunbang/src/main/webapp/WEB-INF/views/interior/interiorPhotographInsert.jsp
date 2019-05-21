@@ -32,7 +32,7 @@
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.insert_submit {
+.submit {
 	background-color: #ffa0a8;
 	color: white;
 	border: #ffa0a8;
@@ -356,12 +356,11 @@
 			<h4 align="center" style="font-family: a고딕15;">사진 등록</h4>
 			<br> <input type="hidden" name="board_type" value="photograph">
 			<div class="row">
-				<input type="hidden" id="" name="post_keyword" value="cover">
-				<label style="font-family: a고딕14;">파일선택 <input type="file"
+				<input type="hidden" name="post_keyword" value="cover">
+				<label style="font-family: a고딕14;">파일선택<input type="file"
 					id="input_img0" name="post_data0">
 				</label>
 			</div>
-			<br>
 			<div class="row">
 				<div class="col" align="center"
 					style="background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
@@ -376,42 +375,69 @@
 			<br>
 			<div class="row">
 				<div class="col">
-					<select class="category" id="category1" name="category1"
+					<select class="housing_type" id="housing_type" name="housing_type"
 						style="width: 100%; height: 35px; font-family: a고딕14;" required>
 						<option value="">공간 선택(필수)</option>
-						<option value="0">원룸</option>
-						<option value="1">거실</option>
-						<option value="2">키친</option>
-						<option value="3">욕실</option>
-						<option value="4">드레스룸</option>
-						<option value="5">서재&amp;작업실</option>
-						<option value="6">베란다</option>
-						<option value="7">현관</option>
-						<option value="8">사무공간</option>
+						<option value="원룸">원룸</option>
+						<option value="거실">거실</option>
+						<option value="키친">키친</option>
+						<option value="욕실">욕실</option>
+						<option value="드레스룸">드레스룸</option>
+						<option value="서재&작업실">서재&amp;작업실</option>
+						<option value="베란다">베란다</option>
+						<option value="현관">현관</option>
+						<option value="사무공간">사무공간</option>
 					</select>
 				</div>
 				&nbsp;&nbsp;
 				<div class="col">
-					<select class="category" id="category2" name="category2"
+					<select class="floor_area" id="floor_area" name="floor_area"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
 						<option value="">평수 선택</option>
-						<option value="0">10평 미만</option>
-						<option value="1">10평 이상</option>
-						<option value="2">20평 미만</option>
-						<option value="3">30평 미만</option>
-						<option value="4">40평 미만</option>
+						<option value="10">10평 미만</option>
+						<option value="10">10평 이상</option>
+						<option value="20">20평 미만</option>
+						<option value="30">30평 미만</option>
+						<option value="40">40평 미만</option>
+					</select>
+				</div>				
+			</div>
+			<br>
+			<div class="row">
+			<div class="col">
+					<select class="color" id="color1" name="color1"
+						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">전체 컬러 선택(필수)</option>
+						<option value="#d53736" >RED</option>
+						<option value="#fed144" >YELLOW</option>
+						<option value="#96d783" >GREEN</option>
+						<option value="#3d97dd" >BLUE</option>
+						<option value="#ee8a94" >PINK</option>
+						<option value="#fafafa">WHITE</option>
 					</select>
 				</div>
 				<div class="col">
-					<select class="category" id="category3" name="category3"
+					<select class="color" id="color2" name="color2"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
-						<option value="">컬러 선택</option>
-						<option value="0" style="color: red;">RED</option>
-						<option value="1" style="color: yellow;">YELLOW</option>
-						<option value="2" style="color: green;">GREEN</option>
-						<option value="3" style="color: blue;">BLUE</option>
-						<option value="4" style="color: pink;">PINK</option>
-						<option value="5">WHITE</option>
+						<option value="">벽 컬러 선택</option>
+						<option value="#d53736" >RED</option>
+						<option value="#fed144" >YELLOW</option>
+						<option value="#96d783" >GREEN</option>
+						<option value="#3d97dd" >BLUE</option>
+						<option value="#ee8a94" >PINK</option>
+						<option value="#fafafa">WHITE</option>
+					</select>
+				</div>
+				<div class="col">
+					<select class="color" id="color3" name="color3"
+						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">바닥 컬러 선택</option>
+						<option value="#d53736" >RED</option>
+						<option value="#fed144" >YELLOW</option>
+						<option value="#96d783" >GREEN</option>
+						<option value="#3d97dd" >BLUE</option>
+						<option value="#ee8a94" >PINK</option>
+						<option value="#fafafa">WHITE</option>
 					</select>
 				</div>
 			</div>
@@ -419,7 +445,7 @@
 			<div class="row">
 				<div class="col">				
 					<span style="font-family: a고딕14; ">제목 : </span><input type="text"
-						size="53" name="board_title" id="jb_khinsert_title" style="width:95%;">
+						size="53" name="board_title" id="board_title" style="width:95%;">
 				</div>
 			</div>
 			<br>
@@ -511,7 +537,7 @@
 			<br> <br>
 			<div class="row">
 				<div class="col" style="text-align: right;">
-					<input class="insert_submit" type="submit" value="등&nbsp;록">
+					<input class="submit" type="submit" value="등&nbsp;록">
 				</div>
 			</div>
 		</form>

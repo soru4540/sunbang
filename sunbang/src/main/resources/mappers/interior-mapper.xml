@@ -199,8 +199,14 @@ where <![CDATA[ rownum <9 ]]>
 <!-- 게시판등록 -->
 <insert id="insertBoard" parameterType="Board">
 <choose>
-<when test="board_type.equals('photograph')"></when>
-<when test="board_type.equals('housewarming')"></when>
+<when test="board_type.equals('photograph')">
+insert into tb_board (board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,board_hits,board_date,board_status,user_no) 
+values(board_seq.nextval,#{board_type},#{housing_type},#{floor_area},#{color1},#{color2},#{color3},#{board_title},0,default,default,#{user_no})
+</when>
+<when test="board_type.equals('housewarming')">
+insert into tb_board (board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,board_hits,board_date,board_status,user_no) 
+values(board_seq.nextval,#{board_type},#{housing_type},#{floor_area},#{color1},#{color2},#{color3},#{board_title},0,default,default,#{user_no}
+</when>
 <when test="board_type.equals('knowhow')">
 insert into tb_board (board_no,board_type,category1,category2,category3,board_title,board_hits,board_date,board_status,user_no) 
 values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{board_title},0,default,default,#{user_no})
@@ -215,7 +221,8 @@ select max(board_no) from tb_board where user_no = #{user_no}
 
 <!-- 게시물등록 -->
 <insert id="insertPost" parameterType="Post">
-insert into tb_post values(post_seq.nextval,#{post_keyword},#{post_data,jdbcType=VARCHAR},#{post_contents,jdbcType=VARCHAR},#{board_no})
+insert into tb_post 
+values(post_seq.nextval,#{post_keyword},#{post_data,jdbcType=VARCHAR},#{post_contents,jdbcType=VARCHAR},#{board_no})
 </insert>
 
 <!-- 게시판리스트 카운트 -->
