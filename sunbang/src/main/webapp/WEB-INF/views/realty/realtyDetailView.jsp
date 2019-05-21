@@ -210,9 +210,12 @@ $(function(){
 			contentType: "application/json; charset=utf-8",
 			success: function(result){
 				if(result == 0){
-					$("#sh_report").css("display", "");
+					$("#sh_report").unbind('click', false);
 				}else{
-					$("#sh_report").css("display", "none");
+					$("#sh_report").bind('click', false);
+					$("#sh_report").click(function(){
+						alert("이미 신고하신 게시물입니다.");
+					});
 				}
 			}
 		});		
@@ -233,11 +236,13 @@ $(function(){
 				success: function(result){
 					if(result == 1){
 						alert("신고가 완료되었습니다.");
-						$("#sh_report").css("display", "none");
+						$("#sh_report").bind('click', false);
+						$("#sh_report").click(function(){
+							alert("이미 신고하신 게시물입니다.");
+						});
 					}
 				}
 			});				
-			
 		});
 	});
 </script>

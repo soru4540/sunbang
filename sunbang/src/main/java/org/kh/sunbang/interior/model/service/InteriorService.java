@@ -2,6 +2,7 @@ package org.kh.sunbang.interior.model.service;
 
 import java.util.ArrayList;
 
+import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
@@ -65,6 +66,13 @@ public interface InteriorService {
 	ArrayList<ReplyFull> selectReplyList(int board_no);
 	User selectMyProfile(int user_no);
 	int insertBoardHits(int board_no);
+	
+	//--------------------성현씨------------------------------------------------//	
+	ArrayList<BoardFull> selectKnowHowPostList(int board_no);
+	int selectKnowhowLikeCheck(Like like);
+	int selectKnowhowfollowCheck(Follow follow);
+	int selectKnowhowReportCheck(Report report);
+	int insertKnowhowReport(Report report);
 
 	
 }

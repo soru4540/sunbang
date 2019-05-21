@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
@@ -91,6 +92,16 @@ public class InteriorDao {
 	public int deleteLike(SqlSessionTemplate session, Like like) {		
 		return session.delete("interiorMapper.deleteLike",like);
 	}
+	
+	//팔로우 추가
+	public int insertFollow(SqlSessionTemplate session, Follow follow) {   
+		return session.insert("interiorMapper.insertFollow",follow);
+	}
+	//팔로우 삭제
+	public int deleteFollow(SqlSessionTemplate session, Follow follow) {
+		return session.delete("interiorMapper.deleteFollow",follow);
+	}
+	
 	//댓글 리스트 출력
 	public ArrayList<ReplyFull> selectReplyList(SqlSessionTemplate session, int board_no) {		
 		List<ReplyFull> irlist = session.selectList("interiorMapper.selectReplyList",board_no);
@@ -114,8 +125,31 @@ public class InteriorDao {
 	}
 //-----------------------------------------서은---------------------------------------------------
 
+
 	
 
-//-----------------------------------------성현---------------------------------------------------	
+//-----------------------------------------성현---------------------------------------------------
+	public ArrayList<BoardFull> selectKnowHowPostList(SqlSessionTemplate session, int board_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectKnowHowPostList", board_no);
+		return (ArrayList<BoardFull>)list;
+	}
+
+	public int selectKnowhowLikeCheck(SqlSessionTemplate session, Like like) {
+		return session.selectOne("interiorMapper.selectKnowhowLikeCheck", like);
+	}
+
+	public int selectKnowhowfollowCheck(SqlSessionTemplate session, Follow follow) {
+		return session.selectOne("interiorMapper.selectKnowhowfollowCheck", follow);
+	}
+
+	public int insertKnowhowReport(SqlSessionTemplate session, Report report) {
+		return session.insert("interiorMapper.insertKnowhowReport", report);
+	}
+
+	public int selectKnowhowReportCheck(SqlSessionTemplate session, Report report) {
+		return session.selectOne("interiorMapper.selectKnowhowReportCheck", report);
+	}
+	
+	
 		
 }

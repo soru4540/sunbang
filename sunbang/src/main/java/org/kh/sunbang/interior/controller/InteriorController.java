@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.interior.model.service.InteriorService;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
@@ -20,6 +23,7 @@ import org.kh.sunbang.interior.model.vo.Reply;
 import org.kh.sunbang.interior.model.vo.ReplyFull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -279,19 +283,21 @@ public class InteriorController {
  			}		
  	}
  	
- 	@RequestMapping(value="ifinsert.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
- 	@ResponseBody
- 	public String insertFollow(Follow follow, HttpServletResponse response) {
- 		JSONObject sendObj = new JSONObject();
- 	return sendObj.toJSONString();
- 	}
- 	
- 	@RequestMapping(value="ifdelete.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
- 	@ResponseBody
- 	public String deleteFollow(Follow follow, HttpServletResponse response) {
- 		JSONObject sendObj = new JSONObject();
- 	return sendObj.toJSONString();
- 	}
+    //팔로우 추가
+    @RequestMapping(value="ifinsert.do", method = RequestMethod.POST)
+    @ResponseBody
+    public int insertFollow(Follow follow, HttpServletResponse response) {    
+       int result = interiorService.insertFollow(follow); 
+    return result;
+    }
+    
+    //팔로우 삭제
+    @RequestMapping(value="ifdelete.do", method = RequestMethod.POST)
+    @ResponseBody
+    public int deleteFollow(Follow follow, HttpServletResponse response) {
+       int result = interiorService.deleteFollow(follow); 
+        return result;
+    }
  	
  	@RequestMapping("istory.do")
  	public ModelAndView moveStoryList(ModelAndView mv,Follow follow) {		
@@ -614,8 +620,15 @@ public class InteriorController {
 	         mv.setViewName("interior/interiorHousewarmingDetail");
 	         return mv;
 	      } else {
-	    	  
-	         mv.setViewName("interior/interiorKnowhowDetail");
+	    	 //성현
+	    	 ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(Integer.parseInt(board_no));
+	         if(knowHowPostList != null) {
+	 			mv.addObject("knowHowPostList", knowHowPostList);
+	 			mv.setViewName("interior/interiorKnowhowDetail");
+	         }else {
+	 			mv.addObject("message", "인테리어 노하우 정보 상세 조회에 실패하였습니다.");
+				mv.setViewName("common/error");			
+			 }
 	         return mv;
 	      }
 	   }	
@@ -623,5 +636,91 @@ public class InteriorController {
 	
 //-------------------------성현 PART------------------------------------------------		
 	
-	
+	//좋아요 체크
+ 	@RequestMapping(value="ilcheck.do", method = RequestMethod.POST)
+ 	public void selectKnowhowLikeCheck(Like like,HttpServletResponse response) {
+ 		int result = interiorService.selectKnowhowLikeCheck(like);
+ 		String sresult = Integer.toString(result);
+ 		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+ 	}
+ 	
+    //팔로우 체크
+    @RequestMapping(value="ifcheck.do", method = RequestMethod.POST)
+    public void selectKnowhowfollowCheck(Follow follow, HttpServletResponse response) {    
+       int result = interiorService.selectKnowhowfollowCheck(follow); 
+		String sresult = Integer.toString(result);
+ 		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    //신고체크
+	@RequestMapping(value="rkcheck.do", method=RequestMethod.POST)
+	public void selectRealtyReportCheck(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		int contents_no = ((Long)job.get("contents_no")).intValue();
+		int user_no = ((Long)job.get("user_no")).intValue();
+		
+		Report report = new Report();
+		report.setContents_no(contents_no);
+		report.setUser_no(user_no);
+		
+		int reportCheck = interiorService.selectKnowhowReportCheck(report);
+		String sreportCheck = Integer.toString(reportCheck);
+		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sreportCheck);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}    
+    
+    //신고하기
+	@RequestMapping(value="rkinsert.do", method=RequestMethod.POST)
+	public void insertKnowhowReport(@RequestBody String param, HttpServletResponse response) throws ParseException {
+		JSONParser jparser = new JSONParser();
+		JSONObject job = (JSONObject)jparser.parse(param);
+		
+		String category = (String)job.get("category");
+		int contents_no = ((Long)job.get("contents_no")).intValue();
+		String contents = (String)job.get("contents");
+		int user_no = ((Long)job.get("user_no")).intValue();
+		
+		Report report = new Report();
+		report.setCategory(category);
+		report.setContents_no(contents_no);
+		report.setContents(contents);
+		report.setUser_no(user_no);
+		
+		int result = interiorService.insertKnowhowReport(report);
+		String sresult = Integer.toString(result);
+		
+		response.setContentType("text/html; charset=utf-8");
+		try {
+			PrintWriter out = response.getWriter();
+			out.append(sresult);
+			out.flush();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}	
+	}    
 }

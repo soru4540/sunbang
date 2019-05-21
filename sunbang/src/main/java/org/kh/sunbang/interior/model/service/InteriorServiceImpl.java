@@ -2,6 +2,7 @@ package org.kh.sunbang.interior.model.service;
 
 import java.util.ArrayList;
 
+import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.interior.model.dao.InteriorDao;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
@@ -123,15 +124,13 @@ public int deleteLike(Like like) {
 }
 
 @Override
-public int insertFollow(Follow follow) {
-	// TODO Auto-generated method stub
-	return 0;
+public int insertFollow(Follow follow) {   
+   return interiorDao.insertFollow(session, follow);
 }
 
 @Override
 public int deleteFollow(Follow follow) {
-	// TODO Auto-generated method stub
-	return 0;
+   return interiorDao.deleteFollow(session, follow);
 }
 
 @Override
@@ -321,7 +320,30 @@ public ArrayList<ReplyFull> selectReplyList(int board_no) {
 	
 	
 //--------------------성현------------------------------------------------//
+	@Override
+	public ArrayList<BoardFull> selectKnowHowPostList(int board_no) {
+		return interiorDao.selectKnowHowPostList(session, board_no);
+	}
+
+	@Override
+	public int selectKnowhowLikeCheck(Like like) {
+		return interiorDao.selectKnowhowLikeCheck(session, like);
+	}
+
+	@Override
+	public int selectKnowhowfollowCheck(Follow follow) {
+		return interiorDao.selectKnowhowfollowCheck(session, follow);
+	}
+
+	@Override
+	public int selectKnowhowReportCheck(Report report) {
+		return interiorDao.selectKnowhowReportCheck(session, report);
+	}	
 	
-	
+	@Override
+	public int insertKnowhowReport(Report report) {
+		return interiorDao.insertKnowhowReport(session, report);
+	}
+
 	
 }

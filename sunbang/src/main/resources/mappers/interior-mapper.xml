@@ -419,7 +419,37 @@ where user_no = #{user_no} and follower_no = #{follower_no}
 
 
 <!--  ///////////////////////////////////////////////////////성현/////////////////////////////////////////////////////// -->
+<!-- know detail 출력 -->
+<select id="selectKnowHowPostList" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where board_no = #{board_no}
+</select>
 
+<select id="selectKnowhowLikeCheck" parameterType="Like" resultType="int">
+	select count(*) from tb_like
+	where user_no = #{user_no} and board_no = #{board_no}
+</select>
 
+<select id="selectKnowhowfollowCheck" parameterType="Follow" resultType="int">
+	select count(*) from tb_follow
+	where user_no = #{user_no} and follower_no = #{follower_no}
+</select>
 
+<select id="selectKnowhowReportCheck" parameterType="Report" resultType="int">
+	select count(*) from tb_report
+	where user_no = #{user_no} and contents_no = #{contents_no}
+</select>
+
+<insert id="insertKnowhowReport" parameterType="Report">
+	insert into tb_report
+	values (report_seq.nextval, 'interior', #{category}, 'knowhow', #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
+</insert>
 </mapper>
