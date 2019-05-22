@@ -384,6 +384,16 @@ insert into tb_like values(like_seq.nextval,#{user_no},#{board_no})
 delete from tb_like where user_no=#{user_no} and board_no=#{board_no}
 </delete>
 
+<!-- 팔로우 등록 -->
+<insert id="insertFollow" parameterType="Follow">
+insert into tb_follow values(follow_seq.nextval,#{follower_no},#{user_no})
+</insert>
+
+<!-- 팔로우 삭제 -->
+<delete id="deleteFollow" parameterType="Follow">
+delete from tb_follow where follower_no = #{follower_no} and user_no = #{user_no} 
+</delete>
+
 <!-- 댓글 리스트 출력 -->
 <select id="selectReplyList" parameterType="_int" resultMap="resultReplyFull">
 select * from tb_reply
