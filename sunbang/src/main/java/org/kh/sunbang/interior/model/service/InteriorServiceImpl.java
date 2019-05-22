@@ -124,13 +124,13 @@ public int deleteLike(Like like) {
 }
 
 @Override
-public int insertFollow(Follow follow) {   
-   return interiorDao.insertFollow(session, follow);
+public int insertFollow(Follow follow) {	
+	return interiorDao.insertFollow(session, follow);
 }
 
 @Override
 public int deleteFollow(Follow follow) {
-   return interiorDao.deleteFollow(session, follow);
+	return interiorDao.deleteFollow(session, follow);
 }
 
 @Override
@@ -185,7 +185,7 @@ public User selectMyProfile(int user_no) {
 	// TODO Auto-generated method stub
 	return null;
 }
-/*
+
 //게시판등록
 @Override
 public int insertBoard(Board board) {		
@@ -201,7 +201,7 @@ public int selectBoardNo(int user_no) {
 public int insertPost(Post post) {	
 	return interiorDao.insertPost(session, post);
 }
-*/
+
 
 //댓글 등록
 @Override
@@ -226,29 +226,50 @@ public int deleteReply(int reply_no) {
 public ArrayList<ReplyFull> selectReplyList(int board_no) {	
 	return interiorDao.selectReplyList(session, board_no);
 }
-	
-
-
+//인테리어 유저 신고 등록	
+@Override
+public int insertReport(Report report) {	
+	return interiorDao.insertReport(session, report);
+}
+//게시판 수정페이지 출력
+@Override
+public ArrayList<BoardFull> selectBoardUpdateView(int board_no) {	
+	return interiorDao.selectBoardUpdateView(session, board_no);
+}
+//게시판 수정 (노하우)
+@Override
+public int updateBoard(Board board) {
+	return interiorDao.updateBoard(session, board);
+}
+//게시물 수정 (노하우)
+@Override
+public int updatePost(Post post) {	
+	return interiorDao.updatePost(session, post);
+}
+@Override
+public int deletePost(int post_no) {
+	return interiorDao.deletePost(session, post_no);
+}
 
 //--------------------서은------------------------------------------------//
 	
-	@Override
+	/*@Override
 	public int insertBoard(Board board) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int selectBoardNo(int user_no) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int insertPost(Post post) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
 	@Override
 	public int selectPostNo(int board_no) {
@@ -262,23 +283,23 @@ public ArrayList<ReplyFull> selectReplyList(int board_no) {
 		return 0;
 	}
 
-	@Override
+	/*@Override
 	public Board selectBoardUpdateView(int board_no) {
 		// TODO Auto-generated method stub
 		return null;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int updateBoard(Board board) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
-	@Override
+	/*@Override
 	public int updatePost(Post post) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
 	@Override
 	public int updateMarker(Marker marker) {
@@ -292,11 +313,11 @@ public ArrayList<ReplyFull> selectReplyList(int board_no) {
 		return 0;
 	}
 
-	@Override
+	/*@Override
 	public int deletePost(int post_no) {
 		// TODO Auto-generated method stub
 		return 0;
-	}
+	}*/
 
 	@Override
 	public int deleteMarker(int marker_no) {

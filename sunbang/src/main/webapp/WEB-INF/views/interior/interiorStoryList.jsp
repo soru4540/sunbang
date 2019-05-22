@@ -111,6 +111,12 @@ outline-style: none;
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+#jb_ireportcontent {
+	width:100%;
+	border: 1px solid #ced4da;
+	border-radius:4px;
+}
+
 @media screen and (max-width: 1400px) {
 
 	#jb_story_container #fix_con {
@@ -528,6 +534,7 @@ outline-style: none;
 					$("#reply_contents_return" + e).val());
 		}
 		
+		//팔로우 추가
 		function addFollow(e){
 			if($("#i_user_no").val()!=0){
 			$.ajax({
@@ -539,7 +546,31 @@ outline-style: none;
 				},
 				url : "ifinsert.do",
 				success : function(returndata) {
-				
+					$("#follow_btn1").css("display","none");
+					$("#follow_btn2").css("display","");
+				},error : function() {
+
+				}
+			});
+		}else{
+			alert("로그인이 필요한 서비스입니다.");
+		}
+		}
+		
+		//팔로우 취소
+		function delFollow(e){
+			if($("#i_user_no").val()!=0){
+			$.ajax({
+				type : "post",
+				dataType : "json",
+				data : {
+					user_no : $("#i_user_no").val(),
+					follower_no : e,				
+				},
+				url : "ifdelete.do",
+				success : function(returndata) {
+				$("#follow_btn2").css("display","none");
+				$("#follow_btn1").css("display","");
 				},
 				error : function() {
 
@@ -548,6 +579,25 @@ outline-style: none;
 		}else{
 			alert("로그인이 필요한 서비스입니다.");
 		}
+		}
+
+		function addReport(e){
+			var reportcontent = $("#jb_ireportcontent").val(); 
+			reportcontent = reportcontent.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+
+			$.ajax({
+				url: "ireportinsert.do",
+				type: "post",
+				dataType : "json",
+				data: {report_system: "user" ,category: $("#category").val() ,reported_board: "userid",contents_no: e ,contents: reportcontent ,user_no: $("#i_user_no").val()},			
+				success: function(result){
+					if(result == 1){
+						alert("신고가 완료되었습니다.");					
+					}
+				},error: function() {
+					
+			 } 	
+			});		
 		}
 		
 	</script>
@@ -576,11 +626,47 @@ outline-style: none;
 								<p>미니멀 라이프를 꿈꾸는 이를 위한 수납 노하우! 글씨가 넘쳐도 자동 줄바꿈이 됐으면 하는 작은 소원이
 									있다...</p>
 								<br>								
-									<c:if test="${checkfollow != 1}"><button type="button" class="btn btn-outline-info" onclick="addFollow(${follower_no});">팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
-									<c:if test="${checkfollow == 1}"><button type="button" class="btn btn-outline-info" onclick="delFollow(${follower_no});">언팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
-									<button type="button" class="btn btn-outline-danger" onclick="">신고</button>																	
+									<c:if test="${checkfollow != 1}"><button type="button" class="btn btn-outline-info" id="follow_btn1" onclick="addFollow(${follower_no});">팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn2" style="display:none;" onclick="delFollow(${follower_no});">언팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+									<c:if test="${checkfollow == 1}"><button type="button" class="btn btn-outline-info" id="follow_btn2" onclick="delFollow(${follower_no});">언팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn1" style="display:none;" onclick="addFollow(${follower_no});">팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>									
+									<button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#jb_reportModal" id="jb_report">신고</button>																	
 							</div>						
 					    </div>
+					    			<!-- The Modal -->
+						<div class="modal fade" id="jb_reportModal">
+							<div class="modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered">
+								<div class="modal-content">
+
+									<!-- Modal Header -->
+									<div class="modal-header">
+										<h4 class="modal-title">인테리어 회원 신고</h4>
+										<button type="button" class="close" data-dismiss="modal">&times;</button>
+									</div>
+
+									<!-- Modal body -->
+									<div class="modal-body">									
+										<p>확인 후 이용규칙 위반 및 부적절한 게시물을 게재한 회원일 경우 해당 회원은 이용이 제한되거나 이용이 불가합니다.<br>
+											허위신고일 시 신고자는 법적인 책임을 질 수 있습니다.</p>
+										 <p style="color:#006080">- 선방은 쾌적하고 편리한 커뮤니티를 만들고자 노력하고 있습니다 : ) -</p><br>
+									<h5> 신고 카테고리 </h5> 	
+								   <select class="custom-select" id="category">	
+								        <option value="">카테고리</option>							
+										<option value="욕설">욕설</option>
+                                        <option value="사기">사기</option>
+                                        <option value="부적절한 행동">부적절한 행동</option>
+                                         <option value="기타">기타</option>		
+									</select><br><br>
+									<h5> 신고내용 </h5><hr> 	
+										<textarea rows="20" cols="20" id="jb_ireportcontent" placeholder="신고 사유를 작성해주세요"></textarea>
+									</div>
+
+									<!-- Modal footer -->
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="addReport(${follower_no});">제출</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					    
 					  <div class="col-md-9">				
 						<div class="row" id="list">							
 						 </div>

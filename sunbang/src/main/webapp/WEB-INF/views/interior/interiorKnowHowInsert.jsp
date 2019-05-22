@@ -201,12 +201,13 @@ color:#ff9198;
 		"<input type='button'  class='jb_khinsert_btn' value='버튼' onclick='addData5("+e+")'>&nbsp;&nbsp;&nbsp;<input type='button' class='jb_khinsert_btn' value='구분선' onclick='addData6("+e+")'>"); 			
 		$("#row"+(e+1)).css("display", "");
 		$("#line"+e).css("display", "");
+		$("#rowdata"+e).html("<input type='hidden' name='post_keyword' value='empty'>");
 	
 	}		
 	//클릭시 게시물 추가버튼으로 돌아감
 	function delType(e) {
 		$("#row"+e).html("<i class='fas fa-plus-circle' id='jb_khinsert_icon' onclick='addType("+e+");''></i>&nbsp;&nbsp;&nbsp;<span class='jb_khinsert_line'>------------------------------------------</span>");
-		$("#rowdata"+e).html("");	
+		$("#rowdata"+e).html("<input type='hidden' name='post_keyword' value='empty'>");	
 	}
 	//클릭시 소제목 입력창 생성
 	function addData1(e){
@@ -475,12 +476,18 @@ color:#ff9198;
 	<div class="row">
 		<div class="col-md-2"></div>
 		<div class="col-md-8">	
-		<input class="jb_khinsert_btn" type="submit" value="등록">	
+		<input class="jb_khinsert_btn" type="submit" value="등록">
 		</div>
 		<div class="col-md-2"></div>
 		</div>
 	</form>
-	<br><br>
+	<br><div class="row">
+		<div class="col-md-2"></div>
+		<div class="col-md-8">	
+		<a href="ibupdateview.do?board_no=96">수정</a>
+		</div>
+		<div class="col-md-2"></div>
+		</div><br>
 </div>
 <c:import url="../common/footer.jsp" />	
 

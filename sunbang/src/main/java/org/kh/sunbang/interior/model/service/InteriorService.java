@@ -18,8 +18,6 @@ public interface InteriorService {
 	//추상메소드만 멤버로 가짐
 	//[public abstract] 반환형 메소드명(자료형 매개변수);
 	
-//--------------------jb------------------------------------------------//
-	
 	BoardFull selectHbTop1();
 	ArrayList<BoardFull> selectKbTop4();
 	ArrayList<BoardFull> selectHbTop3();
@@ -31,7 +29,7 @@ public interface InteriorService {
 	int insertPost(Post post);
 	int selectPostNo(int board_no);
 	int insertMarker(Marker marker);
-	Board selectBoardUpdateView(int board_no);
+	ArrayList<BoardFull> selectBoardUpdateView(int board_no);
 	int updateBoard(Board board);
 	int updatePost(Post post);
 	int updateMarker(Marker marker);
@@ -66,6 +64,7 @@ public interface InteriorService {
 	ArrayList<ReplyFull> selectReplyList(int board_no);
 	User selectMyProfile(int user_no);
 	int insertBoardHits(int board_no);
+	int insertReport(Report report);
 	
 	//--------------------성현씨------------------------------------------------//	
 	ArrayList<BoardFull> selectKnowHowPostList(int board_no);

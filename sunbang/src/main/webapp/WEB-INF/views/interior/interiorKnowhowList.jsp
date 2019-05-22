@@ -246,8 +246,7 @@ border: 1px solid #ffb6b9;
 	</script>
 	<br>
 	<br>
-
-	<<div class="container" id="jb_filter3_container">
+	<div class="container" id="jb_filter3_container">
 		<div class="row" align="center">		
 				<div class="col-md-1"></div>
 				<div class="col-md-2"><img src="${pageContext.request.contextPath }/files/interior/interiorMain/kh1.PNG" onclick="addFilter1('리모델링');"></div>								

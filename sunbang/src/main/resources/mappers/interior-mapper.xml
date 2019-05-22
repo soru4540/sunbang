@@ -126,6 +126,20 @@
     <result property="keyword7" column="keyword7" />   
 </resultMap>
 
+<resultMap id="resultReport" type="report">
+      <id property="report_no" column="report_no" />
+      <result property="report_system" column="report_system" />
+      <result property="category" column="category" />
+      <result property="reported_board" column="reported_board" />
+      <result property="contents_no" column="contents_no" />
+      <result property="contents" column="contents" />
+      <result property="report_date" column="report_date" />
+      <result property="handle_date" column="handle_date" />
+      <result property="report_status" column="report_status" />
+      <result property="user_no" column="user_no" />
+</resultMap>
+
+
 <!--  ///////////////////////////////////////////////////////JB/////////////////////////////////////////////////////// -->
 
 <!-- 메인 집들이 top1 -->
@@ -199,14 +213,8 @@ where <![CDATA[ rownum <9 ]]>
 <!-- 게시판등록 -->
 <insert id="insertBoard" parameterType="Board">
 <choose>
-<when test="board_type.equals('photograph')">
-insert into tb_board (board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,board_hits,board_date,board_status,user_no) 
-values(board_seq.nextval,#{board_type},#{housing_type},#{floor_area},#{color1},#{color2},#{color3},#{board_title},0,default,default,#{user_no})
-</when>
-<when test="board_type.equals('housewarming')">
-insert into tb_board (board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,board_hits,board_date,board_status,user_no) 
-values(board_seq.nextval,#{board_type},#{housing_type},#{floor_area},#{color1},#{color2},#{color3},#{board_title},0,default,default,#{user_no}
-</when>
+<when test="board_type.equals('photograph')"></when>
+<when test="board_type.equals('housewarming')"></when>
 <when test="board_type.equals('knowhow')">
 insert into tb_board (board_no,board_type,category1,category2,category3,board_title,board_hits,board_date,board_status,user_no) 
 values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{board_title},0,default,default,#{user_no})
@@ -221,8 +229,7 @@ select max(board_no) from tb_board where user_no = #{user_no}
 
 <!-- 게시물등록 -->
 <insert id="insertPost" parameterType="Post">
-insert into tb_post 
-values(post_seq.nextval,#{post_keyword},#{post_data,jdbcType=VARCHAR},#{post_contents,jdbcType=VARCHAR},#{board_no})
+insert into tb_post values(<if test="post_no != 0">#{post_no}</if><if test="post_no == 0">post_seq.nextval</if>,#{post_keyword},#{post_data,jdbcType=VARCHAR},#{post_contents,jdbcType=VARCHAR},#{board_no})
 </insert>
 
 <!-- 게시판리스트 카운트 -->
@@ -384,6 +391,7 @@ insert into tb_like values(like_seq.nextval,#{user_no},#{board_no})
 delete from tb_like where user_no=#{user_no} and board_no=#{board_no}
 </delete>
 
+
 <!-- 팔로우 등록 -->
 <insert id="insertFollow" parameterType="Follow">
 insert into tb_follow values(follow_seq.nextval,#{follower_no},#{user_no})
@@ -393,6 +401,7 @@ insert into tb_follow values(follow_seq.nextval,#{follower_no},#{user_no})
 <delete id="deleteFollow" parameterType="Follow">
 delete from tb_follow where follower_no = #{follower_no} and user_no = #{user_no} 
 </delete>
+
 
 <!-- 댓글 리스트 출력 -->
 <select id="selectReplyList" parameterType="_int" resultMap="resultReplyFull">
@@ -423,6 +432,40 @@ update tb_reply set reply_contents = #{reply_contents} where reply_no = #{reply_
 select count(*) from tb_follow
 where user_no = #{user_no} and follower_no = #{follower_no}
 </select>
+
+<!-- 인테리어 유저 신고 등록 -->
+<insert id="insertReport" parameterType="Report">
+insert into tb_report values (report_seq.nextval, #{report_system}, #{category}, #{reported_board}, #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
+</insert>
+
+<!-- 게시판 수정페이지 출력 -->
+<select id="selectBoardUpdateView" parameterType="_int" resultMap="resultBoardFull">
+select board_no,board_type,space, housing_type,category1, category2, category3, floor_area, color1, color2, color3,board_title,
+        budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents,marker_no,product_image,cordi_x,cordi_y,product_url, user_no
+from tb_board
+left join tb_post using(board_no)
+left join tb_marker using(post_no)
+where board_no = #{board_no}
+order by post_no asc
+</select>
+
+<!-- 게시판 수정 -->
+<update id="updateBoard" parameterType="Board">
+update tb_board set category1 = #{category1}, category2 = #{category2}, category3 = #{category3}, board_title = #{board_title}, board_status = #{board_status}
+where board_no = #{board_no} 
+</update>
+
+<!-- 게시물 수정 -->
+<update id="updatePost" parameterType="Post">
+update tb_post set post_keyword= #{post_keyword}, <if test="post_data != null">post_data = #{post_data}</if> <if test="post_data != null and post_contents != null"> , </if> <if test="post_contents != null">post_contents = #{post_contents}</if>
+where post_no = #{post_no}
+</update>
+
+<!-- 게시물 삭제 -->
+<delete id="deletePost" parameterType="_int">
+delete from tb_post where post_no = #{post_no}
+</delete>
+
 
 <!--  ///////////////////////////////////////////////////////SE/////////////////////////////////////////////////////// -->
 

@@ -166,7 +166,7 @@
 					</div>
 				</li>
 				<li class="nav-item"><a class="nav-link"
-					href="inlistselect.do?user_no=1">뉴스피드</a></li>
+					href="inewsfeed.do?user_no=1">뉴스피드</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="iwritepage.do">글쓰기</a></li>
 				<li class="nav-item"><a class="nav-link"

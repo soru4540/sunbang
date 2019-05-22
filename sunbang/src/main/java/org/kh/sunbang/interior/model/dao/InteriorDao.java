@@ -92,16 +92,6 @@ public class InteriorDao {
 	public int deleteLike(SqlSessionTemplate session, Like like) {		
 		return session.delete("interiorMapper.deleteLike",like);
 	}
-	
-	//팔로우 추가
-	public int insertFollow(SqlSessionTemplate session, Follow follow) {   
-		return session.insert("interiorMapper.insertFollow",follow);
-	}
-	//팔로우 삭제
-	public int deleteFollow(SqlSessionTemplate session, Follow follow) {
-		return session.delete("interiorMapper.deleteFollow",follow);
-	}
-	
 	//댓글 리스트 출력
 	public ArrayList<ReplyFull> selectReplyList(SqlSessionTemplate session, int board_no) {		
 		List<ReplyFull> irlist = session.selectList("interiorMapper.selectReplyList",board_no);
@@ -123,6 +113,37 @@ public class InteriorDao {
 	public int selectCheckFollow(SqlSessionTemplate session, Follow follow) {	
 		return session.selectOne("interiorMapper.selectCheckFollow",follow);
 	}
+	//팔로우 추가
+	public int insertFollow(SqlSessionTemplate session, Follow follow) {	
+		return session.insert("interiorMapper.insertFollow",follow);
+	}
+	//팔로우 삭제
+	public int deleteFollow(SqlSessionTemplate session, Follow follow) {
+		return session.delete("interiorMapper.deleteFollow",follow);
+	}
+	//신고 등록
+	public int insertReport(SqlSessionTemplate session, Report report) {	
+		return session.insert("interiorMapper.insertReport",report);
+	}
+	//게시판 수정페이지 출력(노하우)
+	public ArrayList<BoardFull> selectBoardUpdateView(SqlSessionTemplate session, int board_no) {	
+		List<BoardFull> iblist = session.selectList("interiorMapper.selectBoardUpdateView",board_no);
+		return (ArrayList<BoardFull>)iblist;		
+	}
+	
+	//게시판 수정 (노하우)
+	public int updateBoard(SqlSessionTemplate session, Board board) {	
+		return session.update("interiorMapper.updateBoard",board);
+	}
+	//게시물 수정(노하우)
+	public int updatePost(SqlSessionTemplate session, Post post) {		
+		return session.update("interiorMapper.updatePost",post);
+	}
+    //게시물 삭제(노하우)
+	public int deletePost(SqlSessionTemplate session, int post_no) {		
+		return session.delete("interiorMapper.deletePost",post_no);
+	}
+	
 //-----------------------------------------서은---------------------------------------------------
 
 
