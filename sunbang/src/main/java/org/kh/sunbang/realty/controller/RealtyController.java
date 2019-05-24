@@ -86,6 +86,10 @@ public class RealtyController {
 		User user = realtyService.selectUserInfo(realty.getUser_no());
 		ArrayList<BoardFull> recommenditop5 = realtyService.selectRecommendInteriorTop5(realty);
 		
+		if(recommenditop5.isEmpty()) {
+			recommenditop5 = realtyService.selectRecommendInterior();
+		}
+		
 		if(realty != null) {
 			mv.addObject("realty", realty);
 			mv.addObject("user", user);
@@ -276,9 +280,6 @@ public class RealtyController {
             String originFileName = mf.getOriginalFilename(); // 원본 파일 명
             long fileSize = mf.getSize(); // 파일 사이즈
 
-            System.out.println("originFileName : " + originFileName);
-            System.out.println("fileSize : " + fileSize);
-
             String saveFile = path + "\\" + System.currentTimeMillis() + originFileName;
             try {
             	if(originFileName != "" && fileSize != 0) {
@@ -317,8 +318,6 @@ public class RealtyController {
         		e.printStackTrace();
         	}
         }
-        
-		System.out.println(realty);
 		
 		if(realtyService.insertRealty(realty) > 0) {
 			
@@ -436,62 +435,105 @@ public class RealtyController {
         	
     	if(realty.getRealty_image1().isEmpty() && updatefile0.getOriginalFilename() != "" && updatefile0.getSize() != 0) {
     		String saveFile0 = path+ "\\" + System.currentTimeMillis() + updatefile0.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image1"))).delete();
     		updatefile0.transferTo(new File(saveFile0));
     		realty.setRealty_image1(saveFile0.substring(saveFile0.lastIndexOf("\\")+1));
+    	}
+    	
+    	if(realty.getRealty_image1().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image1"))).delete();
     	}
         	
     	if(realty.getRealty_image2().isEmpty() && updatefile1.getOriginalFilename() != "" && updatefile1.getSize() != 0) {
     		String saveFile1 = path+ "\\" + System.currentTimeMillis() + updatefile1.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image2"))).delete();
     		updatefile1.transferTo(new File(saveFile1));
     		realty.setRealty_image2(saveFile1.substring(saveFile1.lastIndexOf("\\")+1));
     	}
     	
+    	if(realty.getRealty_image2().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image2"))).delete();
+    	}
+    	
     	if(realty.getRealty_image3().isEmpty() && updatefile2.getOriginalFilename() != "" && updatefile2.getSize() != 0) {
     		String saveFile2 = path+ "\\" + System.currentTimeMillis() + updatefile2.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image3"))).delete();
     		updatefile2.transferTo(new File(saveFile2));
     		realty.setRealty_image3(saveFile2.substring(saveFile2.lastIndexOf("\\")+1));
     	}
     	
+    	if(realty.getRealty_image3().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image3"))).delete();
+    	}
+    	
     	if(realty.getRealty_image4().isEmpty() && updatefile3.getOriginalFilename() != "" && updatefile3.getSize() != 0) {
     		String saveFile3 = path+ "\\" + System.currentTimeMillis() + updatefile3.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image4"))).delete();
     		updatefile3.transferTo(new File(saveFile3));
     		realty.setRealty_image4(saveFile3.substring(saveFile3.lastIndexOf("\\")+1));
     	}
     	
+    	if(realty.getRealty_image4().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image4"))).delete();
+    	}
+    	
     	if(realty.getRealty_image5().isEmpty() && updatefile4.getOriginalFilename() != "" && updatefile4.getSize() != 0) {
     		String saveFile4 = path+ "\\" + System.currentTimeMillis() + updatefile4.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image5"))).delete();
     		updatefile4.transferTo(new File(saveFile4));
     		realty.setRealty_image5(saveFile4.substring(saveFile4.lastIndexOf("\\")+1));
     	}
     	
+    	if(realty.getRealty_image5().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image5"))).delete();
+    	}
+    	
     	if(realty.getRealty_image6().isEmpty() && updatefile5.getOriginalFilename() != "" && updatefile5.getSize() != 0) {
     		String saveFile5 = path+ "\\" + System.currentTimeMillis() + updatefile5.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image6"))).delete();
     		updatefile5.transferTo(new File(saveFile5));
     		realty.setRealty_image6(saveFile5.substring(saveFile5.lastIndexOf("\\")+1));
     	}
     	
+    	if(realty.getRealty_image6().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image6"))).delete();
+    	}
+    	
     	if(realty.getRealty_image7().isEmpty() && updatefile6.getOriginalFilename() != "" && updatefile6.getSize() != 0) {
     		String saveFile6 = path+ "\\" + System.currentTimeMillis() + updatefile6.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image7"))).delete();
     		updatefile6.transferTo(new File(saveFile6));
     		realty.setRealty_image7(saveFile6.substring(saveFile6.lastIndexOf("\\")+1));
     	}
     	
+    	if(realty.getRealty_image7().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image7"))).delete();
+    	}
+    	
     	if(realty.getRealty_image8().isEmpty() && updatefile7.getOriginalFilename() != "" && updatefile7.getSize() != 0) {
     		String saveFile7 = path+ "\\" + System.currentTimeMillis() + updatefile7.getOriginalFilename();
+    		(new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image8"))).delete();
     		updatefile7.transferTo(new File(saveFile7));
     		realty.setRealty_image8(saveFile7.substring(saveFile7.lastIndexOf("\\")+1));
     	}
+    	
+    	if(realty.getRealty_image8().isEmpty()) {
+    	    (new File(path+"\\"+ mtpRequest.getParameter("realty_delete_image8"))).delete();
+    	}
 		
         //360이미지 
-        if(realty.getImage360().isEmpty()) {
+    	String path360 = mtpRequest.getSession().getServletContext().getRealPath("files/realty/realty360Images");
+    	String save360File = path360 + "\\" + System.currentTimeMillis() + image360.getOriginalFilename();
+
+    	if(realty.getImage360().isEmpty()) {
         	realty.setImage360(null);
+        	(new File(path360+"\\"+ mtpRequest.getParameter("delete_image360"))).delete();
         }
         
         if(image360 != null) {
-        	String path360 = mtpRequest.getSession().getServletContext().getRealPath("files/realty/realty360Images");
-        	String save360File = path360 + "\\" + System.currentTimeMillis() + image360.getOriginalFilename();
         	try {
         		if(image360.getOriginalFilename() != "" && image360.getSize() != 0) {
+        			(new File(path360+"\\"+ mtpRequest.getParameter("delete_image360"))).delete();
         			image360.transferTo(new File(save360File));
         			realty.setImage360(save360File.substring(save360File.lastIndexOf("\\")+1));
         		}
@@ -501,8 +543,6 @@ public class RealtyController {
         		e.printStackTrace();
         	}
         }
-        
-        System.out.println(realty);
 		
         int result = realtyService.updateRealty(realty);
         if(result > 0) {

@@ -37,6 +37,11 @@ public class RealtyServiceImpl implements RealtyService {
 	public ArrayList<BoardFull> selectRecommendInteriorTop5(Realty realty) { //인테리어 추천 top5
 		return realtyDao.selectRecommendInteriorTop5(mybatisSession, realty);
 	}
+
+	@Override
+	public ArrayList<BoardFull> selectRecommendInterior() {//인테리어 추천 top5 (위에 조건에 충족하지 않을 때)
+		return realtyDao.selectRecommendInterior(mybatisSession);
+	}
 	
 	@Override
 	public int selectRealtyNo(int user_no) { //등록한 매물번호 가져오기
@@ -107,7 +112,6 @@ public class RealtyServiceImpl implements RealtyService {
 	public int updateRealty(Realty realty) { //매물 수정
 		return realtyDao.updateRealty(mybatisSession, realty);
 	}
-	
 	
 	//형진---------------------------------------------------------------------------------------------------------------
 	

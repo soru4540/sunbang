@@ -51,7 +51,7 @@ function request_pay(){
 	    	msg += '에러내용 : ' + rsp.error_msg;
 	    	alert(msg);
 	    	
-	    	$('#sh_pay_form').submit(); //결제없이 값넘기기 테스트용 삭제해야함
+	    	//$('#sh_pay_form').submit(); //결제없이 값넘기기 테스트용 삭제해야함
 		}
 	});	
 }
@@ -77,8 +77,8 @@ function request_pay(){
 			$("#sh_pay_result_value").html("프리미엄 30일 권을 선택하셨습니다.");
 			
 			$("#sh_premium_type").val("30");
-			//$("#sh_charged_payment").val("9900");
-			$("#sh_charged_payment").val("100");
+			$("#sh_charged_payment").val("9900");
+			//$("#sh_charged_payment").val("100");
 			
 		});
 		
@@ -92,8 +92,8 @@ function request_pay(){
 			$("#sh_pay_result_value").html("프리미엄 90일 권을 선택하셨습니다.");
 			
 			$("#sh_premium_type").val("90");
-			//$("#sh_charged_payment").val("27000");
-			$("#sh_charged_payment").val("200");
+			$("#sh_charged_payment").val("27000");
+			//$("#sh_charged_payment").val("200");
 		});
 		
 		$("#sh_180").click(function(){
@@ -106,8 +106,8 @@ function request_pay(){
 			$("#sh_pay_result_value").html("프리미엄 180일 권을 선택하셨습니다.");
 			
 			$("#sh_premium_type").val("180");
-			//$("#sh_charged_payment").val("53000");
-			$("#sh_charged_payment").val("300");
+			$("#sh_charged_payment").val("53000");
+			//$("#sh_charged_payment").val("300");
 		});
 		
 		$("#sh_365").click(function(){
@@ -120,8 +120,8 @@ function request_pay(){
 			$("#sh_pay_result_value").html("프리미엄 365일 권을 선택하셨습니다.");
 			
 			$("#sh_premium_type").val("365");
-			//$("#sh_charged_payment").val("100000");
-			$("#sh_charged_payment").val("400");
+			$("#sh_charged_payment").val("100000");
+			//$("#sh_charged_payment").val("400");
 		});
 	});
 </script>	

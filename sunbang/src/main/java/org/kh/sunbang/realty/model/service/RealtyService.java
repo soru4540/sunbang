@@ -14,6 +14,7 @@ public interface RealtyService {
 	Realty selectRealtyDetailView(int realty_no);
 	User selectUserInfo(int user_no);
 	ArrayList<BoardFull> selectRecommendInteriorTop5(Realty realty);
+	ArrayList<BoardFull> selectRecommendInterior();
 	int selectRealtyNo(int user_no);
 	
 	int selectDibsCount(int realty_no);
@@ -41,5 +42,5 @@ public interface RealtyService {
 	//진솔---------------------------------------------------------------------------------------------------------------
 	
 	ArrayList<Realty> selectRealtyTop5();
-
+	
 }

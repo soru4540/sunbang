@@ -2142,6 +2142,15 @@ placeholder="
 							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image6" name="realty_image7" value="${realty.realty_image7}">
 							<input type="hidden" class="sh_load_realty_image" id="sh_load_realty_image7" name="realty_image8" value="${realty.realty_image8}">
 							
+							<input type="hidden" name="realty_delete_image1" value="${realty.realty_image1}">
+							<input type="hidden" name="realty_delete_image2" value="${realty.realty_image2}">
+							<input type="hidden" name="realty_delete_image3" value="${realty.realty_image3}">
+							<input type="hidden" name="realty_delete_image4" value="${realty.realty_image4}">
+							<input type="hidden" name="realty_delete_image5" value="${realty.realty_image5}">
+							<input type="hidden" name="realty_delete_image6" value="${realty.realty_image6}">
+							<input type="hidden" name="realty_delete_image7" value="${realty.realty_image7}">
+							<input type="hidden" name="realty_delete_image8" value="${realty.realty_image8}">
+							
 						<c:forEach var="i" begin="0" end="7">
 							<div class="row" id="sh_realty_image_row${i}">
 								<div class="col-md-12">
@@ -2184,6 +2193,7 @@ placeholder="
 						<div class="col-md-12">
 						
 						<input type="hidden" id="sh_load_image360" name="image360" value="${realty.image360 }">
+						<input type="hidden" name="delete_image360" value="${realty.image360 }">
 						
 							<div class="row">
 								<div class="col-md-12">

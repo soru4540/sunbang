@@ -471,17 +471,8 @@ $(function(){
 			</div>
 		</div>
 	</c:if>
-	<c:if test="${realty.realty_status == '검수중' || realty.realty_status == '수정완료'}">
-		<div class="row" id="sh_realtydetail_hide">
-			<div class="col-md-12">
-				<hr><br><br>
-				검수중인 매물입니다.
-				<br><br><br><br><hr>
-			</div>
-		</div>
-	</c:if>	
 	
-	<c:if test="${realty.realty_status != '숨기기' && realty.realty_status != '삭제' && realty.realty_status != '완전삭제' && realty.realty_status != '검수중' && realty.realty_status != '수정완료'}">
+	<c:if test="${realty.realty_status != '숨기기' && realty.realty_status != '삭제' && realty.realty_status != '완전삭제'}">
 		<div class="row">
 			<div class="col-md-12">
 				<nav class="navbar navbar-default bg-light fixed-bottom"> <!-- 하단바 -->
@@ -1150,7 +1141,7 @@ function changeCategoryClass(el) {
 						  	<div class="col-md-12">
 						  		<input type="hidden" value="${recommenditop5.board_no }">
 						  		<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${recommenditop5.post_data }" 
-						  		     class="sh_recommendinterior_img" onclick="location.href='interiormain.do'">
+						  		     class="sh_recommendinterior_img" onclick="location.href='ibselect.do?board_no=${recommenditop5.board_no }'">
 			  					<div class="sh_recommendinterior_content">
 			  					<p><b>건물</b> ${recommenditop5.housing_type } / ${recommenditop5.floor_area } 평<br>
 			  					   <b>스타일</b> ${recommenditop5.style }<br>
