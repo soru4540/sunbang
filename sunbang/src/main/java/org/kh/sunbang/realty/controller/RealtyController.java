@@ -17,6 +17,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.service.RealtyService;
+import org.kh.sunbang.realty.model.vo.FRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,41 +40,31 @@ public class RealtyController {
 
 //형진----------------------------------------------------------------------------	
 	
-	@RequestMapping(value="realtymain.do")
-	public ModelAndView movePropertyMainMethod(ModelAndView mv) {
+	@RequestMapping(value = "realtymain.do")
+	public String movePropertyMainMethod() {
 
-		ArrayList<Realty> rlist =  new ArrayList<Realty>();
-		rlist = realtyService.selectMarkerList();
-		
-		if(rlist != null) {
-			mv.addObject("realtymain", rlist);
-			mv.setViewName("realty/realtyMain");
-		}else {
-			mv.addObject("message", "매물정보 조회에 실패하였습니다.");
-			mv.setViewName("common/error");
-		}
-		
-		return mv;
+		return "realty/realtyMain";
 	}
-	
-	@RequestMapping(value="rlist.do", method=RequestMethod.POST)
+
+	@RequestMapping(value = "rlist.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<Realty> test6Method(@RequestBody String param) throws ParseException{
-		JSONParser jparser = new JSONParser();
-		JSONArray jarr = (JSONArray)jparser.parse(param);
-		ArrayList<Integer> realtyno = new ArrayList<Integer>();
-		for(int i = 0; i < jarr.size(); i++) {
-			JSONObject jr = new JSONObject();
-			jr.put(i, jarr.get(i));
-			String a = jr.get(i).toString();
-			realtyno.add(Integer.parseInt(a));
-		}
+	public ArrayList<Realty> selectMarkerList(FRealty frealty, HttpServletResponse response) throws ParseException{
+		ArrayList<Realty> mlist = new ArrayList<Realty>(); 
+		System.out.println(frealty);
 		
-		ArrayList<Realty> rlist = realtyService.selectRealtyList(realtyno);
+		System.out.println("월세 최소 : " +   frealty.getMin_monthly());
+		System.out.println("월세 최대 : " +   frealty.getMax_monthly());
+		System.out.println("전세 최소 : " + frealty.getMin_payback());
+		System.out.println("전세 최대 : " + frealty.getMax_payback());
+		System.out.println("매매 최소 : " + frealty.getMin_purchase());
+		System.out.println("매매 최대 : " + frealty.getMax_purchase());
 		
-			return rlist;
+		mlist = realtyService.selectFilteredList(frealty);
+		//System.out.println("컨트롤러 : " + mlist.size());
+		
+		return mlist;
+		
 	}
-
 	//성현----------------------------------------------------------------------------
 	@RequestMapping("rdetail.do")
 	public ModelAndView selectRealtyDetailView(

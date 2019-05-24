@@ -6,6 +6,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.dao.RealtyDao;
+import org.kh.sunbang.realty.model.vo.FRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -116,13 +117,15 @@ public class RealtyServiceImpl implements RealtyService {
 	//형진---------------------------------------------------------------------------------------------------------------
 	
 	@Override
-	public ArrayList<Realty> selectMarkerList() {
-		return realtyDao.selectMarkerList(mybatisSession);
+	public ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno) {
+		return realtyDao.selectRealtyList(mybatisSession, realtyno);
 	}
 
 	@Override
-	public ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno) {
-		return realtyDao.selectRealtyList(mybatisSession, realtyno);
+	public ArrayList<Realty> selectFilteredList(FRealty frealty) {
+		// TODO Auto-generated method stub
+		
+		return realtyDao.selectFilteredList(mybatisSession, frealty);
 	}
 
 	// 진솔 --------------------------------------------------------------------------------------------------------------

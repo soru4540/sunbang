@@ -66,6 +66,23 @@
    
    </resultMap>
 
+	<resultMap id="resultFRealty" type="FRealty"><!-- 필터링/ 미완성 -->
+   	<id property="oneroom" column="realty_type"/>
+   	<result property="tworoom" column="realty_type"/>
+   	<result property="threeroom" column="realty_type"/>
+   	<result property="apartment" column="realty_type"/>
+   	<result property="officetel" column="realty_type"/>
+   	<result property="month_lease" column="month_lease"/>
+   	<result property="min_monthly" column="month_lease"/>
+   	<result property="max_monthly" column="month_lease"/>
+   	<result property="payback_deposit_lease" column="payback_deposit_lease"/>
+   	<result property="min_payback;" column="payback_deposit_lease"/>
+   	<result property="max_payback;" column="payback_deposit_lease"/>
+   	<result property="purchase" column="purchase"/>
+   	<result property="min_purchase;" column="purchase"/>
+   	<result property="max_purchase;" column="purchase"/>
+   </resultMap>
+
    <resultMap id="resultDibs" type="Dibs">
       <result property="dibs_no" column="dibs_no" />
       <result property="memo" column="memo" />
@@ -320,12 +337,36 @@
 
 	<!-- 형진///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
    
-   <select id="selectMarkerList"  resultMap="resultRealty" useCache="true">
-      select * from tb_realty
-   </select>
-   
-   <select id="selectRealtyList" parameterType="int" resultMap="resultRealty">
-      select * from tb_realty where realty_no = #{realty_no}
+   <select id="selectFilteredList" parameterType="FRealty"  resultMap="resultRealty">
+   		select * from tb_realty  
+   		  <where>
+   			<if test="oneroom != 'toto'">
+   				realty_type=#{oneroom}
+   			</if>
+   			<if test="tworoom != 'toto'">
+   				OR realty_type=#{tworoom}
+   			</if>
+   			<if test="threeroom != 'toto'">
+   				OR realty_type=#{threeroom}
+   			</if>
+   			 <if test="apartment != 'toto'">
+   				OR realty_type=#{apartment}
+   			</if>
+   			 <if test="officetel != 'toto'">
+   				OR realty_type=#{officetel}
+   			</if>
+   		</where>
+   		<where>
+   			<if test="max_monthly > 0">
+   				month_lease <![CDATA[>]]> #{min_monthly} and month_lease <![CDATA[ <= ]]> #{max_monthly}
+   			</if>
+   			<if test="max_payback > 0">
+   				OR payback_deposit_lease <![CDATA[ > ]]> #{min_payback} and payback_deposit_lease <![CDATA[ <= ]]> #{max_payback} 
+   			</if>
+   			<if test="max_purchase > 0">
+   				OR purchase <![CDATA[ > ]]> #{min_purchase} and purchase  <![CDATA[ <= ]]> #{max_purchase} 
+   			</if>
+   		</where>
    </select>
 	
 	<!-- 진솔 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->

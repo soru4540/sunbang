@@ -8,19 +8,33 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-<title>main</title>
-<script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/bootstrap-slider.js"></script>
-<link href="${pageContext.request.contextPath }/resources/css/bootstrap-slider.css" rel="stylesheet">
+<title>SUNBANG</title>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/resources/js/bootstrap-slider.js"></script>
+<link
+	href="${pageContext.request.contextPath }/resources/css/bootstrap-slider.css"
+	rel="stylesheet">
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript"
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55d7db7b289215b9986b37fed37910b7&libraries=services,clusterer,drawing"></script>
 
 <style type="text/css">
+#hj_filter_setting {
+	padding-left : 5%;
+	margin:5%
+}
+
+.hj_slider_elements {
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
+
 #hj_dropdownmenu {
-	text-align: left;
-	height: 300px;
-	width: 300px;
+	width: 800%;
+	left: -280%;
+	position: relative;
+	padding: 40%;
 }
 
 #hj_estatelist {
@@ -70,9 +84,15 @@
 	box-shadow: none;
 }
 
-#hj_btn {
+#hj_btn_filter {
 	background-color: #61c0bf;
-		margin-right: 15px;
+	margin-right: 15px;
+}
+
+#hj_btn_map {
+	background-color: #61c0bf;
+	margin-right: 15px;
+	display: none;
 }
 
 .custom-control {
@@ -105,40 +125,78 @@
 	color: #aaa;
 }
 
-.dropdown {
-	width: auto;
-	height: auto;
-	float: left;
-	margin-right:5px;
-}
-
 #hj_search_row {
 	margin: 8px;
 }
+
 b {
-margin-left:10px;
-margin-right:10px;
+	margin-left: 10px;
+	margin-right: 10px;
 }
-#hj_deposit_slider .slider-selection, #hj_monthly_slider .slider-selection, #hj_purchase_slider .slider-selection{
-			background: #61c0bf;
+
+#hj_deposit_slider .slider-selection, #hj_monthly_slider .slider-selection,
+	#hj_purchase_slider .slider-selection, #hj_area_slider .slider-selection {
+	background: #61c0bf;
+}
+
+.slider.slider-horizontal {
+	width: 30%;
+	height: 20px;
+}
+
+#hj_purchase_type::before {
+	content: '';
+	clear: both;
 }
 </style>
 
 <script type="text/javascript">
-$(document).ready(function() {
-	changed();
-	ajax();
- 	$('.dropdown-toggle').on('click', function (e) {
-		$(this).next().toggle();
-	}); 
-	$('.dropdown-menu.keep-open').on('click', function (e) {
-		e.stopPropagation();          
-	});
-});//ready
-
-
-
-
+	$(document).ready(function() {
+		$("#hj_btn_filter").click(function() {
+			$("#hj_map").hide();
+			$("#hj_filter").show();
+			$("#hj_btn_filter").hide();
+			$("#hj_btn_map").show();
+		});
+		$("#hj_btn_map").click(function() {
+			$("#hj_map").show();
+			$("#hj_filter").hide();
+			$("#hj_btn_filter").show();
+			$("#hj_btn_map").hide();
+		});
+		if($("#hj-checkbox7").is(":checked")){
+			$('#hj_slider_deposit').show();
+        }	
+		if($("#hj-checkbox6").is(":checked")){
+			$('#hj_slider_month').show();
+        }
+		 if($("#hj-checkbox8").is(":checked")){
+				$('#hj_slider_purchase').show();
+	     }
+		   $("#hj-checkbox7").change(function(){
+		        if($("#hj-checkbox7").is(":checked")){
+					$('#hj_slider_deposit').show();
+		        }else{
+					$('#hj_slider_deposit').hide();
+		        }
+		    });
+		   $("#hj-checkbox6").change(function(){
+		        if($("#hj-checkbox6").is(":checked")){
+					$('#hj_slider_month').show();
+		        }else{
+					$('#hj_slider_month').hide();
+		        }
+		    });
+		   $("#hj-checkbox8").change(function(){
+		        if($("#hj-checkbox8").is(":checked")){
+					$('#hj_slider_purchase').show();
+		        }else{
+					$('#hj_slider_purchase').hide();
+		        }
+		    });
+		getList();
+		//setMarkers();
+	});//ready
 </script>
 
 
@@ -156,400 +214,585 @@ $(document).ready(function() {
 		<div class="row" id="hj_row1">
 			<div class="col-md-12">
 				<div class="row" id="hj_search_row">
-					<div class="col-md-2">
+					<div class="col-md-3" style="padding-top: 0.5%;">
 						<div class="form-group has-search">
-							<span class="fa fa-search form-control-feedback"></span> 
-							<input type="text" class="form-control" placeholder="강남구 역삼역"  style="width: 100%;">
+							<span class="fa fa-search form-control-feedback"></span>
+							
+							<input type="text" id="hj_keyword" class="form-control" placeholder="강남구 역삼역" style="width: 100%;" onkeypress="if( event.keyCode==13 ){goSearch();}" />
+							
 						</div>
 					</div>
-					<div class="col-md-10">
-						<div class="dropdown">
-							<div class="btn-group" id="hj_btn-group">
-								<button id="hj_btn" type="button" id="hj_btn"
-									class="btn btn-success dropdown-toggle no-border"
-									data-toggle="dropdown" id="dropdownMenuButton"
-									data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">원룸,투ㆍ쓰리룸,오피스텔</button>
-								<ul class="dropdown-menu" id="hj_dropdownmenu"
-									aria-labelledby="dropdownMenuButton">
-									<div style="padding-left: 8%;">
-										<h4 style="margin-top: 20px;">방 종류</h4>
-										<p style="color: gray;">중복선택 가능</p>
-									</div>
-										<div>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox1"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox1">원룸</label>
-											</div>
-										</li>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox2"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox2">투ㆍ쓰리룸</label>
-											</div>
-										</li>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox3"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox3">오피스텔</label>
-											</div>
-										</li>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox4"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox4">아파트</label>
-											</div>
-										</li>
-								</ul>		
-							</div> <!-- 방종류 -->
-							</div>
-							<div class="dropdown">
-							<div class="btn-group" id="hj_btn-group">
-								<button id="hj_btn" type="button" id="hj_btn"
-									class="btn btn-success dropdown-toggle no-border"
-									data-toggle="dropdown" id="dropdownMenuButton_1"
-									data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">월,전세/매매</button>
-								<ul class="dropdown-menu" id="hj_dropdownmenu"
-									aria-labelledby="dropdownMenuButton_1">
-									<div style="padding-left: 8%;">
-										<h4 style="margin-top: 20px;">매물 종류</h4>
-										<p style="color: gray;">중복선택 가능</p>
-									</div>
-										<div>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox5"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox5">월세</label>
-											</div>
-										</li>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox6"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox6">전세</label>
-											</div>
-										</li>
-										<li>
-											<div class="custom-control custom-checkbox">
-												<input type="checkbox" id="hj-checkbox7"
-													class="custom-control-input" /> <label
-													class="custom-control-label" for="hj-checkbox5">매매</label>
-											</div>
-										</li>
-										
-								</ul>		
-							</div>
-							</div>
-							<div class="dropdown">
-							<div class="btn-group" id="hj_btn-group">
-								<button id="hj_btn" type="button"
-									class="btn btn-success no-border dropdown-toggle"
-									data-toggle="dropdown" id="dropdownMenuButton_1"
-									data-toggle="dropdown" aria-haspopup="true"
-									aria-expanded="false">가격대</button>
-								<ul class="dropdown-menu" id="hj_dropdownmenu"
-									aria-labelledby="dropdownMenuButton_1" style="width:450px	; height:auto; padding:30%;">
-										<li>
-											<div>
-											<h5 style="float:left; margin-right:10%;">보증금/전세가</h5>
-											<p id="depositmin" style="float:left">최소 : 0 만원 , </p>
-											<p id="depositmax">최대 : 무제한</p>
-											</div>
-											<b>0</b> <input id="hj_deposit_slider" type="text" class="span2"/> <b>무제한</b>
-										</li>
-										<hr>
-										<li>
-											<h5 style="float:left; margin-right:10%;">월세</h5>
-											<p id="monthlymin" style="float:left">최소 : 0 만원 , </p>
-											<p id="monthlymax">최대 : 무제한</p>
-											<b>0</b> <input id="hj_monthly_slider" type="text" class="span2"/> <b>무제한</b>
-										</li>
-										<hr>
-										<li>
-											<h5 style="float:left; margin-right:10%;">매매가</h5>
-											<p id="purchasemin" style="float:left">최소 : 0 만원 , </p>
-											<p id="purchasemax">최대 : 무제한</p>
-											<b>0</b> <input id="hj_purchase_slider" type="text" class="span2"/> <b>무제한</b>
-										</li>
-								</ul>		
-							</div>
-							</div>
-							
+					<div class="col-md-9">
+						<div class="btn" id="hj_btn-group">
+							<button type="button" id="hj_btn_filter" class="btn btn-success">검색
+								필터</button>
+							<button type="button" id="hj_btn_map" class="btn btn-success">검색
+								필터</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-		<script type="text/javascript">
-		var depositSlider = new Slider("#hj_deposit_slider", { id: "hj_deposit_slider", min: 0, max: 1000000000, step:10000000 ,range: true, value: [1, 1000000000] });
-		var monthlySlider = new Slider("#hj_monthly_slider", {id: "hj_monthly_slider", min : 0 , max: 5000000, step:50000, range : true, value:[0,5000000]});
-		var purchaseSlider = new Slider("#hj_purchase_slider", {id: "hj_purchase_slider", min : 0, max: 1500000000, step:10000000, range : true, value:[0,1500000000]});
-		depositSlider.on("slide", function(sliderValue) {
-			var value = document.getElementById("depositmin").textContent = sliderValue;
-			var minval = value[0]/10000;
-			var maxval = value[1]/10000;
-			if(minval < 10000) {
-				minval += " 만원";	
-			}
-			else {
-				minval = minval/10000 + " 억";
-			}
-			if(maxval < 10000) {
-				maxval += " 만원";	
-			}else if(maxval == 100000) {
-				maxval = "무제한"
-			}else {
-				maxval = maxval/10000 + " 억";
-			}
-			
-			if(minval == 0) {
-				minval = 0;
-			}
-			
-			
-			
-			$("#depositmin").html("최소 : "+minval + ", ");
-			//$("#hj_jsonLength").html(jsonLength)
-			$("#depositmax").html("최대 :" +maxval);
-		});
-		monthlySlider.on("slide", function(sliderValue) {
-			var value = document.getElementById("monthlymin").textContent = sliderValue;
-			var minval = value[0]/10000;
-			var maxval = value[1]/10000;
-			if(minval < 10000) {
-				minval += " 만원";	
-			}
-			else {
-				minval = minval/10000 + " 억";
-			}
-			if(maxval < 500) {
-				maxval += " 만원";	
-			}else if(maxval == 500) {
-				maxval = "무제한";
-			}else {
-				maxval = maxval/10000 + " 억";
-			}
-			if(minval == 0) {
-				minval = 0;
-			}
-			$("#monthlymin").html("최소 : "+minval + ", ");
-			//$("#hj_jsonLength").html(jsonLength)
-			$("#monthlymax").html("최대 :" +maxval);
-		});
-		purchaseSlider.on("slide", function(sliderValue) {
-			var value = document.getElementById("purchasemin").textContent = sliderValue;
-			var minval = value[0]/10000;
-			var maxval = value[1]/10000;
-			if(minval < 10000) {
-				minval += " 만원";	
-			}
-			else {
-				minval = minval/10000 + " 억";
-			}
-			if(maxval < 10000) {
-				maxval += " 만원";	
-			}else if(maxval == 150000) {
-				maxval = "무제한"
-			}else {
-				maxval = maxval/10000 + " 억";
-			}
-			if(minval == 0) {
-				minval = 0;
-			}
-			
-			
-			$("#purchasemin").html("최소 : "+minval + ", ");
-			//$("#hj_jsonLength").html(jsonLength)
-			$("#purchasemax").html("최대 :" +maxval);
-		});
-		
-		</script>
-		
 
-		<div class="row">
+		<div class="row" id="hj_filter" style="display: none;">
+			
+			<div class="col-md-12">
+				<div>
+					<div style="padding-left: 8%;">
+						<h4 style="margin-top: 20px;">방 종류</h4>
+						<p style="color: gray;">중복선택 가능</p>
+					</div>
+					<div id="hj_realty_type">
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox1" class="custom-control-input" name="oneroom" value="원룸"  /> 
+							<label class="custom-control-label" for="hj-checkbox1" >원룸</label>
+						</div>
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox2" class="custom-control-input" name="tworoom" value="투룸"  />
+								 <label class="custom-control-label" for="hj-checkbox2" >투룸</label>
+						</div>
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox3" class="custom-control-input" name="threeroom" value="쓰리룸"  />
+								 <label class="custom-control-label" for="hj-checkbox3" >쓰리룸</label>
+						</div>
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox4" class="custom-control-input" name="officetel" value="오피스텔"  />
+							 <label class="custom-control-label" for="hj-checkbox4" >오피스텔</label>
+						</div>
+
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox5"class="custom-control-input" name="apartment" value="아파트"  /> 
+							<label class="custom-control-label" for="hj-checkbox5" >아파트</label>
+						</div>
+					</div>
+					<hr style="clear: both;">
+					<div id="hj_purchase_type">
+						<div style="padding-left: 8%;">
+							<h4 style="margin-top: 20px;">매물 종류</h4>
+							<p style="color: gray;">중복선택 가능</p>
+						</div>
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox6"
+								class="custom-control-input" name="monthly_lease" value="monthly_lease"   /> <label
+								class="custom-control-label" for="hj-checkbox6">월세</label>
+						</div>
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox7"
+								class="custom-control-input" name="payback_deposit_lease" value="payback_deposit_lease"  /> <label
+								class="custom-control-label" for="hj-checkbox7">전세</label>
+						</div>
+						<div class="custom-control custom-checkbox" style="float: left;">
+							<input type="checkbox" id="hj-checkbox8" class="custom-control-input" name="purchase" value="purchase"  /> <label
+								class="custom-control-label" for="hj-checkbox8">매매</label>
+						</div>
+					</div>
+					<!-- hj_purchase_type -->
+
+					<hr style="clear: both;">
+
+					<div id="hj_slider" style="padding-left: 8%;">
+						<div id='hj_slider_deposit' style="display:none;">
+						<div class="hj_slider_elements">
+							<h5 style="margin-right: 5%;">보증금/전세가</h5>
+							<p id="depositmin" style="float: left">최소 : 0 만원 ,</p>
+							<p id="depositmax">최대 : 무제한</p>
+							<b>0</b> <input id="hj_deposit_slider" type="text" class="span2" />
+							<b>무제한</b>
+						</div>
+						</div>
+						
+						<div id="hj_slider_month" style="display:none;" >
+						<div class="hj_slider_elements">
+							<h5 style="margin-right: 10%;">월세</h5>
+							<p id="monthlymin" style="float: left">최소 : 0 만원 ,</p>
+							<p id="monthlymax">최대 : 무제한</p>
+							<b>0</b> <input id="hj_monthly_slider" type="text" class="span2" />
+							<b>무제한</b>
+						</div>
+						</div>
+						
+						<div id="hj_slider_purchase" style="display:none;">
+						<div class="hj_slider_elements">
+							<h5 style="margin-right: 10%;">매매가</h5>
+							<p id="purchasemin" style="float: left">최소 : 0 만원 ,</p>
+							<p id="purchasemax">최대 : 무제한</p>
+							<b>0</b> <input id="hj_purchase_slider" type="text" class="span2" />
+							<b>무제한</b>
+						</div>
+						</div>
+					</div>
+					<!-- hj_slider -->
+
+					<hr>
+
+					<div id="hj_slider" style="padding-left: 8%;">
+						<div class="hj_slider_elements">
+							<h5 style="margin-right: 5%;">방크기(전용면적)</h5>
+							<p id="areamin" style="float: left">최소 : 0 평 ,</p>
+							<p id="areamax">최대 :  무제한</p>
+							<b>0</b><input id="hj_area_slider" type="text"
+								data-slider-value="[0, 100]" data-slider-ticks="[0, 50, 100]"
+								data-slider-lock-to-ticks="true" /><b>무제한</b>
+						</div>
+					</div>
+					<hr>
+					<div id="hj_filter_setting">
+						<div style="float:left; margin-right:2%;">
+						<h5><a href="#"; onClick=doFiltering(); return false;">보내기</a></h5>
+						</div>
+						<div>
+						<h5><a href="#">초기화</a></h5>
+						</div>
+					</div>
+				</div>
+				<!-- 필터 -->
+
+			</div>
+			<!-- 안보이는거 -->
+		</div>
+		<!-- row -->
+
+		<div class="row" id="hj_map">
 			<div class="col-md-9" style="padding-right: 0px; padding-left: 0;">
 				<div id="map" style="width: 100%; height: 800px;"></div>
 
 			</div>
 			<!-- 지도를 표시할 div -->
 
-			<script>
-				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-			    mapOption = { 
-			        center: new daum.maps.LatLng(37.56572628005628, 126.98773032243167), // 지도의 중심좌표
-			        level: 8 // 지도의 확대 레벨
-			    };
-
-					// 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-					var map = new daum.maps.Map(mapContainer, mapOption);
-					
-					
-					function markerFilter(a,b) {
-						var address = a;
-						var realty_no = b;
-						var geocoder = new daum.maps.services.Geocoder(); //주소변환객체 생성
-						var bounds = map.getBounds();
-						
-						    // 영역정보의 남서쪽 정보를 얻어옵니다 
-						    var swLatlng = bounds.getSouthWest();
-						    
-						    // 영역정보의 북동쪽 정보를 얻어옵니다 
-						    var neLatlng = bounds.getNorthEast();
-						    
-						    var x1 = swLatlng.getLat(); //남서쪽 위도 
-						    var y1 = swLatlng.getLng(); //남서쪽 경도
-						    
-						    var x2 = neLatlng.getLat(); // 북동쪽 위도
-						    var y2 = neLatlng.getLng(); // 북동족 경도 
-						    
-						    geocoder.addressSearch(address, function(result, status) { 
-						    // 정상적으로 검색이 완료됐으면 
-						     if (status === daum.maps.services.Status.OK) {
-						    	 var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-						    	
-						    	 var x = coords.getLat(); //매물 위도
-							     var y = coords.getLng();//매물 경도
-							 if((x1 < x)&&(x < x2) && (y1< y) && (y<y2)) {
-									var marker = setMarker(coords);
-									if(marker == 1) {
-										realtyList(realty_no);
-								 }
-							   }// if
-							   else {
-
-							    	ajax();
-							    }
-						    }//매물 주소검색 if
-						    
-						   
-						});//geocoder
-					}
-					var list = new Array();
-					function realtyList(a) { //리스트 출력을위해 세션에저장						
-						realty_no = a;
-						list.push(realty_no);
-						sessionStorage.setItem("list",JSON.stringify(list));
-						ajax();
-					}
-					
-					function setMarker(coords){ //마커 생성하는 메서드
-						var marker = new daum.maps.Marker({
-				            map: map,
-				            position: coords
-				        });// 결과값으로 받은 위치를 마커로 표시합니다	
-				            return 1;
-					}//setMarker()
-					
-					daum.maps.event.addListener(map, 'dragend', function() { //지도 드래그할때 작동       
-				    sessionStorage.removeItem("list");
-					list = new Array();
-					changed();
-					ajax();
-					});
-					
-					daum.maps.event.addListener(map, 'zoom_changed', function() { //지도 축소,확대시 작동
-				    sessionStorage.removeItem("list");
-					list = new Array();
-					changed();
-					ajax();
-					});
-
-					function changed() { //매물 리스트 조회
-						<c:forEach items="${realtymain}" var="item">			
-					   	  markerFilter("${item.land_lot}",${item.realty_no});
-						</c:forEach>
-						}
-					
-					
-					function ajax() {
-						
-						var z = JSON.parse(sessionStorage.getItem("list"));
-						if(z != null){
-						var values ="";
-							 $.ajax({
-									url: "rlist.do",
-									type:"post",
-									contentType: "application/json; charset=utf-8",
-									data:JSON.stringify(z),
-									success:function(data){
-										var jsonStr = JSON.stringify(data);
-										var json = JSON.parse(jsonStr);
-										var payment = "";
-										var charge = "";
-										var calcharge = "";
-										var length =json.length;
-										var jsonLength = "<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
-											+"조건에 맞는 방 " + length + " 개</div>";
-										
-										for(var i in json) {										
-											
-											if(json[i].month_lease > 0) {
-												payment = "월세 ";										
-												charge = json[i].deposit/10000;
-												charge += " / ";
-												charge += json[i].month_lease/10000 ;
-												}
-											if (json[i].PAYBACK_DEPOSIT_LEASE > 0) {
-												payment = "전세 ";
-												if(json[i].payback_deposit_lease/10000 > 10) {
-													charge = json[i].payback_deposit_lease/10000 + "억";
-												} else {
-													charge = json[i].payback_deposit_lease/10000 + "만";
-												}										
-											}
-											if (json[i].purchase > 0) {
-												payment = "매매 ";
-												charge = json[i].purchase/100000000 + ".";
-												charge += json[i].purchase%100000000 + "억"	;
-											}
-											values +="<div id='house'> <div id='hj_houseImages'> <img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/sample1.png' /></div>"
-											+ "<div id='hj_houseDetail'>"
-											+ "<a href=rdetail.do?realty_no="+json[i].realty_no +">"+	"<h4>" + payment +"  "+ charge+ "</h4>" +"</a>"
-											+	"<h6>" + json[i].residential + "㎥" + "ㆍ"+json[i].realty_layers + "층</h6>"
-											+	"<h6>" +json[i].road_address + "</h6>"
-											+ "<p style=color:gray;>" +json[i].realty_detail_title + "</p>"
-											+"</div></div>"
-											}//for
-											
-											
-											
-											
-											$("#hj_housediv").html(values);
-											$("#hj_jsonLength").html(jsonLength)
-										}//success
-										
-								});//ajax		
-							} else {
-								$("#hj_housediv").html("");
-								$("#hj_jsonLength").html("<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
-										+"조회된 결과가 없습니다" +"</div>");
-							}
-						 }
-						
-				</script>
-
-			<div class="col-md-3" style="background-color: #EEEEEE; text-align: center; padding-left: 0; padding-right: 0;">
-	 			<div id="hj_jsonLength"></div>
+			<div class="col-md-3"
+				style="background-color: #EEEEEE; text-align: center; padding-left: 0; padding-right: 0;">
+				<div id="hj_jsonLength"></div>
 				<br>
 				<div id="hj_housediv"
 					style="width: 100%; height: 700px; overflow: auto;">
+
 					<div id="house">
 						<div id="hj_houseImages"></div>
-						<div id="hj_houseDetail">
-							
-						</div>
+						<div id="hj_houseDetail"></div>
 					</div>
 				</div>
 			</div>
+			<!-- "검색된 갯수 col-md-3" -->
 		</div>
+		<!-- row -->
+	</div>
 	<!-- container -->
+
+
+
+	<script type="text/javascript">
+	var areaMinval = 0;
+	var areaMaxval =100;
+	var depositMinval = 0;
+	var depositMaxval = 1000000000;
+	var monthlyMinval = 0;
+	var monthlyMaxval = 5000000;
+	var purchaseMinval = 0;
+	var purchaseMaxval = 1500000000;
+	
+	
+	
+	
+	var areaSlider = new Slider("#hj_area_slider", {
+		id : "hj_area_slider"
+	});
+	
+	var depositSlider = new Slider("#hj_deposit_slider", {
+		id : "hj_deposit_slider",
+		min : 0,
+		max : 1000000000,
+		step : 10000000,
+		range : true,
+		value : [ 1, 1000000000 ]
+	});
+	var monthlySlider = new Slider("#hj_monthly_slider", {
+		id : "hj_monthly_slider",
+		min : 0,
+		max : 5000000,
+		step : 50000,
+		range : true,
+		value : [ 0, 5000000 ]
+	});
+	var purchaseSlider = new Slider("#hj_purchase_slider", {
+		id : "hj_purchase_slider",
+		min : 0,
+		max : 1500000000,
+		step : 10000000,
+		range : true,
+		value : [ 0, 1500000000 ]
+	});
+	depositSlider
+			.on(
+					"slide",
+					function(sliderValue) {
+						var value = document.getElementById("depositmin").textContent = sliderValue;
+						depositMinval = value[0];
+						depositMaxval = value[1];
+						var minval = value[0] / 10000;
+						var maxval = value[1] / 10000;
+						if (minval < 10000) {
+							minval += " 만원";
+						} else {
+							minval = minval / 10000 + " 억";
+						}
+						if (maxval < 10000) {
+							maxval += " 만원";
+						} else if (maxval == 100000) {
+							maxval = "무제한"
+						} else {
+							maxval = maxval / 10000 + " 억";
+						}
+
+						if (minval == 0) {
+							minval = 0;
+						}
+
+						$("#depositmin").html("최소 : " + minval + ", ");
+						//$("#hj_jsonLength").html(jsonLength)
+						$("#depositmax").html("최대 :" + maxval);
+					});
+	monthlySlider.on(
+					"slide",
+					function(sliderValue) {
+						var value = document.getElementById("monthlymin").textContent = sliderValue;
+						monthlyMinval = value[0];
+						monthlyMaxval = value[1];
+						var minval = value[0] / 10000;
+						var maxval = value[1] / 10000;
+						if (minval < 10000) {
+							minval += " 만원";
+						} else {
+							minval = minval / 10000 + " 억";
+						}
+						if (maxval < 500) {
+							maxval += " 만원";
+						} else if (maxval == 500) {
+							maxval = "무제한";
+						} else {
+							maxval = maxval / 10000 + " 억";
+						}
+						if (minval == 0) {
+							minval = 0;
+						}
+						$("#monthlymin").html("최소 : " + minval + ", ");
+						//$("#hj_jsonLength").html(jsonLength)
+						$("#monthlymax").html("최대 :" + maxval);
+					});
+	purchaseSlider
+			.on(
+					"slide",
+					function(sliderValue) {
+						var value = document.getElementById("purchasemin").textContent = sliderValue;
+						var minval = value[0] / 10000;
+						var maxval = value[1] / 10000;
+						purchaseMinval = value[0];
+						purchaseMaxval = value[1];
+						if (minval < 10000) {
+							minval += " 만원";
+						} else {
+							minval = minval / 10000 + " 억";
+						}
+						if (maxval < 10000) {
+							maxval += " 만원";
+						} else if (maxval == 150000) {
+							maxval = "무제한"
+						} else {
+							maxval = maxval / 10000 + " 억";
+						}
+						if (minval == 0) {
+							minval = 0;
+						}
+
+						$("#purchasemin").html("최소 : " + minval + ", ");
+						//$("#hj_jsonLength").html(jsonLength)
+						$("#purchasemax").html("최대 :" + maxval);
+					});
+	areaSlider
+			.on(
+					"slide",
+					function(sliderValue) {
+						var value = document.getElementById("areamin").textContext = sliderValue;
+						
+						areaMinval = value[0];
+						areaMaxval = value[1];
+						var minval = value[0];
+						var maxval = value[1];
+						if(maxval == 100) {
+							maxval = "무제한";
+						$("#areamax").html("최대 :" + maxval);
+						} else {
+							$("#areamax").html("최대 :" + maxval + " 평");
+						}
+						$("#areamin").html("최소 : " + minval + " 평, ");
+						//$("#hj_jsonLength").html(jsonLength)
+					});
+	
+	
+	
+	
+	
+	
+	
+	//다음 지도 스크립트 
+	
+		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+		mapOption = {
+			center : new daum.maps.LatLng(37.56572628005628, 126.98773032243167), // 지도의 중심좌표
+			level : 8
+		// 지도의 확대 레벨
+		};
+		
+		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
+		
+		daum.maps.event.addListener(map, 'dragend', function() { //지도 드래그할때 작동       
+			getList();
+		});
+
+		daum.maps.event.addListener(map, 'zoom_changed', function() { //지도 축소,확대시 작동
+			getList();	
+		});
+		
+		var clusterer = new daum.maps.MarkerClusterer({
+			map : map, // 마커들을 클러스터로 관리하고 표시할 지도 객체 
+			averageCenter : true, // 클러스터에 포함된 마커들의 평균 위치를 클러스터 마커 위치로 설정 
+			minLevel : 10
+		// 클러스터 할 최소 지도 레벨 	
+		});
+		
+		function doFiltering() {
+			$("#hj_filter").hide();
+			$("#hj_map").show();
+			getList();
+		}
+		
+		function goSearch(){
+			var a = $("#hj_keyword").val();
+			
+			var ps = new daum.maps.services.Places(map); 
+
+			
+		}
+		
+		
+	    function getList() {
+		    var oneroom = "toto";
+			var tworoom = "toto";
+			var threeroom= "toto";
+			var officetel = "toto";
+			var apartment = "toto";
+			var monthly_lease = "toto";
+			var payback_deposit_lease = "toto";
+			var purchase = "toto";
+			var monthmin = monthlyMinval;
+			var monthmax = monthlyMaxval;
+			var depositmin = depositMinval;
+			var depositmax = depositMaxval;
+			var purchasemin = purchaseMinval;
+			var purchasemax = purchaseMaxval;
+			
+		/* areaMaxval; 평수최댓값 
+			areaMinval;  평수최솟값	*/
+/* 			console.log("월세 최소 : " + monthlyMinval);
+			console.log("월세 최대 : " + monthlyMaxval);
+			console.log("전세 최소 : " + depositMinval);
+			console.log("전세 최대 : " + depositMaxval);
+			console.log("매매 최소 : " + purchaseMinval);
+			console.log("매매 최대 : " + purchaseMaxval); */
+			
+			if ($('input[name="oneroom"]').is(':checked')) {oneroom = $("input[name='oneroom']:checked").val();} else {oneroom = "toto";}
+			if ($('input[name="tworoom"]').is(':checked')) {tworoom = $("input[name='tworoom']:checked").val();} else{tworoom = "toto";}
+			if ($('input[name="threeroom"]').is(':checked')) {threeroom = $("input[name='threeroom']:checked").val();} else {threeroom = "toto";}
+			if ($('input[name="apartment"]').is(':checked')) {apartment = $("input[name='apartment']:checked").val();} else {apartment = "toto";}
+			if ($('input[name="officetel"]').is(':checked')) {officetel = $("input[name='officetel']:checked").val();} else {officetel = "toto";}
+			if ($('input[name="monthly_lease"]').is(':checked')) {	
+				
+				monthmin = monthlyMinval;
+				monthmax = monthlyMaxval;
+				} else {
+					monthmax = 0;
+				}
+			if ($('input[name="payback_deposit_lease"]').is(':checked')) {
+					depositmin = depositMinval;
+					depositmax = depositMaxval;
+				} else {
+					depositmax = 0;
+				}
+			if ($('input[name="purchase"]').is(':checked')) {
+					purchasemin = purchaseMinval;
+					purchasemax = purchaseMaxval;
+				} else {
+					purchasemax = 0;
+				}
+			
+			var image = "";
+			$.ajax({
+				url: "rlist.do",
+				type: "post",
+				dataType : "json",
+				data:{
+						oneroom:oneroom,
+						tworoom:tworoom,
+						threeroom:threeroom,
+						officetel:officetel,
+						apartment: apartment,
+						min_monthly : monthmin,
+						max_monthly : monthmax,
+						min_payback : depositmin,
+						max_payback : depositmax,
+						min_purchase : purchasemin,
+						max_purchase : purchasemax
+						},
+				success: function(data){
+					clusterer.clear();
+					var realtyArr = new Array();
+					var count = 0;
+					var realty = "";
+					var jsonStr = JSON.stringify(data);
+					var json = JSON.parse(jsonStr);
+					for (var i in json) {
+						var a = json[i].realty_status;
+						if(a != "완전삭제" && a != "숨기기" && a != "삭제" && a != "검수중" && a != "수정완료") {
+						console.log(a);
+						marking(i);
+						} else {
+							count++;
+						}
+					}//for
+					function marking(param) {
+						var bounds = map.getBounds();
+						var swLatlng = bounds.getSouthWest();
+						// 영역정보의 북동쪽 정보를 얻어옵니다 
+						var neLatlng = bounds.getNorthEast();
+
+						var x1 = swLatlng.getLat(); //남서쪽 위도 
+						var y1 = swLatlng.getLng(); //남서쪽 경도
+
+						var x2 = neLatlng.getLat(); // 북동쪽 위도
+						var y2 = neLatlng.getLng(); // 북동족 경도
+						
+						var geocoder = new daum.maps.services.Geocoder(); //주소변환객체 생성
+						//콜백 루틴 
+						geocoder.addressSearch(json[i].road_address, function(result, status) {
+							count++;
+							if (status === daum.maps.services.Status.OK) {// 정상적으로 검색이 완료됐으면
+								var arr = new Array();
+								var coords = new daum.maps.LatLng(result[0].y,
+										result[0].x);
+								var x = coords.getLat(); //매물 위도
+								var y = coords.getLng();//매물 경도
+								if (((x1 < x) && (y1 < y))&&((x < x2) && (y < y2))) {
+									realtyArr.push(json[param]);
+									
+								        // 데이터에서 좌표 값을 가지고 마커를 표시합니다
+								        // 마커 클러스터러로 관리할 마커 객체는 생성할 때 지도 객체를 설정하지 않습니다
+								        var markers = $(data.positions).map(function(param, position) {
+								            return new daum.maps.Marker({
+								                position : new daum.maps.LatLng(coords.lat, coords.lng)
+								            });
+								        });
+
+								        // 클러스터러에 마커들을 추가합니다
+									
+										var marker = new daum.maps.Marker({
+										map : map, // 마커를 표시할 지도
+										position : coords	
+									}); //marker 
+									
+								        clusterer.addMarker(marker);
+								}//if(좌표계산)
+							}//if()
+								if(count == (json.length)) {
+									setRealtyList(realtyArr);
+								}
+						});//geocoder.addressSearch
+					}//marking
+					function setRealtyList(param) {
+						var values ="";
+						var payment = "";
+						var charge ;
+						var calcharge = "";
+						var length = param.length;
+						var jsonLength = "<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
+								+ "조건에 맞는 방 " + length + " 개 </div>";
+						if(json != null) {
+						for (var j in param) {
+							
+							if (param[j].month_lease != 0 ) {
+								payment = "월세 ";
+								charge = param[j].deposit / 10000;
+								charge += " / ";
+								charge += param[j].month_lease / 10000;
+							}
+							else if (param[j].PAYBACK_DEPOSIT_LEASE != 0) {
+								payment = "전세 ";
+								if (param[j].payback_deposit_lease / 100000000 > 1) {
+									charge = param[j].payback_deposit_lease
+											/ 100000000 ;
+									
+									charge += " 억";
+								} else {
+									charge = param[j].payback_deposit_lease 
+											/ 10000000 + "만";
+								}
+							}
+							else if (param[j].purchase != 0) {
+								payment = "매매 ";
+								charge = param[j].purchase
+										/ 100000000 + ".";
+								charge += param[j].purchase
+										% 100000000 + "억123";
+							}
+							if(param[j].realty_image1 != null) {
+							image =  param[j].realty_image1;
+							}else {
+								image = sample.png;
+							}
+							values += "<div id='house'> <div id='hj_houseImages'>"
+								+	"<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+								+image
+								+"'/>"
+								+	"</div>"
+								+ "<div id='hj_houseDetail'>"
+								+ "<a href=rdetail.do?realty_no="
+								+ param[j].realty_no
+								+ ">"
+								+ "<h4>"
+								+ payment
+								+ "  "
+								+ charge
+								+ "</h4>"
+								+ "</a>"
+								+ "<h6>"
+								+ param[j].residential
+								+ "㎥"
+								+ "ㆍ"
+								+ param[j].realty_layers
+								+ "층</h6>"
+								+ "<h6>"
+								+ param[j].road_address
+								+ "</h6>"
+								+ "<p style=color:gray;>"
+								+ param[j].realty_detail_title
+								+ "</p>" + "</div></div>";
+							
+						}//for
+						$("#hj_housediv").html(values);
+						$("#hj_jsonLength").html(jsonLength)
+						}else{
+							$("#hj_housediv").html("");
+							$("#hj_jsonLength")
+									.html("<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
+													+ "조회된 결과가 없습니다" + "</div>");
+						}
+					}//func
+				}//success
+			});//ajax
+		    }//func
+		
+	</script>
+
+
 	<c:import url="../common/footer.jsp"></c:import>
+
 </body>
 </html>

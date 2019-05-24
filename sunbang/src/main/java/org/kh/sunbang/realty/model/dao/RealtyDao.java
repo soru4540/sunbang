@@ -6,6 +6,7 @@ import java.util.List;
 import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
+import org.kh.sunbang.realty.model.vo.FRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -93,11 +94,6 @@ public class RealtyDao {
 
 	//형진---------------------------------------------------------------------------------------------------------------	
 
-	public ArrayList<Realty> selectMarkerList(SqlSessionTemplate mybatisSession) {
-		List<Realty> list = mybatisSession.selectList("realtyMapper.selectMarkerList");
-		return (ArrayList<Realty>) list;
-	}
-
 	public ArrayList<Realty> selectRealtyList(SqlSessionTemplate mybatisSession, ArrayList<Integer> realtyno) {
 		ArrayList<Realty> realtyList = new ArrayList<Realty>();
 		for (int i = 0; i < realtyno.size(); i++) {
@@ -107,6 +103,12 @@ public class RealtyDao {
 		return realtyList;
 	}
 
+	public ArrayList<Realty> selectFilteredList(SqlSessionTemplate mybatisSession, FRealty frealty) {
+		System.out.println("dao frealty : " + frealty);
+		List<Realty> list = mybatisSession.selectList("realtyMapper.selectFilteredList",frealty);
+		
+		return (ArrayList<Realty>)list;
+	}
 	// 진솔-------------------------------------------------------------------------------------------------------------
 	
 	public ArrayList<Realty> selectRealtyTop5(SqlSessionTemplate mybatisSession) {
