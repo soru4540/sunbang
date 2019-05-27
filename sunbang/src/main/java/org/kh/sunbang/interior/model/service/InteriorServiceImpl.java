@@ -377,6 +377,16 @@ public ArrayList<FollowFull> selectFollowingList(FollowFull followfull) {
 	public int insertKnowhowReport(Report report) {
 		return interiorDao.insertKnowhowReport(session, report);
 	}
+	
+	@Override
+	public ArrayList<BoardFull> selectPhotoList(int board_no){
+		return interiorDao.selectPhotoList(session, board_no);
+	}
+	
+	@Override
+	public ArrayList<BoardFull> selectHouseWList(int board_no){
+		return interiorDao.selectHouseWList(session, board_no);
+	}
 
 	
 }

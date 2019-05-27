@@ -1,4 +1,4 @@
-package org.kh.sunbang.interior.model.dao;
+﻿package org.kh.sunbang.interior.model.dao;
 
 import org.springframework.stereotype.Repository;
 
@@ -132,15 +132,16 @@ public class InteriorDao {
 		return (ArrayList<BoardFull>)iblist;		
 	}
 	
-	//게시판 수정 (노하우)
+	//게시판 수정 
 	public int updateBoard(SqlSessionTemplate session, Board board) {	
 		return session.update("interiorMapper.updateBoard",board);
 	}
-	//게시물 수정(노하우)
+	//게시물 수정
 	public int updatePost(SqlSessionTemplate session, Post post) {		
 		return session.update("interiorMapper.updatePost",post);
 	}
-    //게시물 삭제(노하우)
+	
+    //게시물 삭제
 	public int deletePost(SqlSessionTemplate session, int post_no) {		
 		return session.delete("interiorMapper.deletePost",post_no);
 	}
@@ -173,7 +174,24 @@ public class InteriorDao {
 
 //-----------------------------------------서은---------------------------------------------------
 
+	public ArrayList<BoardFull> selectPhotoList(SqlSessionTemplate session, int board_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectPhotoList", board_no);
+		return (ArrayList<BoardFull>)list;
+	}
 
+	//게시글 전체 삭제
+	public int deleteBoard(SqlSessionTemplate session, int board_no) {
+		return session.delete("interiorMapper.deleteBoard",board_no);
+	}
+
+	public ArrayList<BoardFull> selectHouseWList(SqlSessionTemplate session, int board_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectHouseWList", board_no);
+		return (ArrayList<BoardFull>)list;
+	}
+
+	public int updateBoard(SqlSessionTemplate session, BoardFull boardfull) {
+		return session.update("interiorMapper.updateBoard",boardfull);
+	}
 	
 
 //-----------------------------------------성현---------------------------------------------------

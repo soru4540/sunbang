@@ -76,5 +76,10 @@ public interface InteriorService {
 	int selectKnowhowReportCheck(Report report);
 	int insertKnowhowReport(Report report);
 
+	//----------------------서은------------------------//
+		
+		ArrayList<BoardFull> selectPhotoList(int board_no);	
+		ArrayList<BoardFull> selectHouseWList(int board_no);
+	
 	
 }
