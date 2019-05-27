@@ -426,22 +426,22 @@
    			</if>
    			
    			
-   			<if test="max_monthly > 0">
-   				OR month_lease <![CDATA[>]]> #{min_monthly} and month_lease <![CDATA[ <= ]]> #{max_monthly}
+   			<if test="max_monthly != 0">
+   				And month_lease <![CDATA[>=]]> #{min_monthly} and month_lease <![CDATA[ <= ]]> #{max_monthly}
    			</if>
-   			<if test="max_payback > 0">
-   				OR payback_deposit_lease <![CDATA[ > ]]> #{min_payback} and payback_deposit_lease <![CDATA[ <= ]]> #{max_payback} 
+   			<if test="max_payback != 0">
+   				And payback_deposit_lease <![CDATA[ >=]]> #{min_payback} and payback_deposit_lease <![CDATA[ <= ]]> #{max_payback} 
    			</if>
-   			<if test="max_purchase > 0">
-   				OR purchase <![CDATA[ > ]]> #{min_purchase} and purchase  <![CDATA[ <= ]]> #{max_purchase} 
+   			<if test="max_purchase != 0">
+   				And purchase <![CDATA[ >= ]]> #{min_purchase} and purchase  <![CDATA[ <= ]]> #{max_purchase} 
    			</if>
    			
    			
    			<if test="max_area == 100" >
-   				OR residential <![CDATA[>=]]> #{min_area}
+   				AND residential <![CDATA[>=]]> #{min_area}
    			</if>
    			<if test="max_area != 100">
-   				OR residential <![CDATA[>=]]> #{min_area} and RESIDENTIAL <![CDATA[<=]]> #{max_area}
+   				AND residential <![CDATA[>=]]> #{min_area} and RESIDENTIAL <![CDATA[<=]]> #{max_area}
    			</if>
    			</where>
    </select>

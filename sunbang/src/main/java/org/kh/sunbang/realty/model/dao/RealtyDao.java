@@ -105,7 +105,7 @@ public class RealtyDao {
 	}
 
 	public ArrayList<PRealty> selectFilteredList(SqlSessionTemplate mybatisSession, FRealty frealty) {
-		System.out.println("dao frealty : " + frealty);
+	
 		List<PRealty> list = mybatisSession.selectList("realtyMapper.selectFilteredList",frealty);
 		
 		return (ArrayList<PRealty>)list;

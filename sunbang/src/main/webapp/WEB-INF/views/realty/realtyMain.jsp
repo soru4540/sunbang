@@ -9,7 +9,7 @@
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
-<title>main</title>
+<title>SUNBANG</title>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/resources/js/bootstrap-slider.js"></script>
 <link
@@ -42,6 +42,30 @@
 	text-align: center;
 }
 
+#hj_h4 {
+	overflow: hidden;
+ 	text-overflow: ellipsis; 
+ 	display: -webkit-box; 
+	-webkit-line-clamp: 1;  
+ 	-webkit-box-orient: vertical;
+}
+
+#hj_detail_title {
+	overflow: hidden;
+ 	text-overflow: ellipsis; 
+ 	display: -webkit-box; 
+	-webkit-line-clamp: 3;  
+ 	-webkit-box-orient: vertical;
+ 	color:gray;
+}
+
+#hj_h6_a {
+	overflow: hidden;
+ 	text-overflow: ellipsis; 
+ 	display: -webkit-box; 
+	-webkit-line-clamp: 2;  
+ 	-webkit-box-orient: vertical;
+}
 #hj_houseImages {
 	backround-color: white;
 	width: 33%;
@@ -114,6 +138,7 @@
 	float: left;
 }
 
+	
 .has-search .form-control-feedback {
 	position: absolute;
 	z-index: 2;
@@ -149,6 +174,14 @@ b {
 	content: '';
 	clear: both;
 }
+@media (max-width: 991px) {
+   #hj_list{
+      min-width:100%;
+      max-width:100%!important;
+   }
+}
+
+
 </style>
 
 <script type="text/javascript">
@@ -379,19 +412,19 @@ b {
 		<!-- row -->
 
 		<div class="row" id="hj_map">
-			<div class="col-md-9" style="padding-right: 0px; padding-left: 0;">
-				<div id="map" style="width: 100%; height: 800px;"></div>
+			<div class="col-lg" style="padding-right: 0px; padding-left: 0;">
+				<div id="map" style="width: 100%; min-height:100%; height: 900px;"></div>
 
 			</div>
 			<!-- 지도를 표시할 div -->
 
-			<div class="col-md-3"
-				style="background-color: #EEEEEE; text-align: center; padding-left: 0; padding-right: 0;">
+			<div class="col-lg" id="hj_list"
+				style="background-color: #EEEEEE; text-align: center; padding-left: 0; padding-right: 0; max-width:30%; min-width:400px;">
 				<div id="hj_jsonLength"></div>
 				<br>
 				
 				<div id="hj_housediv"
-					style="width: 100%; height: 700px; overflow: auto;">
+					style="width: 100%; height: 900px; overflow: auto;">
 
 					<div id="house">
 						<div id="hj_houseImages"></div>
@@ -635,14 +668,7 @@ b {
 			var areamin = areaMinval;
 			var areamax = areaMaxval;
 			
-		/* areaMaxval; 평수최댓값 
-			areaMinval;  평수최솟값	*/
-/* 			console.log("월세 최소 : " + monthlyMinval);
-			console.log("월세 최대 : " + monthlyMaxval);
-			console.log("전세 최소 : " + depositMinval);
-			console.log("전세 최대 : " + depositMaxval);
-			console.log("매매 최소 : " + purchaseMinval);
-			console.log("매매 최대 : " + purchaseMaxval); */
+
 			
 			if ($('input[name="oneroom"]').is(':checked')) {oneroom = $("input[name='oneroom']:checked").val();} else {oneroom = "toto";}
 			if ($('input[name="tworoom"]').is(':checked')) {tworoom = $("input[name='tworoom']:checked").val();} else{tworoom = "toto";}
@@ -668,7 +694,7 @@ b {
 				} else {
 					purchasemax = 0;
 				}
-			console.log(areamin + ", " + areamax);
+			
 			var image = "";
 			$.ajax({
 				url: "rlist.do",
@@ -697,7 +723,7 @@ b {
 					var jsonStr = JSON.stringify(data);
 					var json = JSON.parse(jsonStr);
 					for (var i in json) {
-						console.log(json);
+					
 						var a = json[i].realty_status;
 						if(a != "완전삭제" && a != "숨기기" && a != "삭제" && a != "검수중" && a != "수정완료") {
 						marking(i);
@@ -765,36 +791,65 @@ b {
 						if(json != null) {
 						for (var j in param) {
 							if(param[j].premium == 'Y' ) {
-								if (param[j].month_lease != 0 ) {
-									payment = "월세 ";
-									charge = param[j].deposit / 10000;
-									charge += " / ";
-									charge += param[j].month_lease / 10000;
-								}
-								else if (param[j].PAYBACK_DEPOSIT_LEASE != 0) {
-									payment = "전세";
-									if (param[j].payback_deposit_lease / 100000000 > 1) {
-										charge = param[j].payback_deposit_lease
-												/ 100000000 ;
+								if(monthmax == 0 && depositmax == 0 && purchasemax == 0) {
+									if(param[j].month_lease > 0) {
+										payment = "월세 ";
+										charge = param[j].deposit / 10000;
+										charge += " / ";
+										charge += param[j].month_lease / 10000;
+									} //noncheck month
+									else if (param[j].payback_deposit_lease > 0) {
+										payment = "전세";
+										if (param[j].payback_deposit_lease / 100000000 > 1) {
+											charge = param[j].payback_deposit_lease
+													/ 100000000 ;											
+											charge += " 억";
+										} else {
+											charge = param[j].payback_deposit_lease / 10000 ;
+											charge +="만";
+										}
+									}else if (param[j].purchase > 0) {
+										payment = "매매 ";
+										charge = param[j].purchase
+												/ 100000000
+										charge += "억";
 										
-										charge += " 억";
-									} else {
-										charge = param[j].payback_deposit_lease 
-												/ 10000000 + "만";
 									}
-								}
-								else if (param[j].purchase != 0) {
-									payment = "매매 ";
-									charge = param[j].purchase
-											/ 100000000 + ".";
-									charge += param[j].purchase
-											% 100000000 + "억";
-								}
-								if(param[j].realty_image1 != null) {
-								image =  param[j].realty_image1;
-								}else {
-									image = sample.png;
-								}
+									if(param[j].realty_image1 != null) {
+										image =  param[j].realty_image1;
+										}else {
+											image = sample.png;
+										}
+									} else { /*non check if*/
+										if(monthmax != 0 && param[j].month_lease > 0) {
+											payment = "월세 ";
+											charge = param[j].deposit / 10000;
+											charge += " / ";
+											charge += param[j].month_lease / 10000;
+										}
+										if(depositmax != 0 && param[j].payback_deposit_lease > 0) {
+											payment = "전세";
+											if (param[j].payback_deposit_lease / 100000000 > 1) {
+												charge = param[j].payback_deposit_lease
+														/ 100000000 ;											
+												charge += " 억";
+											} else {
+												charge = param[j].payback_deposit_lease / 10000 ;
+												charge +="만";
+											}
+										}
+										if(purchasemax != 0 && param[j].purchase > 0) {
+											payment = "매매 ";
+											charge = param[j].purchase
+													/ 100000000
+											charge += "억";
+										}
+										if(param[j].realty_image1 != null) {
+											image =  param[j].realty_image1;
+											}else {
+												image = sample.png;
+											}
+									} //checked if
 								pvalues += "<div id='house'>P <div id='hj_houseImages'>"
 									+	"<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
 									+image
@@ -804,7 +859,7 @@ b {
 									+ "<a href=rdetail.do?realty_no="
 									+ param[j].realty_no
 									+ ">"
-									+ "<h4>"
+									+ "<h4 id='hj_h4'>"
 									+ payment
 									+ "  "
 									+ charge
@@ -816,85 +871,114 @@ b {
 									+ "ㆍ"
 									+ param[j].realty_layers
 									+ "층</h6>"
-									+ "<h6>"
+									+ "<h6 id='hj_h6_a'>"
 									+ param[j].road_address
 									+ "</h6>"
-									+ "<p style=color:gray;>"
+									+ "<p id='hj_detail_title'>"
 									+ param[j].realty_detail_title
 									+ "</p>" + "</div></div>";
-									
-							} else {
-							
-							if (param[j].month_lease != 0 ) {
-								payment = "월세 ";
-								charge = param[j].deposit / 10000;
-								charge += " / ";
-								charge += param[j].month_lease / 10000;
-							}
-							else if (param[j].PAYBACK_DEPOSIT_LEASE != 0) {
-								payment = "전세";
-								if (param[j].payback_deposit_lease / 100000000 > 1) {
-									charge = param[j].payback_deposit_lease
-											/ 100000000 ;
-									
-									charge += " 억";
-								} else {
-									charge = param[j].payback_deposit_lease 
-											/ 10000000 + "만";
-								}
-							}
-							else if (param[j].purchase != 0) {
-								payment = "매매 ";
-								charge = param[j].purchase
-										/ 100000000 + ".";
-								charge += param[j].purchase
-										% 100000000 + "억";
-							}
-							if(param[j].realty_image1 != null) {
-							image =  param[j].realty_image1;
-							}else {
-								image = sample.png;
-							}
-							
-							values += "<div id='house'> <div id='hj_houseImages'>"
-								+	"<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
-								+image
-								+"'/>"
-								+	"</div>"
-								+ "<div id='hj_houseDetail'>"
-								+ "<a href=rdetail.do?realty_no="
-								+ param[j].realty_no
-								+ ">"
-								+ "<h4>"
-								+ payment
-								+ "  "
-								+ charge
-								+ "</h4>"
-								+ "</a>"
-								+ "<h6>"
-								+ param[j].residential
-								+ "㎥"
-								+ "ㆍ"
-								+ param[j].realty_layers
-								+ "층</h6>"
-								+ "<h6>"
-								+ param[j].road_address
-								+ "</h6>"
-								+ "<p style=color:gray;>"
-								+ param[j].realty_detail_title
-								+ "</p>" + "</div></div>";
-							}
-						}//for
+								} /*premium if*/ 
+								else {
+									if(monthmax == 0 && depositmax == 0 && purchasemax == 0) {
+										if(param[j].month_lease > 0) {
+											payment = "월세 ";
+											charge = param[j].deposit / 10000;
+											charge += " / ";
+											charge += param[j].month_lease / 10000;
+										} //noncheck month
+										else if (param[j].payback_deposit_lease > 0) {
+											payment = "전세";
+											if (param[j].payback_deposit_lease / 100000000 > 1) {
+												charge = param[j].payback_deposit_lease
+														/ 100000000 ;											
+												charge += " 억";
+											} else {
+												charge = param[j].payback_deposit_lease / 10000 ;
+												charge +="만";
+											}
+										}else if (param[j].purchase > 0) {
+											payment = "매매 ";
+											charge = param[j].purchase
+													/ 100000000
+											charge += "억";
+											
+										}
+										if(param[j].realty_image1 != null) {
+											image =  param[j].realty_image1;
+											}else {
+												image = sample.png;
+											}
+										
+										} else { /*non check if*/
+											if(monthmax != 0 && param[j].month_lease > 0) {
+												payment = "월세 ";
+												charge = param[j].deposit / 10000;
+												charge += " / ";
+												charge += param[j].month_lease / 10000;
+											}
+											if(depositmax != 0 && param[j].payback_deposit_lease > 0) {
+												payment = "전세";
+												if (param[j].payback_deposit_lease / 100000000 > 1) {
+													charge = param[j].payback_deposit_lease
+															/ 100000000 ;											
+													charge += " 억";
+												} else {
+													charge = param[j].payback_deposit_lease / 10000 ;
+													charge +="만";
+												}
+											}
+											if(purchasemax != 0 && param[j].purchase > 0) {
+												payment = "매매 ";
+												charge = param[j].purchase
+														/ 100000000
+												charge += "억";
+											}
+											if(param[j].realty_image1 != null) {
+												image =  param[j].realty_image1;
+												}else {
+													image = sample.png;
+												}
+										} //checked if
+									values += "<div id='house'><div id='hj_houseImages'>"
+										+	"<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+										+image
+										+"'/>"
+										+ "</div>"
+										+ "<div id='hj_houseDetail'>"
+										+ "<a href=rdetail.do?realty_no="
+										+ param[j].realty_no
+										+ ">"
+										+ "<h4 id='hj_h4'>"
+										+ payment
+										+ "  "
+										+ charge
+										+ "</h4>"
+										+ "</a>"
+										+ "<h6>"
+										+ param[j].residential
+										+ "㎥"
+										+ "ㆍ"
+										+ param[j].realty_layers
+										+ "층</h6>"
+										+ "<h6 id='hj_h6_a'>"
+										+ param[j].road_address
+										+ "</h6>"
+										+ "<p id='hj_detail_title'>"
+										+ param[j].realty_detail_title
+										+ "</p>" + "</div></div>";
+								}//not premium if
+							}	//for
 						pvalues += values;
 						$("#hj_housediv").html(pvalues);
 						$("#hj_jsonLength").html(jsonLength)
-						}else{ // 조회된 결과가 없을때
+						}// if json != null
+						else{ // 조회된 결과가 없을때
 							$("#hj_housediv").html("");
 							$("#hj_jsonLength")
 									.html("<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
 													+ "조회된 결과가 없습니다" + "</div>");
 						}
-					}//func
+					}//list func
 				}//success
 			});//ajax
 		    }//func
