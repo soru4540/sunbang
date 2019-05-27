@@ -215,6 +215,10 @@ public class InteriorDao {
 	public int selectKnowhowReportCheck(SqlSessionTemplate session, Report report) {
 		return session.selectOne("interiorMapper.selectKnowhowReportCheck", report);
 	}
+
+	public int updateBoardHits(SqlSessionTemplate session, int board_no) {
+		return session.update("interiorMapper.updateBoardHits", board_no);
+	}
 	
 	
 		

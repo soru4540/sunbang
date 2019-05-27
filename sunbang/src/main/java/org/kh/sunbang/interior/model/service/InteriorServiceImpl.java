@@ -388,5 +388,10 @@ public ArrayList<FollowFull> selectFollowingList(FollowFull followfull) {
 		return interiorDao.selectHouseWList(session, board_no);
 	}
 
+	@Override
+	public int updateBoardHits(int board_no) {
+		return interiorDao.updateBoardHits(session, board_no);
+	}
+
 	
 }

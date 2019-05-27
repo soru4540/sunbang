@@ -306,7 +306,7 @@ $(function(){
   #sh_top {
 	position: fixed;
 	top: 85%;
-	left: 90%;
+	left: 5%;
 	width: 5%;
 	border-radius: 5px;
 	padding:2px;
@@ -488,12 +488,6 @@ $(function(){
 <body>
 <c:import url="../common/realtyHeader.jsp" /><br>
 	<div class="container" style="font-family: a고딕12;">
-	<c:import url="/chatview.do">
-		<c:param name="realty_no" value="${realty.realty_no }"/>
-		<c:param name="title" value="${realty.realty_detail_title }"/>
-		<c:param name="user_no" value="${loginUser.user_no }"/>
-		<c:param name="realty_user_no" value="${realty.user_no }"/>
-	</c:import>
 	<c:if test="${realty.realty_status == '숨기기' }">
 		<div class="row" id="sh_realtydetail_hide">
 			<div class="col-md-12">
@@ -1182,7 +1176,7 @@ function changeCategoryClass(el) {
 						  	<div class="col-md-12">
 						  		<input type="hidden" value="${recommenditop5.board_no }">
 						  		<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${recommenditop5.post_data }" 
-						  		     class="sh_recommendinterior_img" onclick="location.href='ibselect.do?board_no=${recommenditop5.board_no }'">
+						  		     class="sh_recommendinterior_img" onclick="location.href='ibselect.do?board_no=${recommenditop5.board_no }&board_type=${recommenditop5.board_type }'">
 			  					<div class="sh_recommendinterior_content">
 			  					<p><b>건물</b> ${recommenditop5.housing_type } / ${recommenditop5.floor_area } 평<br>
 			  					   <b>스타일</b> ${recommenditop5.style }<br>
@@ -1207,5 +1201,11 @@ function changeCategoryClass(el) {
 	<br>
 	<br>
 <c:import url="../common/footer.jsp" />
+<c:import url="/chatview.do">
+	<c:param name="realty_no" value="${realty.realty_no }"/>
+	<c:param name="title" value="${realty.realty_detail_title }"/>
+	<c:param name="user_no" value="${loginUser.user_no }"/>
+	<c:param name="realty_user_no" value="${realty.user_no }"/>
+</c:import>
 </body>
 </html>

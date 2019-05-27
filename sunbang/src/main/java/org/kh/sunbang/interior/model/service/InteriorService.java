@@ -75,6 +75,7 @@ public interface InteriorService {
 	int selectKnowhowfollowCheck(Follow follow);
 	int selectKnowhowReportCheck(Report report);
 	int insertKnowhowReport(Report report);
+	int updateBoardHits(int board_no);
 
 	//----------------------서은------------------------//
 		

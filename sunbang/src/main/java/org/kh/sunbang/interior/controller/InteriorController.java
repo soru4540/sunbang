@@ -1124,6 +1124,7 @@ public class InteriorController {
 		if (board_type.equals("photograph")) {
 			ArrayList<BoardFull> photoList = interiorService.selectPhotoList(board_no);
 			if (photoList != null) {
+				interiorService.updateBoardHits(board_no);
 				mv.addObject("photoList", photoList);
 				mv.setViewName("interior/interiorPhotographDetail");
 			} else {
@@ -1134,6 +1135,7 @@ public class InteriorController {
 		} else if (board_type.equals("housewarming")) {
 			ArrayList<BoardFull> houseWList = interiorService.selectHouseWList(board_no);
 			if (houseWList != null) {
+				interiorService.updateBoardHits(board_no);
 				mv.addObject("houseWList", houseWList);
 				mv.setViewName("interior/interiorHousewarmingDetail");
 			} else {
@@ -1146,6 +1148,7 @@ public class InteriorController {
 			// 성현
 			ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(board_no);
 			if (knowHowPostList != null) {
+				interiorService.updateBoardHits(board_no);
 				mv.addObject("knowHowPostList", knowHowPostList);
 				mv.setViewName("interior/interiorKnowhowDetail");
 			} else {

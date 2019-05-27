@@ -624,4 +624,11 @@ where board_no = #{board_no}
 	insert into tb_report
 	values (report_seq.nextval, 'interior', #{category}, 'knowhow', #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
 </insert>
+
+<update id="updateBoardHits" parameterType="int">
+		update tb_board
+		set board_hits = board_hits + 1
+		where board_no = #{board_no}	
+</update>
+
 </mapper>
