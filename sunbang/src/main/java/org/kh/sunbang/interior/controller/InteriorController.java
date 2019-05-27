@@ -1,4 +1,4 @@
-package org.kh.sunbang.interior.controller;
+﻿package org.kh.sunbang.interior.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -1079,18 +1079,13 @@ public class InteriorController {
 		if(board_type.equals("photograph")) {
 			 return "interior/interiorPhotographInsert";			
 			}else if(board_type.equals("housewarming")) {
-				 return "interior/interiorHouseWarmingInsert";		
+				 return "interior/interiorHousewarmingInsert";		
 			}else {
 				 return "interior/interiorKnowhowInsert";		
 			}
 	}	
 	
-	@RequestMapping("ibinsert.do")
-	public String insertBoard(HttpServletRequest request){
 		
-		return "";		
-	}	
-	
 	@RequestMapping("ibupdateview.do")
 	public ModelAndView selectBoardUpdateView(ModelAndView mv, BoardFull boardfull) {
 	    ArrayList<BoardFull> iblist = interiorService.selectBoardUpdateView(boardfull.getBoard_no());
@@ -1110,52 +1105,56 @@ public class InteriorController {
 			}
 	}
 	
-	@RequestMapping("ibupdate.do")
-	public String updateBoard(HttpServletRequest request) {
-		
-		return "";
+	
+	
+	// 게시글 삭제
+	@RequestMapping(value = "ibdelete.do", method = RequestMethod.POST)
+	public int deleteBoard(Board board, HttpServletRequest request) {
+		int result = interiorService.deleteBoard(board.getBoard_no());
+		return result;
 	}
 	
-	@RequestMapping("ibdelete.do")
-	public String deleteBoard(HttpServletRequest request) {
-		
-		return "";
-	}
+			
 	
-	@RequestMapping("ipdelete.do")
-	public void deletePost(HttpServletRequest request) {
-		
-	
-	}
-	
-	@RequestMapping("imdelete.do")
-	public void deleteMarker(HttpServletRequest request) {
-		
-	}		
-	
-	//게시판 (사진, 집들이 노하우)상세로 이동 
+	// 게시판 (사진, 집들이 노하우)상세로 이동
 	@RequestMapping("ibselect.do")
-	public ModelAndView selectBoard(ModelAndView mv, @RequestParam(name = "board_no") String board_no, @RequestParam(name = "board_type") String board_type) {
+	public ModelAndView selectBoard(ModelAndView mv, @RequestParam(name = "board_no") int board_no,
+			@RequestParam(name = "board_type") String board_type) {
 
-	      if (board_type.equals("photograph")) {
-	         mv.setViewName("interior/interiorPhotograghDetail");
-	         return mv;
-	      } else if (board_type.equals("housewarming")) {
-	         mv.setViewName("interior/interiorHousewarmingDetail");
-	         return mv;
-	      } else {
-	    	 //성현
-	    	 ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(Integer.parseInt(board_no));
-	         if(knowHowPostList != null) {
-	 			mv.addObject("knowHowPostList", knowHowPostList);
-	 			mv.setViewName("interior/interiorKnowhowDetail");
-	         }else {
-	 			mv.addObject("message", "인테리어 노하우 정보 상세 조회에 실패하였습니다.");
-				mv.setViewName("common/error");			
-			 }
-	         return mv;
-	      }
-	   }	
+		if (board_type.equals("photograph")) {
+			ArrayList<BoardFull> photoList = interiorService.selectPhotoList(board_no);
+			if (photoList != null) {
+				mv.addObject("photoList", photoList);
+				mv.setViewName("interior/interiorPhotographDetail");
+			} else {
+				mv.addObject("message", "인테리어 사진 정보 상세 조회에 실패하였습니다.");
+				mv.setViewName("common/error");
+			}
+			return mv;
+		} else if (board_type.equals("housewarming")) {
+			ArrayList<BoardFull> houseWList = interiorService.selectHouseWList(board_no);
+			if (houseWList != null) {
+				mv.addObject("houseWList", houseWList);
+				mv.setViewName("interior/interiorHousewarmingDetail");
+			} else {
+				mv.addObject("message", "인테리어 집들이 정보 상세 조회에 실패하였습니다.");
+				mv.setViewName("common/error");
+			}
+
+			return mv;
+		} else {
+			// 성현
+			ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(board_no);
+			if (knowHowPostList != null) {
+				mv.addObject("knowHowPostList", knowHowPostList);
+				mv.setViewName("interior/interiorKnowhowDetail");
+			} else {
+				mv.addObject("message", "인테리어 노하우 정보 상세 조회에 실패하였습니다.");
+				mv.setViewName("common/error");
+			}
+			return mv;
+		}
+	}
 	
 	
 //-------------------------성현 PART------------------------------------------------		

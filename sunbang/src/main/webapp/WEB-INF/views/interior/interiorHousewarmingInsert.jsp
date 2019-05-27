@@ -11,6 +11,7 @@
 	href="${pageContext.request.contextPath}/resources/images/logo2.PNG">
 <title>SUNBANG</title>
 <style type="text/css">
+
 .insert_btn {
 	display: inline-block;
 	font-weight: 400;
@@ -32,7 +33,7 @@
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
-.insert_submit {
+.submit {
 	background-color: #ffa0a8;
 	color: white;
 	border: #ffa0a8;
@@ -204,59 +205,41 @@
 				reader.readAsDataURL(f);
 			});
 		}
+
 		//클릭시 게시물 추가항목들 생성
 		function addType(e) {
 			$("#row" + e)
 					.html(
 							"<i class='fas fa-times-circle' id='insert_icon' onclick='delType("
 									+ e
-									+ ");'></i>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='소제목' onclick='addData1("
+									+ ");'></i>&nbsp;&nbsp;&nbsp;"
+									+ "<input type='button' class='insert_btn' value='사진' onclick='addData1("
 									+ e
-									+ ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='텍스트' onclick='addData2("
-									+ e
-									+ ")'>&nbsp;&nbsp;&nbsp;"
-									+ "<input type='button' class='insert_btn' value='사진' onclick='addData3("
-									+ e
-									+ ")'>&nbsp;&nbsp;&nbsp;<input type='button'  class='insert_btn' value='동영상' onclick='addData4("
-									+ e
-									+ ")'>&nbsp;&nbsp;&nbsp;"
-									+ "<input type='button'  class='insert_btn' value='버튼' onclick='addData5("
-									+ e
-									+ ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='구분선' onclick='addData6("
-									+ e + ")'>");
+									+ ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='동영상' onclick='addData2("
+									+ e + ")'>&nbsp;&nbsp;&nbsp;");
 			$("#row" + (e + 1)).css("display", "");
 			$("#line" + e).css("display", "");
+			$("#rowdata" + e).html(
+					"<input type='hidden' name='post_keyword' value='empty'>");
 
 		}
-		//클릭시 게시물 추가버튼으로 돌아감
 		function delType(e) {
 			$("#row" + e)
 					.html(
 							"<i class='fas fa-plus-circle' id='insert_icon' onclick='addType("
 									+ e
 									+ ");''></i>&nbsp;&nbsp;&nbsp;<span class='insert_line'>------------------------------------------</span>");
-			$("#rowdata" + e).html("");
+			$("#rowdata" + e).html(
+					"<input type='hidden' name='post_keyword' value='empty'>");
 		}
-		//클릭시 소제목 입력창 생성
+		//클릭시 사진 입력창 생성
 		function addData1(e) {
 			$("#rowdata" + e)
 					.html(
-							"<br><input type='hidden' name='post_keyword' value='strapline'>소제목 : <br><input type='text'  class='' id='' style='width: -webkit-fill-available;' name='post_contents"+e+"' size='100'>");
-		}
-		//클릭시 텍스트 입력창 생성
-		function addData2(e) {
-			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='text'>내용 : <br><textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none; width: -webkit-fill-available;'></textarea>");
-		}
-		//클릭시 사진 입력창 생성
-		function addData3(e) {
-			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='photo'><label style='font-family:a고딕14;'>파일 선택<input type='file' id='input_img"+e+"' name='post_data"+e+"'></label><br><div class='row' style='background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; margin: 0 auto; padding-top: 30px; padding-bottom: 30px; max-width: inherit;'>"
+							"<br><input type='hidden' name='post_keyword' value='photo'><label style='font-family:a고딕14;'>파일 선택<input type='file' id='input_img" + e + "' name='post_data" + e + "'></label><br><div class='row' style='background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; margin: 0 auto; padding-top: 30px; padding-bottom: 30px; max-width: inherit;'>"
 									+ "<img id='img"
 									+ e
-									+ "' style='min-height:540px; max-height:100%; margin: 0 auto; max-width: inherit; '></div>");
+									+ "' style='min-height:540px; max-height:100%; margin: 0 auto; max-width: inherit; '></div><br><br>내용 : <textarea id='' name='post_contents" + e +"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
 			if (e == 1) {
 				$(function() {
 					$("#input_img" + e).on("change", handleImgFileSelect1);
@@ -279,89 +262,64 @@
 				});
 			}
 		}
-		//클릭시 동영상 입력창 생성	
-		function addData4(e) {
+
+		///클릭시 동영상 입력창 생성	
+		function addData2(e) {
 			$("#rowdata" + e)
 					.html(
-							"<br><input type='hidden' name='post_keyword' value='video'>동영상 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='font-family: a고딕14; width: -webkit-fill-available;'><br><br>내용 : <textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width: -webkit-fill-available;'></textarea>");
+							"<br><input type='hidden' name='post_keyword' value='video'>동영상 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='width:100%;'><br><br>내용 : <textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
 		}
-		//클릭시 버튼 입력창 생성
-		function addData5(e) {
-			$("#rowdata" + e)
+
+		/* 		190522 03:52
+		 function addType(e) {
+		 $("#row" + e)
+		 .html(
+		 "<i class='fas fa-times-circle' id='insert_icon' onclick='delType("
+		 + e
+		 + ");'></i>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='소제목' onclick='addData1("
+		 + e
+		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='텍스트' onclick='addData2("
+		 + e
+		 + ")'>&nbsp;&nbsp;&nbsp;"
+		 + "<input type='button' class='insert_btn' value='사진' onclick='addData3("
+		 + e
+		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button'  class='insert_btn' value='동영상' onclick='addData4("
+		 + e
+		 + ")'>&nbsp;&nbsp;&nbsp;"
+		 + "<input type='button'  class='insert_btn' value='버튼' onclick='addData5("
+		 + e
+		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='구분선' onclick='addData6("
+		 + e + ")'>");
+		 $("#row" + (e + 1)).css("display", "");
+		 $("#line" + e).css("display", "");
+
+		 }	
+		 */
+
+		//클릭시 게시물 추가버튼으로 돌아감
+		/* function delType(e) {
+			$("#row" + e)
 					.html(
-							"<br><input type='hidden' name='post_keyword' value='button'>버튼 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='font-family: a고딕14; width: -webkit-fill-available;'><br><br>내용 : <input type='text' id='' style='width: -webkit-fill-available;' name='post_contents"+e+"' size='100'>");
-		}
-		//클릭시 구분선 입력창 생성
-		function addData6(e) {
-			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='divisionline'><select class='' id='divisionline"+e+"' name='post_data"+e+"' style='width:300px; text-align:center;'><option value='solid' selected>실선</option><option value='dashed'>파선</option><option value='dotted'>점선</option>"
-									+ "<option value='double'>두줄</option></select><br><br><hr id='hrline"
+							"<i class='fas fa-plus-circle' id='insert_icon' onclick='addType("
 									+ e
-									+ "' style='border:2px solid #ffb6b9;width:80%;'>");
-			if (e == 1) {
-				$(function() {
-					$("#divisionline" + e).on(
-							"change",
-							function changeline() {
-								$("#hrline" + e).css("border-style",
-										$("#divisionline" + e).val());
-							});
-				});
-			} else if (e == 2) {
-				$(function() {
-					$("#divisionline" + e).on(
-							"change",
-							function changeline() {
-								$("#hrline" + e).css("border-style",
-										$("#divisionline" + e).val());
-							});
-				});
-			} else if (e == 3) {
-				$(function() {
-					$("#divisionline" + e).on(
-							"change",
-							function changeline() {
-								$("#hrline" + e).css("border-style",
-										$("#divisionline" + e).val());
-							});
-				});
-			} else if (e == 4) {
-				$(function() {
-					$("#divisionline" + e).on(
-							"change",
-							function changeline() {
-								$("#hrline" + e).css("border-style",
-										$("#divisionline" + e).val());
-							});
-				});
-			} else if (e == 5) {
-				$(function() {
-					$("#divisionline" + e).on(
-							"change",
-							function changeline() {
-								$("#hrline" + e).css("border-style",
-										$("#divisionline" + e).val());
-							});
-				});
-			}
-		}
+									+ ");''></i>&nbsp;&nbsp;&nbsp;<span class='insert_line'>------------------------------------------</span>");
+			$("#rowdata" + e).html("");
+		} */
 	</script>
 	<br>
 	<br>
 	<div class="container" id="insert_container">
 		<form name="khinsert" id="khinsert" action="ibinsert.do" method="post"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data"> 
 			<br>
 			<h4 align="center" style="font-family: a고딕15;">집들이 등록</h4>
-			<br> <input type="hidden" name="board_type" value="photograph">
+			<br> <input type="hidden" name="board_type" value="housewarming">
 			<div class="row">
 				<input type="hidden" id="" name="post_keyword" value="cover">
 				<label style="font-family: a고딕14;">파일선택 <input type="file"
 					id="input_img0" name="post_data0">
 				</label>
 			</div>
-			<br>
 			<div class="row">
 				<div class="col" align="center"
 					style="background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
@@ -369,65 +327,107 @@
 						style="max-height: 100%; min-height: 540px; max-width: inherit;">
 				</div>
 			</div>
-			<br> <br> <input type="url"
-				placeholder="출처 URL이 있다면 적어주세요 (http://~)" pattern="https?://.+"
-				class="url" name="card[source]" id="card_source"
-				style="width: 100%; height: 40px; font-family: a고딕14;"> <br>
-			<br>
+			<br> <br> 
 			<div class="row">
 				<div class="col">
-					<select class="category" id="category1" name="category1"
+					<select class="housing_type" id="housing_type" name="housing_type"
 						style="width: 100%; height: 35px; font-family: a고딕14;" required>
-						<option value="">공간 선택(필수)</option>
-						<option value="0">원룸</option>
-						<option value="1">거실</option>
-						<option value="2">키친</option>
-						<option value="3">욕실</option>
-						<option value="4">드레스룸</option>
-						<option value="5">서재&amp;작업실</option>
-						<option value="6">베란다</option>
-						<option value="7">현관</option>
-						<option value="8">사무공간</option>
+						<option value="">주거 형태(필수)</option>
+						<option value="원룸&오피스텔">원룸&amp;오피스텔</option>
+						<option value="아파트">아파트</option>
+						<option value="빌라&연립">빌라&amp;연립</option>
+						<option value="단독주택">단독주택</option>
+						<option value="사무공간">사무공간</option>
+						<option value="상업공간">상업공간</option>
 					</select>
 				</div>
 				&nbsp;&nbsp;
 				<div class="col">
-					<select class="category" id="category2" name="category2"
+					<select class="floor_area" id="floor_area" name="floor_area"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
 						<option value="">평수 선택</option>
-						<option value="0">10평 미만</option>
-						<option value="1">10평 이상</option>
-						<option value="2">20평 미만</option>
-						<option value="3">30평 미만</option>
-						<option value="4">40평 미만</option>
+						<option value="10">10평 미만</option>
+						<option value="10">10평 이상</option>
+						<option value="20">20평 미만</option>
+						<option value="30">30평 미만</option>
+						<option value="40">40평 미만</option>
+					</select>
+				</div>		
+				&nbsp;&nbsp;
+				<div class="col">
+					<select class="style" id="style" name="style"
+						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">스타일 선택</option>
+						<option value="모던">모던</option>
+						<option value="미니멀&심플">미니멀&amp;심플</option>
+						<option value="내추럴">내추럴</option>
+						<option value="빈티지&레트로">빈티지&amp;레트로</option>
+						<option value="클래식&앤틱">클래식&amp;앤틱</option>
+						<option value="프렌치&프로방스">프렌치&amp;프로방스</option>
+						<option value="러블리&로맨틱">러블리&amp;로맨틱</option>
+						<option value="인더스트리얼">인더스트리얼</option>
+					</select>
+				</div>			
+			</div>
+			<br>
+			<div class="row">
+			<div class="col">
+					<select class="color" id="color1" name="color1"
+						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">전체 컬러 선택(필수)</option>
+						<option value="#d53736" >RED</option>
+						<option value="#fed144" >YELLOW</option>
+						<option value="#96d783" >GREEN</option>
+						<option value="#3d97dd" >BLUE</option>
+						<option value="#ee8a94" >PINK</option>
+						<option value="#fafafa">WHITE</option>
 					</select>
 				</div>
 				<div class="col">
-					<select class="category" id="category3" name="category3"
+					<select class="color" id="color2" name="color2"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
-						<option value="">컬러 선택</option>
-						<option value="0" style="color: red;">RED</option>
-						<option value="1" style="color: yellow;">YELLOW</option>
-						<option value="2" style="color: green;">GREEN</option>
-						<option value="3" style="color: blue;">BLUE</option>
-						<option value="4" style="color: pink;">PINK</option>
-						<option value="5">WHITE</option>
+						<option value="">벽 컬러 선택</option>
+						<option value="#d53736" >RED</option>
+						<option value="#fed144" >YELLOW</option>
+						<option value="#96d783" >GREEN</option>
+						<option value="#3d97dd" >BLUE</option>
+						<option value="#ee8a94" >PINK</option>
+						<option value="#fafafa">WHITE</option>
+					</select>
+				</div>
+				<div class="col">
+					<select class="color" id="color3" name="color3"
+						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">바닥 컬러 선택</option>
+						<option value="#d53736" >RED</option>
+						<option value="#fed144" >YELLOW</option>
+						<option value="#96d783" >GREEN</option>
+						<option value="#3d97dd" >BLUE</option>
+						<option value="#ee8a94" >PINK</option>
+						<option value="#fafafa">WHITE</option>
 					</select>
 				</div>
 			</div>
 			<br>
 			<div class="row">
+				<div class="col" style="font-family: a고딕14; ">				
+					<span >예산 : </span><input type="text" style="height: 35px; "
+						size="53" name="budget" id="budget" >&nbsp;만원			
+				</div>
+				<br><br>
+			</div>
+			<div class="row">
 				<div class="col">				
 					<span style="font-family: a고딕14; ">제목 : </span><input type="text"
-						size="53" name="board_title" id="jb_khinsert_title" style="width:95%;">
-				</div>
+						size="53" name="board_title" id="board_title" style="width:96.2%; height: 35px;">
+				</div>				
 			</div>
 			<br>
 			<div class="text">
 				<!-- 내용 -->
-				<textarea class="form-control" id="contents" rows="5" wrap="hard"
-					name="contents" style="font-family: a고딕14;"></textarea>
-			</div>
+				<textarea class="form-control" id="post_contents0" rows="5"
+					wrap="hard" name="post_contents0" style="font-family: a고딕14;"></textarea>
+			</div>			
 			<br>
 			<div class="row">
 				<div class="col" id="row1">
@@ -511,13 +511,12 @@
 			<br> <br>
 			<div class="row">
 				<div class="col" style="text-align: right;">
-					<input class="insert_submit" type="submit" value="등&nbsp;록">
+					<input class="submit" type="submit" value="등&nbsp;록">
 				</div>
 			</div>
 		</form>
 		<br> <br>
 	</div>
 	<c:import url="../common/footer.jsp" />
-
 </body>
 </html>

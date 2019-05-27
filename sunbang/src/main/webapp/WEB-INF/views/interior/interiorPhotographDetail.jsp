@@ -32,7 +32,7 @@
 	$(function() {
 
 		var report = new Object();
-		report.contents_no = ${houseWList[0].board_no};
+		report.contents_no = ${photoList[0].board_no};
 		report.user_no = ${	loginUser.user_no};
 		$.ajax({
 			url : "rkcheck.do",
@@ -61,7 +61,7 @@
 			report.category = $("#sh_rdelete_category").val();
 			report.contents_no = $
 			{
-				houseWList[0].board_no
+				photoList[0].board_no
 			}
 			;
 			report.contents = $("#sh_rreportcontent").val();
@@ -92,15 +92,15 @@
 <!-- 수정하기 -->
 <script type="text/javascript">	
 	$(function() {
-		$("#sh_housewarming_update_btn").click(function() {
-			location.href = "ibupdateview.do?board_no="+${houseWList[0].board_no};
+		$("#sh_photograph_update_btn").click(function() {
+			location.href = "ibupdateview.do?board_no="+${photoList[0].board_no};
 		});
 	});
 </script>
 <!-- 삭제하기 -->
 <script type="text/javascript">	
 	$(function() {
-		$("#housewarming_allDelete_btn").click(function() {			
+		$("#photograph_allDelete_btn").click(function() {			
 			if(confirm("삭제하시겠습니까?")){
 			document.form1.action = "${pageContext.request.contextPath}/intrior/ibdelete.do"; 
 			document.form1.submit();
@@ -118,7 +118,7 @@
 		;
 		var board_no = $
 		{
-			houseWList[0].board_no
+			photoList[0].board_no
 		}
 		;
 
@@ -182,7 +182,7 @@
 	$(function() {
 		if(loginUser != empty){
 		var user_no = ${loginUser.user_no};
-		var follower_no = ${houseWList[0].user_no};
+		var follower_no = ${photoList[0].user_no};
 		}
 		$.ajax({
 			url : "ifcheck.do",
@@ -364,7 +364,7 @@
 	color: white;
 }
 
-#sh_housewarming_update_btn {
+#sh_photograph_update_btn {
 	width: 100%;
 	color: white;
 	background-color: #ff9198;
@@ -375,21 +375,21 @@
 	text-align: center;
 }
 
-#sh_housewarming_content {
+#sh_photograph_content {
 	width: 100%;
 	font-family: a고딕10;
 }
 
-#sh_housewarming_content p {
+#sh_photograph_content p {
 	font-weight: bold;
 }
 
-#sh_housewarming_content img {
+#sh_photograph_content img {
 	width: 100%;
 	border-radius: 5px;
 }
 
-#sh_housewarming_content button {
+#sh_photograph_content button {
 	width: 100%;
 	color: white;
 	background-color: #ff9198;
@@ -398,12 +398,12 @@
 	padding: 5px;
 }
 
-.sh_housewarming_content_btn {
+.sh_photograph_content_btn {
 	width: 50%;
 	margin: auto;
 }
 
-#housewarming_allDelete_btn {
+#photograph_allDelete_btn {
 	width: 100%;
 	color: white;
 	background-color: #ff9198;
@@ -428,11 +428,11 @@
 							<div class="col-md-12">
 								<br>
 								<p id="sh_category" name="category">
-									<c:if test="${not empty houseWList[0].space }">
-								${houseWList[0].space }  
+									<c:if test="${not empty photoList[0].space }">
+								${photoList[0].space }  
 								</c:if>
-									<c:if test="${not empty houseWList[0].floor_area }">
-								/ ${houseWList[0].floor_area }  평  
+									<c:if test="${not empty photoList[0].floor_area }">
+								/ ${photoList[0].floor_area }  평  
 								</c:if>
 								</p>
 								<c:if test="${not empty loginUser }">
@@ -441,13 +441,13 @@
 									<br>
 								</c:if>
 								<br>
-								<p id="sh_board_title" name="board_title">제목<br>${houseWList[0].board_title }</p>
+								<p id="sh_board_title" name="board_title">제목<br>${photoList[0].board_title }</p>
 								<span id="sh_user_profile"> <img
-									src="${pageContext.request.contextPath }/files/user/userImages/${houseWList[0].user_profile }">&nbsp;
-									${houseWList[0].nickname }
+									src="${pageContext.request.contextPath }/files/user/userImages/${photoList[0].user_profile }">&nbsp;
+									${photoList[0].nickname }
 								</span> <br> <br>
 								<p id="sh_board_date" name="board_date">
-									<fmt:formatDate value="${houseWList[0].board_date }"
+									<fmt:formatDate value="${photoList[0].board_date }"
 										pattern="yyyy.MM.dd (E)" />
 								</p>
 								<div class="row">
@@ -456,17 +456,17 @@
 											<a href="uloginview.do">로그인이 필요한 서비스입니다.</a>
 										</div>
 									</c:if>
-									<c:if test="${loginUser.user_no == houseWList[0].user_no}">
+									<c:if test="${loginUser.user_no == photoList[0].user_no}">
 										<button type="button" id="sh_like_btn">
 											<i class="far fa-heart"></i> 좋아요
 										</button>
-										<input type="button" id="sh_housewarming_update_btn" value="수정">
-										<input type="button" id="housewarming_allDelete_btn" value="삭제">
+										<input type="button" id="sh_photograph_update_btn" value="수정">
+										<input type="button" id="photograph_allDelete_btn" value="삭제">
 									</c:if>
 									<div class="col-md-6">
 										<input type="hidden" value="0" id="sh_like">
 										<c:if
-											test="${not empty loginUser && loginUser.user_no != houseWList[0].user_no}">
+											test="${not empty loginUser && loginUser.user_no != photoList[0].user_no}">
 											<button type="button" id="sh_like_btn">
 												<i class="far fa-heart"></i> 좋아요
 											</button>
@@ -475,7 +475,7 @@
 									<div class="col-md-6">
 										<input type="hidden" value="0" id="sh_follow">
 										<c:if
-											test="${not empty loginUser && loginUser.user_no != houseWList[0].user_no}">
+											test="${not empty loginUser && loginUser.user_no != photoList[0].user_no}">
 											<button type="button" id="sh_follow_btn">팔로우</button>
 										</c:if>
 									</div>
@@ -530,35 +530,35 @@
 						</div>
 						<!-- modal 끝 -->
 					</div>
-					<div class="col-md-9" id="sh_housewarming_content">
+					<div class="col-md-9" id="sh_photograph_content">
 					<br>
-						<c:forEach items="${houseWList }" var="houseWList"
+						<c:forEach items="${photoList }" var="photoList"
 							varStatus="status">
-							<c:if test="${houseWList.post_keyword == 'cover' }">
+							<c:if test="${photoList.post_keyword == 'cover' }">
 								<img
-									src="${pageContext.request.contextPath }/files/interior/interiorBoard/${houseWList.post_data }">
+									src="${pageContext.request.contextPath }/files/interior/interiorBoard/${photoList.post_data }">
 								<br>
 								<br>
-								<a id="housewarming_text${status.index }">${houseWList.post_contents }</a>
+								<a id="photograph_text${status.index }">${photoList.post_contents }</a>
 								<br>
 								<br>
 							</c:if>
 
-							<c:if test="${houseWList.post_keyword == 'photo' }">
+							<c:if test="${photoList.post_keyword == 'photo' }">
 								<img
-									src="${pageContext.request.contextPath }/files/interior/interiorBoard/${houseWList.post_data }">
+									src="${pageContext.request.contextPath }/files/interior/interiorBoard/${photoList.post_data }">
 								<br>
 								<br>
-								<a id="housewarming_text${status.index }">${houseWList.post_contents }</a>
+								<a id="photograph_text${status.index }">${photoList.post_contents }</a>
 								<br>
 								<br>
 							</c:if>
 
-							<c:if test="${houseWList.post_keyword == 'video' }">
+							<c:if test="${photoList.post_keyword == 'video' }">
 								<!-- 동영상 주소 변환 watch?v=  ->  embed/ -->
 								<script type="text/javascript">
                               $(function(){
-                                 var address = "${houseWList.post_data}";
+                                 var address = "${photoList.post_data}";
                                  address = address.replace('watch?v=', 'embed/');
                                  $("#sh_transAddress${status.index }").attr("src", address);
                               });   
@@ -569,7 +569,7 @@
 									height="500px" frameborder="0" allowfullscreen></iframe>
 								<br>
 								<br>
-								<a id="housewarming_text${status.index }">${houseWList.post_contents }</a>
+								<a id="photograph_text${status.index }">${photoList.post_contents }</a>
 								<br>
 								<br>
 							</c:if>
