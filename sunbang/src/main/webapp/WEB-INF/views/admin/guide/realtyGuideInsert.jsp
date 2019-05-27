@@ -8,7 +8,6 @@
 <link rel="shortcut icon" type="image⁄x-icon"
 	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
-<script src="https://code.jquery.com/jquery-latest.js"></script>
 <script type="text/javascript"
 	src="/sunbang/resources/editor/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript"

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE configuration PUBLIC
 "-//mybatis.org//DTD Config 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -20,6 +20,7 @@
  		<typeAlias type="org.kh.sunbang.admin.model.vo.Report" alias="Report" />
 		<typeAlias type="org.kh.sunbang.admin.model.vo.Guide" alias="Guide" />
 		<typeAlias type="org.kh.sunbang.admin.model.vo.PremiumFull" alias="PremiumFull" />
+		<typeAlias type="org.kh.sunbang.admin.model.vo.Apaging" alias="Apaging" />
 		
 		<typeAlias type="org.kh.sunbang.interior.model.vo.BoardFull" alias="BoardFull" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Board" alias="Board" />

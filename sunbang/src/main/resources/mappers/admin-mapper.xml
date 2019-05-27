@@ -10,10 +10,12 @@
 		<result property="reported_board" column="reported_board" />
 		<result property="contents_no" column="contents_no" />
 		<result property="contents" column="contents" />
+		<result property="contents_status" column="contents_status" />
 		<result property="report_date" column="report_date" />
 		<result property="handle_date" column="handle_date" />
 		<result property="report_status" column="report_status" />
 		<result property="user_no" column="user_no" />
+		<result property="user_id" column="user_id" />
 	</resultMap>
 
 	<resultMap id="resultGuide" type="Guide">
@@ -27,18 +29,12 @@
 	</resultMap>
 
 	<resultMap type="PremiumFull" id="resultPremiumFull">
-		<id property="charge_no" column="charge_no" />
-		<result property="charge_date" column="charge_date" />
-		<result property="expiration_date" column="expiration_date" />
-		<result property="charged_payment" column="charged_payment" />
-		<result property="charged_status" column="charged_status" />
-		<result property="refund_date" column="refund_date" />
-		<result property="user_no" column="user_no" />
+		<id property="user_no" column="user_no" />
 		<result property="user_type" column="user_type" />
 		<result property="user_profile" column="user_profile" />
 		<result property="user_id" column="user_id" />
 		<result property="nickname" column="nickname" />
-		<result property="user_name" column="user_name" />		
+		<result property="user_name" column="user_name" />
 		<result property="email" column="email" />
 		<result property="phone" column="phone" />
 		<result property="password" column="password" />
@@ -47,20 +43,42 @@
 		<result property="user_status" column="user_status" />
 		<result property="reason_leave" column="reason_leave" />
 		<result property="login_num" column="login_num" />
+
 		<result property="business_user_no" column="business_user_no" />
 		<result property="office_name" column="office_name" />
 		<result property="office_regist_no" column="office_regist_no" />
-		<result property="business_license_no" column="business_license_no" />
+		<result property="business_license_no"
+			column="business_license_no" />
 		<result property="office_address" column="office_address" />
 		<result property="office_phone" column="office_phone" />
 		<result property="status_agreement" column="status_agreement" />
 		<result property="premium_status" column="premium_status" />
 
+		<result property="charge_no" column="charge_no" />
+		<result property="charge_date" column="charge_date" />
+		<result property="expiration_date" column="expiration_date" />
+		<result property="charged_payment" column="charged_payment" />
+		<result property="charged_status" column="charged_status" />
+		<result property="refund_date" column="refund_date" />
 	</resultMap>
 
-	<select id="selectUnHandledList" parameterType="Report"
-		resultMap="resultReport">
-		select * from tb_report where report_status = 0
+	<resultMap id="resultPaging" type="Apaging">
+		<id property="page" column="page" />
+		<result property="maxpage" column="maxpage" />
+		<result property="startpage" column="startpage" />
+		<result property="endpage" column="endpage" />
+		<result property="limit" column="limit" />
+		<result property="selectval" column="selectval" />
+		<result property="keyword" column="keyword" />
+		<result property="system" column="system" />
+	</resultMap>
+
+	<select id="selectUnHandledList" resultMap="resultReport">
+		select report_no,
+		report_system, category, reported_board, contents_no, contents,
+		report_date, handle_date, report_status, u.user_no, u.user_id
+		from
+		tb_report r join tb_user u on r.user_no = u.user_no
 	</select>
 
 	<select id="selectGuideAllList" parameterType="String"
@@ -88,9 +106,17 @@
 		insert into tb_guide
 		values (guide_seq.nextval,
 		#{guide_system}, #{category}, #{title},
-		#{thumbnail}, #{contents},
-		default)
+		#{thumbnail}, #{contents}, 1)
 	</insert>
+	
+	<update id="updateGuide" parameterType="Guide">
+		update tb_guide
+		set
+		title = #{title}, 
+		thumbnail = #{thumbnail},
+		contents =  #{contents}
+		where guide_no = #{guide_no}
+	</update>
 
 	<update id="deleteGuide" parameterType="int">
 		update tb_guide
@@ -98,25 +124,266 @@
 		guide_status = 0 where guide_no = #{guide_no}
 	</update>
 
-	<select id="selectPremiumList" parameterType="PremiumFull"
+	<select id="selectPremiumList" parameterType="Apaging"
 		resultMap="resultPremiumFull">
 		<![CDATA[
 		select * from (select rownum rnum, charge_no, charge_date, expiration_date, charged_payment, charged_status, refund_date, 
 			business_user_no, office_name, office_regist_no,business_license_no,office_address,office_phone,status_agreement,premium_status,user_no,user_type,user_profile,user_id,nickname,user_name,email,phone,PASSWORD,join_date,update_date,user_status,reason_leave,login_num  
         from (select p.charge_no, p.charge_date, p.expiration_date, p.charged_payment, p.charged_status, p.refund_date, p.business_user_no, b.office_name, b.office_regist_no, b.business_license_no, b.office_address, b.office_phone, b.status_agreement, b.premium_status, u.user_no, u.user_type, u.user_profile, u.user_id,  u.nickname, u.user_name, u.email, u.phone, u.password, u.join_date, u.update_date, u.user_status, u.reason_leave, u.login_num 
-			from tb_premium p inner join tb_business b on p.business_user_no = b.business_user_no inner join tb_user u on b.user_no = u.user_no order by charge_no desc)) 
-		where rnum >= #{offset} and rnum <= #{limit}
+			from tb_premium p inner join tb_business b on p.business_user_no = b.business_user_no inner join tb_user u on b.user_no = u.user_no
+			]]>
+		<if test="selectval != null">
+			<where>
+				<if test="selectval == 'p.business_user_no'">
+					p.business_user_no = #{keyword}
+				</if>
+				<if test="selectval == 'u.user_name'">
+					u.user_name LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="selectval == 'expiration_date'">
+					<if test="keyword == 'using'">
+						expiration_date<![CDATA[ >= ]]>(select
+						TO_CHAR(SYSDATE, 'YY/MM/DD') from dual)
+					</if>
+					<if test="keyword == 'expire'">
+						expiration_date<![CDATA[ < ]]>(select
+						TO_CHAR(SYSDATE, 'YY/MM/DD') from dual)
+					</if>
+				</if>
+			</where>
+		</if>
+		
+		<![CDATA[
+			order by charge_no desc)) 
+		where rnum >= #{page} and rnum <= #{limit}
          ]]>
 	</select>
 
+
 	<select id="selectListCount" resultType="_int">
-		select count(*) from tb_premium
+		select count(*) from
+		tb_premium
+	</select>
+
+	<select id="selectCountPremium" resultType="_int">
+		select
+		count(*) from
+		tb_premium where charge_date=(select to_char(sysdate,'yy/mm/dd') from
+		dual)
+	</select>
+
+	<select id="selectBusinessDetail" parameterType="PremiumFull"
+		resultMap="resultPremiumFull">
+		select
+		b.business_user_no, b.office_name, b.office_regist_no,
+		b.business_license_no,
+		b.office_address, b.office_phone,
+		b.status_agreement, b.premium_status,
+		u.user_no, u.user_type,
+		u.user_profile, u.user_id, u.nickname,
+		u.user_name, u.email, u.phone,
+		u.password, u.join_date, u.update_date,
+		u.user_status, u.reason_leave,
+		u.login_num
+		<if test='charge_no > 0'>
+			,p.charge_no, p.charge_date, p.expiration_date,
+			p.charged_payment, p.charged_status, p.refund_date
+		</if>
+		from tb_business b
+		<if test='charge_no > 0'>
+			inner join tb_premium p on p.business_user_no =
+			b.business_user_no
+		</if>
+		inner join tb_user u on
+		b.user_no = u.user_no
+		where b.business_user_no =
+		#{business_user_no}
+	</select>
+
+	<!-- 기업 회원 관리 -->
+	<select id="selectBusinessList" parameterType="Apaging"
+		resultMap="resultPremiumFull">
+		select *
+		from (select rownum rnum, business_user_no, office_name,
+		office_regist_no,business_license_no
+		,office_address,office_phone,status_agreement,premium_status,user_no,user_type,user_profile,user_id,
+		nickname,user_name,email,phone,PASSWORD,join_date,update_date,user_status,reason_leave,login_num
+		from (select b.business_user_no, b.office_name, b.office_regist_no,
+		b.business_license_no, b.office_address,
+		b.office_phone, b.status_agreement, b.premium_status, u.user_no, u.user_type,
+		u.user_profile,
+		u.user_id, u.nickname, u.user_name, u.email, u.phone, u.password, u.join_date,
+		u.update_date,
+		u.user_status, u.reason_leave, u.login_num
+		from tb_business b inner join tb_user u on b.user_no = u.user_no
+		<if test="selectval != null">
+			<where>
+				<if test="selectval == 'business_user_no'">
+					business_user_no = #{keyword}
+				</if>
+				<if test="selectval == 'user_name'">
+					user_name LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="selectval == 'status_agreement'">
+					status_agreement = #{keyword}
+				</if>
+			</where>
+		</if>
+		order by 1 desc
+		)
+		)
+	<![CDATA[
+	where rnum >= #{page} and rnum <= #{limit}
+	]]>
+	</select>
+
+	<update id="updateBusinessStatus" parameterType="PremiumFull">
+		update
+		tb_business
+		set status_agreement = #{status_agreement}
+		where
+		business_user_no = #{business_user_no}
+	</update>
+
+	<select id="selectUserList" parameterType="Apaging" resultType="PremiumFull">
+		select *
+		from (select rownum rnum, user_no, user_type, user_profile, user_id, nickname, user_name, email, phone,
+			password, join_date, update_date, user_status, reason_leave, login_num 
+			from tb_user 
+			<if test="selectval != null">
+			<where>
+				<if test="selectval == 'user_id'">
+					user_id LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="selectval == 'user_name'">
+					user_name LIKE '%'||#{keyword}||'%'
+				</if>
+				<if test="selectval == 'user_status'">
+					user_status = #{keyword}
+				</if>
+			</where>
+			</if>
+			order by user_no desc)
+		<![CDATA[
+		where rnum >= #{page} and rnum <= #{limit}
+		]]>
 	</select>
 	
-	<select id="selectBusinessDetail" parameterType="_int" resultMap="resultPremiumFull">
-		select p.charge_no, p.charge_date, p.expiration_date, p.charged_payment, p.charged_status, p.refund_date, p.business_user_no, b.office_name, b.office_regist_no, b.business_license_no, b.office_address, b.office_phone, b.status_agreement, b.premium_status, u.user_no, u.user_type, u.user_profile, u.user_id,  u.nickname, u.user_name, u.email, u.phone, u.password, u.join_date, u.update_date, u.user_status, u.reason_leave, u.login_num 
-		from tb_premium p inner join tb_business b on p.business_user_no = b.business_user_no inner join tb_user u on b.user_no = u.user_no 
-		where p.business_user_no = #{business_user_no}
+	<update id="updateUserStatus" parameterType="PremiumFull">
+		update
+		tb_user
+		set user_status = #{user_status}, update_date = sysdate 
+		where
+		user_no = #{user_no}
+	</update>
+	
+	<update id="updateUserReasonLeave" parameterType="PremiumFull">
+		update
+		tb_user
+		set reason_leave = #{reason_leave}, update_date = sysdate 
+		where
+		user_no = #{user_no}
+	</update>
+	
+	<delete id="deleteUser" parameterType="int">
+		delete 
+		from tb_user 
+		where user_no = #{user_no}
+	</delete>
+	
+	<select id="selectReportList" parameterType="Apaging" resultMap="resultReport">
+		select * 
+		from(select rownum rnum, report_no,
+		report_system, category, reported_board, contents_no, contents,
+		report_date, handle_date, report_status, user_no, user_id, contents_status
+        from(select report_no, report_system, category, reported_board, contents_no, contents, report_date, handle_date, report_status, u.user_no, u.user_id
+		<if test="system =='realty'">
+        	, rt.realty_status contents_status
+        	from tb_report r join tb_user u on r.user_no = u.user_no
+        	join tb_realty rt on r.contents_no = rt.realty_no
+        </if>
+        <if test="system =='interior'">
+        	, b.board_status contents_status
+        	from tb_report r join tb_user u on r.user_no = u.user_no
+        	join tb_board b on r.contents_no = b.board_no
+        </if>
+        <if test="system =='user'">
+        	, u.user_status contents_status
+        	from tb_report r join tb_user u on r.user_no = u.user_no
+        </if>
+        where report_system= #{system}
+        <if test="selectval == 'category'">
+        and category = #{keyword}
+        </if>
+        <if test="selectval == 'report_status'">
+        and report_status = #{keyword}
+        </if>
+        <if test="selectval == 'contents_status'">
+        and rt.realty_status = #{keyword}
+        </if>
+		))
+	<![CDATA[
+	where rnum >= #{page} and rnum <= #{limit}
+	]]>
 	</select>
+	
+	<select id="selectReportDetail" parameterType="Report" resultMap="resultReport">
+	select report_no, report_system, category, reported_board, contents_no, contents, report_date, handle_date, report_status, u.user_no, u.user_id 
+    <if test="report_system =='realty'">
+        	, rt.realty_status contents_status
+        	from tb_report r join tb_user u on r.user_no = u.user_no
+        	join tb_realty rt on r.contents_no = rt.realty_no
+        </if>
+        <if test="report_system =='interior'">
+        	, b.board_status contents_status
+        	from tb_report r join tb_user u on r.user_no = u.user_no
+        	join tb_board b on r.contents_no = b.board_no
+        </if>
+	where report_no = #{report_no}
+	</select>
+	
+	<select id="selectUserDetail" parameterType="String" resultMap="resultPremiumFull">
+		select u.user_no, u.user_type,
+		u.user_profile, u.user_id, u.nickname,
+		u.user_name, u.email, u.phone,
+		u.password, u.join_date, u.update_date,
+		u.user_status, u.reason_leave,
+		u.login_num, b.business_user_no, b.office_name, b.office_regist_no,
+		b.business_license_no,
+		b.office_address, b.office_phone,
+		b.status_agreement, b.premium_status
+        from tb_user u 
+        left join tb_business b on
+		u.user_no = b.user_no
+		where u.user_id = #{user_id}
+	</select>
+	
+	<select id="selectCountBUser" resultType="_int">
+		select count(*) from tb_business where status_agreement ='N'
+	</select>
+	
+	<update id="updateContentsStatus" parameterType="Report">
+		update
+		<if test="report_system =='realty'">
+			tb_realty
+			set realty_status = #{contents_status}, renewdate = sysdate 
+			where
+			realty_no = #{contents_no}
+		</if>
+		<if test="report_system =='interior'">
+			tb_board
+			set board_status = #{contents_status} 
+			where
+			board_no = #{contents_no}
+		</if>
+	</update>
+	
+	<update id="updateReportStatus" parameterType="Report">
+		update
+			tb_report
+			set report_status = #{report_status}, handle_date = sysdate 
+			where
+			report_no = #{report_no}
+	</update>
 	
 </mapper>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -114,7 +114,7 @@
 			<hr class="clearfix w-100 d-md-none">
 			<ul class="navbar-nav mr-auto"
 				style="margin: 0 auto; margin-right: 0 !important;">
-				<li class="nav-item"><a class="nav-link" href="#">집찾기</a></li>
+				<li class="nav-item"><a class="nav-link" href="test.do">집찾기</a></li>
 				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">
 					<li class="nav-item"><a class="nav-link" href="rinsertview.do?user_no=${loginUser.user_no }&premium_status=${loginUser.premium_status}">집내놓기</a></li>
 				</c:if>
@@ -146,7 +146,7 @@
 							<a class="dropdown-item" href="ulogout.do?uri=1"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_no == 0 }"> <!-- 관리자 -->
-							<a class="dropdown-item" href="adminPage.do"><i class="fas fa-user-edit"></i> 관리자 페이지</a>
+							<a class="dropdown-item" href="auhlistselect.do"><i class="fas fa-user-edit"></i> 관리자 페이지</a>
 							<a class="dropdown-item" href="ulogout.do?uri=1"> 로그아웃</a>
 						</c:if>
 					</div>

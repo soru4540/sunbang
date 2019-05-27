@@ -1,10 +1,13 @@
 package org.kh.sunbang.admin.model.service;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
+import org.kh.sunbang.admin.model.vo.Apaging;
 import org.kh.sunbang.admin.model.vo.Guide;
 import org.kh.sunbang.admin.model.vo.PremiumFull;
 import org.kh.sunbang.admin.model.vo.Report;
+import org.kh.sunbang.user.model.vo.User;
 
 public interface AdminService {
 
@@ -20,10 +23,37 @@ public interface AdminService {
 
 	int deleteGuide(int guide_no);
 
-	ArrayList<PremiumFull> selectPremiumList(int currentPage, int limit);
-
 	int selectListCount();
 
-	PremiumFull selectBusinessDetail(int business_user_no);
+	PremiumFull selectBusinessDetail(PremiumFull pref);
 
+	int selectCountPremium();
+
+	ArrayList<PremiumFull> selectPremiumList(Apaging page);
+
+	ArrayList<PremiumFull> selectBusinessList(Apaging page);
+
+	int updateBusinessStatus(PremiumFull pfull);
+
+	ArrayList<User> selectUserList(Apaging page);
+
+	int updateUserStatus(PremiumFull pfull);
+
+	int updateUserReasonLeave(PremiumFull pfull);
+
+	ArrayList<Report> selectReportList(Apaging page);
+
+	Report selectReportDetail(Report report);
+
+	int updateReportStatus(Report report);
+
+	PremiumFull selectUserDetail(String user_id);
+
+	int selectCountBUser();
+
+	int updateContentsStatus(Report report);
+
+	int updateGuide(Guide guide);
+
+	int deleteUser(int user_no);
 }

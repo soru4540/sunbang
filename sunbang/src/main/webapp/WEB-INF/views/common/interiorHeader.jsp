@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+﻿<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -175,7 +175,7 @@
 					href="iblistselect.do?board_type=housewarming">집들이</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="iblistselect.do?board_type=knowhow">노하우</a></li>
-				<li class="nav-item"><a class="nav-link" href="#">가이드&nbsp;&nbsp;</a></li>
+				<li class="nav-item"><a class="nav-link" href="aglistselect.do?guide_system=interior">가이드&nbsp;&nbsp;</a></li>
 				<li class="nav-item" id="js_pheader_user"><c:if test="${!empty loginUser}">
 						<a class="nav-link dropdown-toggle"
 							id="navbarDropdownMenuLink-333" data-toggle="dropdown"
@@ -202,7 +202,7 @@
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_no == 0 }"> <!-- 관리자 -->
-							<a class="dropdown-item" href="adminPage.do"><i class="fas fa-user-edit"></i> 관리자 페이지</a>
+							<a class="dropdown-item" href="auhlistselect.do"><i class="fas fa-user-edit"></i> 관리자 페이지</a>
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>
 					</div>

@@ -175,7 +175,6 @@ $(function(){
 					+ errorthrown);
 		}
 	});
-	
 });
 </script>
 </head>
@@ -232,30 +231,36 @@ $(function(){
 								<!-- Title -->
 								<p class="card-text" id="pcate">${realty.realty_type}</p>
 								<h5 class="card-title">
-									<c:if test="${!empty realty.month_lease}">
+									<c:if test="${realty.month_lease != 0}">
 						월세
-						<c:if test="${realty.month_lease > 99999}">
+						<c:if test="${realty.month_lease > 99999 && realty.month_lease < 999999}">
 								${fn:substring(realty.month_lease,0,2)}
 						</c:if>
-										<c:if test="${realty.month_lease > 999999}">
+						<c:if test="${realty.month_lease > 999999 && realty.month_lease < 9999999}">
 								${fn:substring(realty.month_lease,0,3)}
 						</c:if>
 						/
-						<c:if test="${realty.deposit > 9999999}">
-								${fn:substring(realty.deposit,0,4)}<br>
-										</c:if>
-										<c:if test="${realty.deposit > 999999999}">
-								${fn:substring(realty.deposit,0,1)}.${fn:substring(realty.deposit,2,4)}<br>
-										</c:if>
-
-									</c:if>
-									<c:if test="${realty.payback_deposit_lease > 0 }">
+						<c:if test="${realty.deposit > 99999 && realty.deposit < 999999}">
+							${fn:substring(realty.deposit,0,2)}<br>
+						</c:if>
+						<c:if test="${realty.deposit > 999999 &&  realty.deposit < 9999999 }">
+							${fn:substring(realty.deposit,0,3)}<br>
+						</c:if>
+						<c:if test="${realty.deposit > 9999999 &&  realty.deposit < 99999999 }">
+							${fn:substring(realty.deposit,0,4)}<br>
+						</c:if>
+						<c:if test="${realty.deposit > 99999999 &&  realty.deposit < 999999999 }">
+							${fn:substring(realty.deposit,0,5)}<br>
+						</c:if>
+						
+						<c:if test="${realty.payback_deposit_lease > 0 }">
 							전세 
+							</c:if>
 							<c:if test="${realty.payback_deposit_lease > 9999999}">
-								${fn:substring(realty.payback_deposit_lease,0,4)}<br>
+								${fn:substring(realty.payback_deposit_lease,0,5)}<br>
 										</c:if>
 										<c:if test="${realty.payback_deposit_lease > 999999999}">
-								${fn:substring(realty.payback_deposit_lease,0,1)}.${fn:substring(realty.payback_deposit_lease,2,4)}<br>
+								${fn:substring(realty.payback_deposit_lease,0,6)}<br>
 										</c:if>
 									</c:if>
 									<c:if test="${realty.purchase > 0 }">

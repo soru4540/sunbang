@@ -9,6 +9,8 @@
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
 <link rel="shortcut icon" type="image⁄x-icon"
 	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
+<script type="text/javascript"
+	src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <title>SUNBANG</title>
 <style type="text/css">
 .fix_con {
@@ -42,7 +44,12 @@
 	font-family: a고딕15;
 }
 </style>
+<script>
+$(function(){
+	$("img").addClass("img-fluid");
+});
 
+</script>
 </head>
 <body>
 	<c:import url="../../common/realtyHeader.jsp"></c:import>
@@ -62,7 +69,7 @@
 					<div class="d1" style="width: 70%;">
 						<p>
 							${guide.category }&nbsp;
-							<c:if test="true">
+							<c:if test="${loginUser.user_no == 0 }"> <!-- 관리자 -->
 								<button type="button" class="btn btn-outline-success btn-sm"
 									onclick="location.href='agupdateview.do?guide_system=realty&guide_no=${guide.guide_no}'">수정</button>
 								<button type="button" class="btn btn-outline-danger btn-sm"
@@ -80,7 +87,7 @@
 							<button type="button" class="btn btn-outline-primary"
 								onclick="javascript:window.scrollTo(0,0);">상단으로</button>
 							<button type="button" class="btn btn-outline-info"
-								onclick="history.go(-1);">목록으로</button>
+								onclick="location.href='aglistselect.do?guide_system=realty'">목록으로</button>
 						</div>
 						<hr>
 

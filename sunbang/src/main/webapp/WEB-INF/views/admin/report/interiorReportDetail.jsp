@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,28 +24,23 @@
 	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 	crossorigin="anonymous"></script>
 <style type="text/css">
-h4 {
+#js_rpdetail_h4 {
 	font-weight: bold;
 	margin-bottom: 40px;
 	margin-top: 40px;
 }
 
-.col-form-label {
+#js_rpdetail_table .col-form-label {
 	text-align: center;
 	background-color: #f8f9fa;
 }
 
-#tb {
+#js_rpdetail_table {
 	margin: 0 auto;
 	width: 90%;
 }
 
-.col-sm-10 {
-	padding-right: 15px;
-	padding-left: 15px;
-}
-
-#contents {
+#js_rpdetail_contents {
 	height: 300px;
 	padding: .375rem .75rem;
 	font-size: 1rem;
@@ -55,75 +51,161 @@ h4 {
 	background-clip: padding-box;
 	border: 1px solid #ced4da;
 	border-radius: .25rem;
+	overflow-x: hidden;
+	word-wrap: break-word;
 }
 </style>
 <script type="text/javascript">
-$(function(){
-	$(window).bind("beforeunload", function (){
-		opener.parent.location.reload();
-		window.close();
+	$(function() {
+		$(window).bind("beforeunload", function() {
+			opener.parent.location.reload();
+			window.close();
+		});
 	});
-});
+	
+	function openView(){
+		var popupX = (window.screen.width/2) - (200/2);
+		var popupY= (window.screen.height/2) - (700/2);
+		window.open('rdetail.do?realty_no='+${report.report_no }, 'View',
+				'left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');
+	}
+	
+	function update(data){
+		var report_no = ${report.report_no };
+		var contents_no = ${report.contents_no};
+		var contents_status =$("#contents_status").val();
+		//console.log('artsupdate.do?report_no='+report_no+'&contents_no='+contents_no+'&status='+data+"&contents_status="+contents_status);
+		location.href='artsupdate.do?report_system=interior&report_no='+report_no+'&contents_no='+contents_no+'&status='+data+"&contents_status="+contents_status;
+	}
 </script>
 
 </head>
 <body>
 	<div class="container" style="height: 100%;">
 		<div>
-			<h4 align="center">인테리어 신고글 상세</h4>
+			<h4 align="center" id="js_rpdetail_h4">인테리어 신고글 상세</h4>
 		</div>
-		<div id="tb">
+		<div id="js_rpdetail_table">
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">카테고리</label>
+				<label class="col-sm-2 col-form-label">신고번호</label>
 				<div class="col-sm">
-					<input type="text" class="form-control" id="category"
-						value="허위글">
+					<input type="text" class="form-control" id="report_no" disabled
+						style="background-color: white;" value="${report.report_no }">
 				</div>
-				<label class="col-sm-2 col-form-label">게시판</label>
+				<label class="col-sm-2 col-form-label">시스템</label>
 				<div class="col-sm">
-					<input type="text" class="form-control" id="feedbackDate"
-						value="노하우">
+					<input type="text" class="form-control" id="report_system" disabled
+						style="background-color: white;" value="${report.report_system }">
 				</div>
 			</div>
 
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">글번호</label>
+				<label class="col-sm-2 col-form-label">카테고리</label>
 				<div class="col-sm">
-					<input type="text" class="form-control" id="userId"
-						value="1000">
+					<input type="text" class="form-control" id="category" disabled
+						style="background-color: white;" value="${report.category }">
 				</div>
-				<label class="col-sm-2 col-form-label">작성자</label>
+				<label class="col-sm-2 col-form-label">게시판</label>
 				<div class="col-sm">
-					<input type="text" class="form-control" id="statusNo"
-						value="김수정">
+					<input type="text" class="form-control" id="report_no" disabled
+						style="background-color: white;" value="${report.reported_board }">
 				</div>
 			</div>
 			<div class="form-group row">
-				<label class="col-sm-2 col-form-label">일자</label>
+				<label class="col-sm-2 col-form-label">글번호</label>
 				<div class="col-sm">
-					<input type="text" class="form-control" id="userId"
-						value="2019/04/16">
+					<a class="form-control" id="reported_board" href="#"
+						onclick="openView()" style="color: blue; font-weight: bold;">${report.contents_no }</a>
 				</div>
-				<label class="col-sm-2 col-form-label">상태</label>
+				<label class="col-sm-2 col-form-label">작성자</label>
 				<div class="col-sm">
-					<input type="text" class="form-control" id="statusNo"
-						value="미처리">
+					<input type="text" class="form-control" id="userId" disabled
+						style="background-color: white;" value="${report.user_id }">
+				</div>
+
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">처리상태</label>
+				<div class="col-sm">
+					<c:if test="${report.report_status == 0}">
+						<input type="text" class="form-control" id="statusNo" value="미처리"
+							disabled style="background-color: white;">
+					</c:if>
+					<c:if test="${report.report_status == 1}">
+						<input type="text" class="form-control" id="statusNo" value="검수중"
+							disabled style="background-color: white;">
+					</c:if>
+					<c:if test="${report.report_status == 2}">
+						<input type="text" class="form-control" id="statusNo" value="처리완료"
+							disabled style="background-color: white;">
+					</c:if>
+				</div>
+				<label class="col-sm-2 col-form-label">게시상태</label>
+				<div class="col-sm">
+					<c:if test="${report.contents_status == 0}">
+						<input type="text" class="form-control" id="contents_status" value="게시중"
+							disabled style="background-color: white;">
+					</c:if>
+					<c:if test="${report.contents_status == 1}">
+						<input type="text" class="form-control" id="contents_status" value="검수중"
+							disabled style="background-color: white;">
+					</c:if>
+					<c:if test="${report.contents_status == 2}">
+						<input type="text" class="form-control" id="contents_status" value="처리완료"
+							disabled style="background-color: white;">
+					</c:if>
+				</div>
+			</div>
+			<div class="form-group row">
+				<label class="col-sm-2 col-form-label">신고일자</label>
+				<div class="col-sm">
+					<input type="text" class="form-control" id="report_date" disabled
+						style="background-color: white;" value="${report.report_date }">
+				</div>
+				<label class="col-sm-2 col-form-label">처리일자</label>
+				<div class="col-sm">
+					<input type="text" class="form-control" id="report_date" disabled
+						style="background-color: white;" value="${report.handle_date }">
 				</div>
 			</div>
 
 			<div class="form-group row">
 				<label for="inputcontents" class="col-sm-2 col-form-label">내용</label>
-				<div class="col-sm-10">
-					<div class="form-control" id="contents">
-						<p>저 집 20평대 아파트가 아니라 30평대로 알고 있는데
-								20평대 인테리어라고 거짓말 했네요;;; 저렇게 넓을 수가 없습니다.</p>
-					</div>
+				<div class="col-sm-10"
+					style="padding-right: 15px; padding-left: 15px;">
+					<div class="form-control" id="js_rpdetail_contents">
+						${report.contents }</div>
 				</div>
 			</div>
 			<div class="form-group row">
-				<div align="right" style="width: 98%;">
-					<button type="reset" class="btn btn-primary"
-						onclick="">처리완료</button>
+				<div align="right" style="width: 70%;">
+					<c:if test="${report.report_status != 2}">
+						<button class="btn btn-primary" onclick="update(2)">확인완료</button>&nbsp;&nbsp;
+						<button class="btn btn-danger" data-toggle="modal"
+							data-target="#delete">검수</button>
+					</c:if>
+					<!-- Modal -->
+					<div class="modal fade" id="delete" tabindex="-1" role="dialog"
+						aria-labelledby="exampleModalLabel" aria-hidden="true">
+						<div class="modal-dialog modal-dialog-centered" role="document">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">인테리어 게시글 검수
+										안내 메세지</h5>
+								</div>
+								<div class="modal-body">정말 이 매물의 상태를 검수중으로 바꾸시겠습니까?</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-dismiss="modal">취소</button>
+									<button type="button" class="btn btn-primary"
+										onclick="update(1)">확인</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div align="right" style="width: 28%;">
+
 					<button type="reset" class="btn btn-secondary"
 						onclick="window.close();">닫기</button>
 				</div>

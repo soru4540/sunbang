@@ -8,6 +8,30 @@
 <link rel="shortcut icon" type="image⁄x-icon"
 	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+	$(function() {
+		var cate = sessionStorage.getItem("category");
+		if (cate != null) {
+			$("#js_pguide_p3").text("");
+			$("#js_pguide_p3").text(cate);
+		} else {
+			$("#js_pguide_p3").text("");
+			$("#js_pguide_p3").text("전체보기");
+		}
+	})
+	function ahref(data) {
+		var category = data;
+		sessionStorage.setItem("category", category);
+		if (category == "전체보기") {
+			location.href = 'aglistselect.do?guide_system=realty';
+		} else {
+			location.href = 'agclselect.do?guide_system=realty&category='
+					+ category;
+		}
+	}
+</script>
 <style type="text/css">
 #js_pguide_con {
 	min-height: 960px;
@@ -36,7 +60,7 @@
 	font-size: 35px;
 }
 
-#js_pguide_p2 {
+#js_pguide_p2, #js_pguide_p3 {
 	color: #343a40;
 	margin-top: 40px;
 	font-family: a고딕15;
@@ -125,37 +149,43 @@
 			<div class="col">
 				<p id="js_pguide_p1">부동산 가이드</p>
 				<p id="js_pguide_p2">집 구하기, 집 내놓기 쉽고 빠르게</p>
-				<c:if test="${loginUser.user_no == 0 }"> <!-- 관리자 -->
+				<c:if test="${loginUser.user_no == 0 }">
+					<!-- 관리자 -->
 					<button type="button" class="btn btn-outline-dark"
-						onclick="location.href='aginsertview.do?guide_system=realty'">가이드 작성</button>
+						onclick="location.href='aginsertview.do?guide_system=realty'">가이드
+						작성</button>
 				</c:if>
 			</div>
 		</div>
 		<div class="row" id="js_pguide_iconList">
 			<div class="col" id="js_pguide_icon">
-				<a href="aglistselect.do?guide_system=realty">전체보기</a>
+				<a href="#" onclick="ahref('전체보기')" id="js_pguide_alist">전체보기</a>
 			</div>
 			<div class="col" id="js_pguide_icon">
-				<a href="agclselect.do?guide_system=realty&category=부동산 상식">부동산 상식</a>
+				<a href="#" onclick="ahref('부동산 상식')" id="js_pguide_alist">부동산
+					상식</a>
 			</div>
 			<div class="col" id="js_pguide_icon">
-				<a href="agclselect.do?guide_system=realty&category=이사 가이드">이사 가이드</a>
+				<a href="#" onclick="ahref('이사 가이드')" id="js_pguide_alist">이사
+					가이드</a>
 			</div>
 			<div class="col" id="js_pguide_icon">
-				<a href="agclselect.do?guide_system=realty&category=분양 정보">분양 정보</a>
+				<a href="#" onclick="ahref('분양 정보')" id="js_pguide_alist">분양 정보</a>
 			</div>
 			<div class="col" id="js_pguide_icon">
-				<a href="agclselect.do?guide_system=realty&category=법률 지식">법률 지식</a>
+				<a href="#" onclick="ahref('법률 지식')" id="js_pguide_alist">법률 지식</a>
 			</div>
 			<div class="col" id="js_pguide_icon">
-				<a href="agclselect.do?guide_system=realty&category=선방에서 집 구하기">선방에서 집 구하기</a>
+				<a href="#" onclick="ahref('선방에서 집 구하기')" id="js_pguide_alist">선방에서
+					집 구하기</a>
 			</div>
 			<div class="col" id="js_pguide_icon">
-				<a href="agclselect.do?guide_system=realty&category=선방에 집 내놓기">선방에 집 내놓기</a>
+				<a href="#" onclick="ahref('선방에 집 내놓기')" id="js_pguide_alist">선방에
+					집 내놓기</a>
 			</div>
 		</div>
-		<div class="row" style="margin: 5px;">
-			<p id="js_pguide_p2">부동산 상식</p>
+		<div class="row" style="margin: 5px; height: 90px;">
+			<p id="js_pguide_p3"></p>
 		</div>
 		<div class="row" id="js_pguide_cardList">
 			<c:forEach items="${ galist }" var="guide" varStatus="status">

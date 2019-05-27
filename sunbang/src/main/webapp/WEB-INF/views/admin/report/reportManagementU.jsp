@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image⁄x-icon"
+	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
 <style type="text/css">
-#js_interiorM_content {
+#js_userM_content {
 	float: left;
 	width: 360px;
 	overflow: hidden;
@@ -15,124 +17,198 @@
 	white-space: nowrap;
 }
 
-#js_interiorM_tb {
+#js_userM_tb {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow-x: auto;
 	min-height: 600px;
 	text-align: center;
 }
 
-#js_interiorM_h {
+#js_userM_h {
 	margin-top: 60px;
 	margin-bottom: 30px;
 	text-align: center;
 }
 </style>
 <script type="text/javascript">
-	function detailView() {
-		var popupX = (window.screen.width/2) - (1000/2);
-		var popupY= (window.screen.height/2) - (700/2);
-		window.open('/sunbang/views/admin/userReportDetail.jsp', 'detailView',
-				'width=1000,height=700, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');
-		
-	};
+function detailView(data) {
+	var popupX = (window.screen.width/2) - (1000/2);
+	var popupY= (window.screen.height/2) - (700/2);
+	window.open('ardetailselect.do?report_system=user&report_no='+data, 'detailView',
+		'width=1000,height=700, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');	
+};
+function selSearch(){
+	var category = $("#selBox").val();
+	location.href = "arlistselect.do?report_system=user&selectval=category&keyword="+category;
+}
 </script>
 </head>
 <body>
-	<c:import url="../common/realtyHeader.jsp"></c:import>
-	<c:import url="../common/adminHeader.jsp"></c:import>
+	<c:import url="../../common/realtyHeader.jsp"></c:import>
+	<c:import url="../../common/adminHeader.jsp"></c:import>
 	<div class="container" style="min-height: 960px;">
-		<h4 id="js_interiorM_h">회원 신고 관리</h4>
-		<div id="js_interiorM_tb">
+		<h4 id="js_userM_h">회원 신고 관리</h4>
+		<div id="js_userM_tb">
 			<table class="table table-sm">
 				<thead>
 					<tr>
 						<th scope="col" width="60px;">No</th>
 						<th scope="col" width="150px;">카테고리</th>
-						<th scope="col" width="150px;">신고유저</th>
+						<th scope="col" width="150px;">신고회원</th>
 						<th scope="col">내용</th>
-						<th scope="col" width="130px;">신고자</th>
+						<th scope="col" width="130px;">작성자</th>
 						<th scope="col" width="130px;">일자</th>
 						<th scope="col" width="130px;">처리일자</th>
 						<th scope="col" width="100px;">상태</th>
 					</tr>
 				</thead>
 				<tbody>
+					<c:forEach items="${rlist }" var="r">
 					<tr>
-						<th scope="row">4</th>
-						<td>욕설</td>
-						<td>홍진솔</td>
-						<td id="js_interiorM_content"><a
-							href="javascript:detailView();">제 글에 욕설 댓글을 남겼습니다. 어떻게 처리 좀 해주셨으면 좋겠습니다 ㅜㅜ</a></td>
-						<td>안형진</td>
-						<td>2019/04/16</td>
-						<td></td>
-						<td>미처리</td>
+						<th scope="row">${r.report_no }</th>
+						<td>${r.category }</td>
+						<td>${r.reported_board }</td>
+						<td id="js_userM_content">
+							<a href="javascript:detailView(${r.report_no });">${ r.contents}</a></td>
+						<td>${r.user_id}</td>
+						<td>${r.report_date }</td>
+						<td>${r.handle_date }</td>
+						<td id="status">
+							<c:if test="${r.report_status == 0}">
+								<p style="color: blue; margin:0;">미처리</p>
+							</c:if> 
+							<c:if test="${r.report_status == 1}">
+								<p style="color: orange; margin:0;">확인완료</p>
+							</c:if> 
+							<c:if test="${r.report_status == 2}">
+								<p style="color: grren; margin:0;">처리완료</p>
+							</c:if>
+						</td>
 					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td>사기</td>
-						<td>이혜리</td>
-						<td id="js_interiorM_content"><a href="#">자기 집이라고 하는데 찾아보니까 어느 회사 직원이더라구요! 확인 해주세요!!</a></td>
-						<td>유은정</td>
-						<td>2019/03/08</td>
-						<td>2019/03/09</td>
-						<td>처리</td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td>부적절한 행동</td>
-						<td>황민규</td>
-						<td id="js_interiorM_content"><a href="#">계속 제글에 이상한 댓글로 도배를 합니다. 저랑 전혀 알지 못하는 사람인데</a></td>
-						<td>이철민</td>
-						<td>2019/03/02</td>
-						<td>2019/03/03</td>
-						<td>처리</td>
-					</tr>
-					<tr>
-						<th scope="row">1</th>
-						<td>기타</td>
-						<td>서지안</td>
-						<td id="js_interiorM_content"><a href="#">저한테 계속 카카오톡아이디를 알려달라고 하는데 이걸 어떻게 처리해야할까요?</a></td>
-						<td>사하라</td>
-						<td>2019/02/10</td>
-						<td>2019/02/11</td>
-						<td>처리</td>
-					</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
-		<div class="row">
-			<div class="col">
-				<select class="custom-select" name="selBox"
-					style="max-width: 200px;">
-					<option value="">카테고리 선택 후 검색</option>
+		<div class="row" style="margin: 0 auto;">
+			<div class="col-sm">
+				<div class="row">
+				<select class="custom-select" name="selBox" id="selBox" style="min-width: 150px;max-width: 150px;">
+					<option value="">카테고리 선택</option>
 					<option value="욕설">욕설</option>
 					<option value="사기">사기</option>
 					<option value="부적절한 행동">부적절한 행동</option>
 					<option value="기타">기타</option>
 				</select>
-				<button class="btn btn-info btn-sm" onclick="selSearch();">검색</button>
+				<button class="btn btn-info" onclick="selSearch();">검색</button>
+				<a class="dropdown-item" href="arlistselect.do?report_system=user&page=1"style="width: 80px;">reset</a>
+				</div>
 			</div>
-			<div class="col" style="margin-left:150px;">
+			<div class="col-sm" align="center"  style="margin: 0 auto;"> 
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
+						<c:if test="${ page.page <= 1 }">
+							<li class="page-item"><span aria-hidden="true"
+								class="page-link">&laquo;&laquo;</span>&nbsp;</li>
+						</c:if>
+						<c:if test="${ page.page > 1 }">
+							<c:url var="bli" value="ablistselect.do?">
+								<c:param name="page" value="1" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${ pli }"><span
+									aria-hidden="true">&laquo;&laquo;</span></a>&nbsp;</li>
+						</c:if>
+						<c:if
+							test="${ page.page - 10 < page.startpage and page.page - 10 > 1 }">
+							<c:url var="bli" value="ablistselect.do?">
+								<c:param name="page" value="${page.startpage - 10 }" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${pli}"><span
+									aria-hidden="true" class="page-link">&laquo;</span></a></li>
+						</c:if>
+						<c:if
+							test="${ page.page - 10 >= page.startpage and page.page - 10 <= 1 }">
+							<li class="page-item"><span class="page-link"
+								aria-hidden="true">&laquo;</span></li>
+						</c:if>
+
+						<c:forEach var="p" begin="${ page.startpage }"
+							end="${ page.endpage }">
+							<c:if test="${ p == page.page}">
+								<li class="page-item"><a class="page-link"><b>${ p }</b></a></li>
+							</c:if>
+							<c:if test="${ p ne page.page}">
+								<c:if
+									test="${!empty selectval and selectval eq 'p.business_user_no'}">
+									<c:url var="psearchbno" value="ablistselect.do?">
+										<c:param name="selectval" value="${ selectval }" />
+										<c:param name="keyword" value="${ keyword }" />
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ psearchbno }">${ p }</a></li>
+								</c:if>
+								<c:if test="${!empty selectval and selectval eq 'u.user_name'}">
+									<c:url var="psearchuname" value="ablistselect.do?">
+										<c:param name="selectval" value="${ selectval }" />
+										<c:param name="keyword" value="${ keyword }" />
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ psearchuname }">${ p }</a></li>
+								</c:if>
+								<c:if
+									test="${!empty selectval and selectval eq 'expiration_date'}">
+									<c:url var="psearchedate" value="ablistselect.do?">
+										<c:param name="selectval" value="${ selectval }" />
+										<c:param name="keyword" value="${ keyword }" />
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ psearchedate }">${ p }</a></li>
+								</c:if>
+								<c:if test="${empty search}">
+									<c:url var="psearch" value="ablistselect.do?">
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ blist }">${ p }</a></li>
+								</c:if>
+							</c:if>
+						</c:forEach>
+						<c:if
+							test="${page.page + 10 > page.endpage and page.page + 10 < page.maxpage}">
+							<c:url var="next" value="ablistselect.do?">
+								<c:param name="page" value="${ page.endpage + 10 }" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${ next }"><span
+									aria-hidden="true">&raquo;</span></a>&nbsp;</li>
+						</c:if>
+						<c:if
+							test="${page.page + 10 <= page.endpage and page.page + 10 >= page.maxpage}">
+							<li class="page-item"><span aria-hidden="true">&raquo;</span>&nbsp;
+							</li>
+						</c:if>
+						<c:if test="${ page.page >= page.maxpage }">
+							<li class="page-item"><span aria-hidden="true"
+								class="page-link">&raquo;&raquo;</span></li>
+						</c:if>
+						<c:if test="${ page.page < page.maxpage }">
+							<c:url var="mpage" value="ablistselect.do?">
+								<c:param name="page" value="${ page.maxpage }" />
+							</c:url>
+							<li class="page-item"><a class="page-link"
+								href="${ page.maxpage }"><span aria-hidden="true">&raquo;&raquo;</span></a></li>
+						</c:if>
 					</ul>
 				</nav>
 			</div>
-			<div class="col" align="right">
-				<button class="btn btn-dark btn-sm"
-					onclick="history.go(-1);">관리자페이지로</button>
+			<div class="col-sm" align="right" style="margin:0 auto;">
+				<button class="btn btn-dark"
+					onclick="location.href='auhlistselect.do'">관리자페이지로</button>
 			</div>
 		</div>
 	</div>
-	<c:import url="../common/footer.jsp"></c:import>
+	<c:import url="../../common/footer.jsp"></c:import>
 </body>
 </html>

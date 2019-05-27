@@ -34,24 +34,16 @@ $(function() {
     $("#savebutton").click(function(){
         //id가 smarteditor인 textarea에 에디터에서 대입
         obj.getById["contents"].exec("UPDATE_CONTENTS_FIELD", []);
-        var guide_system = document.ginsertform.guide_system.value;
-		var category = document.ginsertform.category.value;
-		var title = document.ginsertform.title.value;
-		var thumbnail = document.ginsertform.thumbnail.value;
-		var contents = document.ginsertform.contents.value;
+		var title = document.gupdateform.title.value;
+		var contents = document.gupdateform.contents.value;
 		if (title == "") {
 			alert("제목을 입력하세요.");
-			document.ginsertform.title.focus;
-			return;
-		}
-		if (thumbnail == "") {
-			alert("썸네일을 업로드하세요.");
-			document.ginsertform.thumbnail.focus;
+			document.gupdateform.title.focus;
 			return;
 		}
         //폼 submit
-        document.ginsertform.action = "aginsert.do";
-        $("#ginsertform").submit();
+        document.gupdateform.action = "agupdate.do";
+        $("#gupdateform").submit();
     })
 });
 </script>
@@ -77,71 +69,39 @@ $(function() {
 		<div class="row">
 			<p id="js_pginsert_title">부동산 가이드 수정</p>
 		</div>
-		<form>
+		<form id="gupdateform" name="gupdateform" method="POST" enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="disabledSelect">카테고리 선택</label> <select
-					class="form-control " id="disabledSelect" disabled >
-					<option>부동산 상식</option>
-					<option>이사 가이드</option>
-					<option>분양 정보</option>
-					<option>법률 지식</option>
-					<option>선방에서 집 구하기</option>
-					<option>선방에 집 내놓기</option>
+				<input type="hidden" id="guide_system" name="guide_system" value="realty">
+				<input type="hidden" id="guide_no" name="guide_no" value="${guide.guide_no }">
+				<label for="category">카테고리 선택</label> 
+				<select class="form-control " id="category" disabled >
+					<option value="${guide.category }">${guide.category }</option>
 				</select>
 			</div>
 			<div class="form-group">
 				<label for="exampleFormControlInput1">제목</label> <input type="text"
-					class="form-control" id="title" name="title" placeholder="제목 입력" value="부동산 등기부등본 어떻게 봐야하나요?">
+					class="form-control" id="title" name="title" value="${guide.title }">
 			</div>
 			<div class="form-group">
-				<label for="file">첨부파일</label> <input type="file"
-					class="form-control-file" id="file" name="files">
+				<input type="hidden" id="othumbnail" name="othumbnail" value="${guide.thumbnail }">
+				<label for="file">첨부파일</label>
+				<input type="file"class="form-control-file" id="thumbnail" name="thumbnail">
 			</div>
 			<div class="form-group" style="height:100%;">
 				<label for="exampleFormControlTextarea1">내용입력</label>
 				<div style="height:100%;">
-					<textarea name="contents" id="contents" rows="20" cols="100">
-					<pre>
-자 그럼 본격적으로 부동산 등기부등본 쉽게 보는 법을 알아보겠습니다.
-
-부동산 거래에 있어 해당 부동산의 권리관계를 명시한 서류가 등기부등본으로 눈에 보이지않는 정보까지 담고 있습니다. 
-
-부동산 거래는 큰 목돈이 걸려 있어 등기부등본을 볼 줄 알면 사기나 잘못된 건물 또는 토지의 
-구입을 예방할 수 있지만,등기부등본을 제대로 볼 줄 아는 사람이 많지 않은 것이 현실입니다. 
-
-
-부동산 등기부등본은 토지등기부등본과 건물등기부등본이 있으며,
-건물등기부등본은 아파트와 같은 집합건물등기부등본과 일반건물등기부등본으로 나눠집니다.
-
-(등기부등본의 구성)
-
-
-등기부등본을 쉽고 올바르게 보기 위해선 등기부등본에 기재되는 등기의 종류에 대해서 기본적으로 알고 있어야 합니다. 
-
-등기부등본에 기재할 수 있는 권리는 소유권, 지상권, 지역권, 전세권, 저당권이 인정되며, 
-등기의 종류는 기입등기, 변경등기, 경정등기, 말소등기, 회복등기가 있습니다.
-
-- 기입등기 : 새로운 등기원인이 발생하면 기입하는 등기로 소유권보존등기, 소유권이전등기, 근저당설정등기 등
-- 변경등기 : 등기가 행해진 후 어떤 원인에 의해 변경이 발생할 때 하는 등기로 소유권변경등기, 근저당변경등기 등
-- 경정등기 : 이미 기입된 등기에 대해 절차나 착오가 있을 경우 바로잡기 위한 등기로 소유권경정등기, 근저당경정등기 등
-- 말소등기 : 이미 등기된 내용을 법적으로 소멸시키는 등기로 전세권말소등기, 근저당말소등기 등
-- 회복등기 : 기존 등기가 부당하게 소멸된 경우 이를 부활시키는 등기로 전세권말소회복등기 등
-
-
-부동산 등기부등본 갑구는 소유권에 대한 내용이 등기되고, 주로 변경 및 변동사항, 압류, 가압류, 경매신청, 
-가등기, 환매등기, 예고등기 등이 기입되며, 을구는 소유권 이외의 권리사항으로 지상권, 지역권, 저당권, 
-전세권, 임차권 등이 기입됩니다.
-
-					</pre>
+					<textarea name="contents" id="contents" style="width: 100%; height: 500px">
+						<p>${guide.contents }</p>
 					</textarea>
 				</div>
 			</div>
-			<div class="row">
+			<div class="row" id="js_iginsert_btn">
 				<div class="col" style="text-align: right;">
-					<input class="btn btn-primary btn-sm" id="savebutton" value="등록">
+					<input class="btn btn-primary btn-sm" type="button" value="수정등록"
+						id="savebutton">
 				</div>
 				<button type="button" class="btn btn-outline-info btn-sm"
-								onclick="history.go(-1);">목록으로</button>
+					onclick="history.go(-1);">뒤로가기</button>
 			</div>
 		</form>
 	</div>

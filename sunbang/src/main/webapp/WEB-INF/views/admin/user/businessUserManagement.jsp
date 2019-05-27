@@ -5,9 +5,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<link rel="shortcut icon" type="image⁄x-icon"
+	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
 <style type="text/css">
-#js_primiumM_tb {
+#js_buserM_tb {
 	min-height: 600px;
 	text-align: center;
 	text-overflow: ellipsis;
@@ -15,7 +17,7 @@
 	overflow-x: auto;
 }
 
-#js_primiumM_h {
+#js_buserM_h {
 	margin-top: 60px;
 	margin-bottom: 30px;
 	text-align: center;
@@ -24,190 +26,264 @@
 <script type="text/javascript"
 	src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
-	function detailView() {
-		var popupX = (window.screen.width/2) - (1000/2);
-		var popupY= (window.screen.height/2) - (700/2);
-		window.open('/sunbang/views/admin/businessUserDetail.jsp', 'detailView',
-				'width=1000,height=650, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');
-		
-	};
-</script>
-<script type="text/javascript">
-$(function() {
-	if ($("#status").text() == "승인") {
-		console.log("승인");
-		$("#btn1").attr('disabled', true);
-		$("#btn1").css("opacity", "0.3");
-	} else if ($("#status").text() == "보류") {
-		$("#btn2").attr('disabled', true);
-		$("#btn2").css("opacity", "0.3");
-	} else if ($("#status").text() == "거절") {
-		$("#btn2").attr('disabled', true);
-		$("#btn2").css("opacity", "0.3");
-		$("#btn3").attr('disabled', true);
-		$("#btn3").css("opacity", "0.3");
-	}
+
+$(function(){
+	$("#selbox").change(function(){
+		if($("#selbox").val()==1 || $("#selbox").val()==2){
+			$("#key").html("");
+			$("#key").html("<input class='form-control mr-sm-2' type='search' placeholder='Search' aria-label='Search' id='keyword' name='keyword'>");
+		}
+		if($("#selbox").val()==3){
+			$("#key").html("");
+			$("#key").html("<select class='custom-select' name='selstatus' id='selstatus'>"
+					+"<option value='N'>미승인</option>"
+					+"<option value='Y'>승인</option>"
+					+"<option value='W'>경고</option></select>");
+		}
+	});
 });
+
+function search(){
+	var selectk = $("#selbox").val();
+	var keyword = $("#keyword").val();
+	if (selectk == "") {
+		alert("카테고리를 선택하세요.");
+		$("#selbox").select();
+		return;
+	}
+	if(selectk==1 || selectk==2){
+		if (keyword == "") {
+			alert("검색할 문자를 입력하세요.");
+			$("#keyword").select();
+			return;
+		}
+		if(keyword != "" && selectk==1){
+			selectk= "business_user_no";
+		}else{
+			selectk= "user_name";
+		}
+		location.href = "ablistselect.do?selectval="+selectk+"&keyword="+keyword;
+	}
+	if(selectk==3){
+		var status = $("#selstatus").val()
+		location.href = "ablistselect.do?selectval=status_agreement&keyword="+status;
+	}
+}
+function detailView(data) {
+	var popupX = (window.screen.width/2) - (1000/2);
+	var popupY= (window.screen.height/2) - (1000/2);
+	window.open('abdetailselect.do?business_user_no='+data, 'detailView',
+			'width=1000,height=880, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');
+}
 </script>
 </head>
 <body>
-	<c:import url="../common/realtyHeader.jsp"></c:import>
-	<c:import url="../common/adminHeader.jsp"></c:import>
+	<c:import url="../../common/realtyHeader.jsp"></c:import>
+	<c:import url="../../common/adminHeader.jsp"></c:import>
 	<div class="container" style="min-height: 960px;">
-		<h4 id="js_primiumM_h">기업회원 관리</h4>
-		<div id="js_primiumM_tb">
+		<h4 id="js_buserM_h">기업회원 관리</h4>
+		<div id="js_buserM_tb">
 			<table class="table table-sm">
 				<thead>
 					<tr>
-						<th scope="col" width="60px;">No</th>
-						<th scope="col" width="400px;">등록번호</th>
-						<th scope="col" width="400px;">상호</th>
-						<th scope="col" width="200px;">대표자</th>
-						<th scope="col" width="200px;">신청일자</th>
-						<th scope="col" width="200px;">처리일자</th>
+						<th scope="col" width="50px;">No</th>
+						<th scope="col" width="100px;">기업번호</th>
+						<th scope="col" width="300px;">상호</th>
+						<th scope="col" width="300px;">이름</th>
+						<th scope="col" width="100px;">신청일자</th>
+						<th scope="col" width="100px;">처리일자</th>
 						<th scope="col" width="100px;">P</th>
-						<th scope="col" width="150px;">상태</th>
-						<th scope="col" width="300px;">처리</th>
+						<th scope="col" width="100px;">승인상태</th>
+						<th scope="col" width="100px;">회원등급</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
-						<th scope="row">6</th>
-						<td><a href="javascript:detailView();">28237-2018-00133</a></td>
-						<td>100억공인중개사사무소</td>
-						<td>김세연</td>
-						<td>2019/04/19</td>
-						<td></td>
-						<td>N</td>
-						<td id="status">미승인</td>
-						<td><input type="button" class="btn btn-success btn-sm"
-							value="승인" id="btn1" onclick="location.href=''"> <input
-							type="button" class="btn btn-warning btn-sm" value="보류" id="btn2"
-							onclick="location.href=''"> <input type="button"
-							class="btn btn-danger btn-sm" value="거절" id="btn3"
-							data-toggle="modal" data-target="#delete"></td>
-					</tr>
-					<tr>
-						<th scope="row">5</th>
-						<td><a href="#">가3360-3841</a></td>
-						<td>강남부동산공인중개사사무소</td>
-						<td>허명희</td>
-						<td>2019/04/15</td>
-						<td></td>
-						<td>N</td>
-						<td id="status">미승인</td>
-						<td><input type="button" class="btn btn-success btn-sm"
-							value="승인" id="btn1" onclick="location.href=''"> <input
-							type="button" class="btn btn-warning btn-sm" value="보류" id="btn2"
-							onclick="location.href=''"> <input type="button"
-							class="btn btn-danger btn-sm" value="거절" id="btn3"
-							data-toggle="modal" data-target="#delete"></td>
-					</tr>
-					<tr>
-						<th scope="row">4</th>
-						<td><a href="#">가3360-6022</a></td>
-						<td>광개토공인중개사사무소</td>
-						<td>김용상</td>
-						<td>2019/04/11</td>
-						<td></td>
-						<td>N</td>
-						<td id="status">미승인</td>
-						<td><input type="button" class="btn btn-success btn-sm"
-							value="승인" id="btn1" onclick="location.href=''"> <input
-							type="button" class="btn btn-warning btn-sm" value="보류" id="btn2"
-							onclick="location.href=''"> <input type="button"
-							class="btn btn-danger btn-sm" value="거절" id="btn3"
-							data-toggle="modal" data-target="#delete"></td>
-					</tr>
-					<tr>
-						<th scope="row">3</th>
-						<td><a href="#">가3360-6174</a></td>
-						<td>미소공인중개사사무소</td>
-						<td>노예실</td>
-						<td>2019/04/03</td>
-						<td></td>
-						<td>N</td>
-						<td id="status">미승인</td>
-						<td><input type="button" class="btn btn-success btn-sm"
-							value="승인" id="btn1" onclick="location.href=''"> <input
-							type="button" class="btn btn-warning btn-sm" value="보류" id="btn2"
-							onclick="location.href=''"> <input type="button"
-							class="btn btn-danger btn-sm" value="거절" id="btn3"
-							data-toggle="modal" data-target="#delete"></td>
-					</tr>
-					<tr>
-						<th scope="row">2</th>
-						<td><a href="#">가3360-6022</a></td>
-						<td>백송공인중개사사무소</td>
-						<td>김현숙</td>
-						<td>2019/03/29</td>
-						<td></td>
-						<td>N</td>
-						<td id="status">미승인</td>
-						<td><input type="button" class="btn btn-success btn-sm"
-							value="승인" id="btn1" onclick="location.href=''"> <input
-							type="button" class="btn btn-warning btn-sm" value="보류" id="btn2"
-							onclick="location.href=''"> <input type="button"
-							class="btn btn-danger btn-sm" value="거절" id="btn3"
-							data-toggle="modal" data-target="#delete"></td>
-					</tr>
-					<tr>
-						<th scope="row">1</th>
-						<td><a href="#">가3360-2585</a></td>
-						<td>소망공인중개사사무소</td>
-						<td>김영미</td>
-						<td>2019/03/11</td>
-						<td></td>
-						<td>Y</td>
-						<td id="status">승인</td>
-						<td><input type="button" class="btn btn-success btn-sm"
-							value="승인" id="btn1" onclick=""  style="disabled:true; opacity:0.3;"> <input
-							type="button" class="btn btn-warning btn-sm" value="보류" id="btn2"
-							onclick="location.href=''"> <input type="button"
-							class="btn btn-danger btn-sm" value="거절" id="btn3"
-							data-toggle="modal" data-target="#delete"></td>
-					</tr>
-
+					<c:forEach items="${blist }" var="b" varStatus="status">
+						<tr>
+						<td><c:out value="${status.count}" /></td>
+							<td><a href="javascript:detailView(${b.business_user_no });">${b.business_user_no }</a></td>
+							<td>${b.office_name }</td>
+							<td>${b.user_name }</td>
+							<td>${b.join_date }</td>
+							<td>${b.update_date }</td>
+							<td><c:if test="${b.premium_status == 'N'}">
+								미가입
+							</c:if> <c:if test="${b.premium_status == 'Y'}">
+								가입
+							</c:if></td>
+							<td id="status">
+								<c:if test="${b.status_agreement == 'N'}">
+									<p style="color: blue; margin:0;">미승인</p>
+								</c:if> <c:if test="${b.status_agreement == 'Y'}">
+									<p style="color: green; margin:0;">승인</p>
+								</c:if> <c:if test="${b.status_agreement == 'W'}">
+									<p style="color: orange; margin:0;">경고</p>
+								</c:if>
+							</td>
+							<td>
+								<c:if test="${b.user_status == 0}">
+									전체이용가능
+								</c:if>
+								<c:if test="${b.user_status == 1}">
+									부동산 블랙
+								</c:if>
+								<c:if test="${b.user_status == 2}">
+									인테리어 블랙
+								</c:if>
+								<c:if test="${b.user_status == 3}">
+									채팅 블랙
+								</c:if>
+								<c:if test="${b.user_status == 4}">
+									부동산/인테리어 블랙
+								</c:if>
+								<c:if test="${b.user_status == 5}">
+									인테리어/채팅 블랙
+								</c:if>
+								<c:if test="${b.user_status == 6}">
+									부동산/채팅 블랙
+								</c:if>
+								<c:if test="${b.user_status == 7}">
+									전체 블랙
+								</c:if>
+								<c:if test="${b.user_status == 8}">
+									탈퇴
+								</c:if>
+								<c:if test="${b.user_status == 9}">
+									경고(부동산블랙)
+								</c:if>
+							</td>
+						</tr>
+					</c:forEach>
 				</tbody>
 			</table>
 		</div>
 		<div class="row">
-			<div class="col" style="max-width: 150px; margin:0 auto;">
-				<select class="custom-select" name="selBox">
+			<div class="col-sm" style="margin: 0 auto; padding: 0px;">
+				<div class="row" style="margin: 0 auto;">
+				<select class="custom-select" name="selbox" id="selbox" style="width:110px;">
 					<option value="">선택</option>
-					<option value="등록번호">등록번호</option>
-					<option value="상호">상호</option>
-					<option value="상태">상태</option>
+					<option value="1">기업번호</option>
+					<option value="2">이름</option>
+					<option value="3">상태</option>
 				</select>
-			</div>
-			<div class="col" style="max-width: 200px; margin:0 auto; padding:0px;">
+				<div class="col" id="key" style="max-width: 200px; margin: 0 auto; padding: 0px;">
 				<input class="form-control mr-sm-2" type="search"
-					placeholder="Search" aria-label="Search">
-				
+					placeholder="Search" aria-label="Search" id="keyword"
+					name="keyword">
+				</div>
+				</div>
 			</div>
-			<div class="col" style="margin:0 auto; padding:0px;">
-			<button class="btn btn-info btn" onclick="">검색</button>
+			<div class="col-sm" style="margin: 0 auto; padding: 0px;">
+				<div class="row" style="margin: 0 auto;">
+				<button class="btn btn-info btn" onclick="search()">검색</button>
+				<a class="dropdown-item" href="ablistselect.do?"
+					style="width: 20px;">reset</a>
+				</div>
 			</div>
-			<div class="col">
+			<div class="col-sm">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination">
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-						</a></li>
-						<li class="page-item"><a class="page-link" href="#">1</a></li>
-						<li class="page-item"><a class="page-link" href="#">2</a></li>
-						<li class="page-item"><a class="page-link" href="#">3</a></li>
-						<li class="page-item"><a class="page-link" href="#"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
+						<c:if test="${ page.page <= 1 }">
+							<li class="page-item"><span aria-hidden="true"
+								class="page-link">&laquo;&laquo;</span>&nbsp;</li>
+						</c:if>
+						<c:if test="${ page.page > 1 }">
+							<c:url var="bli" value="ablistselect.do?">
+								<c:param name="page" value="1" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${ pli }"><span
+									aria-hidden="true">&laquo;&laquo;</span></a>&nbsp;</li>
+						</c:if>
+						<c:if
+							test="${ page.page - 10 < page.startpage and page.page - 10 > 1 }">
+							<c:url var="bli" value="ablistselect.do?">
+								<c:param name="page" value="${page.startpage - 10 }" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${pli}"><span
+									aria-hidden="true" class="page-link">&laquo;</span></a></li>
+						</c:if>
+						<c:if
+							test="${ page.page - 10 >= page.startpage and page.page - 10 <= 1 }">
+							<li class="page-item"><span class="page-link"
+								aria-hidden="true">&laquo;</span></li>
+						</c:if>
+
+						<c:forEach var="p" begin="${ page.startpage }"
+							end="${ page.endpage }">
+							<c:if test="${ p == page.page}">
+								<li class="page-item"><a class="page-link"><b>${ p }</b></a></li>
+							</c:if>
+							<c:if test="${ p ne page.page}">
+								<c:if
+									test="${!empty selectval and selectval eq 'p.business_user_no'}">
+									<c:url var="psearchbno" value="ablistselect.do?">
+										<c:param name="selectval" value="${ selectval }" />
+										<c:param name="keyword" value="${ keyword }" />
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ psearchbno }">${ p }</a></li>
+								</c:if>
+								<c:if test="${!empty selectval and selectval eq 'u.user_name'}">
+									<c:url var="psearchuname" value="ablistselect.do?">
+										<c:param name="selectval" value="${ selectval }" />
+										<c:param name="keyword" value="${ keyword }" />
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ psearchuname }">${ p }</a></li>
+								</c:if>
+								<c:if
+									test="${!empty selectval and selectval eq 'expiration_date'}">
+									<c:url var="psearchedate" value="ablistselect.do?">
+										<c:param name="selectval" value="${ selectval }" />
+										<c:param name="keyword" value="${ keyword }" />
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ psearchedate }">${ p }</a></li>
+								</c:if>
+								<c:if test="${empty search}">
+									<c:url var="psearch" value="ablistselect.do?">
+										<c:param name="page" value="${ p }" />
+									</c:url>
+									<li class="page-item"><a class="page-link"
+										href="${ blist }">${ p }</a></li>
+								</c:if>
+							</c:if>
+						</c:forEach>
+						<c:if
+							test="${page.page + 10 > page.endpage and page.page + 10 < page.maxpage}">
+							<c:url var="next" value="ablistselect.do?">
+								<c:param name="page" value="${ page.endpage + 10 }" />
+							</c:url>
+							<li class="page-item"><a class="page-link" href="${ next }"><span
+									aria-hidden="true">&raquo;</span></a>&nbsp;</li>
+						</c:if>
+						<c:if
+							test="${page.page + 10 <= page.endpage and page.page + 10 >= page.maxpage}">
+							<li class="page-item"><span aria-hidden="true">&raquo;</span>&nbsp;
+							</li>
+						</c:if>
+						<c:if test="${ page.page >= page.maxpage }">
+							<li class="page-item"><span aria-hidden="true"
+								class="page-link">&raquo;&raquo;</span></li>
+						</c:if>
+						<c:if test="${ page.page < page.maxpage }">
+							<c:url var="mpage" value="ablistselect.do?">
+								<c:param name="page" value="${ page.maxpage }" />
+							</c:url>
+							<li class="page-item"><a class="page-link"
+								href="${ page.maxpage }"><span aria-hidden="true">&raquo;&raquo;</span></a></li>
+						</c:if>
 					</ul>
 				</nav>
 			</div>
-			<div class="col" align="right">
+			<div class="col-sm" align="right">
 				<button class="btn btn-dark" onclick="history.go(-1);">관리자페이지로</button>
 			</div>
 		</div>
 	</div>
-	<c:import url="../common/footer.jsp"></c:import>
+	<c:import url="../../common/footer.jsp"></c:import>
 </body>
 </html>
