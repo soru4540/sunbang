@@ -15,6 +15,7 @@ import org.kh.sunbang.chat.model.service.ChatService;
 import org.kh.sunbang.chat.model.vo.Chat;
 import org.kh.sunbang.chat.model.vo.ChatBlock;
 import org.kh.sunbang.chat.model.vo.Message;
+import org.kh.sunbang.user.model.vo.User;
 import org.springframework.aop.aspectj.annotation.LazySingletonAspectInstanceFactoryDecorator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,6 +42,14 @@ public class ChatController {
 	@RequestMapping("cmyview.do")
 	public String mychatView(){
 		return "chat/myChat";}
+	
+	@RequestMapping("chatview.do")
+	public String mychatViews(){
+		return "chat/chat";}
+	
+	@RequestMapping("interiorchatview.do")
+	public String mychatViewss(){
+		return "chat/InteriorChat";}
 	
 	@RequestMapping("cfilter.do")
 	public ModelAndView listFilterChat(){return null;} 
@@ -80,9 +89,9 @@ public class ChatController {
 	} 
 	
 	@RequestMapping("cmlist.do")
-	public void listMessage(HttpServletResponse response, @RequestParam(name="chatno") int chatno) throws IOException{
+	public void listMessage(HttpServletResponse response, Chat chat) throws IOException{
 		response.setContentType("text/html; charset=utf-8");
-		List<Message> list = chatService.selectListMessage(chatno);
+		List<Message> list = chatService.selectListMessage(chat);
 		
 		JSONObject sendObj = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -103,6 +112,7 @@ public class ChatController {
 			jmessage.put("user_no", message.getUser_no());
 			jmessage.put("nickname", message.getNickname());
 			jmessage.put("user_profile", message.getUser_profile());
+			jmessage.put("read_count", message.getRead_count());
 			
 			
 			jarr.add(jmessage);
@@ -118,9 +128,9 @@ public class ChatController {
 		} 
 	
 	@RequestMapping("cuserlist.do")
-	public void listChatUser(HttpServletResponse response, @RequestParam(name="chatno") int chatno) throws IOException{
+	public void listChatUser(HttpServletResponse response, Chat chat1) throws IOException{
 		response.setContentType("text/html; charset=utf-8");
-		List<Chat> list = chatService.selectListChatUser(chatno);
+		List<Chat> list = chatService.selectListChatUser(chat1);
 		
 		JSONObject sendObj = new JSONObject();
 		JSONArray jarr = new JSONArray();
@@ -132,6 +142,7 @@ public class ChatController {
 			jchat.put("user_no", chat.getUser_no());
 			jchat.put("nickname", chat.getNickname());
 			jchat.put("user_profile", chat.getUser_profile());
+			jchat.put("check_join", chat.getCheck_join());
 			
 			jarr.add(jchat);
 		}
@@ -145,10 +156,52 @@ public class ChatController {
 		out.close();} 
 	
 	@RequestMapping("cinsert.do")
-	public String insertChat(){return null;} 
+	@ResponseBody
+	public int insertChat(Chat chat, HttpServletRequest request){
+		int result = chatService.insertChat(chat);
+		chat.setChat_no(result);
+		chat.setUser_no(Integer.parseInt(request.getParameter("two_user_no")));
+		chatService.insertChat(chat);
+		
+		return result;
+	} 
+	
+	@RequestMapping("cuserchatinsert.do")
+	@ResponseBody
+	public int insertUserChat(Chat chat) {
+		int result = chatService.insertUserChat(chat);
+		return result;
+	}
+	
+	@RequestMapping("ccheck.do")
+	@ResponseBody
+	public int selectCheckChat(Chat chat){
+		Chat result = chatService.selectCheckChat(chat);
+		int intresult = 0;
+		if(result != null) {
+			intresult = result.getChat_no();
+		}
+		
+		return intresult;
+	} 
+	
+	@RequestMapping("cselectuser.do")
+	@ResponseBody
+	public int selectUserChat(HttpServletRequest request) {
+		String nickname = request.getParameter("nickname");
+		User result = chatService.selectUserChat(nickname);
+		int rresult = 0;
+		if(result != null) {
+			rresult = result.getUser_no();
+		}
+		return rresult;
+	}
 	
 	@RequestMapping("cdelete.do")
-	public String deleteChat(){return null;} 
+	@ResponseBody
+	public void deleteChat(Chat chat){
+		int result = chatService.deleteChat(chat);
+	} 
 	
 	@RequestMapping("cupdatejoin.do")
 	public String updateJoin(){return null;} 
@@ -198,7 +251,6 @@ public class ChatController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
 		String renewFile = sdf.format(new Date(System.currentTimeMillis()))+"."+ orginFile.substring(orginFile.lastIndexOf(".") + 1);
 		file.transferTo(new File(savePath + "\\" + renewFile));
-		System.out.println(renewFile);
 		message.setChat_no(Integer.parseInt(request.getParameter("chat_no")));
 		message.setUser_no(Integer.parseInt(request.getParameter("user_no")));
 		message.setOrigin_filename(orginFile);
@@ -246,10 +298,17 @@ public class ChatController {
 	} 
 	
 	@RequestMapping("cbinsert.do")
-	public String insertChatBlock(){return null;} 
+	@ResponseBody
+	public void insertChatBlock(ChatBlock chatBlock){
+		int result = chatService.insertChatBlock(chatBlock);
+		
+	} 
 	
 	@RequestMapping("cbdel.do")
-	public String deleteChatBlock(){return null;} 
+	@ResponseBody
+	public void deleteChatBlock(ChatBlock chatBlock){
+		int result = chatService.deleteChatBlock(chatBlock);
+	} 
 	
 	@RequestMapping("cmdownload.do")
 	public String filedownload(){return null;}

@@ -33,6 +33,11 @@ public class UserServiceImpl implements UserService{
 	public User selectLoginPwd(User user) {
 		return userDao.selectLoginPwd(mybatisSession, user);
 	}
+	
+	@Override
+	public User selectUpdateLogin(User user) {
+		return userDao.selectUpdateLogin(mybatisSession, user);
+	}
 
 	@Override
 	public int updateLoginNum(User user) {
@@ -46,20 +51,18 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public String selectFindId(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println(userDao.selectFindId(mybatisSession, user));
+		return userDao.selectFindId(mybatisSession, user);
 	}
 
 	@Override
-	public String selectFIndPwd(User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public User selectFindPwd(User user) {
+		return userDao.selectFindPwd(mybatisSession, user);
 	}
 
 	@Override
 	public int updateUser(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		return userDao.updateUser(mybatisSession, user);
 	}
 
 	@Override
@@ -85,15 +88,13 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User selectMyUser(int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public Premium selectMyUser(int business_user_no) {
+		return userDao.selectMyUser(mybatisSession, business_user_no);
 	}
 
 	@Override
-	public int updatePwd(String password) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updatePwd(User user) {
+		return userDao.updatePwd(mybatisSession, user);
 	}
 
 	@Override
@@ -102,9 +103,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String updatePremium(int business_user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updatePremium(int charge_no) {
+		return userDao.updatePremium(mybatisSession, charge_no);
 	}
 
 	@Override
@@ -132,6 +132,11 @@ public class UserServiceImpl implements UserService{
 		return userDao.deleteLike(mybatisSession, like_no);
 	}
 	
+	@Override
+	public int updateUserPremium(int business_user_no) {
+		return userDao.updateUserPremium(mybatisSession, business_user_no);
+	}
+	
 	//김성현--------------------------------------------------------------
 	@Override
 	public int insertPremium(Premium premium) { //결제 등록
@@ -147,5 +152,6 @@ public class UserServiceImpl implements UserService{
 	public User selectUserNo(int business_user_no) { //결제 후 세션 reload
 		return userDao.selectUserNo(mybatisSession, business_user_no);
 	}
+
 
 }

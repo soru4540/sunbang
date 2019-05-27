@@ -35,10 +35,17 @@ public class UserDao {
 		}
 		return loginUser;
 	}
+	
+	public User selectUpdateLogin(SqlSessionTemplate session, User user) {
+		User loginUser = session.selectOne("userMapper.selectLoginPwd", user);
+		return loginUser;
+	}
+
 
 	
 	public int updateLoginNum(SqlSessionTemplate session, User user) {
-		return session.update("userMapper.updateLoginNum", user); 
+		session.update("userMapper.updateLoginNum", user);
+		return session.selectOne("userMapper.selectLoginNum", user);
 	}
 	
 	
@@ -47,26 +54,30 @@ public class UserDao {
 		if(!user.getUser_type().equals("일반회원")) {
 		result =  session.insert("userMapper.binsertUser", user);
 		}
+		session.insert("chatMapper.insertaChat", user);
+		session.insert("chatMapper.insertbChat");
 		
 		return result;
 	}
 
 	
 	public String selectFindId(SqlSessionTemplate session, User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("userMapper.selectFindId", user); 
 	}
 
 	
-	public String selectFIndPwd(SqlSessionTemplate session, User user) {
-		// TODO Auto-generated method stub
-		return null;
+	public User selectFindPwd(SqlSessionTemplate session, User user) {
+		User result= session.selectOne("userMapper.selectFindPwd", user);
+		return result; 
 	}
 
 	
 	public int updateUser(SqlSessionTemplate session, User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		int result =  session.update("userMapper.updateUser", user);
+		if(user.getUser_type().equals("공인중개사")) {
+		result =  session.update("userMapper.bupdateUser", user);
+		}
+		return result;
 	}
 
 	
@@ -90,15 +101,13 @@ public class UserDao {
 	}
 
 	
-	public User selectMyUser(SqlSessionTemplate session, int user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public Premium selectMyUser(SqlSessionTemplate session, int business_user_no) {
+		return session.selectOne("userMapper.selectMyUser", business_user_no); 
 	}
 
 	
-	public int updatePwd(SqlSessionTemplate session, String password) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int updatePwd(SqlSessionTemplate session, User user) {
+		return session.update("userMapper.updatePwd", user); 
 	}
 
 	
@@ -107,9 +116,8 @@ public class UserDao {
 	}
 
 	
-	public String updatePremium(SqlSessionTemplate session, int business_user_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public int updatePremium(SqlSessionTemplate session, int charge_no) {
+		return session.update("userMapper.updatePremium", charge_no); 
 	}
 
 	
@@ -138,6 +146,10 @@ public class UserDao {
 	public int deleteLike(SqlSessionTemplate session, int like_no) {
 		return session.delete("userMapper.deleteLike", like_no); 
 	}
+	
+	public int updateUserPremium(SqlSessionTemplate session, int business_user_no) {
+		return session.update("userMapper.updateUserPremium", business_user_no); 
+	}
 
 	
 	//성현------------------------------------
@@ -154,4 +166,5 @@ public class UserDao {
 	public User selectUserNo(SqlSessionTemplate mybatisSession, int business_user_no) {
 		return mybatisSession.selectOne("userMapper.selectUserNo", business_user_no);
 	}
+
 }

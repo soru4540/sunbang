@@ -26,6 +26,13 @@
 	integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
 	crossorigin="anonymous">
 <script type="text/javascript" src="${pageContext.request.contextPath }/resources/js/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	$("#nononono1").click(function(){
+		alert("접근불가 서비스입니다");
+	});
+});
+</script>
 <style type="text/css">
 #js_pheader_body {
 	font-family: a고딕11;
@@ -116,7 +123,12 @@
 				style="margin: 0 auto; margin-right: 0 !important;">
 				<li class="nav-item"><a class="nav-link" href="test.do">집찾기</a></li>
 				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">
+					<c:if test="${loginUser.user_status != 9}">
 					<li class="nav-item"><a class="nav-link" href="rinsertview.do?user_no=${loginUser.user_no }&premium_status=${loginUser.premium_status}">집내놓기</a></li>
+					</c:if>
+					<c:if test="${loginUser.user_status == 9}">
+					<li class="nav-item"><a class="nav-link" id="nononono1" style="cursor:pointer;">집내놓기</a></li>
+					</c:if>
 				</c:if>
 				<li class="nav-item"><a class="nav-link" href="aglistselect.do?guide_system=realty">부동산가이드</a></li>
 				<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }">
@@ -125,20 +137,20 @@
 				<li class="nav-item" id="js_pheader_user">
 				<c:if test="${!empty loginUser}">
 					<a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" style="cursor:pointer;"> 
-						<c:if test="${!empty loginUser.user_profile }"><img src="sunbang/files/user/userImages/${loginUser.user_profile }" class="rounded-circle"  style="width:30px; height:30px; border:1px solid #eee;"></c:if> 
+						<c:if test="${!empty loginUser.user_profile }"><img src="files/user/userImages/${loginUser.user_profile }" class="rounded-circle"  style="width:30px; height:30px; border:1px solid #eee;"></c:if> 
 							<c:if test="${empty loginUser.user_profile }"><i class="fas fa-user"></i></c:if>
 							&nbsp;${loginUser.nickname }
 					</a>
 					<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333" id="js_pheader_dropdown">
 						<c:if test="${loginUser.user_type eq '일반회원' }"> <!-- 일반회원 -->
-						<a class="dropdown-item" href="umyuserview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
+						<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="ulogout.do?uri=1"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }"> <!-- 기업회원 -->
-							<a class="dropdown-item" href="umyuserview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
+							<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>

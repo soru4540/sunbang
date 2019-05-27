@@ -1,6 +1,6 @@
 package org.kh.sunbang.user.controller;
 
-import java.io.BufferedReader; 
+import java.io.BufferedReader;   
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -14,11 +14,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-/*import org.apache.commons.mail.DefaultAuthenticator; 
+/*import org.apache.commons.mail.DefaultAuthenticator;  
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;*/
 import org.kh.sunbang.dibs.model.vo.Dibs;
@@ -28,9 +29,11 @@ import org.kh.sunbang.user.model.vo.Uboard;
 import org.kh.sunbang.user.model.vo.Urealty;
 import org.kh.sunbang.user.model.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -49,9 +52,6 @@ public class UserController {
 	@Autowired
 	private UserService userService;
 	
-/*	@Autowired
-	private JavaMailSender sender;*/
-	
 	@Autowired
 	BCryptPasswordEncoder bcyptPasswordEncoder;
 	
@@ -62,8 +62,11 @@ public class UserController {
 	} 
 	
 	@RequestMapping("umyuserview.do")
-	public String selectMyUserView(){
-		return "user/myUser";
+	public ModelAndView selectMyUserView(ModelAndView mv, @RequestParam(name="business_user_no", required=false)int business_user_no){
+		Premium premium = userService.selectMyUser(business_user_no);
+		mv.addObject("premium", premium);
+		mv.setViewName("user/myUser");
+		return mv;
 	}
 	
 	@RequestMapping("umydibs.do")
@@ -82,14 +85,25 @@ public class UserController {
 		return mv;
 	} 
 	
+	@RequestMapping(value="uulogin.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void uuLogin(HttpSession session, SessionStatus status, HttpServletResponse response, @CookieValue(value="UG", required=false) String UG) {
+		if(UG != null) {
+		User loginUser = new User();
+		loginUser.setUser_id(UG.split("/")[0]);
+		loginUser.setUser_type(UG.split("/")[1]);
+		User loginUserPwd = userService.selectUpdateLogin(loginUser);
+		session.setAttribute("loginUser", loginUserPwd);
+		status.setComplete();
+		}
+	}
+	
 	@RequestMapping(value="ulogin.do", method=RequestMethod.POST)
 	@ResponseBody
 	public void login(User user, HttpSession session, @RequestParam(name="logincheck", required=false) String logincheck, SessionStatus status, HttpServletResponse response) throws IOException{
 		User loginUser = userService.selectLoginId(user); 
-		/*Cookie loginCookie = new Cookie("CookieUser", value);*/
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		
 		
 		if(loginUser != null) {
 		user.setUser_type(loginUser.getUser_type());
@@ -99,7 +113,14 @@ public class UserController {
 			if(loginUserPwd != null) {
 				loginUser.setLogin_num(0);
 				int result = userService.updateLoginNum(loginUser);
-				if(result > 0) {
+				if(result < 5) {
+					if(logincheck != null) {
+						Cookie loginCookie = new Cookie("UG", loginUserPwd.getUser_id()+"/"+loginUserPwd.getUser_type());
+						loginCookie.setPath("/sunbang");
+						loginCookie.setMaxAge(60*60*24*7);
+						response.addCookie(loginCookie);
+					}
+					loginUserPwd.setPassword(null);
 					session.setAttribute("loginUser", loginUserPwd);
 					status.setComplete();
 					out.append("success");
@@ -111,8 +132,7 @@ public class UserController {
 			}else {
 				loginUser.setLogin_num(loginUser.getLogin_num() + 1);
 				int result = userService.updateLoginNum(loginUser);
-				
-				if(result > 0) {
+				if(result < 5) {
 					out.append("pwdfail");
 					out.flush();
 				}else {
@@ -134,11 +154,20 @@ public class UserController {
 		
 		if(session != null) {
 			session.invalidate();
+			Cookie cookie = new Cookie("UG", null);
+			cookie.setPath("/sunbang");
+			cookie.setMaxAge(0);
+			response.addCookie(cookie);
 		}
 		if(ReUri == 1) {
 			out.println("<script>location.href='realtymain.do'</script>");
-		}else if(ReUri == 2)
+			out.flush();
+			
+		}else if(ReUri == 2) {
 			out.println("<script>location.href='interiormain.do'</script>");
+			out.flush();
+		}
+		out.close();
 	} 
 	
 	@RequestMapping(value="uinsert.do", method=RequestMethod.POST)
@@ -146,7 +175,7 @@ public class UserController {
 		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
 		if(request.getParameter("user_type").equals("공인중개사")) {
 			String licenseNo = request.getParameter("license1")+"-"+request.getParameter("license2")+"-"+request.getParameter("license3");
-			String officePhone = request.getParameter("ophone1")+request.getParameter("ophone2")+request.getParameter("ophone3");
+			String officePhone = request.getParameter("ophone1")+"-"+request.getParameter("ophone2")+"-"+request.getParameter("ophone3");
 			user.setBusiness_license_no(licenseNo);
 			user.setOffice_phone(officePhone);
 		}
@@ -164,8 +193,13 @@ public class UserController {
 		user.setPassword(bcyptPasswordEncoder.encode(user.getPassword()));
 		
 		if(userService.insertUser(user) > 0) {
+			if(user.getUser_type().equals("일반회원")) {
 			redirectAttributes.addFlashAttribute("messagetitle", "회원가입성공!");
 			redirectAttributes.addFlashAttribute("message", user.getNickname()+"님 회원가입을 축하드립니다");
+			}else {
+			redirectAttributes.addFlashAttribute("messagetitle", "회원가입승인대기중!");
+			redirectAttributes.addFlashAttribute("message", user.getNickname()+"님 회원가입을 축하드립니다. 가입승인후 매물등록이 가능합니다.");
+			}
 			return "redirect:uloginview.do";
 		}else {
 			redirectAttributes.addFlashAttribute("message", "회원가입이 실패하였습니다");
@@ -278,16 +312,97 @@ public class UserController {
     	br.close();
 	}
 	
-	@RequestMapping("ufindid.do")
-	public String selectFindId(){
-		return null;
+	@RequestMapping(value="ufindid.do",method=RequestMethod.POST)
+	@ResponseBody
+	public void selectFindId(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		User user = new User();
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
+		user.setPhone(phone);
+		user.setUser_name(request.getParameter("user_name"));
+		String result = userService.selectFindId(user);
+		if(result != null) {
+			out.append(result);
+			out.flush();
+		}else {
+			out.append("fail");
+			out.flush();
+		}
+		out.close();
 	} 
 
-	@RequestMapping("ufindpwd.do")
-	public String selectFindPwd(){return null;} 
+	@RequestMapping(value="ufindpwd.do",method=RequestMethod.POST)
+	@ResponseBody
+	public void selectFindPwd(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		User user = new User();
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
+		user.setPhone(phone);
+		user.setUser_id(request.getParameter("user_id"));
+		User result = userService.selectFindPwd(user);
+		if(result != null) {
+			out.append(String.valueOf(result.getUser_no()));
+			out.flush();
+		}else {
+			out.append("fail");
+			out.flush();
+		}
+		out.close();
+	} 
 	
-	@RequestMapping("uupdate.do")
-	public String updateUser(){return null;} 
+	@RequestMapping(value="uupdate.do", method=RequestMethod.POST)
+	public String updateUser(User user, HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name="profile", required=false)MultipartFile profile, HttpSession session, SessionStatus status) throws IllegalStateException, IOException{
+		String phone = request.getParameter("phone1")+"-"+request.getParameter("phone2")+"-"+request.getParameter("phone3");
+		if(request.getParameter("user_type").equals("공인중개사")) {
+			String licenseNo = request.getParameter("license1")+"-"+request.getParameter("license2")+"-"+request.getParameter("license3");
+			String officePhone = request.getParameter("ophone1")+"-"+request.getParameter("ophone2")+"-"+request.getParameter("ophone3");
+			user.setBusiness_license_no(licenseNo);
+			user.setOffice_phone(officePhone);
+		}
+		String user_profile = null;
+		String savePath = request.getSession().getServletContext().getRealPath("files/user/userImages");
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
+		if(request.getParameter("resultimg").equals("false")) {
+			user_profile =request.getParameter("checkimg");
+		}
+		if(request.getParameter("resultimg").equals("none")) {
+			user_profile = null;
+			File file = new File(savePath+"/"+request.getParameter("checkimg"));
+			if(file.exists() == true) {
+				file.delete();
+			}
+		}
+		if(request.getParameter("resultimg").equals("true")) {
+		if(!profile.isEmpty()) {
+		user_profile = sdf.format(new Date(System.currentTimeMillis()))+"."+ profile.getOriginalFilename().substring(profile.getOriginalFilename().lastIndexOf(".") + 1);
+		profile.transferTo(new File(savePath + "\\" + user_profile));
+		user.setUser_profile(user_profile);
+		if(request.getParameter("checkimg") != null) {
+		File file = new File(savePath+"/"+request.getParameter("checkimg"));
+		if(file.exists() == true) {
+			file.delete();
+		}}
+		}
+		}
+		
+		user.setPhone(phone);
+		user.setUser_profile(user_profile);
+		
+		if(userService.updateUser(user) > 0) {
+			User loginUserPwd = userService.selectUpdateLogin(user);
+			loginUserPwd.setPassword(null);
+			session.setAttribute("loginUser", loginUserPwd);
+			status.setComplete();
+			redirectAttributes.addFlashAttribute("messagetitle", "회원수정성공!");
+			redirectAttributes.addFlashAttribute("message", user.getNickname()+"님 회원수정하셨습니다");
+			return "redirect:umyuserview.do?business_user_no="+user.getBusiness_user_no();
+		}else {
+			redirectAttributes.addFlashAttribute("message", "회원수정이 실패하였습니다");
+			return "redirect:umyuserview.do?business_user_no="+user.getBusiness_user_no();
+		}
+	} 
 	
 	@RequestMapping("uchecknick.do")
 	@ResponseBody
@@ -321,7 +436,6 @@ public class UserController {
 	/*	@RequestMapping(value="ucheckemail.do", method = RequestMethod.POST)
 		@ResponseBody
 		public void selectCheckEmail(@RequestParam(name="email") String email, HttpServletResponse response) throws EmailException, IOException{
-			System.out.println(email);
 			response.setContentType("text/html; charset=UTF-8");
 			PrintWriter out = response.getWriter();
 			String num = String.valueOf((int)(Math.floor(Math.random() * (89999)) + 10000));
@@ -335,7 +449,7 @@ public class UserController {
 			sendEmail.setSSLOnConnect(true);
 			sendEmail.setStartTLSEnabled(true);
 			sendEmail.setSmtpPort(587);
-			sendEmail.setAuthenticator(new DefaultAuthenticator("public18", "rhddyd0820*"));
+			sendEmail.setAuthenticator(new DefaultAuthenticator("", ""));
 			sendEmail.addTo(email);
 			sendEmail.setFrom("public18@naver.com", "선방", "utf-8");
 			sendEmail.setSubject(num);
@@ -351,7 +465,6 @@ public class UserController {
 	@ResponseBody
 	public void selectCheckPhone(@RequestParam(name="phone") String phone,HttpServletResponse response) throws IOException{
 		String num = String.valueOf((int)(Math.floor(Math.random() * (89999)) + 10000));
-		System.out.println(num);
 		String msg = "[선방]인증번호는"+num+" 입니다";
 		
 		BASE64Encoder encoder = new BASE64Encoder();
@@ -408,8 +521,12 @@ public class UserController {
 	@RequestMapping("uchecklicense.do")
 	public String selectCheckLicense(){return null;} 
 	
-	@RequestMapping("uupdatepwd.do")
-	public String updatePwd(){return null;} 
+	@RequestMapping(value="uupdatepwd.do", method=RequestMethod.POST)
+	@ResponseBody
+	public void updatePwd(User user){
+		user.setPassword(bcyptPasswordEncoder.encode(user.getPassword()));
+		int result = userService.updatePwd(user);
+	} 
 	
 	@RequestMapping(value="uuserout.do", method=RequestMethod.POST)
 	public String updateUserOut(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes){
@@ -456,7 +573,15 @@ public class UserController {
 	
 	
 	@RequestMapping("upupdate.do")
-	public String updatePremium(){return null;} 
+	@ResponseBody
+	public String updatePremium(HttpServletRequest request){
+		if(userService.updatePremium(Integer.parseInt(request.getParameter("charge_no"))) >0) {
+			userService.updateUserPremium(Integer.parseInt(request.getParameter("business_user_no")));
+			return "success";
+		}else {
+			return "fail";
+		}
+	} 
 
 	// 김성현
 	@RequestMapping(value="upinsert.do", method=RequestMethod.POST)

@@ -8,6 +8,28 @@
 <title>선방</title>
 <script type="text/javascript">
 $(function(){
+	$("#sh_chat_btn_1").click(function(){
+		
+		<c:if test='${!empty param.user_no}'>
+		
+		$("#mlistout").toggle();
+		</c:if>
+		<c:if test='${empty param.user_no}'>
+		
+		alert('로그인하시오');
+		</c:if>
+	})
+	$("#sh_chat_btn_2").click(function(){
+		
+		<c:if test='${!empty param.user_no}'>
+		
+		$("#mlistout").toggle();
+		</c:if>
+		<c:if test='${empty param.user_no}'>
+		
+		alert('로그인하시오');
+		</c:if>
+	})
 	function messageinsert(){
 		$.ajax({
 			url: "cminsert.do",
@@ -65,7 +87,7 @@ $(function(){
 		$.ajax({
 			url: "ccheck.do",
 			type: "get",
-			data: {user_no: ${param.user_no}, realty_no: ${param.realty_no}, chat_type : "부동산"},
+			data: {user_no: ${param.user_no}, realty_no: ${param.realty_no}},
 			dataType: "text",
 			async:false,
 			success: function(result){
@@ -94,51 +116,21 @@ $(function(){
 	}
 	
 	$("#msgbtn").click(function(){
-		var chatno = checkchat();
-		if(chatno == "0"){
-			insertchat();
-			var chatno1=checkchat();
-			$("input[name=chat_no]").val(chatno1);
-			messageinsert();
-		}
-		if(chatno != "0"){
-		$("input[name=chat_no]").val(chatno);
 		messageinsert();
-		}
 	});
 	
 	$("#cimg").change(function(){
-		var chatno = checkchat();
-		if(chatno == "0"){
-			insertchat();
-			var chatno1=checkchat();
-			$("input[name=chat_no]").val(chatno1);
-			imageinsert();
-		}
-		if(chatno != "0"){
-		$("input[name=chat_no]").val(chatno);
 		imageinsert();
-		}
 	});
 	
 	$("#cfile").change(function(){
-		var chatno = checkchat();
-		if(chatno == "0"){
-			insertchat();
-			var chatno1=checkchat();
-			$("input[name=chat_no]").val(chatno1);
-			fileinsert();
-		}
-		if(chatno != "0"){
-		$("input[name=chat_no]").val(chatno);
 		fileinsert();
-		}
 	});
 	
 	$.ajax({
 		url: "ccheck.do",
 		type: "get",
-		data: {user_no: ${param.user_no}, realty_no: ${param.realty_no}, chat_type : "부동산"},
+		data: {user_no: ${param.user_no}, chat_type: "관리자"},
 		dataType: "text",
 		success: function(result){
 			$("input[name=chat_no]").val(result);

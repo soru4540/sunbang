@@ -6,6 +6,7 @@ import org.kh.sunbang.chat.model.dao.ChatDao;
 import org.kh.sunbang.chat.model.vo.Chat;
 import org.kh.sunbang.chat.model.vo.ChatBlock;
 import org.kh.sunbang.chat.model.vo.Message;
+import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -31,26 +32,18 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public ArrayList<Message> selectListMessage(int chatno) {
-		return chatDao.selectListMessage(mybatisSession, chatno);
+	public ArrayList<Message> selectListMessage(Chat chat) {
+		return chatDao.selectListMessage(mybatisSession, chat);
 	}
 	
 	@Override
-	public String insertChat(Chat chat) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertChat(Chat chat) {
+		return chatDao.insertChat(mybatisSession, chat);
 	}
 
 	@Override
-	public int deleteChat(int chat_no) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	@Override
-	public int selectCheckChat(int chat_no) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deleteChat(Chat chat) {
+		return chatDao.deleteChat(mybatisSession, chat);
 	}
 
 	@Override
@@ -79,21 +72,35 @@ public class ChatServiceImpl implements ChatService{
 	}
 	
 	@Override
-	public ArrayList<Chat> selectListChatUser(int chatno) {
-		return chatDao.selectListChatUser(mybatisSession, chatno);
+	public ArrayList<Chat> selectListChatUser(Chat chat) {
+		return chatDao.selectListChatUser(mybatisSession, chat);
 	}
 
 	@Override
-	public String insertChatBlock(ChatBlock chatBlock) {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertChatBlock(ChatBlock chatBlock) {
+		return chatDao.insertChatBlock(mybatisSession, chatBlock);
 	}
 
 	@Override
-	public String deleteChatBlock(int block_no) {
-		// TODO Auto-generated method stub
-		return null;
+	public int deleteChatBlock(ChatBlock chatBlock) {
+		return chatDao.deleteChatBlock(mybatisSession, chatBlock);
 	}
+	
+	@Override
+	public Chat selectCheckChat(Chat chat) {
+		return chatDao.selectCheckChat(mybatisSession, chat);
+	}
+
+	@Override
+	public User selectUserChat(String nickname) {
+		return chatDao.selectUserChat(mybatisSession, nickname);
+	}
+	
+	@Override
+	public int insertUserChat(Chat chat) {
+		return chatDao.insertUserChat(mybatisSession, chat);
+	}
+
 
 	@Override
 	public String updateJoin(Chat chat) {
@@ -112,6 +119,7 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 

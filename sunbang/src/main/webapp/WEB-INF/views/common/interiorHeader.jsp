@@ -191,20 +191,20 @@
 						<a class="nav-link dropdown-toggle"
 							id="navbarDropdownMenuLink-333" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false" style="cursor:pointer;">
-							<c:if test="${!empty loginUser.user_profile }"><img src="sunbang/files/user/userImages/${loginUser.user_profile }" class="rounded-circle"  style="width:30px; height:30px; border:1px solid #eee;"></c:if> 
+							<c:if test="${!empty loginUser.user_profile }"><img src="files/user/userImages/${loginUser.user_profile }" class="rounded-circle"  style="width:30px; height:30px; border:1px solid #eee;"></c:if> 
 							<c:if test="${empty loginUser.user_profile }"><i class="fas fa-user"></i></c:if>
 							&nbsp;${loginUser.nickname }
 						</a>
 						<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333" id="js_pheader_dropdown">
 						<c:if test="${loginUser.user_type eq '일반회원' }"> <!-- 일반회원 -->
-							<a class="dropdown-item" href="umyuserview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
+							<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }"> <!-- 기업회원 -->
-							<a class="dropdown-item" href="umyuserview.do"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
+							<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>

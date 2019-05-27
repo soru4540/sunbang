@@ -18,11 +18,12 @@ public class Message implements java.io.Serializable{
 	private int user_no;	//회원번호
 	private String nickname; //닉네임
 	private String user_profile; //프로필
+	private int read_count; //안읽은횟수
 	
 	public Message() {}
 
 	public Message(int message_no, String message, String message_image, String origin_filename, String renew_filename,
-			String post_time, int chat_no, int user_no, String nickname, String user_profile) {
+			String post_time, int chat_no, int user_no, String nickname, String user_profile, int read_count) {
 		super();
 		this.message_no = message_no;
 		this.message = message;
@@ -34,6 +35,7 @@ public class Message implements java.io.Serializable{
 		this.user_no = user_no;
 		this.nickname = nickname;
 		this.user_profile = user_profile;
+		this.read_count = read_count;
 	}
 
 	public int getMessage_no() {
@@ -116,6 +118,14 @@ public class Message implements java.io.Serializable{
 		this.user_profile = user_profile;
 	}
 
+	public int getRead_count() {
+		return read_count;
+	}
+
+	public void setRead_count(int read_count) {
+		this.read_count = read_count;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -125,8 +135,9 @@ public class Message implements java.io.Serializable{
 		return "Message [message_no=" + message_no + ", message=" + message + ", message_image=" + message_image
 				+ ", origin_filename=" + origin_filename + ", renew_filename=" + renew_filename + ", post_time="
 				+ post_time + ", chat_no=" + chat_no + ", user_no=" + user_no + ", nickname=" + nickname
-				+ ", user_profile=" + user_profile + "]";
+				+ ", user_profile=" + user_profile + ", read_count=" + read_count + "]";
 	}
+
 
 	
 

@@ -6,26 +6,29 @@ import java.util.List;
 import org.kh.sunbang.chat.model.vo.Chat;
 import org.kh.sunbang.chat.model.vo.ChatBlock;
 import org.kh.sunbang.chat.model.vo.Message;
+import org.kh.sunbang.user.model.vo.User;
 
 public interface ChatService {
 
-	String insertChat(Chat chat);
-	int deleteChat(int chat_no);
+	int insertChat(Chat chat);
+	int deleteChat(Chat chat);
 	ArrayList<Chat> selectListFilterChat();
 	ArrayList<Chat> selectMyListFilterChat(int userno);
-	int selectCheckChat(int chat_no);
 	int insertMessage(Message message);
 	int deleteMessage(int message_no);
-	ArrayList<Message> selectListMessage(int chatno);
+	ArrayList<Message> selectListMessage(Chat chat);
 	ArrayList<ChatBlock> selectMylistChatBlock(int userno);
-	String insertChatBlock(ChatBlock chatBlock);
-	String deleteChatBlock(int block_no);
+	int insertChatBlock(ChatBlock chatBlock);
+	int deleteChatBlock(ChatBlock chatBlock);
 	String updateJoin(Chat chat);
 	String updateAway(Chat chat);
 	String updateAlert(Chat chat);
-	ArrayList<Chat> selectListChatUser(int chatno);
+	ArrayList<Chat> selectListChatUser(Chat chat);
 	int insertMessageImg(Message message);
 	int insertMessageFile(Message message);
+	Chat selectCheckChat(Chat chat_no);
+	User selectUserChat(String nickname);
+	int insertUserChat(Chat chat);
 	
 	
 }

@@ -18,16 +18,18 @@ public class Urealty implements java.io.Serializable{
 	private String realty_image1;			//일반사진1
 	private String nickname;					//닉네임
 	private int user_no;					//회원번호
-	private int user_profile;					//프로필
+	private String user_profile;					//프로필
 	private int dibs_count;					//찜횟수
 	private String realty_detail_title;		//상세정보제목
+	
+	
 	
 	public Urealty() {
 	}
 
 	public Urealty(int dibs_no, String memo, int realty_no, String move_available_date, int realty_hits,
 			String realty_type, String road_address, long month_lease, long payback_deposit_lease, long residential,
-			String realty_image1, String nickname, int user_no, int user_profile, int dibs_count,
+			String realty_image1, String nickname, int user_no, String user_profile, int dibs_count,
 			String realty_detail_title) {
 		super();
 		this.dibs_no = dibs_no;
@@ -152,11 +154,11 @@ public class Urealty implements java.io.Serializable{
 		this.user_no = user_no;
 	}
 
-	public int getUser_profile() {
+	public String getUser_profile() {
 		return user_profile;
 	}
 
-	public void setUser_profile(int user_profile) {
+	public void setUser_profile(String user_profile) {
 		this.user_profile = user_profile;
 	}
 
@@ -189,6 +191,9 @@ public class Urealty implements java.io.Serializable{
 				+ ", nickname=" + nickname + ", user_no=" + user_no + ", user_profile=" + user_profile + ", dibs_count="
 				+ dibs_count + ", realty_detail_title=" + realty_detail_title + "]";
 	}
+	
+	
+	
 
 
 	

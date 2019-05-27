@@ -100,6 +100,10 @@ where user_id=#{user_id}
 </choose>
 </select>
 
+<select id="selectLoginNum" parameterType="User" resultType="_int">
+	select login_num from tb_user where user_id = #{user_id}
+</select>
+
 <select id="selectCheckId" parameterType="String" resultType="int">
 	select count(*) from tb_user where user_id = #{user_id}
 </select>
@@ -132,10 +136,28 @@ join tb_dibs on (tb_dibs.realty_no = tb_realty.realty_no)
 where tb_dibs.user_no = #{user_no} order by dibs_no desc)
 </select>
 
+<select id="selectMyUser" parameterType="_int" resultType="Premium">
+select max(charge_no) charge_no ,charge_date,expiration_date, charged_payment, charged_status from tb_premium where business_user_no=#{business_user_no, jdbcType=NUMERIC} 
+group by charge_no,charge_date,expiration_date, charged_payment, charged_status
+</select>
+
+<select id="selectFindId" parameterType="User" resultType="String">
+select user_id from tb_user where user_name = #{user_name} and phone =#{phone}
+</select>
+
+<select id="selectFindPwd" parameterType="User" resultType="User">
+select user_no from tb_user where user_id = #{user_id} and phone = #{phone}
+</select>
+
 <update id="updateLoginNum" parameterType="User">
 	update tb_user
 	set login_num = #{login_num}
 	where user_no=#{user_no}
+</update>
+
+<update id="updatePwd" parameterType="User">
+	update tb_user set password=#{password}, update_date = sysdate
+	where user_no = #{user_no}
 </update>
 
 <update id="updateDibsMemo" parameterType="Dibs">
@@ -145,7 +167,14 @@ where tb_dibs.user_no = #{user_no} order by dibs_no desc)
 </update>
 
 <insert id="insertUser" parameterType="User">
+	<choose>
+	<when test="user_type.equals('일반회원') ">
 	INSERT INTO TB_USER VALUES(USER_SEQ.NEXTVAL, #{user_type}, #{user_profile, jdbcType=VARCHAR}, #{user_id}, #{nickname}, #{user_name}, #{email}, #{phone}, #{password}, default, null, default, null, default)
+	</when>
+	<otherwise>
+	INSERT INTO TB_USER VALUES(USER_SEQ.NEXTVAL, #{user_type}, #{user_profile, jdbcType=VARCHAR}, #{user_id}, #{nickname}, #{user_name}, #{email}, #{phone}, #{password}, default, null, 9, null, default)
+	</otherwise>
+	</choose>
 </insert>
 
 <insert id="binsertUser" parameterType="User">
@@ -154,6 +183,31 @@ where tb_dibs.user_no = #{user_no} order by dibs_no desc)
 </selectKey>
 INSERT INTO TB_BUSINESS VALUES(BUSINESS_SEQ.NEXTVAL, #{office_name, jdbcType=VARCHAR}, #{office_regist_no, jdbcType=VARCHAR}, #{business_license_no, jdbcType=VARCHAR }, #{office_address, jdbcType=VARCHAR}, #{office_phone, jdbcType=VARCHAR}, default, default, #{user_no})
 </insert>
+
+<update id="updatePremium" parameterType="_int">
+update tb_premium
+set expiration_date = sysdate, refund_date = sysdate, charged_status = '환불처리'
+where charge_no = #{charge_no}
+</update>
+
+<update id="updateUser" parameterType="User">
+update tb_user
+set USER_PROFILE = #{user_profile, jdbcType=VARCHAR}, NICKNAME = #{nickname}, EMAIL = #{email}, PHONE = #{phone}, update_date = sysdate
+where user_no = #{user_no}
+</update>
+
+<update id="bupdateUser" parameterType="User">
+update tb_business
+set OFFICE_NAME = #{office_name},BUSINESS_LICENSE_NO = #{business_license_no}, OFFICE_ADDRESS = #{office_address},OFFICE_PHONE= #{office_phone}
+where user_no = #{user_no}
+</update>
+
+<update id="updateUserPremium" parameterType="_int">
+update tb_business
+set premium_status = 'N'
+where business_user_no = #{business_user_no}
+</update>
+
 
 <update id="updateUserOut" parameterType="User">
 	update tb_user

@@ -6,6 +6,7 @@ import java.util.List;
 import org.kh.sunbang.chat.model.vo.Chat;
 import org.kh.sunbang.chat.model.vo.ChatBlock;
 import org.kh.sunbang.chat.model.vo.Message;
+import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -20,24 +21,34 @@ public class ChatDao {
 		return (ArrayList<Chat>)list;
 	}
 	
-	public ArrayList<Message> selectListMessage(SqlSessionTemplate session, int chatno){
-		List<Message> list = session.selectList("chatMapper.selectListMessage", chatno);
+	public ArrayList<Message> selectListMessage(SqlSessionTemplate session, Chat chat){
+		List<Message> list = session.selectList("chatMapper.selectListMessage", chat);
 		return (ArrayList<Message>)list;
 	}
 	
-	public ArrayList<Chat> selectListChatUser(SqlSessionTemplate session, int chatno) {
-		List<Chat> list = session.selectList("chatMapper.selectListChatUser", chatno);
+	public ArrayList<Chat> selectListChatUser(SqlSessionTemplate session, Chat chat) {
+		List<Chat> list = session.selectList("chatMapper.selectListChatUser", chat);
 		return (ArrayList<Chat>)list;
 	};
 	
-	public String insertChat(SqlSessionTemplate session, Chat chat){
-		return null;};
+	public int insertChat(SqlSessionTemplate session, Chat chat){
+		return session.insert("chatMapper.insertChat", chat);
+		}
 	
-	public int deleteChat(SqlSessionTemplate session, int chat_no){
-		return chat_no;};
+	public int deleteChat(SqlSessionTemplate session, Chat chat){
+		return session.delete("chatMapper.deleteChat", chat);
+		}
 	
-	public int selectCheckChat(SqlSessionTemplate session, int chat_no){
-		return chat_no;};
+	public Chat selectCheckChat(SqlSessionTemplate session, Chat chat){
+		Chat chat1 =null;
+		if(chat.getChat_type().equals("부동산")) {
+		chat1 = session.selectOne("chatMapper.selectCheckChat", chat);
+		}
+		if(chat.getChat_type().equals("관리자")) {
+		chat1 = session.selectOne("chatMapper.selectCheckChat", chat);	
+		}
+		return chat1;
+	}
 	
 	public int insertMessage(SqlSessionTemplate session, Message message){
 		return session.insert("chatMapper.insertMessage", message);
@@ -52,18 +63,31 @@ public class ChatDao {
 	}
 	
 	public int deleteMessage(SqlSessionTemplate session, int message_no){
-		return session.delete("chatMapper.deleteMessage", message_no);};
+		return session.delete("chatMapper.deleteMessage", message_no);
+		}
 	
 	public ArrayList<ChatBlock> selectMylistChatBlock(SqlSessionTemplate session, int userno){
 		List<ChatBlock> list = session.selectList("chatMapper.selectMylistChatBlock", userno);
 		return (ArrayList<ChatBlock>)list;
 		}
 	
-	public String insertChatBlock(SqlSessionTemplate session, ChatBlock chatBlock){
-		return null;};
+	public int insertChatBlock(SqlSessionTemplate session, ChatBlock chatBlock){
+		return session.insert("chatMapper.insertChatBlock", chatBlock);
+		}
 	
-	public String deleteChatBlock(SqlSessionTemplate session, int block_no){
-		return null;};
+	public int deleteChatBlock(SqlSessionTemplate session, ChatBlock chatBlock){
+		return session.delete("chatMapper.deleteChatBlock", chatBlock);
+		}
+	
+	public User selectUserChat(SqlSessionTemplate session, String nickname) {
+		return session.selectOne("chatMapper.selectUserChat", nickname);	
+	}
+	
+	public int insertUserChat(SqlSessionTemplate session, Chat chat) {
+		session.insert("chatMapper.insertUserChat", chat);
+		return session.insert("chatMapper.inserttwoUserChat", chat);
+		
+	}
 	
 	public String updateJoin(SqlSessionTemplate session, Chat chat){
 		return null;};
@@ -73,6 +97,8 @@ public class ChatDao {
 	
 	public String updateAlert(SqlSessionTemplate session, Chat chat){
 		return null;}
+
+
 
 
 

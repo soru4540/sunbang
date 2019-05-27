@@ -254,7 +254,42 @@ $(function(){
 		$('#sh_detaili_textarea').val(str);
 	});	
 </script>
-
+<!-- 채팅버튼 비활성화 -->
+<script type="text/javascript">
+   $(function(){
+	   $("#sh_chat_btn_1").click(function(){
+			<c:if test='${!empty loginUser.user_no}'>
+			 if(${loginUser.user_no == realty.user_no }){
+				 var message = confirm("채팅내역으로 이동하시겠습니까?");
+		            if(message == true){
+		               location.href="cmyview.do";
+		            }
+			 }else{
+			$("#mlistout").toggle();
+			 }
+			</c:if>
+			<c:if test='${empty loginUser.user_no}'>
+			alert('로그인하시오');
+			</c:if>
+		})
+		$("#sh_chat_btn_2").click(function(){
+			
+			<c:if test='${!empty loginUser.user_no}'>
+			 if(${loginUser.user_no == realty.user_no }){
+				 var message = confirm("채팅내역으로 이동하시겠습니까?");
+		            if(message == true){
+		               location.href="cmyview.do";
+		            }
+			 }else{
+			$("#mlistout").toggle();
+			 }
+			</c:if>
+			<c:if test='${empty loginUser.user_no}'>
+			alert('로그인하시오');
+			</c:if>
+		})
+   });
+</script>
 <style type="text/css">
 
 #sh_top {
@@ -453,6 +488,12 @@ $(function(){
 <body>
 <c:import url="../common/realtyHeader.jsp" /><br>
 	<div class="container" style="font-family: a고딕12;">
+	<c:import url="/chatview.do">
+		<c:param name="realty_no" value="${realty.realty_no }"/>
+		<c:param name="title" value="${realty.realty_detail_title }"/>
+		<c:param name="user_no" value="${loginUser.user_no }"/>
+		<c:param name="realty_user_no" value="${realty.user_no }"/>
+	</c:import>
 	<c:if test="${realty.realty_status == '숨기기' }">
 		<div class="row" id="sh_realtydetail_hide">
 			<div class="col-md-12">
