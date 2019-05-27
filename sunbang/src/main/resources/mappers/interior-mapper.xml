@@ -224,18 +224,32 @@ where <![CDATA[ rownum <9 ]]>
 <!-- 게시판등록 -->
 <insert id="insertBoard" parameterType="Board">
 <choose>
-<when test="board_type.equals('photograph')"></when>
-<when test="board_type.equals('housewarming')"></when>
-<when test="board_type.equals('knowhow')">
-insert into tb_board (board_no,board_type,category1,category2,category3,board_title,board_hits,board_date,board_status,user_no) 
-values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{board_title},0,default,default,#{user_no})
+<when test="board_type.equals('photograph')">
+	insert into tb_board
+	(board_no,board_type,category1,space,floor_area,color1,color2,color3,board_title,board_hits,board_date,board_status,user_no)
+	values(board_seq.nextval,#{board_type},#{category1},#{space},#{floor_area},#{color1},#{color2},#{color3},#{board_title},0,default,default,#{user_no})
 </when>
+	<when test="board_type.equals('housewarming')">
+		insert into tb_board
+		(board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,budget,style,board_hits,board_date,board_status,user_no)
+		values(board_seq.nextval,#{board_type},#{housing_type},#{floor_area},#{color1},#{color2},#{color3},#{board_title},#{budget},#{style},0,default,default,#{user_no})
+	</when>
+	<when test="board_type.equals('knowhow')">
+		insert into tb_board
+		(board_no,board_type,category1,category2,category3,board_title,board_hits,board_date,board_status,user_no)
+		values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{board_title},0,default,default,#{user_no})
+	</when>
 </choose>
 </insert>
 
 <!-- 게시판번호 불러오기 -->
 <select id="selectBoardNo" parameterType="_int" resultType="_int">
 select max(board_no) from tb_board where user_no = #{user_no}
+</select>
+
+<!-- 게시물번호 불러오기 -->
+<select id="selectPostNo" parameterType="_int" resultType="_int">
+select max(post_no) from tb_post where board_no = #{board_no}
 </select>
 
 <!-- 게시물등록 -->
@@ -450,15 +464,16 @@ insert into tb_report values (report_seq.nextval, #{report_system}, #{category},
 </insert>
 
 <!-- 게시판 수정페이지 출력 -->
-<select id="selectBoardUpdateView" parameterType="_int" resultMap="resultBoardFull">
-select board_no,board_type,space, housing_type,category1, category2, category3, floor_area, color1, color2, color3,board_title,
-        budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents,marker_no,product_image,cordi_x,cordi_y,product_url, user_no
-from tb_board
-left join tb_post using(board_no)
-left join tb_marker using(post_no)
-where board_no = #{board_no}
-order by post_no asc
-</select>
+	<select id="selectBoardUpdateView" parameterType="_int"
+		resultMap="resultBoardFull">
+		select
+		board_no,board_type,space,housing_type,category1,category2,category3,floor_area,color1,color2,color3,board_title,budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents,marker_no,product_image,cordi_x,cordi_y,product_url,user_no
+		from tb_board
+		left join tb_post using(board_no)
+		left join tb_marker using(post_no)
+		where board_no = #{board_no}
+		order by post_no asc
+	</select>
 
 <!-- 게시판 수정 -->
 <update id="updateBoard" parameterType="Board">
@@ -540,7 +555,39 @@ where search like '%' || #{keyword} || '%';
 </select>
 
 <!--  ///////////////////////////////////////////////////////SE/////////////////////////////////////////////////////// -->
+<!-- 사진 detail 출력 -->
+<select id="selectPhotoList" parameterType="_int"  resultMap="resultBoardFull">
+select * from 
+(select row_number() over(order by board_no desc) as rnum, board_no,board_type,category1,space,floor_area,color1,color2,color3,board_title,board_hits,post_no,post_keyword,post_contents,post_data,board_date,board_status,user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where board_no = #{board_no}
+order by post_no asc
+</select>
 
+<!-- 집들이 detail 출력 -->
+<select id="selectHouseWList" parameterType="_int" resultMap="resultBoardFull">
+select * from 
+(select row_number() over(order by board_no desc) as rnum, board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,budget,style,board_hits,post_no,post_keyword,post_contents,post_data,board_date,board_status,user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where board_no = #{board_no}
+</select>
+
+<!-- 게시글 삭제 -->
+<delete id="deleteBoard" parameterType="_int">
+delete from tb_board where board_no = #{board_no}
+</delete>
 
 
 <!--  ///////////////////////////////////////////////////////성현/////////////////////////////////////////////////////// -->
