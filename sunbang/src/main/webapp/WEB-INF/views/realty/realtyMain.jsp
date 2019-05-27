@@ -8,7 +8,8 @@
 <meta charset="UTF-8">
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
-<title>SUNBANG</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
+<title>main</title>
 <script type="text/javascript"
 	src="${pageContext.request.contextPath }/resources/js/bootstrap-slider.js"></script>
 <link
@@ -195,7 +196,6 @@ b {
 		        }
 		    });
 		getList();
-		//setMarkers();
 	});//ready
 </script>
 
@@ -288,18 +288,10 @@ b {
 					</div>
 					<!-- hj_purchase_type -->
 
-					<hr style="clear: both;">
+					<br style="clear: both;">
 
 					<div id="hj_slider" style="padding-left: 8%;">
-						<div id='hj_slider_deposit' style="display:none;">
-						<div class="hj_slider_elements">
-							<h5 style="margin-right: 5%;">보증금/전세가</h5>
-							<p id="depositmin" style="float: left">최소 : 0 만원 ,</p>
-							<p id="depositmax">최대 : 무제한</p>
-							<b>0</b> <input id="hj_deposit_slider" type="text" class="span2" />
-							<b>무제한</b>
-						</div>
-						</div>
+						
 						
 						<div id="hj_slider_month" style="display:none;" >
 						<div class="hj_slider_elements">
@@ -307,6 +299,16 @@ b {
 							<p id="monthlymin" style="float: left">최소 : 0 만원 ,</p>
 							<p id="monthlymax">최대 : 무제한</p>
 							<b>0</b> <input id="hj_monthly_slider" type="text" class="span2" />
+							<b>무제한</b>
+						</div>
+						</div>
+						
+						<div id='hj_slider_deposit' style="display:none;">
+						<div class="hj_slider_elements">
+							<h5 style="margin-right: 5%;">보증금/전세가</h5>
+							<p id="depositmin" style="float: left">최소 : 0 만원 ,</p>
+							<p id="depositmax">최대 : 무제한</p>
+							<b>0</b> <input id="hj_deposit_slider" type="text" class="span2" />
 							<b>무제한</b>
 						</div>
 						</div>
@@ -322,10 +324,12 @@ b {
 						</div>
 					</div>
 					<!-- hj_slider -->
-
-					<hr>
-
-					<div id="hj_slider" style="padding-left: 8%;">
+				
+					
+					
+					
+					<hr style="both:clear;">
+					<div id="hj_slider" style="padding-left: 8%; margin-top:1px solid gray">
 						<div class="hj_slider_elements">
 							<h5 style="margin-right: 5%;">방크기(전용면적)</h5>
 							<p id="areamin" style="float: left">최소 : 0 평 ,</p>
@@ -336,7 +340,27 @@ b {
 						</div>
 					</div>
 					<hr>
-					<div id="hj_filter_setting">
+					
+					<div id="hj_options">
+						<div class="custom-control custom-checkbox" >
+							<input type="checkbox" id="hj-checkEv"
+								class="custom-control-input" name="elevator" value=1   /> <label
+								class="custom-control-label" for="hj-checkEv">엘레베이터</label>
+						</div>
+						<div class="custom-control custom-checkbox" >
+							<input type="checkbox" id="hj-checkPet"
+								class="custom-control-input" name="ALLOWANCE_PET" value=1   /> <label
+								class="custom-control-label" for="hj-checkPet">개키워도됨</label>
+						</div>
+						<div class="custom-control custom-checkbox" >
+							<input type="checkbox" id="hj-checkParking"
+								class="custom-control-input" name="parking_lot" value=1   /> <label
+								class="custom-control-label" for="hj-checkParking">주차여부</label>
+						</div>
+					</div>
+					
+					<hr>
+					<div id="hj_filter_setting" border-top : 1px solid gray; padding-top:1%;>
 						<div style="float:left; margin-right:2%;">
 						<h5><a href="#"; onClick=doFiltering(); return false;">보내기</a></h5>
 						</div>
@@ -345,6 +369,8 @@ b {
 						</div>
 					</div>
 				</div>
+				
+					
 				<!-- 필터 -->
 
 			</div>
@@ -363,6 +389,7 @@ b {
 				style="background-color: #EEEEEE; text-align: center; padding-left: 0; padding-right: 0;">
 				<div id="hj_jsonLength"></div>
 				<br>
+				
 				<div id="hj_housediv"
 					style="width: 100%; height: 700px; overflow: auto;">
 
@@ -558,7 +585,6 @@ b {
 			minLevel : 10
 		// 클러스터 할 최소 지도 레벨 	
 		});
-		
 		function doFiltering() {
 			$("#hj_filter").hide();
 			$("#hj_map").show();
@@ -568,11 +594,28 @@ b {
 		function goSearch(){
 			var a = $("#hj_keyword").val();
 			
-			var ps = new daum.maps.services.Places(map); 
+			var ps = new daum.maps.services.Places(); 
 
-			
+			// 키워드로 장소를 검색합니다
+			ps.keywordSearch(a, placesSearchCB); 
+
+			function placesSearchCB (data, status, pagination) {
+			    if (status === daum.maps.services.Status.OK) {
+
+			        // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+			        // LatLngBounds 객체에 좌표를 추가합니다
+			        var bounds = new daum.maps.LatLngBounds();
+
+			        for (var i=0; i<data.length; i++) {
+			            bounds.extend(new daum.maps.LatLng(data[i].y, data[i].x));
+			        }       
+
+			        // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+			        map.setBounds(bounds);
+			    } 
+			}			
 		}
-		
+
 		
 	    function getList() {
 		    var oneroom = "toto";
@@ -589,6 +632,8 @@ b {
 			var depositmax = depositMaxval;
 			var purchasemin = purchaseMinval;
 			var purchasemax = purchaseMaxval;
+			var areamin = areaMinval;
+			var areamax = areaMaxval;
 			
 		/* areaMaxval; 평수최댓값 
 			areaMinval;  평수최솟값	*/
@@ -623,7 +668,7 @@ b {
 				} else {
 					purchasemax = 0;
 				}
-			
+			console.log(areamin + ", " + areamax);
 			var image = "";
 			$.ajax({
 				url: "rlist.do",
@@ -640,7 +685,9 @@ b {
 						min_payback : depositmin,
 						max_payback : depositmax,
 						min_purchase : purchasemin,
-						max_purchase : purchasemax
+						max_purchase : purchasemax,
+						min_area : areamin,
+						max_area : areamax
 						},
 				success: function(data){
 					clusterer.clear();
@@ -650,9 +697,9 @@ b {
 					var jsonStr = JSON.stringify(data);
 					var json = JSON.parse(jsonStr);
 					for (var i in json) {
+						console.log(json);
 						var a = json[i].realty_status;
 						if(a != "완전삭제" && a != "숨기기" && a != "삭제" && a != "검수중" && a != "수정완료") {
-						console.log(a);
 						marking(i);
 						} else {
 							count++;
@@ -708,6 +755,7 @@ b {
 					}//marking
 					function setRealtyList(param) {
 						var values ="";
+						var pvalues = "";
 						var payment = "";
 						var charge ;
 						var calcharge = "";
@@ -716,6 +764,66 @@ b {
 								+ "조건에 맞는 방 " + length + " 개 </div>";
 						if(json != null) {
 						for (var j in param) {
+							if(param[j].premium == 'Y' ) {
+								if (param[j].month_lease != 0 ) {
+									payment = "월세 ";
+									charge = param[j].deposit / 10000;
+									charge += " / ";
+									charge += param[j].month_lease / 10000;
+								}
+								else if (param[j].PAYBACK_DEPOSIT_LEASE != 0) {
+									payment = "전세";
+									if (param[j].payback_deposit_lease / 100000000 > 1) {
+										charge = param[j].payback_deposit_lease
+												/ 100000000 ;
+										
+										charge += " 억";
+									} else {
+										charge = param[j].payback_deposit_lease 
+												/ 10000000 + "만";
+									}
+								}
+								else if (param[j].purchase != 0) {
+									payment = "매매 ";
+									charge = param[j].purchase
+											/ 100000000 + ".";
+									charge += param[j].purchase
+											% 100000000 + "억";
+								}
+								if(param[j].realty_image1 != null) {
+								image =  param[j].realty_image1;
+								}else {
+									image = sample.png;
+								}
+								pvalues += "<div id='house'>P <div id='hj_houseImages'>"
+									+	"<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+									+image
+									+"'/>"
+									+	"</div>"
+									+ "<div id='hj_houseDetail'>"
+									+ "<a href=rdetail.do?realty_no="
+									+ param[j].realty_no
+									+ ">"
+									+ "<h4>"
+									+ payment
+									+ "  "
+									+ charge
+									+ "</h4>"
+									+ "</a>"
+									+ "<h6>"
+									+ param[j].residential
+									+ "㎥"
+									+ "ㆍ"
+									+ param[j].realty_layers
+									+ "층</h6>"
+									+ "<h6>"
+									+ param[j].road_address
+									+ "</h6>"
+									+ "<p style=color:gray;>"
+									+ param[j].realty_detail_title
+									+ "</p>" + "</div></div>";
+									
+							} else {
 							
 							if (param[j].month_lease != 0 ) {
 								payment = "월세 ";
@@ -724,7 +832,7 @@ b {
 								charge += param[j].month_lease / 10000;
 							}
 							else if (param[j].PAYBACK_DEPOSIT_LEASE != 0) {
-								payment = "전세 ";
+								payment = "전세";
 								if (param[j].payback_deposit_lease / 100000000 > 1) {
 									charge = param[j].payback_deposit_lease
 											/ 100000000 ;
@@ -740,13 +848,14 @@ b {
 								charge = param[j].purchase
 										/ 100000000 + ".";
 								charge += param[j].purchase
-										% 100000000 + "억123";
+										% 100000000 + "억";
 							}
 							if(param[j].realty_image1 != null) {
 							image =  param[j].realty_image1;
 							}else {
 								image = sample.png;
 							}
+							
 							values += "<div id='house'> <div id='hj_houseImages'>"
 								+	"<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
 								+image
@@ -774,11 +883,12 @@ b {
 								+ "<p style=color:gray;>"
 								+ param[j].realty_detail_title
 								+ "</p>" + "</div></div>";
-							
+							}
 						}//for
-						$("#hj_housediv").html(values);
+						pvalues += values;
+						$("#hj_housediv").html(pvalues);
 						$("#hj_jsonLength").html(jsonLength)
-						}else{
+						}else{ // 조회된 결과가 없을때
 							$("#hj_housediv").html("");
 							$("#hj_jsonLength")
 									.html("<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"

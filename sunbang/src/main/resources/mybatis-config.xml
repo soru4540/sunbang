@@ -6,6 +6,7 @@
 	<typeAliases>
 		<typeAlias type="org.kh.sunbang.realty.model.vo.Realty" alias="Realty" />
 		<typeAlias type="org.kh.sunbang.realty.model.vo.FRealty" alias="FRealty" />
+		<typeAlias type="org.kh.sunbang.realty.model.vo.PRealty" alias="PRealty" />
 		<typeAlias type="org.kh.sunbang.dibs.model.vo.Dibs" alias="Dibs" />
 		
  		<typeAlias type="org.kh.sunbang.user.model.vo.User" alias="User" />

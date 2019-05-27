@@ -18,6 +18,7 @@ import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.service.RealtyService;
 import org.kh.sunbang.realty.model.vo.FRealty;
+import org.kh.sunbang.realty.model.vo.PRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,21 +49,11 @@ public class RealtyController {
 
 	@RequestMapping(value = "rlist.do", method = RequestMethod.POST)
 	@ResponseBody
-	public ArrayList<Realty> selectMarkerList(FRealty frealty, HttpServletResponse response) throws ParseException{
-		ArrayList<Realty> mlist = new ArrayList<Realty>(); 
-		System.out.println(frealty);
-		
-		System.out.println("월세 최소 : " +   frealty.getMin_monthly());
-		System.out.println("월세 최대 : " +   frealty.getMax_monthly());
-		System.out.println("전세 최소 : " + frealty.getMin_payback());
-		System.out.println("전세 최대 : " + frealty.getMax_payback());
-		System.out.println("매매 최소 : " + frealty.getMin_purchase());
-		System.out.println("매매 최대 : " + frealty.getMax_purchase());
+	public ArrayList<PRealty> selectMarkerList(FRealty frealty, HttpServletResponse response) throws ParseException{
+		ArrayList<PRealty> mlist = new ArrayList<PRealty>(); 
 		
 		mlist = realtyService.selectFilteredList(frealty);
-		//System.out.println("컨트롤러 : " + mlist.size());
-		
-		return mlist;
+		return mlist;		
 		
 	}
 	//성현----------------------------------------------------------------------------

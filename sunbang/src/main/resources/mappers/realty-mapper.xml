@@ -65,7 +65,69 @@
       <result property="user_no" column="user_no" />
    
    </resultMap>
-
+	
+		   <resultMap id="resultPRealty" type="PRealty">
+      <id property="realty_no" column="realty_no"/>
+      <result property="registdate" column="registdate" />
+      <result property="renewdate" column="renewdate" />
+      <result property="realty_hits" column="realty_hits" />
+      <result property="realty_status" column="realty_status" />
+      <result property="realty_type" column="realty_type" />
+      <result property="building_type" column="building_type" />
+      <result property="road_address" column="road_address" />
+      <result property="land_lot" column="land_lot" />
+      <result property="detail_address" column="detail_address" />
+      
+      <result property="month_lease" column="month_lease" />
+      <result property="deposit" column="deposit" />
+      <result property="payback_deposit_lease" column="payback_deposit_lease" />
+      <result property="purchase" column="purchase" />
+      <result property="residential" column="residential" />
+      <result property="exclusive_area" column="exclusive_area" />
+      <result property="building_layers" column="building_layers" />
+      <result property="realty_layers" column="realty_layers" />
+      <result property="heatting_system" column="heatting_system" />
+      <result property="move_available_date" column="move_available_date" />
+      
+      <result property="management_pay" column="management_pay" />
+      <result property="parking_lot" column="parking_lot" />
+      <result property="elevator" column="elevator" />
+      <result property="builtin" column="builtin" />
+      <result property="allowance_pet" column="allowance_pet" />
+      <result property="balcony" column="balcony" />
+      <result property="loan_availability" column="loan_availability" />
+      <result property="structure" column="structure" />
+      <result property="airconditioner" column="airconditioner" />
+      <result property="laundry_machine" column="laundry_machine" />
+      
+      <result property="bed" column="bed" />
+      <result property="desk" column="desk" />
+      <result property="closet" column="closet" />
+      <result property="tv" column="tv" />
+      <result property="gasrange" column="gasrange" />
+      <result property="shoe_shelf" column="shoe_shelf" />
+      <result property="refrigerator" column="refrigerator" />
+      <result property="induction" column="induction" />
+      <result property="microwave" column="microwave" />
+      <result property="door_lock" column="door_lock" />
+      
+      <result property="bidet" column="bidet" />
+      <result property="realty_detail_title" column="realty_detail_title" />
+      <result property="realty_detail_comment" column="realty_detail_comment" />
+      <result property="realty_image1" column="realty_image1" />
+      <result property="realty_image2" column="realty_image2" />
+      <result property="realty_image3" column="realty_image3" />
+      <result property="realty_image4" column="realty_image4" />
+      <result property="realty_image5" column="realty_image5" />
+      <result property="realty_image6" column="realty_image6" />
+      <result property="realty_image7" column="realty_image7" />
+      
+      <result property="realty_image8" column="realty_image8" />
+      <result property="image360" column="image360" />
+      <result property="user_no" column="user_no" />
+      <result property="premium" column="premium_status"/>
+   </resultMap>
+   
 	<resultMap id="resultFRealty" type="FRealty"><!-- 필터링/ 미완성 -->
    	<id property="oneroom" column="realty_type"/>
    	<result property="tworoom" column="realty_type"/>
@@ -337,11 +399,18 @@
 
 	<!-- 형진///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
    
-   <select id="selectFilteredList" parameterType="FRealty"  resultMap="resultRealty">
-   		select * from tb_realty  
+<select id="selectFilteredList" parameterType="FRealty"  resultMap="resultPRealty">
+   		select REALTY_NO,REGISTDATE,RENEWDATE,REALTY_HITS,REALTY_STATUS,REALTY_TYPE,BUILDING_TYPE,ROAD_ADDRESS,LAND_LOT,DETAIL_ADDRESS,MONTH_LEASE,DEPOSIT,
+   		PAYBACK_DEPOSIT_LEASE,PURCHASE,RESIDENTIAL,EXCLUSIVE_AREA,BUILDING_LAYERS,REALTY_LAYERS,HEATTING_SYSTEM,MOVE_AVAILABLE_DATE,MANAGEMENT_PAY,
+   		PARKING_LOT,ELEVATOR,BUILTIN,ALLOWANCE_PET,BALCONY,LOAN_AVAILABILITY,STRUCTURE,AIRCONDITIONER,LAUNDRY_MACHINE,BED,DESK,CLOSET,TV,GASRANGE,SHOE_SHELF,REFRIGERATOR,INDUCTION,MICROWAVE,DOOR_LOCK,
+   		BIDET,REALTY_DETAIL_TITLE,REALTY_DETAIL_COMMENT,REALTY_IMAGE1,REALTY_IMAGE2,REALTY_IMAGE3,REALTY_IMAGE4,REALTY_IMAGE5,REALTY_IMAGE6,REALTY_IMAGE7,REALTY_IMAGE8,IMAGE360,
+   		premium_status 
+   		from tb_realty
+   		left join tb_user using(user_no)
+   		left join tb_business using(user_no)
    		  <where>
    			<if test="oneroom != 'toto'">
-   				realty_type=#{oneroom}
+   				OR realty_type=#{oneroom}
    			</if>
    			<if test="tworoom != 'toto'">
    				OR realty_type=#{tworoom}
@@ -355,10 +424,10 @@
    			 <if test="officetel != 'toto'">
    				OR realty_type=#{officetel}
    			</if>
-   		</where>
-   		<where>
+   			
+   			
    			<if test="max_monthly > 0">
-   				month_lease <![CDATA[>]]> #{min_monthly} and month_lease <![CDATA[ <= ]]> #{max_monthly}
+   				OR month_lease <![CDATA[>]]> #{min_monthly} and month_lease <![CDATA[ <= ]]> #{max_monthly}
    			</if>
    			<if test="max_payback > 0">
    				OR payback_deposit_lease <![CDATA[ > ]]> #{min_payback} and payback_deposit_lease <![CDATA[ <= ]]> #{max_payback} 
@@ -366,7 +435,15 @@
    			<if test="max_purchase > 0">
    				OR purchase <![CDATA[ > ]]> #{min_purchase} and purchase  <![CDATA[ <= ]]> #{max_purchase} 
    			</if>
-   		</where>
+   			
+   			
+   			<if test="max_area == 100" >
+   				OR residential <![CDATA[>=]]> #{min_area}
+   			</if>
+   			<if test="max_area != 100">
+   				OR residential <![CDATA[>=]]> #{min_area} and RESIDENTIAL <![CDATA[<=]]> #{max_area}
+   			</if>
+   			</where>
    </select>
 	
 	<!-- 진솔 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->

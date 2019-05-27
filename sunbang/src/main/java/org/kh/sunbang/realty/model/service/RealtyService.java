@@ -6,6 +6,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.vo.FRealty;
+import org.kh.sunbang.realty.model.vo.PRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 
@@ -39,7 +40,7 @@ public interface RealtyService {
 	
 	
 	ArrayList<Realty> selectRealtyList(ArrayList<Integer> realtyno);
-	ArrayList<Realty> selectFilteredList(FRealty frealty);
+	ArrayList<PRealty> selectFilteredList(FRealty frealty);
 	
 	//진솔---------------------------------------------------------------------------------------------------------------
 	

@@ -7,6 +7,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.vo.FRealty;
+import org.kh.sunbang.realty.model.vo.PRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -103,11 +104,11 @@ public class RealtyDao {
 		return realtyList;
 	}
 
-	public ArrayList<Realty> selectFilteredList(SqlSessionTemplate mybatisSession, FRealty frealty) {
+	public ArrayList<PRealty> selectFilteredList(SqlSessionTemplate mybatisSession, FRealty frealty) {
 		System.out.println("dao frealty : " + frealty);
-		List<Realty> list = mybatisSession.selectList("realtyMapper.selectFilteredList",frealty);
+		List<PRealty> list = mybatisSession.selectList("realtyMapper.selectFilteredList",frealty);
 		
-		return (ArrayList<Realty>)list;
+		return (ArrayList<PRealty>)list;
 	}
 	// 진솔-------------------------------------------------------------------------------------------------------------
 	

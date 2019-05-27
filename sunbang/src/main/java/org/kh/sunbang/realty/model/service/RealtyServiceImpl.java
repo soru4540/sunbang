@@ -7,6 +7,7 @@ import org.kh.sunbang.dibs.model.vo.Dibs;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.realty.model.dao.RealtyDao;
 import org.kh.sunbang.realty.model.vo.FRealty;
+import org.kh.sunbang.realty.model.vo.PRealty;
 import org.kh.sunbang.realty.model.vo.Realty;
 import org.kh.sunbang.user.model.vo.User;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -122,7 +123,7 @@ public class RealtyServiceImpl implements RealtyService {
 	}
 
 	@Override
-	public ArrayList<Realty> selectFilteredList(FRealty frealty) {
+	public ArrayList<PRealty> selectFilteredList(FRealty frealty) {
 		// TODO Auto-generated method stub
 		
 		return realtyDao.selectFilteredList(mybatisSession, frealty);
