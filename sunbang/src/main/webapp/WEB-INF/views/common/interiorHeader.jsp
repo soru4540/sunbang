@@ -123,6 +123,15 @@
 	color: white;
 }
 </style>
+<script type="text/javascript">
+ function searchInterior(){	
+	 if($("#searchkeyword").val()!=""){
+	 location.href="isearch.do?keyword="+$("#searchkeyword").val();
+	 }else{
+		 alert("검색 키워드를 입력해주세요!");
+	 }
+ }
+</script>
 </head>
 <body>
 	<nav class="navbar navbar-expand-lg navbar-light"
@@ -159,16 +168,18 @@
 				<li class="nav-item" id="jb_iheader_search">
 					<div class="d-flex h-100" align="left">
 						<div class="searchbar">
-							<input class="search_input" type="text" name=""
-								placeholder="Search..."> <a href="#" class="search_icon"><i
+							<input class="search_input" type="text" id="searchkeyword"
+								placeholder="Search..."> <a class="search_icon" onclick="searchInterior();"><i
 								class="fas fa-search"></i></a>
 						</div>
 					</div>
-				</li>
+				</li>&nbsp;&nbsp;
+				<c:if test="${!empty loginUser.user_profile }">
 				<li class="nav-item"><a class="nav-link"
 					href="inewsfeed.do?user_no=1">뉴스피드</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="iwritepage.do">글쓰기</a></li>
+				</c:if>
 				<li class="nav-item"><a class="nav-link"
 					href="iblistselect.do?board_type=photograph">사진</a></li>
 				<li class="nav-item"><a class="nav-link"

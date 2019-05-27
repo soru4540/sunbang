@@ -7,6 +7,7 @@ import org.kh.sunbang.interior.model.dao.InteriorDao;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
+import org.kh.sunbang.interior.model.vo.FollowFull;
 import org.kh.sunbang.interior.model.vo.Ipaging;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Marker;
@@ -52,14 +53,12 @@ public ArrayList<BoardFull> selectPbTop8() {
 
 @Override
 public int selectSearchListCount(String keyword) {
-	// TODO Auto-generated method stub
-	return 0;
+	return interiorDao.selectSearchListCount(session, keyword);
 }
 
 @Override
-public ArrayList<Board> selectSearchList(String keyword) {
-	// TODO Auto-generated method stub
-	return null;
+public ArrayList<BoardFull> selectSearchList(Ipaging ipaging) {	
+	return interiorDao.selectSearchList(session, ipaging);
 }
 
 @Override
@@ -150,11 +149,7 @@ public ArrayList<Board> selectStoryList(int user_no) {
 	return null;
 }
 
-@Override
-public ArrayList<Follow> selectFollowList(int user_no) {
-	// TODO Auto-generated method stub
-	return null;
-}
+
 
 @Override
 public ArrayList<Follow> selectFollowSearch(String keyword) {
@@ -249,6 +244,23 @@ public int updatePost(Post post) {
 @Override
 public int deletePost(int post_no) {
 	return interiorDao.deletePost(session, post_no);
+}
+
+//유저의 팔로우수 팔로잉수 출력
+@Override
+public FollowFull selectUserFollowFollowing(int user_no) {
+	return interiorDao.selectUserFollowFollowing(session, user_no);
+}
+//유저의 팔로워들 출력
+@Override
+public ArrayList<FollowFull> selectFollowList(FollowFull followfull) {	
+	return interiorDao.selectFollowList(session, followfull);
+}
+
+//유저의 팔로잉들 출력
+@Override
+public ArrayList<FollowFull> selectFollowingList(FollowFull followfull) {
+	return interiorDao.selectFollowingList(session, followfull);
 }
 
 //--------------------서은------------------------------------------------//

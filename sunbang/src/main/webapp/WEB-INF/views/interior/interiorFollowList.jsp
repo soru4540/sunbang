@@ -15,7 +15,7 @@
 	margin-bottom: auto;
 	margin-top: auto;
 	height: 45px;
-	background-color: #ff7381;
+	background-color: #ffb6b9;
 	border-radius: 30px;
 	padding: 10px;
 }
@@ -29,17 +29,9 @@
 	caret-color: transparent;
 	line-height: 25px;
 	transition: width 0.4s linear;
-}
-
-#jb_follow_search .searchbar:hover>.search_input {
 	padding: 0 10px;
 	width: 220px;
 	transition: width 0.4s linear;
-}
-
-#jb_follow_search .searchbar:hover>.search_icon {
-	background: white;
-	color: #ffb6b9;
 }
 
 #jb_follow_search .search_icon {
@@ -51,6 +43,8 @@
 	align-items: center;
 	border-radius: 50%;
 	color: white;
+	background: white;
+	color: #ffb6b9;
 }
 
 .jb_follow_profile img {
@@ -80,52 +74,199 @@ font-size: 30px; font-family: a고딕14;
 </head>
 <body>
 	<c:import url="../common/interiorHeader.jsp" />
-	<br>
-
 	<script type="text/javascript">
 		$(function() {
 
 			$("#jb_follow_list2").css("display", "none");
 
-			$("#jb_follow_btn1").click(function() {
+			$("#jb_follow_btn1").click(function() {		
+				$("#list2").html("");
+				$("#following_keyword").val("");
+				getList2();
 				$(".jb_follow_list").css("display", "none");
 				$("#jb_follow_list1").css("display", "");
 			});
 
 			$("#jb_follow_btn2").click(function() {
+				$("#list").html("");
+				$("#follow_keyword").val("");
+				getList();
 				$(".jb_follow_list").css("display", "none");
 				$("#jb_follow_list2").css("display", "");
 			});
-
+		    var page =1;
+			 if(page == 1){    
+		     getList();			     
+			 getList2();
+			 page++;
+			 }   
+			}); 
+		
+		
+		//팔로우 리스트 출력
+		function getList(){
+			var keyword = "";	
+			if($("#follow_keyword").val() == ""){
+				keyword = "empty";
+			}else{
+				keyword = $("#follow_keyword").val();
+			}		       
+			var user_no = ${fuser.user_no};
+			    $.ajax({
+			        type : "post",  
+			        dataType : "json", 
+			        data : {user_no: user_no, keyword: keyword},
+			        url : "ifsearch.do",
+			        success : function(returnData) {					         	
+			        	var objStr = JSON.stringify(returnData);			        	
+						var jsonObj = JSON.parse(objStr);										
+							var value = "";						
+						for(var i in jsonObj.followlist){	
+							value += "<tr align='center'><td width='33%'><div class='jb_follow_profile'>"
+								    + "<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.followlist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
+								    +"<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.followlist[i].user_id+"</span></div></td>"													
+						            +"<td width='33%' style='vertical-align: middle;'><span class='jb_follow_nickname'>"+jsonObj.followlist[i].nickname+"</span></td>"					
+						            +"<td width='33%' style='vertical-align: middle;'><input type='hidden' id='fuser_no"+i+"' value='"+jsonObj.followlist[i].user_no+"'><button type='button' class='btn btn-outline-danger' id='unfollow"+i+"' onclick='delFollow("+i+");'>X</button>"
+						            +"<button type='button' class='btn btn-outline-info' id='follow"+i+"' onclick='addFollow("+i+");' style='display:none;'>+</button></td></tr>";										
+						}
+						$("#list").html(value);
+			        },error: function(returnData){			        	
+			        }
 		});
+		}
+		
+		//팔로잉 리스트 출력
+		function getList2(){	
+			var keyword = "";	
+			if($("#following_keyword").val() == ""){
+				keyword = "empty";
+			}else{
+				keyword = $("#following_keyword").val();
+			}		
+			var user_no = ${fuser.user_no};
+					    $.ajax({
+					        type : "post",  
+					        dataType : "json", 
+					        data : {user_no: user_no , keyword: keyword},
+					        url : "if2search.do",
+					        success : function(returnData) {							       
+					        	var objStr = JSON.stringify(returnData);					       
+								var jsonObj = JSON.parse(objStr);							
+							    var value = "";						
+								for(var i in jsonObj.followinglist){	
+									value += "<tr align='center'><td width='33%'><div class='jb_follow_profile'>"
+									    + "<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.followinglist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
+									    +"<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.followinglist[i].user_id+"</span></div></td>"													
+							            +"<td width='33%' style='vertical-align: middle;'><span class='jb_follow_nickname'>"+jsonObj.followinglist[i].nickname+"</span></td>"					
+							            +"<td width='33%' style='vertical-align: middle;'><input type='hidden' id='ffollower_no"+i+"' value='"+jsonObj.followinglist[i].follower_no+"'><button type='button' class='btn btn-outline-danger' id='unfollowing"+i+"' onclick='delFollowing("+i+");'>X</button>"
+							            +"<button type='button' class='btn btn-outline-info' id='following"+i+"' onclick='addFollowing("+i+");' style='display:none;'>+</button></td></tr>";	
+								}
+								$("#list2").html(value);
+					        },error: function(returnData){			        	
+					        }
+		    });
+		}
+			    
+		function followsearch(){
+			$("#list").html("");
+			getList();
+		}
+		
+		function followingsearch(){
+			$("#list2").html("");		
+			getList2();
+		}
+		
+		function delFollow(e){
+			var user_no = $("#fuser_no"+e).val();
+			var follower_no = "${loginUser.user_no}";
+			   $.ajax({
+			        type : "post",  
+			        dataType : "json", 
+			        data : {user_no : user_no ,follower_no : follower_no},
+			        url : "ifdelete.do",
+			        success : function(returnData) {	
+			        	$("#unfollow"+e).css("display","none");
+			        	$("#follow"+e).css("display","");
+			        },error: function(returnData){
+			        	
+			        }
+			   });
+		}
+		
+		function delFollowing(e){
+			 var user_no = "${loginUser.user_no}";
+			 var follower_no = $("#ffollower_no"+e).val();
+			 $.ajax({
+			        type : "post",  
+			        dataType : "json", 
+			        data : {user_no : user_no,follower_no : follower_no },
+			        url : "ifdelete.do",
+			        success : function(returnData) {	
+			        	$("#unfollowing"+e).css("display","none");
+			        	$("#following"+e).css("display","");
+			        },error: function(returnData){
+			        	
+			        }
+			   });
+		}
+		
+		function addFollow(e){
+			var user_no = $("#fuser_no"+e).val();
+			var follower_no = "${loginUser.user_no}";
+			   $.ajax({
+			        type : "post",  
+			        dataType : "json", 
+			        data : {user_no : user_no ,follower_no : follower_no},
+			        url : "ifinsert.do",
+			        success : function(returnData) {	
+			        	$("#follow"+e).css("display","none");
+			        	$("#unfollow"+e).css("display","");			        	
+			        },error: function(returnData){
+			        	
+			        }
+			   });
+		}
+		
+		function addFollowing(e){
+			 var user_no = "${loginUser.user_no}";
+			 var follower_no = $("#ffollower_no"+e).val();
+			 $.ajax({
+			        type : "post",  
+			        dataType : "json", 
+			        data : {user_no : user_no,follower_no : follower_no },
+			        url : "ifinsert.do",
+			        success : function(returnData) {	
+			        	$("#following"+e).css("display","none");
+			        	$("#unfollowing"+e).css("display","");	
+			        },error: function(returnData){
+			        	
+			        }
+			   });
+		}
+		
 	</script>
-	<div class="container">
-		<div class="row">
-			<div class="col-md-1"></div>
-			<div class="col-md-10">
-				<img src="${pageContext.request.contextPath }/files/interior/interiorMain/sample1.PNG" width="100%" height="380px" />
-			</div>
-			<div class="col-md-1"></div>
-		</div>
+	<br>
+	<div class="container">	
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<table class="table">
 					<tr>
-						<td width="20%"  align="right">
+						<td style="width:40%;"  align="right">
 							<div class="jb_follow_profile">
 								<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG"
-									style="width: 110px; height: 110px; border-radius: 70%;">
+									style="width: 200px; height: 200px; border-radius: 70%;">
 							</div>
 						</td>
-						<td style="width:80%;vertical-align: bottom;"  align="left">&nbsp;&nbsp;&nbsp;
-						<span id="jb_follow_myprofile">한과장님</span>&nbsp;&nbsp;&nbsp;<span class="jb_follow_nickname" style="font-size: 22px;font-family: a고딕14;">myid485</span><br>
-						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 18px;opacity:0.6;font-family: a고딕14;">팔로우 :17&nbsp;&nbsp; 팔로잉 : 28</span>
+						<td style="width:60%;vertical-align: bottom;"  align="left">&nbsp;&nbsp;&nbsp;
+						<span id="jb_follow_myprofile">${fuser.nickname}</span>&nbsp;&nbsp;&nbsp;<span class="jb_follow_nickname" style="font-size: 22px;font-family: a고딕14;">${fuser.user_id}</span><br>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 18px;opacity:0.6;font-family: a고딕14;">팔로우 : ${fuser.follow_count}&nbsp;&nbsp; 팔로잉 : ${fuser.following_count}</span>
 						</td>						
 					</tr>
 				</table>
 			</div>
-			<div class="col-md-1"></div>
+			<div class="col-md-1"></div>            
 		</div>
 		<br>
 		<div class="row" align="center">
@@ -144,226 +285,33 @@ font-size: 30px; font-family: a고딕14;
 				<div class="jb_follow_list" id="jb_follow_list1" style="overflow:auto; height:600px;">
 					<table class="table">
 						<tr align="center">
-							<th colspan="3" id="jb_follow_search">
-								<div class="d-flex justify-content-center h-100">
+							<td colspan="3" id="jb_follow_search">							
+								<div class="d-flex justify-content-center h-100">							
 									<div class="searchbar">
-										<input class="search_input" type="text" name=""
-											placeholder="Search..."> <a href="#"
-											class="search_icon"><i class="fas fa-search"></i></a>
+										<input class="search_input" type="text" id="follow_keyword"
+											placeholder="Search..."> <a class="search_icon" onclick="followsearch();"><i class="fas fa-search"></i></a>
 									</div>
 								</div>
-							</th>
-						</tr>
-						<tr align="center">
-							<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/profile.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">jsol123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">홍회장님</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
 							</td>
 						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">hans123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">한과장님</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-							<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new2.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">kkals123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">김칼스</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new3.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">handj123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">녕진과조장</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">hans123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">한과장님</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-							<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new2.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">kkals123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">김칼스</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new3.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">handj123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">녕진과조장</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-							<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new2.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">kkals123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">김칼스</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new3.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">handj123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">녕진과조장</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
+					 </table>
+					 <table class="table" id="list">						
 					</table>
 				</div>
 				<div class="jb_follow_list" id="jb_follow_list2" style="overflow:auto; height:600px;">
 					<table class="table">
 						<tr align="center">
-							<th colspan="3" id="jb_follow_search">
+							<td colspan="3" id="jb_follow_search">
 								<div class="d-flex justify-content-center h-100">
 									<div class="searchbar">
-										<input class="search_input" type="text" name=""
-											placeholder="Search..."> <a href="#"
-											class="search_icon"><i class="fas fa-search"></i></a>
+										<input class="search_input" type="text" id="following_keyword"
+											placeholder="Search..."> <a class="search_icon" onclick="followingsearch();"><i class="fas fa-search"></i></a>
 									</div>
 								</div>
-							</th>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">hans123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">한과장님</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
 							</td>
 						</tr>
-						<tr align="center">
-							<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">kkals123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">김칼스</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">handj123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">녕진과조장</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">hans123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">한과장님</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-							<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">kkals123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">김칼스</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
-						<tr align="center">
-								<td width="33%">
-								<div class="jb_follow_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG">&nbsp;&nbsp;&nbsp;<span
-										style="font-size:22px; font-family: a고딕14;">handj123</span>
-								</div>
-							</td>
-							<td width="33%" style="vertical-align: middle;"><span class="jb_follow_nickname">녕진과조장</span>
-							</td>
-							<td width="33%" style="vertical-align: middle;">
-								<button type="button" class="btn btn-outline-danger">X</button>
-							</td>
-						</tr>
+						</table>
+						<table class="table" id="list2">						
 					</table>
 				</div>
 			</div>

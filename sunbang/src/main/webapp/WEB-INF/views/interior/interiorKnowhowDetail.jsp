@@ -225,7 +225,7 @@ $(function(){
 
 @media screen and (min-width: 800px) {
   #sh_sidebar {
-    width: 19%;
+    width: 16%;
     padding: 2px;
     height: 300px;
     position:fixed;

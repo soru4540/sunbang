@@ -9,6 +9,7 @@ import org.kh.sunbang.admin.model.vo.Report;
 import org.kh.sunbang.interior.model.vo.Board;
 import org.kh.sunbang.interior.model.vo.BoardFull;
 import org.kh.sunbang.interior.model.vo.Follow;
+import org.kh.sunbang.interior.model.vo.FollowFull;
 import org.kh.sunbang.interior.model.vo.Ipaging;
 import org.kh.sunbang.interior.model.vo.Like;
 import org.kh.sunbang.interior.model.vo.Post;
@@ -143,7 +144,33 @@ public class InteriorDao {
 	public int deletePost(SqlSessionTemplate session, int post_no) {		
 		return session.delete("interiorMapper.deletePost",post_no);
 	}
+	//유저의 팔로우수 팔로잉수 출력
+	public FollowFull selectUserFollowFollowing(SqlSessionTemplate session, int user_no) {
+		   return session.selectOne("interiorMapper.selectUserFollowFollowing",user_no);
+	}
 	
+	//회원의 팔로우 리스트 출력
+	public ArrayList<FollowFull> selectFollowList(SqlSessionTemplate session, FollowFull followfull) {	
+		List<FollowFull> iflist = session.selectList("interiorMapper.selectFollowList",followfull);
+		return (ArrayList<FollowFull>)iflist;	
+	}
+	//회원의 팔로잉 리스트 출력
+	public ArrayList<FollowFull> selectFollowingList(SqlSessionTemplate session, FollowFull followfull) {	
+		List<FollowFull> iflist = session.selectList("interiorMapper.selectFollowingList",followfull);
+		return (ArrayList<FollowFull>)iflist;	
+	}
+	
+	//검색 리스트 카운트 출력
+	public int selectSearchListCount(SqlSessionTemplate session, String keyword) {		
+		return session.selectOne("interiorMapper.selectSearchListCount", keyword);
+	}
+
+	//검색 리스트 출력
+	public ArrayList<BoardFull> selectSearchList(SqlSessionTemplate session, Ipaging ipaging) {
+		List<BoardFull> iblist = session.selectList("interiorMapper.selectSearchList", ipaging);
+		return (ArrayList<BoardFull>)iblist;
+	}
+
 //-----------------------------------------서은---------------------------------------------------
 
 

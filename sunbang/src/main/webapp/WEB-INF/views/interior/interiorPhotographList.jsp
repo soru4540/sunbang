@@ -790,6 +790,7 @@ outline-style: none;
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('블루');">블루</button>&nbsp;&nbsp;&nbsp;&nbsp; 
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('그린');">그린</button>&nbsp;&nbsp;&nbsp;&nbsp; 
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('레드');">레드</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="jb_filter1_filterBtn2" onclick="addFilter4('옐로우');">옐로우</button>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('#FFB6B9');">핑크</button>
 				</div>
 				<div class="jb_filter1_item" id="jb_filter1_items5">				

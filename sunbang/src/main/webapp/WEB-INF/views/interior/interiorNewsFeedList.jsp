@@ -480,7 +480,7 @@ outline-style: none;
 							<c:if test="${!empty loginUser}">
 								<a href="istory.do?user_no=${loginUser.user_no}&follower_no=2" class="font-weight-bold" >
 							</c:if>
-							한서은천재짱짱뿡뿡</a> <br><a href="iflistselect.do?user_no=1"><span
+							한서은천재짱짱뿡뿡</a> <br><a href="ifollowlist.do?user_no=1"><span
 									style="font-family: a고딕14; opacity: 0.5;">팔로우 : 78 팔로잉 : 17</span></a><br>
 								<br>
 								<p>미니멀 라이프를 꿈꾸는 이를 위한 수납 노하우! 글씨가 넘쳐도 자동 줄바꿈이 됐으면 하는 작은 소원이

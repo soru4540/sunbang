@@ -105,10 +105,22 @@
         <result property="board_no" column="board_no" />
 </resultMap>
 
+<resultMap type="FollowFull" id="resultFollowFull">
+    <id property="follow_no" column="follow_no"/>
+     <result property="follower_no" column="follower_no" />
+      <result property="user_no" column="user_no" />   
+      <result property="user_profile" column="user_profile" />
+      <result property="user_id" column="user_id" />
+      <result property="nickname" column="nickname" />
+      <result property="user_name" column="user_name" /> 
+      <result property="following_count" column="following_count" />
+      <result property="follow_count" column="follow_count" />        
+</resultMap>
+
 <resultMap type="Follow" id="resultFollow">
     <id property="follow_no" column="follow_no"/>
      <result property="follower_no" column="follower_no" />
-      <result property="user_no" column="user_no" />    
+      <result property="user_no" column="user_no" />      
 </resultMap>
 
 <resultMap type="Ipaging" id="resultIpaging">
@@ -126,19 +138,18 @@
     <result property="keyword7" column="keyword7" />   
 </resultMap>
 
-<resultMap id="resultReport" type="report">
-      <id property="report_no" column="report_no" />
-      <result property="report_system" column="report_system" />
-      <result property="category" column="category" />
-      <result property="reported_board" column="reported_board" />
-      <result property="contents_no" column="contents_no" />
-      <result property="contents" column="contents" />
-      <result property="report_date" column="report_date" />
-      <result property="handle_date" column="handle_date" />
-      <result property="report_status" column="report_status" />
-      <result property="user_no" column="user_no" />
+<resultMap id="resultReport" type="Report">
+		<id property="report_no" column="report_no" />
+		<result property="report_system" column="report_system" />
+		<result property="category" column="category" />
+		<result property="reported_board" column="reported_board" />
+		<result property="contents_no" column="contents_no" />
+		<result property="contents" column="contents" />
+		<result property="report_date" column="report_date" />
+		<result property="handle_date" column="handle_date" />
+		<result property="report_status" column="report_status" />
+		<result property="user_no" column="user_no" />
 </resultMap>
-
 
 <!--  ///////////////////////////////////////////////////////JB/////////////////////////////////////////////////////// -->
 
@@ -451,7 +462,8 @@ order by post_no asc
 
 <!-- 게시판 수정 -->
 <update id="updateBoard" parameterType="Board">
-update tb_board set category1 = #{category1}, category2 = #{category2}, category3 = #{category3}, board_title = #{board_title}, board_status = #{board_status}
+update tb_board set space = #{space,jdbcType=VARCHAR}, housing_type=#{housing_type,jdbcType=VARCHAR}, category1 = #{category1,jdbcType=VARCHAR}, category2 = #{category2,jdbcType=VARCHAR}, category3 = #{category3,jdbcType=VARCHAR}, floor_area=#{floor_area,jdbcType=INTEGER}, 
+color1=#{color1,jdbcType=VARCHAR},color2=#{color2,jdbcType=VARCHAR},color3=#{color3,jdbcType=VARCHAR}, board_title = #{board_title,jdbcType=VARCHAR}, budget=#{budget,jdbcType=INTEGER}, style=#{style,jdbcType=VARCHAR}, board_status = #{board_status,jdbcType=INTEGER}
 where board_no = #{board_no} 
 </update>
 
@@ -461,11 +473,71 @@ update tb_post set post_keyword= #{post_keyword}, <if test="post_data != null">p
 where post_no = #{post_no}
 </update>
 
+
 <!-- 게시물 삭제 -->
 <delete id="deletePost" parameterType="_int">
 delete from tb_post where post_no = #{post_no}
 </delete>
 
+<!-- 유저의 팔로우수 팔로잉수 출력 -->
+<select id="selectUserFollowFollowing" parameterType="_int" resultMap="resultFollowFull">
+select * from tb_user 
+left join(select count(follower_no) following_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select follower_no user_no, count(user_no) follow_count from tb_follow 
+group by follower_no) using(user_no)
+where user_no = #{user_no}
+</select>
+
+<!-- 유저의 팔로워들 출력 -->
+<select id="selectFollowList" parameterType="followfull" resultMap="resultFollowFull">
+select * from tb_follow f
+left join tb_user u on (f.user_no = u.user_no)
+where f.follower_no =#{user_no} <if test="keyword != 'empty'"> and (u.user_id like '%' || #{keyword} || '%' or u.nickname like '%' || #{keyword} || '%' ) </if> 
+</select>
+
+<!-- 유저의 팔로잉들 출력 -->
+<select id="selectFollowingList" parameterType="followfull" resultMap="resultFollowFull">
+select * from tb_follow f
+left join tb_user u on (f.follower_no = u.user_no)
+where f.user_no = #{user_no} <if test="keyword != 'empty'"> and (u.user_id like '%' || #{keyword} || '%' or u.nickname like '%' || #{keyword} || '%' ) </if>
+</select>
+
+<!-- 검색 리스트 카운트 출력 -->
+<select id="selectSearchListCount" parameterType="string" resultType="_int"> 
+select count(*)
+from (select space || housing_type ||category1 || category2 || category3 || floor_area||'평' || decode(color1,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색')
+|| decode(color2,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색') ||
+decode(color3,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색') || board_title ||
+budget||'원' || style ||decode(post_keyword,'video','동영상') || post_contents || user_id || nickname as search
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+order by board_no asc, post_no asc)
+where search like '%' || #{keyword} || '%'
+</select>
+
+<!-- 검색 리스트 출력 -->
+<select id="selectSearchList" parameterType="string" resultMap="resultBoardFull">
+select *
+from (select board_no,board_type,space, housing_type,category1, category2, category3, floor_area, color1, color2, color3,board_title,
+budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents, user_no,user_name,user_id, nickname,like_count,follow_count, space || housing_type ||category1 || category2 || category3 || floor_area||'평' || decode(color1,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색')
+|| decode(color2,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색') ||
+decode(color3,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색') || board_title ||
+budget||'원' || style ||decode(post_keyword,'video','동영상') || post_contents || user_id || nickname as search
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)
+order by board_no desc)
+where search like '%' || #{keyword} || '%';
+</select>
 
 <!--  ///////////////////////////////////////////////////////SE/////////////////////////////////////////////////////// -->
 
