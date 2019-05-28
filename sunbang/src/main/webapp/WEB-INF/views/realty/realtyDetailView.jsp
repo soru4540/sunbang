@@ -265,7 +265,7 @@ $(function(){
 		               location.href="cmyview.do";
 		            }
 			 }else{
-			$("#mlistout").toggle();
+			$("#jw_mlistout").toggle();
 			 }
 			</c:if>
 			<c:if test='${empty loginUser.user_no}'>
@@ -281,7 +281,7 @@ $(function(){
 		               location.href="cmyview.do";
 		            }
 			 }else{
-			$("#mlistout").toggle();
+		$("#jw_mlistout").toggle();
 			 }
 			</c:if>
 			<c:if test='${empty loginUser.user_no}'>

@@ -89,6 +89,10 @@ public class ChatDao {
 		
 	}
 	
+	public int insertTeamChat(SqlSessionTemplate session, Chat chat) {
+		return session.insert("chatMapper.insertTeamChat", chat);
+	}
+	
 	public String updateJoin(SqlSessionTemplate session, Chat chat){
 		return null;};
 	
@@ -97,6 +101,15 @@ public class ChatDao {
 	
 	public String updateAlert(SqlSessionTemplate session, Chat chat){
 		return null;}
+
+	public Chat selectChatChatCheck(SqlSessionTemplate session, Chat chat) {
+		Chat result = session.selectOne("chatMapper.selectChatChatCheck", chat);
+		if(result == null) {
+			session.insert("chatMapper.insertChatChatCheck", chat);
+		}
+		return result;
+	}
+
 
 
 

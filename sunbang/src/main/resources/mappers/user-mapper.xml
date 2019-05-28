@@ -112,6 +112,13 @@ where user_id=#{user_id}
 	select count(*) from tb_user where nickname = #{nickname}
 </select>
 
+<select id="selectPremiumCheck" parameterType="User" resultType="Premium">
+<![CDATA[SELECT MAX(CHARGE_NO) CHARGE_NO, (CASE WHEN TO_CHAR(EXPIRATION_DATE, 'YYYYMMDD') < TO_CHAR(SYSDATE, 'YYYYMMDD') THEN 'N' ELSE 'Y' END) CHARGED_STATUS, PREMIUM_STATUS  FROM TB_PREMIUM
+JOIN TB_BUSINESS USING(BUSINESS_USER_NO)
+WHERE BUSINESS_USER_NO = #{business_user_no} AND CHARGED_STATUS = '결제완료' AND PREMIUM_STATUS = 'Y'
+GROUP BY (CASE WHEN TO_CHAR(EXPIRATION_DATE, 'YYYYMMDD') < TO_CHAR(SYSDATE, 'YYYYMMDD') THEN 'N' ELSE 'Y' END), PREMIUM_STATUS]]>
+</select>
+
 <select id="selectMyLike" parameterType="_int" resultMap="resultUboard">
 select * from
 (select like_no, sl.board_no, board_title, board_type, board_hits, post_no, post_keyword, post_data, tb_user.user_no, nickname, user_profile, like_count
@@ -148,6 +155,12 @@ select user_id from tb_user where user_name = #{user_name} and phone =#{phone}
 <select id="selectFindPwd" parameterType="User" resultType="User">
 select user_no from tb_user where user_id = #{user_id} and phone = #{phone}
 </select>
+
+<update id="updatePremiumCheck" parameterType="User">
+UPDATE tb_business
+SET PREMIUM_STATUS ='N'
+WHERE BUSINESS_USER_NO = #{business_user_no}
+</update>
 
 <update id="updateLoginNum" parameterType="User">
 	update tb_user

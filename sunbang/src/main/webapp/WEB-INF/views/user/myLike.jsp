@@ -11,7 +11,7 @@
 <script type="text/javascript">
 $(function(){
 	<c:forEach var="c" items="${uboard}">
-	$("#likedel${c.like_no}").click(function(){
+	$("#jw_likedel${c.like_no}").click(function(){
 		var result = confirm("좋아요 취소하시겠습니까?");
 		if(result != ""){
 		$.ajax({
@@ -19,7 +19,7 @@ $(function(){
 			type: "get",
 			data: {like_no : ${c.like_no} },
 			success: function(response){
-				$("#likediv${c.like_no}").remove();
+				$("#jw_likediv${c.like_no}").remove();
 			},
 			error:function(){
 				alert("실패");
@@ -101,8 +101,11 @@ opacity: 0.8;
 <div class="container">
 	<div class="row" style="margin-top:10%; padding-bottom:10%;">
 	<div class="col-12"><i class="fas fa-heart fhh"></i> <b class="hearttop">좋아요목록</b></div>
+	<c:if test="${empty uboard}">
+	<div class="col-12" style="text-align:center; font-size: 30px; color: rgba(255, 182, 185, 0.8) ; font-weight: 800; padding:15% 0;">좋아요목록이 없습니다.</div>
+	</c:if>
 	<c:forEach var="board" items="${uboard}">
-	<div id="likediv${board.like_no}" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card ca border-0"><div class="card-img-top cit"><div class="img-overlay"><span class="fh"><i class="far fa-eye"> <b>${board.board_hits }</b></i> <i class="far fa-heart"> <b>${board.like_count }</b></i></span><span class="ddddel" id="likedel${board.like_no }">&times;</span></div><img src="${pageContext.request.contextPath }/files/interior/interiorMain/${board.post_data }" style="width:100%; height: 200px;"></div>
+	<div id="jw_likediv${board.like_no}" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card ca border-0"><div class="card-img-top cit"><div class="img-overlay"><span class="fh"><i class="far fa-eye"> <b>${board.board_hits }</b></i> <i class="far fa-heart"> <b>${board.like_count }</b></i></span><span class="ddddel" id="jw_likedel${board.like_no }">&times;</span></div><img src="${pageContext.request.contextPath }/files/interior/interiorMain/${board.post_data }" style="width:100%; height: 200px;"></div>
 		<div class="card-body cd" style="text-align:left;"><b style="color:red;">${board.board_type }</b>
 		<br><b>${board.board_title }</b><br><c:if test="${!empty board.user_profile }"><img src="files/user/userImages/${board.user_profile }" class="rounded-circle" style="width:20px; height:20px;"></c:if>${board.nickname}</div></div></div>
 	</c:forEach>

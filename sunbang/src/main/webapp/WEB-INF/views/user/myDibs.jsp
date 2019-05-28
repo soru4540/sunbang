@@ -12,7 +12,7 @@
 $(function(){
 	
 	<c:forEach var="realty" items="${urealty }">
-	$("#deldib${realty.dibs_no}").click(function(){
+	$("#jw_deldib${realty.dibs_no}").click(function(){
 		var result = confirm("찜하기 취소하시겠습니까?");
 		if(result != ""){
 		$.ajax({
@@ -20,7 +20,7 @@ $(function(){
 			type: "get",
 			data: {dibs_no : ${realty.dibs_no} },
 			success:function(){
-				$("#dibsdiv${realty.dibs_no }").remove();
+				$("#jw_dibsdiv${realty.dibs_no }").remove();
 			},
 			error: function(){
 				alert("실패");
@@ -29,15 +29,15 @@ $(function(){
 		}
 	});
 	
-	$("#memobtn${realty.dibs_no}").click(function(){
+	$("#jw_memobtn${realty.dibs_no}").click(function(){
 		$.ajax({
 			url: "udibsmemo.do",
 			type: "post",
-			data: $("#memoform${realty.dibs_no}").serialize(),
+			data: $("#jw_memoform${realty.dibs_no}").serialize(),
 			success: function(response){
-				$("#ale${realty.dibs_no }").fadeIn();
+				$("#jw_ale${realty.dibs_no }").fadeIn();
 				setTimeout(function(){
-					$("#ale${realty.dibs_no }").fadeOut();
+					$("#jw_ale${realty.dibs_no }").fadeOut();
 				}, 1000);
 			},
 			error: function(){
@@ -175,19 +175,22 @@ opacity: 0.8;
 <body>
 <c:import url="../common/realtyHeader.jsp"/>
 <c:forEach var="realty" items="${urealty }">
- <div class="modal fade" id="myModal${realty.dibs_no }"><div class="modal-dialog"><div class="modal-content"><form id="memoform${realty.dibs_no }">
+ <div class="modal fade" id="jw_myModal${realty.dibs_no }"><div class="modal-dialog"><div class="modal-content"><form id="jw_memoform${realty.dibs_no }">
         <div class="modal-header border-0""><h5 class="modal-title">메모</h5><button type="button" class="close" data-dismiss="modal">×</button></div>
         <div class="modal-body"><textarea class="form-control" name="memo" placeholder="메모하기" rows="5" style="resize:none;">${realty.memo }</textarea><input type="hidden" name="dibs_no" value="${realty.dibs_no }"></div>
-        <div class="modal-footer border-0"><button type="button" id="memobtn${realty.dibs_no }" class="btn btn-lgreen" style="width:48%;">확인</button><button type="button" class="btn btn-gray" style="width:48%;" data-dismiss="modal">취소</button></button></div></form>
-</div><div id="ale${realty.dibs_no }" class="alert alert-success mt-5" style="display:none;"><strong>메모 등록!</strong> 메모내용등록하셨습니다</div></div></div>
+        <div class="modal-footer border-0"><button type="button" id="jw_memobtn${realty.dibs_no }" class="btn btn-lgreen" style="width:48%;">확인</button><button type="button" class="btn btn-gray" style="width:48%;" data-dismiss="modal">취소</button></button></div></form>
+</div><div id="jw_ale${realty.dibs_no }" class="alert alert-success mt-5" style="display:none;"><strong>메모 등록!</strong> 메모내용등록하셨습니다</div></div></div>
 </c:forEach>
 
 <div class="container">
 	<div class="row" style="margin-top:10%; padding-bottom:10%;">
 	<div class="col-12"><span class="checktopout"><span class="checktop">찜</span> 찜목록</span></div>
+	<c:if test="${empty urealty}">
+	<div class="col-12" style="text-align:center; font-size: 30px; color: #61C0BF ; font-weight: 800; padding:15% 0;">찜목록이 없습니다.</div>
+	</c:if>
 	<c:forEach var="realty" items="${urealty }">
-	<div id="dibsdiv${realty.dibs_no }" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card border-0"><div class="card-img-top"><div class="img-overlay"><i class="far fa-calendar-check" > <b>입주가능일 <c:if test="${realty.move_available_date eq '0'}">즉시입주</c:if> <c:if test="${realty.move_available_date eq '1'}">날짜협의</c:if> </b></i><i class="far fa-clipboard" data-toggle="modal" data-target="#myModal${realty.dibs_no }"> <b>메모</b></i><span class="check"><i class="far fa-eye"> <b>${realty.realty_hits }</b></i> 찜 (${realty.dibs_count })</span><span class="ddddel" id="deldib${realty.dibs_no }" >&times;</span></div><img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image1}" style="width:100%; height:auto;"></div>
-		<a href="rdetail.do?realty_no=${realty.realty_no }" style="text-decoration:none; color:#777;"><div class="card-body" style="text-align:left;">${realty. realty_type}<br><b>${realty.realty_detail_title }</b><br><c:if test="${!empty realty.user_profile }"><img src="files/user/userImages/${realty.user_profile }" class="rounded-circle" style="width:20px; height:20px;"></c:if>${realty.nickname }<br>면적 : ${realty.residential }<br><small>월세 : ${realty.month_lease }</small><br><small>전세 : ${realty.payback_deposit_lease }</small></a></div></div></div>
+	<div id="jw_dibsdiv${realty.dibs_no }" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card border-0"><div class="card-img-top"><div class="img-overlay"><i class="far fa-calendar-check" > <b>입주가능일 <c:if test="${realty.move_available_date eq '0'}">즉시입주</c:if> <c:if test="${realty.move_available_date eq '1'}">날짜협의</c:if> </b></i><i class="far fa-clipboard" data-toggle="modal" data-target="#jw_myModal${realty.dibs_no }"> <b>메모</b></i><span class="check"><i class="far fa-eye"> <b>${realty.realty_hits }</b></i> 찜 (${realty.dibs_count })</span><span class="ddddel" id="jw_deldib${realty.dibs_no }" >&times;</span></div><img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image1}" style="width:100%; height:auto;"></div>
+		<a href="rdetail.do?realty_no=${realty.realty_no }" style="text-decoration:none; color:#777;"><div class="card-body" style="text-align:left;">${realty. realty_type}<br><b>${realty.realty_detail_title }</b><br><c:if test="${!empty realty.user_profile }"><img src="files/user/userImages/${realty.user_profile }" class="rounded-circle" style="width:20px; height:20px;"></c:if>${realty.nickname }<br>면적 : ${realty.residential }</a></div></div></div>
 	</c:forEach>
 	</div>
 </div>

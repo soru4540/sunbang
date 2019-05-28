@@ -479,8 +479,8 @@ public class UserController {
 		PrintWriter out = response.getWriter();
 		
 		String postParams =
-				"user_id=" + encoder.encode("".getBytes())
-				+ "&secure=" + encoder.encode("".getBytes())
+				"user_id=" + encoder.encode("prgmer18".getBytes())
+				+ "&secure=" + encoder.encode("a4213dcb2d9fc3bfae189e23be565912".getBytes())
 				+ "&msg=" + encoder.encode(msg.getBytes())
 				+ "&rphone=" + encoder.encode(phone.getBytes())
 				+ "&sphone1=" + encoder.encode("010".getBytes())

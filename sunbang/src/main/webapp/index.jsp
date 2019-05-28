@@ -176,6 +176,18 @@ $(function(){
 		}
 	});
 });
+$(function(){
+	$.ajax({
+		url:"uulogin.do",
+		type: "post",
+		success:function(){
+			
+		},
+		error:function(){
+			
+		}
+	});
+});
 </script>
 </head>
 <body>

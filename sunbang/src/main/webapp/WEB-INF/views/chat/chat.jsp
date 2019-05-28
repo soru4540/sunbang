@@ -12,11 +12,11 @@ $(function(){
 		$.ajax({
 			url: "cminsert.do",
 			type: "post",
-			data: $("#mform").serialize(),
+			data: $("#jw_mform").serialize(),
 			async: false,
 			cache: false,
 			success: function(result){
-				$("#mtext").val("");
+				$("#jw_mtext").val("");
 				return result;
 			},
 			error: function(request){
@@ -25,7 +25,7 @@ $(function(){
 	}
 	
 	function imageinsert(){
-		var form = new FormData($("#imgform")[0]);
+		var form = new FormData($("#jw_imgform")[0]);
 		$.ajax({
 		url: "cimginsert.do",
 		type: "post",
@@ -34,16 +34,16 @@ $(function(){
 		contentType: false,
 		processData: false,
 		success: function(result){
-			$("#cimg}").val("");
+			$("#jw_cimg}").val("");
 		},
 		error: function(a, b ,c){
-			alert($("#cimg").val());
+			alert($("#jw_cimg").val());
 			alert(a+ b +c);
 		}});
 	}
 	
 	function fileinsert(){
-		var form = new FormData($("#fileform")[0]);
+		var form = new FormData($("#jw_fileform")[0]);
 		$.ajax({
 		url: "cfileinsert.do",
 		type: "post",
@@ -52,7 +52,7 @@ $(function(){
 		contentType: false,
 		processData: false,
 		success: function(result){
-			$("#cfile}").val("");
+			$("#jw_cfile}").val("");
 		},
 		error: function(a, b ,c){
 			alert(a+ b +c);
@@ -93,7 +93,7 @@ $(function(){
 		});
 	}
 	
-	$("#msgbtn").click(function(){
+	$("#jw_msgbtn").click(function(){
 		var chatno = checkchat();
 		if(chatno == "0"){
 			insertchat();
@@ -107,7 +107,7 @@ $(function(){
 		}
 	});
 	
-	$("#cimg").change(function(){
+	$("#jw_cimg").change(function(){
 		var chatno = checkchat();
 		if(chatno == "0"){
 			insertchat();
@@ -121,7 +121,7 @@ $(function(){
 		}
 	});
 	
-	$("#cfile").change(function(){
+	$("#jw_cfile").change(function(){
 		var chatno = checkchat();
 		if(chatno == "0"){
 			insertchat();
@@ -165,13 +165,13 @@ $(function(){
 			success: function(mobj){
 				
 				var jsonMObj = JSON.parse(JSON.stringify(mobj));
-				var outMlist = $("#mlista").html();
+				var outMlist = $("#jw_mlista").html();
 				
 				for(var j in jsonMObj.mlist){
-					if(!$("#Umsg"+jsonMObj.mlist[j].message_no).length){
+					if(!$("#jw_Umsg"+jsonMObj.mlist[j].message_no).length){
 						if(${loginUser.user_no} != jsonMObj.mlist[j].user_no){
-						outMlist +="<div id='Umsg"+jsonMObj.mlist[j].message_no+"' class='mb-1 Luser' style='width:100%; text-align:left;'>"+jsonMObj.mlist[j].nickname+"</div>"+
-						"<div id='Muser"+jsonMObj.mlist[j].message_no+"' class='mb-1 Lchat' style='width:100%; overflow:auto;'><div class='Lballon'>";
+						outMlist +="<div id='jw_Umsg"+jsonMObj.mlist[j].message_no+"' class='mb-1 Luser' style='width:100%; text-align:left;'>"+jsonMObj.mlist[j].nickname+"</div>"+
+						"<div id='jw_Muser"+jsonMObj.mlist[j].message_no+"' class='mb-1 Lchat' style='width:100%; overflow:auto;'><div class='Lballon'>";
 						
 							if(jsonMObj.mlist[j].message != ""){outMlist +=jsonMObj.mlist[j].message;}
 							else if(jsonMObj.mlist[j].message_image != ""){outMlist +="<img src='files/chat/chatImages/"+jsonMObj.mlist[j].message_image+"' style='width:200px; height: 200px;'>";}
@@ -179,17 +179,17 @@ $(function(){
 							
 						outMlist +="</div><span class='ml-1' style='float:left;'>"+jsonMObj.mlist[j].post_time+"</span><span class='ml-1 readc' style='float:left;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
 						if(${loginUser.user_no} == jsonMObj.mlist[j].user_no){
-						outMlist +="<div id='Umsg"+jsonMObj.mlist[j].message_no+"' class='mb-1 Ruser' style='width:100%; text-align:right;'>"+jsonMObj.mlist[j].nickname+"</div>"+
-						"<div id='Muser"+jsonMObj.mlist[j].message_no+"' class='mb-1 Rchat' style='width:100%; overflow:auto;'><div class='Rballon'>";
+						outMlist +="<div id='jw_Umsg"+jsonMObj.mlist[j].message_no+"' class='mb-1 Ruser' style='width:100%; text-align:right;'>"+jsonMObj.mlist[j].nickname+"</div>"+
+						"<div id='jw_Muser"+jsonMObj.mlist[j].message_no+"' class='mb-1 Rchat' style='width:100%; overflow:auto;'><div class='Rballon'>";
 						
 						if(jsonMObj.mlist[j].message != ""){outMlist +=jsonMObj.mlist[j].message;}
 						else if(jsonMObj.mlist[j].message_image != ""){outMlist +="<img src='files/chat/chatImages/"+jsonMObj.mlist[j].message_image+"' style='width:200px; height: 200px;'>";}
 						else if(jsonMObj.mlist[j].renew_filename != ""){outMlist +=jsonMObj.mlist[j].origin_filename+'<a href="files/chat/chatImages/'+jsonMObj.mlist[j].renew_filename+'" download="'+jsonMObj.mlist[j].origin_filename+'"><span class="btn btn-lgreen px-2">다운로드</span></a>';}
 						
-						outMlist +="</div><span class='mr-1' style='float:right;'>"+jsonMObj.mlist[j].post_time+"<br><span class='mdel' id='mdel"+jsonMObj.mlist[j].message_no+"'>&times;</span></span><span class='ml-1 readc' style='float:right;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
+						outMlist +="</div><span class='mr-1' style='float:right;'>"+jsonMObj.mlist[j].post_time+"<br><span class='mdel' id='jw_mdel"+jsonMObj.mlist[j].message_no+"'>&times;</span></span><span class='ml-1 readc' style='float:right;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
 						}
 				}
-				$("#mlista").html(outMlist);
+				$("#jw_mlista").html(outMlist);
 			},
 			error: function(){
 				console.log('dfd');
@@ -200,7 +200,7 @@ $(function(){
 		listmessage();
 		
 		<c:forEach var="m" begin="0" end="10000" step="1" varStatus="status">
-		$("#mdel${m}").click(function(){
+		$("#jw_mdel${m}").click(function(){
 			$.ajax({
 			url: "cmdel.do",
 			type: "get",
@@ -208,8 +208,8 @@ $(function(){
 			data: {message_no: ${m} },
 			async: false,
 			success: function(mdresult){
-				$("#Umsg${m}").remove();
-				$("#Muser${m}").remove();
+				$("#jw_Umsg${m}").remove();
+				$("#jw_Muser${m}").remove();
 			},
 			error: function(request){
 				alert("실패");
@@ -340,7 +340,7 @@ div ::-webkit-scrollbar-thumb {
 	background: #eee;
 }
 
-#mlistout {
+#jw_mlistout {
 	width: 500px;
 	height: 600px;
 	border-radius: 10px;
@@ -359,21 +359,35 @@ div ::-webkit-scrollbar-thumb {
 	padding: 3px;
 	border-radius: 50%;
 }
+@media (min-width: 1250px){
+#jw_mlistout{
+	bottom: 50px;
+}
+}
+@media (max-width: 1200px){
+#jw_mlistout{
+	bottom: 100px;
+}
+@media (max-width: 450px){
+#jw_mlistout{
+	bottom: 150px;
+}
+}
 </style>
 </head>
 <body>
 
-	<div class="row" id=""><div class="col-12"><div id="mlistout" class="col-12">
+	<div class="row" ><div class="col-12"><div id="jw_mlistout" class="col-12">
 	<div class="row"><div class="col-12" style="padding: 1%; height: 50px; background-color: #61C0BF; color:white; padding:3%;">${param.title}</div></div>
-	<div class="row" style="height: 450px; padding:1%; background: rgba(187,222,214,0.1); overflow:auto;"><div id="mlista" class="col-12" style="overflow:auto;"></div></div>
-	<span class="imgps"><form id="imgform"><label class="btn btn-lgrn ml-1" for="cimg"><i class="far fa-image "></i></label><input type="file" id="cimg"  name="message_image" accept="image/*" style="display: none;">
+	<div class="row" style="height: 450px; padding:1%; background: rgba(187,222,214,0.1); overflow:auto;"><div id="jw_mlista" class="col-12" style="overflow:auto;"></div></div>
+	<span class="imgps"><form id="jw_imgform"><label class="btn btn-lgrn ml-1" for="jw_cimg"><i class="far fa-image "></i></label><input type="file" id="jw_cimg"  name="message_image" accept="image/*" style="display: none;">
 		<input type="hidden" name="user_no" value="${loginUser.user_no}"><input type="hidden" name="chat_no" value="0"></form></span>
-	<span class="fileps"><form id="fileform"><label class="btn btn-lgrn ml-1" for="cfile"><i class="fas fa-file-upload"></i></label><input type="file" id="cfile" name="orgin_filename" style="display: none;">
+	<span class="fileps"><form id="jw_fileform"><label class="btn btn-lgrn ml-1" for="jw_cfile"><i class="fas fa-file-upload"></i></label><input type="file" id="jw_cfile" name="orgin_filename" style="display: none;">
 		<input type="hidden" name="user_no" value="${loginUser.user_no}"><input type="hidden" name="chat_no" value="0"></form></span>
-	<form id="mform"><div class="row" style="height: 100px; background: rgba(187,222,214,0.1);">
-	<div style="width:calc(100% - 80px); padding:1%; height:100%;"><textarea id="mtext" class="form-control" name="messages" placeholder="메세지를 입력해주세요" maxlength="150" style="resize:none; height:100%;"></textarea></div>
+	<form id="jw_mform"><div class="row" style="height: 100px; background: rgba(187,222,214,0.1);">
+	<div style="width:calc(100% - 80px); padding:1%; height:100%;"><textarea id="jw_mtext" class="form-control" name="messages" placeholder="메세지를 입력해주세요" maxlength="150" style="resize:none; height:100%;"></textarea></div>
 	<div style="width: 80px; padding-top:1%; text-align:center;"><input type="hidden" name="user_no" value="${loginUser.user_no}"><input type="hidden" name="chat_no" value="0">
-	<input type="button" id="msgbtn" class="btn btn-lgrn" value="전송"></div></form>
+	<input type="button" id="jw_msgbtn" class="btn btn-lgrn" value="전송"></div></form>
 </div></div></div>
 
 </body>

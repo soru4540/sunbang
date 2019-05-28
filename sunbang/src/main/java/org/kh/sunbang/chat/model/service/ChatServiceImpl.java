@@ -100,6 +100,16 @@ public class ChatServiceImpl implements ChatService{
 	public int insertUserChat(Chat chat) {
 		return chatDao.insertUserChat(mybatisSession, chat);
 	}
+	
+	@Override
+	public Chat selectChatChatCheck(Chat chat) {
+		return chatDao.selectChatChatCheck(mybatisSession, chat);
+	}
+	
+	@Override
+	public int insertTeamChat(Chat chat) {
+		return chatDao.insertTeamChat(mybatisSession, chat);
+	}
 
 
 	@Override
@@ -119,6 +129,7 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 

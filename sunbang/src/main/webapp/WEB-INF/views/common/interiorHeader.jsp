@@ -191,6 +191,7 @@
 						<a class="nav-link dropdown-toggle"
 							id="navbarDropdownMenuLink-333" data-toggle="dropdown"
 							aria-haspopup="true" aria-expanded="false" style="cursor:pointer;">
+							<c:if test="${loginUser.premium_status == 'Y' }"><span style="font-weight:600; background: #61C0BF; color:white; border-radius:50%; padding: 0 6px;">P</span></c:if>
 							<c:if test="${!empty loginUser.user_profile }"><img src="files/user/userImages/${loginUser.user_profile }" class="rounded-circle"  style="width:30px; height:30px; border:1px solid #eee;"></c:if> 
 							<c:if test="${empty loginUser.user_profile }"><i class="fas fa-user"></i></c:if>
 							&nbsp;${loginUser.nickname }

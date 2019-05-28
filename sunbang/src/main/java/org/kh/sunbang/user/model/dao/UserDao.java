@@ -45,6 +45,15 @@ public class UserDao {
 	
 	public int updateLoginNum(SqlSessionTemplate session, User user) {
 		session.update("userMapper.updateLoginNum", user);
+		if(user.getUser_type().equals("매도인") || user.getUser_type().equals("공인중개사")) {
+		Premium premium = session.selectOne("userMapper.selectPremiumCheck", user);
+		if(premium != null) {
+			if(premium.getCharged_status().equals('N')) {
+				session.update("userMapper.updatePremiumCheck", user);
+				user.setPremium_status("N");
+			}
+		}
+		}
 		return session.selectOne("userMapper.selectLoginNum", user);
 	}
 	

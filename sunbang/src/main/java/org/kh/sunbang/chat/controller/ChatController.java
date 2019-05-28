@@ -197,6 +197,20 @@ public class ChatController {
 		return rresult;
 	}
 	
+	@RequestMapping("chatchatcheck.do")
+	@ResponseBody
+	public void selectChatChatCheck(Chat chat) {
+		Chat chat1 = chatService.selectChatChatCheck(chat);
+	}
+	
+	@RequestMapping("teamchatinsert.do")
+	@ResponseBody
+	public int insertTeamChat(Chat chat) {
+		int result = chatService.insertTeamChat(chat);
+		return result;
+	}
+	
+	
 	@RequestMapping("cdelete.do")
 	@ResponseBody
 	public void deleteChat(Chat chat){

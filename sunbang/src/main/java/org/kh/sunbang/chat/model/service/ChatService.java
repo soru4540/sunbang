@@ -29,6 +29,8 @@ public interface ChatService {
 	Chat selectCheckChat(Chat chat_no);
 	User selectUserChat(String nickname);
 	int insertUserChat(Chat chat);
+	Chat selectChatChatCheck(Chat chat);
+	int insertTeamChat(Chat chat);
 	
 	
 }
