@@ -20,11 +20,13 @@ public class Chat implements java.io.Serializable{
 	private int realty_no;	//매물번호
 	private String nickname; //닉네임
 	private String user_profile; //프로필
+	private int message_count; //카운트
 	
 	public Chat() {}
 
 	public Chat(int chat_no, int user_no, String chat_name, String chat_type, String alert_status, String join_time,
-			String away_time, String check_join, int realty_no) {
+			String away_time, String check_join, int realty_no, String nickname, String user_profile,
+			int message_count) {
 		super();
 		this.chat_no = chat_no;
 		this.user_no = user_no;
@@ -35,14 +37,9 @@ public class Chat implements java.io.Serializable{
 		this.away_time = away_time;
 		this.check_join = check_join;
 		this.realty_no = realty_no;
-	}
-
-	public Chat(int chat_no, int user_no, String nickname, String user_profile) {
-		super();
-		this.chat_no = chat_no;
-		this.user_no = user_no;
 		this.nickname = nickname;
 		this.user_profile = user_profile;
+		this.message_count = message_count;
 	}
 
 	public int getChat_no() {
@@ -133,6 +130,14 @@ public class Chat implements java.io.Serializable{
 		this.user_profile = user_profile;
 	}
 
+	public int getMessage_count() {
+		return message_count;
+	}
+
+	public void setMessage_count(int message_count) {
+		this.message_count = message_count;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -142,7 +147,7 @@ public class Chat implements java.io.Serializable{
 		return "Chat [chat_no=" + chat_no + ", user_no=" + user_no + ", chat_name=" + chat_name + ", chat_type="
 				+ chat_type + ", alert_status=" + alert_status + ", join_time=" + join_time + ", away_time=" + away_time
 				+ ", check_join=" + check_join + ", realty_no=" + realty_no + ", nickname=" + nickname
-				+ ", user_profile=" + user_profile + "]";
+				+ ", user_profile=" + user_profile + ", message_count=" + message_count + "]";
 	}
 
 	

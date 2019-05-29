@@ -6,7 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>선방</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
+<title>SUNBANG</title>
 <script type="text/javascript" src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -186,7 +187,7 @@ opacity: 0.8;
 	<div class="row" style="margin-top:10%; padding-bottom:10%;">
 	<div class="col-12"><span class="checktopout"><span class="checktop">찜</span> 찜목록</span></div>
 	<c:if test="${empty urealty}">
-	<div class="col-12" style="text-align:center; font-size: 30px; color: #61C0BF ; font-weight: 800; padding:15% 0;">찜목록이 없습니다.</div>
+	<div class="col-12" style="text-align:center; font-size: 30px; color: #61C0BF ; font-weight: 800; padding:15% 0;"><hr>찜목록이 없습니다.<hr></div>
 	</c:if>
 	<c:forEach var="realty" items="${urealty }">
 	<div id="jw_dibsdiv${realty.dibs_no }" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card border-0"><div class="card-img-top"><div class="img-overlay"><i class="far fa-calendar-check" > <b>입주가능일 <c:if test="${realty.move_available_date eq '0'}">즉시입주</c:if> <c:if test="${realty.move_available_date eq '1'}">날짜협의</c:if> </b></i><i class="far fa-clipboard" data-toggle="modal" data-target="#jw_myModal${realty.dibs_no }"> <b>메모</b></i><span class="check"><i class="far fa-eye"> <b>${realty.realty_hits }</b></i> 찜 (${realty.dibs_count })</span><span class="ddddel" id="jw_deldib${realty.dibs_no }" >&times;</span></div><img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image1}" style="width:100%; height:auto;"></div>

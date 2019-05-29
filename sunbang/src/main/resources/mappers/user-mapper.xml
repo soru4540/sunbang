@@ -144,8 +144,11 @@ where tb_dibs.user_no = #{user_no} order by dibs_no desc)
 </select>
 
 <select id="selectMyUser" parameterType="_int" resultType="Premium">
-select max(charge_no) charge_no ,charge_date,expiration_date, charged_payment, charged_status from tb_premium where business_user_no=#{business_user_no, jdbcType=NUMERIC} 
-group by charge_no,charge_date,expiration_date, charged_payment, charged_status
+select rownum, charge_no ,charge_date,expiration_date, charged_payment, charged_status from(
+select  charge_no ,charge_date,expiration_date, charged_payment, charged_status from tb_premium where business_user_no=#{business_user_no, jdbcType=NUMERIC}
+order by charge_no desc
+)
+where rownum = 1
 </select>
 
 <select id="selectFindId" parameterType="User" resultType="String">

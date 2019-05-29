@@ -74,6 +74,7 @@ public class ChatController {
 			jchat.put("away_time", chat.getAway_time());
 			jchat.put("check_join", chat.getCheck_join());
 			jchat.put("realty_no", chat.getRealty_no());
+			jchat.put("message_count", chat.getMessage_count());
 			
 			jarr.add(jchat);
 			

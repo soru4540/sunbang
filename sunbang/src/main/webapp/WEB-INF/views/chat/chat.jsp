@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>선방</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
+<title>SUNBANG</title>
 <script type="text/javascript">
 $(function(){
 	function messageinsert(){

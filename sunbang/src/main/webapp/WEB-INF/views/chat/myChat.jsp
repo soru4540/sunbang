@@ -6,9 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="shortcut icon" type="image⁄x-icon"
-	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
-<title>선방</title>
+<link rel="shortcut icon" type="image⁄x-icon" href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
+<title>SUNBANG</title>
 <script type="text/javascript" src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <script>
 
@@ -174,11 +173,13 @@ function chatmsgList(){
 		for(var i in jsonObj.clist){
 			
 			if(!$("#jw_chatdiv"+jsonObj.clist[i].chat_no).length){
+				if(${loginUser.user_no} == 0 && jsonObj.clist[i].message_count == 0){
+				}else{
 			outClist += "<div class='chatdiv crdiv mt-2' id='jw_chatdiv"+jsonObj.clist[i].chat_no+"'>[<span class='chatType'>"+jsonObj.clist[i].chat_type+"</span>]<input type='hidden' id='jw_chattyped"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_type+"'><input type='hidden' id='jw_chatnamed"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_name +"'>";
 			if(jsonObj.clist[i].chat_type == '단체'){
 			outClist += jsonObj.clist[i].chat_name +"<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style='display:none;'></span><span class='btn-lgreen mr-2' style='float:right;'>나가기</span></div>";
 			}else if(jsonObj.clist[i].chat_type == '관리자'){
-				outClist +="<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style=''></span></div>";	
+				outClist +="<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style=''></span></div>";
 			}else{
 			outClist +="<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style=''></span><span id='jw_chatdeld"+jsonObj.clist[i].chat_no+"' class='btn-lgreen mr-2' style='float:right;'>나가기</span></div>";	
 			}}
@@ -188,7 +189,7 @@ function chatmsgList(){
 			outBell = '<span id="jw_belloff${mcn}"class="icon"><i class="fas fa-bell-slash"></i></span>';
 			}
 			$("#jw_bellps"+jsonObj.clist[i].chat_no).html(outBell);
-			
+			}
 		}
 		$("#jw_chatlist").html(outClist);
 		
@@ -210,20 +211,28 @@ function chatmsgList(){
 					var CU = JSON.parse(JSON.stringify(cuobj));
 					var outCulist = $("#jw_culist"+jsonObj.clist[i].chat_no).html();
 					var outCCCulist = $("#jw_ccculist"+jsonObj.clist[i].chat_no).html();
-					
+					var redd= 0;
 					for(var j in CU.culist){
 						if(!$("#jw_c"+CU.culist[j].chat_no+"u"+CU.culist[j].user_no+"div").length){
 						outCulist +='<div id="jw_c'+CU.culist[j].chat_no+'u'+CU.culist[j].user_no+'div" class="chatdiv mt-1">'+CU.culist[j].nickname+'';
 						if( ${loginUser.user_no} != CU.culist[j].user_no && CU.culist[j].check_join != 'Y'){
-						outCulist +='<span id="jw_cbin'+CU.culist[j].user_no+'span" class="btn-lgreen"style="float:right;">차단</span>';
+							if(CU.culist[j].user_no == 0){
+							}else{
+						outCulist +='<span id="jw_cbin'+CU.culist[j].user_no+'span" class="btn-lgreen"style="float:right;">차단</span>';		
+							}
 						}
 						if(CU.culist[j].check_join != 'N'){
 						outCulist +='<span class="icon" style="background:gold; border:0;">차단됨</span>';
 						}
 						outCulist +='</div>';
 						if(!$("#jw_ccuserlis"+CU.culist[j].chat_no+"t"+CU.culist[j].user_no).length){
-						outCCCulist +='<span id="jw_ccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+',</span>';
+							if(redd == 0){
+							outCCCulist +='<span id="jw_ccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';
+							}else{
+							outCCCulist +=',<span id="jw_ccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';		
+							}
 						}
+						redd = redd+1;
 						}
 					}
 					$("#jw_culist"+jsonObj.clist[i].chat_no).html(outCulist);
@@ -273,10 +282,10 @@ function chatmsgList(){
 						else if(jsonMObj.mlist[j].renew_filename != ""){outMlist +=jsonMObj.mlist[j].origin_filename+'<a href="files/chat/chatImages/'+jsonMObj.mlist[j].renew_filename+'" download="'+jsonMObj.mlist[j].origin_filename+'"><span class="btn btn-lgreen px-2">다운로드</span></a>';}
 						
 						outMlist +="</div><span class='mr-1' style='float:right;'>"+jsonMObj.mlist[j].post_time+"<br><span class='mdel' id='jw_mdel"+jsonMObj.mlist[j].message_no+"'>&times;</span></span><span class='ml-1 readc' style='float:right;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
-						$("#jw_scroll"+jsonObj.clist[i].chat_no).scrollTop($("#jw_mlista"+jsonObj.clist[i].chat_no).height()+130);
+						$("#jw_mlista"+jsonObj.clist[i].chat_no).html(outMlist);
+						$("#jw_scroll"+jsonObj.clist[i].chat_no).scrollTop($("#jw_mlista"+jsonObj.clist[i].chat_no).height());
 						}
 					}
-					$("#jw_mlista"+jsonObj.clist[i].chat_no).html(outMlist);
 					
 				},
 				error: function(){
@@ -305,21 +314,6 @@ function chatmsgList(){
 		
 		
 		/*  */
-		$("#jw_cbdel${m}").click(function(){
-			$.ajax({
-				url: "cbdel.do",
-				type: "get",
-				data: {block_no: ${m}},
-				success:function(result){
-					$("#jw_cbdivd${m}").remove();
-					$("#jw_cbdel${m}").remove();
-				},
-				error:function(){
-					
-				}
-					
-			});
-		});
 		
 		/* 메세지전송 */
 		
@@ -422,9 +416,26 @@ $("#jw_chatdiv${m}").click(function(event){
 	$("#jw_mlist${m}").fadeIn(300);
 });
 
-
+$("#jw_cbdel${m}").click(function(){
+	$.ajax({
+		url: "cbdel.do",
+		type: "get",
+		data: {block_no: ${m}},
+		success:function(result){
+			$("#jw_cbdivd${m}").remove();
+			$("#jw_cbdel${m}").remove();
+			$(".jw_culist").empty();
+			chatmsgList();
+		},
+		error:function(){
+			
+		}
+			
+	});
+});
 
 $("#jw_chatdeld${m}").click(function(event){
+	event.stopPropagation();
 	$.ajax({
 		url: "cdelete.do",
 		type: "get",
@@ -432,7 +443,6 @@ $("#jw_chatdeld${m}").click(function(event){
 		data: {user_no: ${loginUser.user_no}, chat_no: ${m}},
 		success:function(){
 			$("#jw_chatdiv${m}").remove();
-			event.stopPropagation();
 		},
 		error:function(){
 			
@@ -447,10 +457,10 @@ $('#jw_cbin${m}span').click(function(){
 		async: false,
 		data: {user_no: ${loginUser.user_no}, block_user: ${m}},
 		success:function(){
-			/* $("#jw_cblist").empty();
-			cbList(); */
-			/* $(".jw_culist").empty();
-			chatmsgList(); */
+			$("#jw_cblist").empty();
+			cbList();
+			$(".jw_culist").empty();
+			chatmsgList();
 		},
 		error:function(){
 		}
