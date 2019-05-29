@@ -269,7 +269,7 @@ $(function(){
 			 }
 			</c:if>
 			<c:if test='${empty loginUser.user_no}'>
-			alert('로그인하시오');
+			alert('로그인이 필요한 서비스입니다.');
 			</c:if>
 		})
 		$("#sh_chat_btn_2").click(function(){
@@ -285,7 +285,7 @@ $(function(){
 			 }
 			</c:if>
 			<c:if test='${empty loginUser.user_no}'>
-			alert('로그인하시오');
+			alert('로그인이 필요한 서비스입니다.');
 			</c:if>
 		})
    });

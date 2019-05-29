@@ -281,7 +281,21 @@ public class InteriorServiceImpl implements InteriorService{
 	public int deleteBoard(int board_no) {
 		return interiorDao.deleteBoard(session, board_no);
 	}
+	
+	// 내 글 목록
+	@Override
+	public ArrayList<BoardFull> selectMyPhotograph(int user_no) {
+		return interiorDao.selectMyPhotograph(session, user_no);
+	}
 
+	@Override
+	public ArrayList<BoardFull> selectMyHousewarming(int user_no) {
+		return interiorDao.selectMyHousewarming(session, user_no);
+	}
 
+	@Override
+	public ArrayList<BoardFull> selectMyKnowhow(int user_no) {
+		return interiorDao.selectMyKnowhow(session, user_no);
+	}
 
 }

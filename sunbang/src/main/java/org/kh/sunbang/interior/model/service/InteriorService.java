@@ -116,5 +116,12 @@ public interface InteriorService {
 
 	int deleteAllLike(int board_no);
 	
+	// 내 글 목록
+	ArrayList<BoardFull> selectMyPhotograph(int user_no);
+
+	ArrayList<BoardFull> selectMyHousewarming(int user_no);
+
+	ArrayList<BoardFull> selectMyKnowhow(int user_no);
+	
 	
 }

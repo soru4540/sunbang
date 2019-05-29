@@ -277,7 +277,20 @@ public class InteriorDao {
 			return session.update("interiorMapper.updateBoard", boardfull);
 		}
 		
+		// 내 글 목록
+		public ArrayList<BoardFull> selectMyPhotograph(SqlSessionTemplate session, int user_no) {
+			List<BoardFull> list = session.selectList("interiorMapper.selectMyPhotograph", user_no);
+			return (ArrayList<BoardFull>) list;
+		}
 
-	
+		public ArrayList<BoardFull> selectMyHousewarming(SqlSessionTemplate session, int user_no) {
+			List<BoardFull> list = session.selectList("interiorMapper.selectMyHousewarming", user_no);
+			return (ArrayList<BoardFull>) list;
+		}
+
+		public ArrayList<BoardFull> selectMyKnowhow(SqlSessionTemplate session, int user_no) {
+			List<BoardFull> list = session.selectList("interiorMapper.selectMyKnowhow", user_no);
+			return (ArrayList<BoardFull>) list;
+		}
 		
 }

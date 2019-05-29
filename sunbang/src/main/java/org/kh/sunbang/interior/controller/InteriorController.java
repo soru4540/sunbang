@@ -1073,8 +1073,27 @@ public class InteriorController {
 //-------------------------서은 PART------------------------------------------------	
   		
   		@RequestMapping("imyboard.do")
-  		public String moveMyBoardPage() {
-  			return "interior/interiorMyBoard";
+  		public ModelAndView selectMyBoardPage(ModelAndView mv, @RequestParam(name="user_no") int user_no) {
+  			
+  			ArrayList<BoardFull> photograph = interiorService.selectMyPhotograph(user_no);
+  			ArrayList<BoardFull> housewarming = interiorService.selectMyHousewarming(user_no);
+  			ArrayList<BoardFull> knowhow = interiorService.selectMyKnowhow(user_no);
+  			
+  			if(photograph != null) {
+  				mv.addObject("photograph", photograph);
+  				mv.setViewName("interior/interiorMyBoard");			
+  			}
+  			
+  			if(housewarming != null) {
+  				mv.addObject("housewarming", housewarming);
+  				mv.setViewName("interior/interiorMyBoard");			
+  			}
+  			
+  			if(knowhow != null) {
+  				mv.addObject("knowhow", knowhow);
+  				mv.setViewName("interior/interiorMyBoard");			
+  			}
+  			return mv;  			
   		}
   		
   		@RequestMapping("iwritepage.do")
@@ -1203,7 +1222,7 @@ public class InteriorController {
     
     //신고체크
 	@RequestMapping(value="rkcheck.do", method=RequestMethod.POST)
-	public void selectRealtyReportCheck(@RequestBody String param, HttpServletResponse response) throws ParseException {
+	public void selectKnowhowReportCheck(@RequestBody String param, HttpServletResponse response) throws ParseException {
 		JSONParser jparser = new JSONParser();
 		JSONObject job = (JSONObject)jparser.parse(param);
 		

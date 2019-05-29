@@ -688,4 +688,46 @@ delete from tb_like where board_no = #{board_no}
 delete from tb_board where board_no = #{board_no} 
 </delete>
 
+<!-- 내 방 목록 -->
+<select id="selectMyPhotograph" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and user_no = #{user_no} and board_type = 'photograph'
+order by rnum
+</select>
+
+<select id="selectMyHousewarming" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and user_no = #{user_no} and board_type = 'housewarming'
+order by rnum
+</select>
+
+<select id="selectMyKnowhow" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and user_no = #{user_no} and board_type = 'knowhow'
+order by rnum
+</select>
 </mapper>
