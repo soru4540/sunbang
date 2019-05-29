@@ -338,7 +338,8 @@
 	
 	<select id="selectRealtyMyListView" resultMap="resultRealty" useCache="true">
 		select * from tb_realty
-		where user_no = #{user_no} and realty_status != '삭제' and realty_status != '완전삭제'
+		where user_no = #{user_no} and realty_status != '삭제' and realty_status != '완전삭제' 
+		order by realty_no desc
 	</select>
 	
 	<update id="updateRealtyMyListDelete" parameterType="Realty">
