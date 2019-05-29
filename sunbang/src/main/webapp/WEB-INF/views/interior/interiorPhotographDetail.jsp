@@ -100,27 +100,19 @@
 <!-- 삭제하기 -->
 <script type="text/javascript">	
 	$(function() {
-		$("#photograph_allDelete_btn").click(function() {			
-			if(confirm("삭제하시겠습니까?")){
-			document.form1.action = "${pageContext.request.contextPath}/intrior/ibdelete.do"; 
-			document.form1.submit();
-			}
+		$("#photograph_allDelete_btn").click(function() {				
+			 var result = confirm("삭제하시겠습니까?");
+	          if(result == true){
+	          	location.href = "ibdelete.do?board_no=${photoList[0].board_no}&board_type='${photoList[0].board_type}'";
+	         }
 		});
 	});
 </script>
 <!-- 좋아요 -->
 <script type="text/javascript">
 	$(function() {
-		var user_no = $
-		{
-			loginUser.user_no
-		}
-		;
-		var board_no = $
-		{
-			photoList[0].board_no
-		}
-		;
+		var user_no = ${loginUser.user_no};
+		var board_no = ${photoList[0].board_no};
 
 		$.ajax({
 			url : "ilcheck.do",
@@ -180,10 +172,11 @@
 <!-- 팔로우 -->
 <script type="text/javascript">
 	$(function() {
-		if(loginUser != empty){
+		
+	/* 	if(loginUser != empty){ */
 		var user_no = ${loginUser.user_no};
 		var follower_no = ${photoList[0].user_no};
-		}
+		/* } */
 		$.ajax({
 			url : "ifcheck.do",
 			data : {
@@ -285,6 +278,12 @@
 #sh_category {
 	font-weight: bold;
 	font-size: large;
+}
+
+#sh_boardhits {
+    float:left;
+    font-weight: normal;
+    color: grey;
 }
 
 #sh_report {
@@ -435,6 +434,8 @@
 								/ ${photoList[0].floor_area }  평  
 								</c:if>
 								</p>
+								<hr>
+                            <span id="sh_boardhits">조회수 : ${knowHowPostList[0].board_hits }</span>
 								<c:if test="${not empty loginUser }">
 									<a data-toggle="modal" data-target="#sh_reportModal"
 										id="sh_report">신고 <i class="far fa-angry"></i></a>
@@ -577,6 +578,44 @@
 						<br> <br> <br> <br> <br> <br> <br>
 						<hr style="border : 1px solid lightgray;">
 						<br> <br>
+						<!-- 댓글 리스트 불러오기-->
+						<div class="row" id="list2">
+						<script type="text/javascript">
+							function getCommentList(){
+								$.ajax({
+							        type:'POST',
+							        url : "irlist.do",
+							        dataType : "json",
+							        data:$("#commentForm").serialize(),
+							        contentType : "application/json; charset=utf-8",
+							        success : function(data){							            
+							            var html = "";
+							            var cCnt = "";							            
+							            if(data.length > 0){							                
+							                for(i=0; i<data.length; i++){
+							                    html += "<div>";
+							                    html += "<div><table class='table'><h6><strong>"+data[i].writer+"</strong></h6>";
+							                    html += data[i].comment + "<tr><td></td></tr>";
+							                    html += "</table></div>";
+							                    html += "</div>";
+							                }							                
+							            } else {							                
+							                html += "<div>";
+							                html += "<div><table class='table'><h6><strong>등록된 댓글이 없습니다.</strong></h6>";
+							                html += "</table></div>";
+							                html += "</div>";							                
+							            }							            
+							            $("#cCnt").html(cCnt);
+							            $("#commentList").html(html);							            
+							        },
+							        error:function(request,status,error){							            
+							       }							        
+							    });
+							}
+						</script>
+						
+      					</div> 
+						<br><br>
 						<!-- 댓글창 -->
 						<section class="replyForm">
 							<div class="form_horizontal">
@@ -584,7 +623,7 @@
 									<label for="writer" class="col-sm-2 control-label">작성자</label>
 									<div class="col-sm-12">
 										<input type="text" id="writer" name="writer"
-											class="form-control" />
+											class="form-control" value="${loginUser.nickname }"/>
 									</div>
 								</div>
 
