@@ -237,6 +237,18 @@ outline-style: none;
   }
 }
 
+.mr-3{
+height:50px;
+width:50px;
+border-radius: 5px;
+}
+
+.mr_3{
+height:50px;
+width:50px;
+border-radius: 5px;
+}
+
 </style>
 </head>
 <body>
@@ -467,7 +479,7 @@ outline-style: none;
 			            				+"<h6 align='left'>"
 			            			    +"<i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname
 			            				+"</h6>"
-			            				+"<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
+			            				+"<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
 			            				+"<h5 align='center'>";			            				
 			            				var count = 0
 			            				  for(var k in jsonObj.illist){
@@ -580,6 +592,7 @@ outline-style: none;
                         if(i !=0 && jsonObj.irlist[i-1].reply_lev == 2){
                         	value += "</div></div>";
                         }                        
+                        
 						value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
 						 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 						  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
@@ -587,9 +600,11 @@ outline-style: none;
 						   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 						    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
 						   }
-                        }                             
+						   
+                        }              
+                        
                         if(jsonObj.irlist[i].reply_lev == 2){
-						value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
+						value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img class='mr_3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
 								+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 								+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><a href='istory.do?user_no="+$("#i_user_no").val()+"&follower_no="+jsonObj.irlist[i].re_user_no+"'>@"+jsonObj.irlist[i].re_nickname+"</a>&nbsp;&nbsp;<span id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</span><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 								+"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
@@ -633,7 +648,9 @@ outline-style: none;
 		        	listReply(i);
 		        	$("#reply_lev"+i).val(1);
 		        	$("#origin_reply_no"+i).val(0);
-		        	$("#reply_contents"+i).val("");		        
+		        	$("#reply_contents"+i).val("");		 
+		        	$("#reference_reply_no"+i).val(0).val());
+				} 
 		        },error: function(){
 		        	
 				}

@@ -96,7 +96,7 @@
 
 #jb_main_container #jb_main_new .hovereffect {
 	width: 100%;
-	height: 75%;
+	height: 90%;
 	float: left;
 	overflow: hidden;
 	position: relative;
@@ -153,10 +153,9 @@
 							<a href="ibselect.do?board_no=${kbtop4.get(0).board_no}&board_type=${kbtop4.get(0).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(0).post_data}"
 								height="455px">
 							<div class="carousel-caption">
-								<h4>First Thumbnail label</h4>
-								<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-									quam. Donec id elit non mi porta gravida at eget metus. Nullam
-									id dolor id nibh ultricies vehicula ut id elit.</p>
+								<h4>knowhow_${kbtop4.get(0).user_id}</h4>
+								
+								<p><c:if test="${!empty kbtop4.get(0).category1 }">${kbtop4.get(0).category1}</c:if> <c:if test="${!empty kbtop4.get(0).category2 }">${kbtop4.get(0).category2}</c:if> <c:if test="${!empty kbtop4.get(0).category3 }">${kbtop4.get(0).category3}</c:if></p>
 							</div>
 							</a>
 						</div>
@@ -164,10 +163,8 @@
 							<a href="ibselect.do?board_no=${kbtop4.get(1).board_no}&board_type=${kbtop4.get(1).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(1).post_data}"
 								height="455px">
 							<div class="carousel-caption">
-								<h4>Second Thumbnail label</h4>
-								<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-									quam. Donec id elit non mi porta gravida at eget metus. Nullam
-									id dolor id nibh ultricies vehicula ut id elit.</p>
+								<h4>knowhow_${kbtop4.get(1).user_id}</h4>
+								<p><c:if test="${!empty kbtop4.get(1).category1 }">${kbtop4.get(1).category1}</c:if> <c:if test="${!empty kbtop4.get(1).category2 }">${kbtop4.get(1).category2}</c:if> <c:if test="${!empty kbtop4.get(1).category3 }">${kbtop4.get(1).category3}</c:if></p>
 							</div>
 							</a>
 						</div>
@@ -175,10 +172,8 @@
 							<a href="ibselect.do?board_no=${kbtop4.get(2).board_no}&board_type=${kbtop4.get(2).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(2).post_data}"
 								height="455px">
 							<div class="carousel-caption">
-								<h4>Third Thumbnail label</h4>
-								<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-									quam. Donec id elit non mi porta gravida at eget metus. Nullam
-									id dolor id nibh ultricies vehicula ut id elit.</p>
+								<h4>knowhow_${kbtop4.get(2).user_id}</h4>
+								<p><c:if test="${!empty kbtop4.get(2).category1 }">${kbtop4.get(2).category1}</c:if> <c:if test="${!empty kbtop4.get(2).category2 }">${kbtop4.get(2).category2}</c:if> <c:if test="${!empty kbtop4.get(2).category3 }">${kbtop4.get(2).category3}</c:if></p>
 							</div>
 							</a>
 						</div>
@@ -186,10 +181,8 @@
 							<a href="ibselect.do?board_no=${kbtop4.get(3).board_no}&board_type=${kbtop4.get(3).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(3).post_data}"
 								height="455px">
 							<div class="carousel-caption">
-								<h4>Third Thumbnail label</h4>
-								<p>Cras justo odio, dapibus ac facilisis in, egestas eget
-									quam. Donec id elit non mi porta gravida at eget metus. Nullam
-									id dolor id nibh ultricies vehicula ut id elit.</p>
+								<h4>knowhow_${kbtop4.get(3).user_id}</h4>
+								<p><c:if test="${!empty kbtop4.get(3).category1 }">${kbtop4.get(3).category1}</c:if> <c:if test="${!empty kbtop4.get(3).category2 }">${kbtop4.get(3).category2}</c:if> <c:if test="${!empty kbtop4.get(3).category3 }">${kbtop4.get(3).category3}</c:if></p>
 							</div>
 							</a>
 						</div>
@@ -359,7 +352,7 @@
 				</a>
 			</div>
 		</div>
-		<br>
+		<br><br>
 	</div>
 	<c:import url="../common/footer.jsp" />
 

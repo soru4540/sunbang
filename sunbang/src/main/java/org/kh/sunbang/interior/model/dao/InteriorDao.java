@@ -246,51 +246,50 @@ public class InteriorDao {
 	
 	//-----------------------------------------서은---------------------------------------------------
 
-		// 게시글 전체 삭제 //////////////////////
-		public int deleteAllLike(SqlSessionTemplate session, int board_no) {
-			return session.delete("interiorMapper.deleteAllLike", board_no);
-		}
+	// 게시글 전체 삭제 //////////////////////
+	public int deleteAllLike(SqlSessionTemplate session, int board_no) {
+		return session.delete("interiorMapper.deleteAllLike", board_no);
+	}
 
-		public int deleteAllPost(SqlSessionTemplate session, int board_no) {
-			return session.delete("interiorMapper.deleteAllPost", board_no);
-		}
+	public int deleteAllPost(SqlSessionTemplate session, int board_no) {
+		return session.delete("interiorMapper.deleteAllPost", board_no);
+	}
 
-		public int deleteBoard(SqlSessionTemplate session, int board_no) {
-			return session.delete("interiorMapper.deleteBoard", board_no);
-		}
-		/////////////////////
+	public int deleteBoard(SqlSessionTemplate session, int board_no) {
+		return session.delete("interiorMapper.deleteBoard", board_no);
+	}
+	/////////////////////
 
-		// 사진 상세페이지
-		public ArrayList<BoardFull> selectPhotoList(SqlSessionTemplate session, int board_no) {
-			List<BoardFull> list = session.selectList("interiorMapper.selectPhotoList", board_no);
-			return (ArrayList<BoardFull>) list;
-		}
+	// 사진 상세페이지
+	public ArrayList<BoardFull> selectPhotoList(SqlSessionTemplate session, int board_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectPhotoList", board_no);
+		return (ArrayList<BoardFull>) list;
+	}
 
-		// 집들이 상세페이지
-		public ArrayList<BoardFull> selectHouseWList(SqlSessionTemplate session, int board_no) {
-			List<BoardFull> list = session.selectList("interiorMapper.selectHouseWList", board_no);
-			return (ArrayList<BoardFull>) list;
-		}
+	// 집들이 상세페이지
+	public ArrayList<BoardFull> selectHouseWList(SqlSessionTemplate session, int board_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectHouseWList", board_no);
+		return (ArrayList<BoardFull>) list;
+	}
 
-		// 게시글 수정
-		public int updateBoard(SqlSessionTemplate session, BoardFull boardfull) {
-			return session.update("interiorMapper.updateBoard", boardfull);
-		}
-		
-		// 내 글 목록
-		public ArrayList<BoardFull> selectMyPhotograph(SqlSessionTemplate session, int user_no) {
-			List<BoardFull> list = session.selectList("interiorMapper.selectMyPhotograph", user_no);
-			return (ArrayList<BoardFull>) list;
-		}
+	// 게시글 수정
+	public int updateBoard(SqlSessionTemplate session, BoardFull boardfull) {
+		return session.update("interiorMapper.updateBoard", boardfull);
+	}
+	
+	// 내 글 목록
+	public ArrayList<BoardFull> selectMyPhotograph(SqlSessionTemplate session, int user_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectMyPhotograph", user_no);
+		return (ArrayList<BoardFull>) list;
+	}
 
-		public ArrayList<BoardFull> selectMyHousewarming(SqlSessionTemplate session, int user_no) {
-			List<BoardFull> list = session.selectList("interiorMapper.selectMyHousewarming", user_no);
-			return (ArrayList<BoardFull>) list;
-		}
+	public ArrayList<BoardFull> selectMyHousewarming(SqlSessionTemplate session, int user_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectMyHousewarming", user_no);
+		return (ArrayList<BoardFull>) list;
+	}
 
-		public ArrayList<BoardFull> selectMyKnowhow(SqlSessionTemplate session, int user_no) {
-			List<BoardFull> list = session.selectList("interiorMapper.selectMyKnowhow", user_no);
-			return (ArrayList<BoardFull>) list;
-		}
-		
+	public ArrayList<BoardFull> selectMyKnowhow(SqlSessionTemplate session, int user_no) {
+		List<BoardFull> list = session.selectList("interiorMapper.selectMyKnowhow", user_no);
+		return (ArrayList<BoardFull>) list;
+	}
 }

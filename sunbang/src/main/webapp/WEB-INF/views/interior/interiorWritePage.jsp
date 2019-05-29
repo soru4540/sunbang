@@ -29,7 +29,7 @@
 			</div>
 
 			<div class="col">
-				<a href=""  style="color: #888;">
+				<a href="ibinsertview.do?board_type=housewarming"  style="color: #888;">
 				<h5 style="font-weight:bold;">집들이</h5>
 					<img src="${pageContext.request.contextPath}/resources/images/home.png" style="width: 40%;">
 				<br>

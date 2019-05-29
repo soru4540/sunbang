@@ -167,10 +167,10 @@
 <!-- 팔로우 -->
 <script type="text/javascript">
 	$(function() {
-		/* if (loginUser != empty) { */
+		if (loginUser != empty) {
 			var user_no = ${loginUser.user_no};
 			var follower_no = ${houseWList[0].user_no};
-		/* } */
+		}
 		$.ajax({
 			url : "ifcheck.do",
 			data : {
@@ -272,12 +272,6 @@
 #sh_category {
 	font-weight: bold;
 	font-size: large;
-}
-
-#sh_boardhits {
-	float:left;
-	font-weight: normal;
-	color: grey;
 }
 
 #sh_report {
@@ -406,6 +400,178 @@
 	margin: 5px;
 	text-align: center;
 }
+
+
+.jb_filter1_filterBtn {
+	display: inline-block;
+	font-weight: 400;
+	font-family: a고딕14;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid #ff9198;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+.jb_filter1_filterBtn2 {
+	display: inline-block;
+	font-weight: 400;	
+	font-family: a고딕14;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 0px;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.textline {
+width: 85%;
+line-height: 40px;
+outline-style: none;
+  
+}
+
+.jb_filter1_submitBtn {
+	display: inline-block;
+	font-weight: 400;
+	font-family: a고딕14;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid #ff9198;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
+
+.mr-3{
+height:50px;
+width:50px;
+border-radius: 5px;
+}
+
+.mr_3{
+height:50px;
+width:50px;
+border-radius: 5px;
+}
+
+.jb_filter_btn {
+	display: inline-block;
+	font-family: a고딕15;
+	font-weight: 400;
+	height: 25px;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #ff9198;
+	border: 1px solid transparent;
+	padding: 3px 3px 3px 3px;
+	font-size: 1rem;
+	line-height: 1;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	margin-bottom: 5px;
+}
+
+.jb_filter_btn2 {
+	display: inline-block;
+	font-family: a고딕12;
+	font-weight: 400;
+	height: 25px;
+	color: black;
+	opacity:0.6;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #fff;
+	border: 1px solid transparent;
+	padding: 3px 3px 3px 3px;
+	font-size: 1rem;
+	line-height: 1;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	margin-bottom: 5px;
+}
+
+.jb_filter_btn3 {
+	display: inline-block;
+	font-family: a고딕12;
+	font-weight: 400;
+	height: 25px;
+	color: black;	
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #fff;
+	border: 1px solid transparent;
+	padding: 3px 3px 3px 3px;
+	font-size: 1rem;
+	line-height: 1;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	margin-bottom: 5px;
+}
+
+
+#list2 a:link {
+	color: #000000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#list2 a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+#list2 a:active {
+	color: #000000;
+	font-family: a고딕15;
+	text-decoration: none;
+}
+
+
 </style>
 </head>
 <body>
@@ -421,14 +587,13 @@
 								<div class="col-md-12">
 									<br>
 									<p id="sh_category" name="category">
-										<c:if test="${not empty houseWList[0].housing_type }">
-								${houseWList[0].housing_type }  
+										<c:if test="${not empty houseWList[0].space }">
+								${houseWList[0].space }  
 								</c:if>
 										<c:if test="${not empty houseWList[0].floor_area }">
 								/ ${houseWList[0].floor_area }  평  
 								</c:if>
-									</p><hr>
-									<span id="sh_boardhits">조회수 : ${houseWList[0].board_hits }</span>
+									</p>
 									<c:if test="${not empty loginUser }">
 										<a data-toggle="modal" data-target="#sh_reportModal"
 											id="sh_report">신고 <i class="far fa-angry"></i></a>
@@ -554,7 +719,7 @@
 									</tr>
 									<tr>
 										<th>예산</th>										
-										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 원</td>										
+										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 만원</td>										
 									</tr>
 									<tr>
 										<th>스타일</th>										
@@ -606,43 +771,154 @@
 							<br> <br> <br> <br> <br> <br> <br>
 							<hr style="border: 1px solid lightgray;">
 							<br> <br>
-							<!-- 댓글창 -->
-							<section class="replyForm">
-								<div class="form_horizontal">
-									<div class="form-group">
-										<label for="writer" class="col-sm-2 control-label">작성자</label>
-										<div class="col-sm-12">
-											<input type="text" id="writer" name="writer"
-												class="form-control" />
-										</div>
+							
+								<script type="text/javascript">
+								//모달 open시 동작(댓글 리스트 출력)
+						function openReplyModal(e){
+							listReply(e);
+						}
+						
+						//댓글 리스트 출력
+						function listReply(boardnum){		
+							   $.ajax({
+							        type : "post",  
+							        dataType : "json", 
+							        data : {board_no : boardnum},
+							        url : "irlist.do",
+							        success : function(returnData) {		
+							        var objStr = JSON.stringify(returnData);	
+									var jsonObj = JSON.parse(objStr);				
+									var value="";						
+									if(jsonObj != null){
+									for(var i in jsonObj.irlist){				
+										
+				                        if(jsonObj.irlist[i].reply_lev == 1){	
+				                        	
+				                        if(i !=0 && jsonObj.irlist[i-1].reply_lev == 2){
+				                        	value += "</div></div>";
+				                        }                        
+										value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
+										 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
+										  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
+										   +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
+										   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
+										    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
+										   }
+				                        }                             
+				                        if(jsonObj.irlist[i].reply_lev == 2){
+										value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img class='mr_3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
+												+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
+												+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><a href='istory.do?user_no="+$("#i_user_no").val()+"&follower_no="+jsonObj.irlist[i].re_user_no+"'>@"+jsonObj.irlist[i].re_nickname+"</a>&nbsp;&nbsp;<span id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</span><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
+												+"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
+										 if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
+											    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'></div></div>";	   
+										 }else{
+												value += "</div></div>";
+										 }
+				                         }	
+				                        
+				                        if( i == jsonObj.irlist.length - 1){
+				                        	value += "</div></div>";
+				                        }
+									}				
+									$("#replylist"+boardnum).html(value);
+									}
+							        },error: function(){
+									}
+				                  });		    
+						}
+						
+					  //댓글달기 클릭시 모달하단 입력창에 해당 댓글의 댓글달기로 변환	
+				      function addReplyLine(e){
+							var i = $("#board_no"+e).val();
+							$("#reply_lev"+i).val(2);
+							$("#origin_reply_no"+i).val($("#origin_reply_no"+e).val());		
+							$("#reference_reply_no"+i).val($("#reply_no"+e).val());
+						} 
+						
+					  //댓글추가
+				      function addReply(e){            	    	
+				         if($("#i_user_no").val()!=0){
+				    	  if($("#reply_contents"+e).val() != ""){
+				    	  $.ajax({
+						        type : "post",  
+						        dataType : "json", 
+						        data : {board_no : e, reply_lev : $("#reply_lev"+e).val(), origin_reply_no : $("#origin_reply_no"+e).val(),reply_contents: $("#reply_contents"+e).val(),reference_reply_no: $("#reference_reply_no"+e).val() ,user_no :$("#i_user_no").val()},
+						        url : "irinsert.do",
+						        success : function(returndata) {
+						        	var i = returndata;
+						        	listReply(i);
+						        	$("#reply_lev"+i).val(1);
+						        	$("#origin_reply_no"+i).val(0);
+						        	$("#reply_contents"+i).val("");		        
+						        },error: function(){
+						        	
+								}
+				              });
+				          }else{
+				        	  alert("댓글을 입력해주세요!");
+				          }
+				         }else{
+				        	 alert("로그인 후 이용 가능합니다.");
+				         }
+				      } 
+						
+					  //댓글 삭제
+				      function delReply(e){
+				    	  var i = $("#board_no"+e).val();
+				    	  $.ajax({
+						        type : "post",  
+						        dataType : "json", 
+						        data : {reply_no: e, board_no : i},
+						        url : "irdelete.do",
+						        success : function(returndata) {
+						        	var i = returndata;
+						        	listReply(i);		              
+						        },error: function(){
+						        	
+								}
+				            });
+				      }
+				      
+					  //댓글수정 클릭시 수정창으로 변환
+				      function changeReply(e){
+				    	  value="<input type='text' id='reply_contents_update"+e+"' style='width:70%'>&nbsp;&nbsp;&nbsp;<input type='button' class='jb_filter_btn3' onclick='updateReply("+e+");' value='수정'>&nbsp;&nbsp;&nbsp;<input type='button' class='jb_filter_btn3' onclick='returnReply("+e+");' value='취소'>";
+				    	  $("#reply_contents_line"+e).html(value);
+				      }
+				      
+					  //댓글 수정
+				     function updateReply(e){
+				    	  var i = $("#reply_contents_update"+e).val();
+				    	  if(i != ""){
+				    	  var b = $("#board_no"+e).val();
+				    	  $.ajax({
+						        type : "post",  
+						        dataType : "json", 
+						        data : {reply_no: e, reply_contents : i, board_no : b},
+						        url : "irupdate.do",
+						        success : function(returndata) {
+						        	var i = returndata;
+						        	listReply(i);		              
+						        },error: function(){
+						        	
+								}
+				          });
+				    	  }else{
+				    		  alert("수정할 내용을 입력해주세요!");
+				    	  }
+				     }
+				     
+					 //댓글 수정 취소
+				     function returnReply(e){
+				    	 $("#reply_contents_line"+e).html($("#reply_contents_return"+e).val());
+				     }
+						</script>
+							
+					         	<!-- 댓글창 오픈 -->			
+									<div class="col-sm-offset-2 col-sm-12">
+										<button type="button" class="repSubmit btn btn-success" data-toggle='modal' data-target='#jb_replyModal${photoList[0].board_no}' id='jb_reply' onclick='openReplyModal(${photoList[0].board_no});'>댓글</button>
 									</div>
-
-									<div class="form-group">
-										<label for="content" class="col-sm-2 control-label">댓글내용</label>
-										<div class="col-sm-12">
-											<textarea id="content" name="content" class="form-control"></textarea>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<div class="col-sm-offset-2 col-sm-12">
-											<button type="button" class="repSubmit btn btn-success">작성</button>
-										</div>
-										<script type="text/javascript">
-											var formObj = $(".replyForm form[role='form']");
-
-											$(".repSubmit").click(
-													function() {
-														formObj.attr("action",
-																"replyWrite");
-														formObj.submit();
-													});
-										</script>
-									</div>
-								</div>
-							</section>
-							<!-- 댓글창 fin -->
-							<br> <br> <br> <br> <br> <br> <br>
+							<br> <br> <br> 
 						</div>
 					</div>
 				</div>
@@ -655,6 +931,47 @@
 
 		</div>
 	</form>
+		<!-- 댓글 리스트 불러오기-->
+	<c:if test="${empty loginUser}">
+		<input type="hidden" id="i_user_no" value="0">
+	</c:if>
+	<c:if test="${!empty loginUser}">
+		<input type="hidden" id="i_user_no" value="${loginUser.user_no}">
+	</c:if>
+	<div class="row" id="list2">
+		<div class='modal fade' id='jb_replyModal${photoList[0].board_no}'>
+			<div
+				class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'>
+				<div class='modal-content'>
+					<div class='modal-header'>
+						<h4 class='modal-title'>댓글</h4>
+						<button class='close' data-dismiss='modal'>&times;</button>
+					</div>
+					<div class='modal-body'>
+						<div class='row'>
+							<div class='col-md-12' id='replylist${photoList[0].board_no}'></div>
+						</div>
+					</div>
+					<div class='modal-footer' id='reply${photoList[0].board_no}'>
+						<img class='mr-3'
+							src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />
+						<input type='text' class='textline'
+							id='reply_contents${photoList[0].board_no}'>
+						<p style='padding-left: 1.5em;'></p>
+						<input type='hidden' id='board_no${photoList[0].board_no}'
+							value='${photoList[0].board_no}'><input type='hidden'
+							id='reply_lev${photoList[0].board_no}' value='1'> <input
+							type='hidden' id='origin_reply_no${photoList[0].board_no}'
+							value='0'><input type='hidden'
+							id='reference_reply_no${photoList[0].board_no}' value='0'>
+						<input type='button' class='jb_filter1_submitBtn' value='전송'
+							onclick='addReply(${photoList[0].board_no});'>
+						<p style='padding-left: 1.5em;'></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<c:import url="../common/footer.jsp" />
 </body>
 </html>

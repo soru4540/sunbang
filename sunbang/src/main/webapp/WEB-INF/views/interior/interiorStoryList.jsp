@@ -225,6 +225,19 @@ outline-style: none;
 	padding:2px;
   }
 }
+
+.mr-3{
+height:50px;
+width:50px;
+border-radius: 5px;
+}
+
+.mr_3{
+height:50px;
+width:50px;
+border-radius: 5px;
+}
+
 </style>
 </head>
 <body>

@@ -372,7 +372,7 @@ public class InteriorController {
   	@RequestMapping("istory.do")
   	public ModelAndView moveStoryList(ModelAndView mv,Follow follow) {		 	
   		FollowFull fuser= interiorService.selectUserFollowFollowing(follow.getFollower_no());
-  		int result = interiorService.selectCheckFollow(follow);
+  		int result = interiorService.selectCheckFollow(follow);  		
   		mv.addObject("fuser", fuser);
   		mv.addObject("checkfollow", result);
   		mv.addObject("follower_no",follow.getFollower_no());
@@ -1073,8 +1073,11 @@ public class InteriorController {
 //-------------------------서은 PART------------------------------------------------	
   		
   		@RequestMapping("imyboard.do")
-  		public ModelAndView selectMyBoardPage(ModelAndView mv, @RequestParam(name="user_no") int user_no) {
-  			
+  		public ModelAndView selectMyBoardPage(ModelAndView mv, 
+  				@RequestParam(name="user_no") int user_no) {
+  			FollowFull user= interiorService.selectUserFollowFollowing(user_no);
+  	        mv.addObject("user", user);
+  	        
   			ArrayList<BoardFull> photograph = interiorService.selectMyPhotograph(user_no);
   			ArrayList<BoardFull> housewarming = interiorService.selectMyHousewarming(user_no);
   			ArrayList<BoardFull> knowhow = interiorService.selectMyKnowhow(user_no);
@@ -1176,6 +1179,7 @@ public class InteriorController {
   				// 성현
   				ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(board_no);
   				if (knowHowPostList != null) {
+  					interiorService.updateBoardHits(board_no);
   					mv.addObject("knowHowPostList", knowHowPostList);
   					mv.setViewName("interior/interiorKnowhowDetail");
   				} else {
@@ -1275,4 +1279,5 @@ public class InteriorController {
 			e.printStackTrace();
 		}	
 	}    
+	
 }

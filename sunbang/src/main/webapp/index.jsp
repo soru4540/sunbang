@@ -326,7 +326,7 @@ $(function(){
 				<c:forEach items="${ iblist }" var="interior" varStatus="status">
 			<!-- card -->
 			<div class="card" id="js_index_card">
-				<a href="ibselect?board_no=${interior.board_no}&board_type=${interior.board_type}"><img class="card-img-top"
+				<a href="ibselect.do?board_no=${interior.board_no}&board_type=${interior.board_type}"><img class="card-img-top"
 					src="${pageContext.request.contextPath}/files/interior/interiorBoard/${interior.post_data}"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->

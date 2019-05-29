@@ -529,11 +529,7 @@ color:#ff9198;
 				</div>
 			</div>
 		</form>
-	<br><div class="row">
-			<div class="col">
-				<a href="ibupdateview.do?board_no=96">수정</a>
-			</div>
-		</div>
+	<br>
 		<br>
 </div>
 <c:import url="../common/footer.jsp" />	
