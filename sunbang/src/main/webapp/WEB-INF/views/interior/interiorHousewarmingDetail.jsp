@@ -86,11 +86,7 @@
 <script type="text/javascript">
 	$(function() {
 		$("#sh_housewarming_update_btn").click(function() {
-			location.href = "ibupdateview.do?board_no=" + $
-			{
-				houseWList[0].board_no
-			}
-			;
+			location.href = "ibupdateview.do?board_no=" + ${houseWList[0].board_no};
 		});
 	});
 </script>
@@ -110,16 +106,8 @@
 <!-- 좋아요 -->
 <script type="text/javascript">
 	$(function() {
-		var user_no = $
-		{
-			loginUser.user_no
-		}
-		;
-		var board_no = $
-		{
-			houseWList[0].board_no
-		}
-		;
+		var user_no = ${loginUser.user_no};
+		var board_no = ${houseWList[0].board_no};
 
 		$.ajax({
 			url : "ilcheck.do",
@@ -179,18 +167,10 @@
 <!-- 팔로우 -->
 <script type="text/javascript">
 	$(function() {
-		if (loginUser != empty) {
-			var user_no = $
-			{
-				loginUser.user_no
-			}
-			;
-			var follower_no = $
-			{
-				houseWList[0].user_no
-			}
-			;
-		}
+		/* if (loginUser != empty) { */
+			var user_no = ${loginUser.user_no};
+			var follower_no = ${houseWList[0].user_no};
+		/* } */
 		$.ajax({
 			url : "ifcheck.do",
 			data : {
@@ -435,8 +415,8 @@
 								<div class="col-md-12">
 									<br>
 									<p id="sh_category" name="category">
-										<c:if test="${not empty houseWList[0].space }">
-								${houseWList[0].space }  
+										<c:if test="${not empty houseWList[0].housing_type }">
+								${houseWList[0].housing_type }  
 								</c:if>
 										<c:if test="${not empty houseWList[0].floor_area }">
 								/ ${houseWList[0].floor_area }  평  
@@ -567,7 +547,7 @@
 									</tr>
 									<tr>
 										<th>예산</th>										
-										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 만원</td>										
+										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 원</td>										
 									</tr>
 									<tr>
 										<th>스타일</th>										
