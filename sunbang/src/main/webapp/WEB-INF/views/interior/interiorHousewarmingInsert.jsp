@@ -414,7 +414,7 @@
 			<div class="row">
 				<div class="col" style="font-family: a고딕14; ">				
 					<span >예산 : </span><input type="text" style="height: 35px; "
-						size="53" name="budget" id="budget" >&nbsp;만원			
+						size="53" name="budget" id="budget" >&nbsp;원			
 				</div>
 				<br><br>
 			</div>

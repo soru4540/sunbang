@@ -91,16 +91,14 @@
 	});
 </script>
 <!-- 삭제하기 -->
-<script type="text/javascript">
+<script type="text/javascript">	
 	$(function() {
-		$("#housewarming_allDelete_btn")
-				.click(
-						function() {
-							if (confirm("삭제하시겠습니까?")) {
-								document.form1.action = "${pageContext.request.contextPath}/intrior/ibdelete.do";
-								document.form1.submit();
-							}
-						});
+		$("#housewarming_allDelete_btn").click(function() {				
+			 var result = confirm("삭제하시겠습니까?");
+	          if(result == true){
+	          	location.href = "ibdelete.do?board_no=${houseWList[0].board_no}&board_type='${houseWList[0].board_type}'";
+	         }
+		});
 	});
 </script>
 <!-- 좋아요 -->
@@ -272,6 +270,12 @@
 #sh_category {
 	font-weight: bold;
 	font-size: large;
+}
+
+#sh_boardhits {
+    float:left;
+    font-weight: normal;
+    color: grey;
 }
 
 #sh_report {
@@ -719,7 +723,7 @@ border-radius: 5px;
 									</tr>
 									<tr>
 										<th>예산</th>										
-										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 만원</td>										
+										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 원</td>										
 									</tr>
 									<tr>
 										<th>스타일</th>										

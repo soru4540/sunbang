@@ -502,49 +502,55 @@
 								style="width: 100%; height: 35px; font-family: a고딕14;" required>
 								<option value="">공간 선택(필수)</option>
 								<c:if test=" ${iblist.space == '원룸' }">
-									<option value="원룸">원룸</option>
+									<option value="원룸" selected>원룸</option>
 								</c:if>
 								<c:if test="${iblist.space != '원룸' }">
-									<option value="원룸">원룸</option>
+									<option value="원룸" >원룸</option>
 								</c:if>
 								<c:if test="${iblist.space == '거실' }">
-									<option value="거실">거실</option>
+									<option value="거실" selected>거실</option>
 								</c:if>
 								<c:if test="${iblist.space != '거실' }">
 									<option value="거실">거실</option>
 								</c:if>
-								<c:if test="${iblist.space == '키친' }">
+								<c:if test="${iblist.space == '침실' }">
+									<option value="키친" selected>키친</option>
+								</c:if>
+								<c:if test="${iblist.space != '침실' }">
 									<option value="키친">키친</option>
+								</c:if>
+								<c:if test="${iblist.space == '키친' }">
+									<option value="키친" selected>키친</option>
 								</c:if>
 								<c:if test="${iblist.space != '키친' }">
 									<option value="키친">키친</option>
 								</c:if>
 								<c:if test="${iblist.space == '드레스룸' }">
-									<option value="드레스룸">드레스룸</option>
+									<option value="드레스룸" selected>드레스룸</option>
 								</c:if>
 								<c:if test="${iblist.space != '드레스룸' }">
 									<option value="드레스룸">드레스룸</option>
 								</c:if>
 								<c:if test="${iblist.space == '서재&작업실' }">
-									<option value="서재&작업실">서재&amp;작업실</option>
+									<option value="서재&작업실" selected>서재&amp;작업실</option>
 								</c:if>
 								<c:if test="${iblist.space != '서재&작업실' }">
-									<option value="서재&작업실">서재&amp;작업실</option>
+									<option value="서재&작업실" >서재&amp;작업실</option>
 								</c:if>
 								<c:if test="${iblist.space == '베란다' }">
-									<option value="베란다">베란다</option>
+									<option value="베란다" selected>베란다</option>
 								</c:if>
 								<c:if test="${iblist.space != '베란다' }">
-									<option value="베란다">베란다</option>
+									<option value="베란다" >베란다</option>
 								</c:if>
 								<c:if test="${iblist.space == '현관' }">
-									<option value="현관">현관</option>
+									<option value="현관" selected>현관</option>
 								</c:if>
 								<c:if test="${iblist.space != '현관' }">
 									<option value="현관">현관</option>
 								</c:if>
 								<c:if test="${iblist.space == '사무공간' }">
-									<option value="사무공간">사무공간</option>
+									<option value="사무공간" selected>사무공간</option>
 								</c:if>
 								<c:if test="${iblist.space != '사무공간' }">
 									<option value="사무공간">사무공간</option>

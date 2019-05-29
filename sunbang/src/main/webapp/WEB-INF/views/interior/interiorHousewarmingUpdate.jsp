@@ -789,7 +789,7 @@
 						<div class="col">
 							<span style="font-family: a고딕14;">예산 : </span><input type="text"
 								size="53" name="board_title" id="board_title"
-								style="width: 96%;" value="${iblist.bubget}">
+								style="width: 96%;" value="${iblist.budget}">
 						</div>
 					</div>
 					<br>

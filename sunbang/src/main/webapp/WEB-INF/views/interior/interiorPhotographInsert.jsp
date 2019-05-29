@@ -270,41 +270,7 @@
 							"<br><input type='hidden' name='post_keyword' value='video'>동영상 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='width:100%;'><br><br>내용 : <textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
 		}
 
-		/* 		190522 03:52
-		 function addType(e) {
-		 $("#row" + e)
-		 .html(
-		 "<i class='fas fa-times-circle' id='insert_icon' onclick='delType("
-		 + e
-		 + ");'></i>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='소제목' onclick='addData1("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='텍스트' onclick='addData2("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;"
-		 + "<input type='button' class='insert_btn' value='사진' onclick='addData3("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button'  class='insert_btn' value='동영상' onclick='addData4("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;"
-		 + "<input type='button'  class='insert_btn' value='버튼' onclick='addData5("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='구분선' onclick='addData6("
-		 + e + ")'>");
-		 $("#row" + (e + 1)).css("display", "");
-		 $("#line" + e).css("display", "");
-
-		 }	
-		 */
-
-		//클릭시 게시물 추가버튼으로 돌아감
-		/* function delType(e) {
-			$("#row" + e)
-					.html(
-							"<i class='fas fa-plus-circle' id='insert_icon' onclick='addType("
-									+ e
-									+ ");''></i>&nbsp;&nbsp;&nbsp;<span class='insert_line'>------------------------------------------</span>");
-			$("#rowdata" + e).html("");
-		} */
+				
 	</script>
 	<br>
 	<br>
@@ -320,7 +286,7 @@
 				<input type="hidden" name="post_keyword" value="cover"> 
 				<label
 					style="font-family: a고딕14;">파일선택<input type="file"
-					id="input_img0" name="post_data0">
+					id="input_img0" name="post_data0" required>
 				</label>
 			</div>
 			<div class="row">
@@ -354,7 +320,7 @@
 				&nbsp;&nbsp;
 				<div class="col">
 					<select class="floor_area" id="floor_area" name="floor_area"
-						style="width: 100%; height: 35px; font-family: a고딕14;">
+						style="width: 100%; height: 35px; font-family: a고딕14;" required>
 						<option value="">평수 선택</option>
 						<option value="9">10평 미만</option>
 						<option value="10">10평 이상</option>
@@ -368,7 +334,7 @@
 			<div class="row">
 				<div class="col">
 					<select class="color" id="color1" name="color1"
-						style="width: 100%; height: 35px; font-family: a고딕14;">
+						style="width: 100%; height: 35px; font-family: a고딕14;"required>
 						<option value="">전체 컬러 선택(필수)</option>
 						<option value="#d53736">RED</option>
 						<option value="#fed144">YELLOW</option>
@@ -383,6 +349,7 @@
 				<div class="col">
 					<select class="color" id="color2" name="color2"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">벽 컬러 선택</option>
 						<option value="#d53736">RED</option>
 						<option value="#fed144">YELLOW</option>
 						<option value="#96d783">GREEN</option>
@@ -412,7 +379,7 @@
 			<div class="row">
 				<div class="col">
 					<span style="font-family: a고딕14;">제목 : </span><input type="text"
-						size="53" name="board_title" id="board_title" style="width: 95%;">
+						size="53" name="board_title" id="board_title" style="width: 95%;"required>
 				</div>
 			</div>
 			<br>

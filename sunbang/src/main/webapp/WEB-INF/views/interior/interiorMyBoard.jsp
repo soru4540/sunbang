@@ -31,26 +31,13 @@
 	});
 </script>
 
+
 <style type="text/css">
 
 #photograph_title,
 #housewarming_title,
 #knowhow_title {
 	cursor:pointer;
-}
-
-.fix_con {
-	position: fixed;
-	width: 14%;
-	word-wrap: break-word;
-	overflow: hidden;
-	word-break: break-all;
-}
-
-.di {
-	word-wrap: break-word;
-	overflow: hidden;
-	word-break: break-all;
 }
 
 #photograph_box,
@@ -62,15 +49,14 @@
 	position: relative;
 }
 
-#box {
-	position: relative;
-	top: 50%;
-	left: 12%;
-	transform: translate(-50%, -50%);
-	border: 1px solid gray;
-	background-color: white;
-	padding: 2rem;
+#box{
+	cursor:pointer;
 }
+
+box:hover{
+	border: 1px solid gray;
+}
+
 </style>
 
 </head>
@@ -88,19 +74,19 @@
 			<!-- sidebar -->
 			<div class="col-sm-3">
 				<div class="fix_con" style="text-align:center;">
-					<div class="myprofile">
-						<img src="${pageContext.request.contextPath }/files/user/userImages/${photoList[0].user_profile }">
+					<div class="myprofile" >
+						<img src="${pageContext.request.contextPath }/files/user/userImages/1111.jpg"
+						style="width: 80%; border-radius:10%; ">
 					</div>
 					<br>
 					<c:if test="${empty loginUser}">
 						<a href="#" class="font-weight-bold"></a>
 					</c:if>
 					<c:if test="${!empty loginUser}">
-						<a href="#" class="font-weight-bold">닉네임</a>
+						<a href="#" class="font-weight-bold">${user.nickname}</a>
 					</c:if>
 					<br>
-					<a href="#"><span style="font-family: a고딕14; opacity: 0.5;">팔로우
-							: 78 팔로잉 : 17</span></a><br> <br>
+					<a href="#"><span style="font-family: a고딕14; opacity: 0.5;">팔로우: 78 팔로잉 : 17</span></a><br> <br>
 					<p>미니멀 라이프를 꿈꾸는 이를 위한 수납 노하우!</p>
 				</div>
 			</div>
@@ -109,31 +95,44 @@
 				<p style="font-family: a고딕17; font-size: 20px;">내 글 목록</p><hr>
 				
 				<!-- 사진 -->
-				<p id="photograph_title" style="font-family: a고딕17; font-size: 20px;">사진_photograph (${fn:length(photograph)})</p>
+				<p id="photograph_title" style="font-family: a고딕15; font-size: 18px;">사진(${fn:length(photograph)})</p>
 				<div class="row" id="photograph_box">
 				<c:forEach items="${photograph }" var="photograph" varStatus="status">
-					<div class="col-6 col-md-4 col-lg-3 mt-5">
-						${photograph.board_no}<!-- 여기에다가 사진이랑 넣고 싶은 정보 넣으시면 됩니다. 부트스트랩으로다가 -->
+					<div class="col-md-4 col-lg-3 mt-4" >					
+						<span style="font-family:a고딕14;">no. ${photograph.board_no}</span>					
+						<!-- 여기에다가 사진이랑 넣고 싶은 정보 넣으시면 됩니다. 부트스트랩으로다가 -->
+						<div class="col" id="box">
+						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${photograph.post_data }" 
+						style="width:100%;"onclick="location.href='ibselect.do?board_no=${photograph.board_no}&board_type=${photograph.board_type}'">
+						</div>
 					</div>
 				</c:forEach>
 				</div><hr>
 				
 				<!-- 집들이 -->	
-				<p id="housewarming_title" style="font-family: a고딕17; font-size: 20px;">집들이_housewarming (${fn:length(housewarming)})</p>
+				<p id="housewarming_title" style="font-family: a고딕15; font-size: 18px;">집들이(${fn:length(housewarming)})</p>
 				<div class="row" id="housewarming_box">
 				<c:forEach items="${housewarming }" var="housewarming" varStatus="status">
-					<div class="col-6 col-md-4 col-lg-3 mt-5">
-						${housewarming.board_no}
+					<div class="col-md-4 col-lg-3 mt-4">
+						<span style="font-family:a고딕14;">no. ${housewarming.board_no}</span>
+						<div class="col" id="box">
+						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${housewarming.post_data }" 
+						style="width:100%;" onclick="location.href='ibselect.do?board_no=${housewarming.board_no}&board_type=${housewarming.board_type}'">
+						</div>
 					</div>
 				</c:forEach>
 				</div><hr>
 				
 				<!-- 노하우 -->	
-				<p id="knowhow_title" style="font-family: a고딕17; font-size: 20px;">노하우_knowhow (${fn:length(knowhow)})</p>
+				<p id="knowhow_title" style="font-family: a고딕15; font-size: 18px;">노하우(${fn:length(knowhow)})</p>
 				<div class="row" id="knowhow_Box">
 				<c:forEach items="${knowhow }" var="knowhow" varStatus="status">
-					<div class="col-6 col-md-4 col-lg-3 mt-5">
-						${knowhow.board_no}
+					<div class="col-md-4 col-lg-3 mt-4" >
+						<span style="font-family:a고딕14;">no. ${knowhow.board_no}</span>
+						<div class="col" id="box">
+						<img src="${pageContext.request.contextPath}/files/interior/interiorBoard/${knowhow.post_data }" 
+						style="width:100%;" onclick="location.href='ibselect.do?board_no=${knowhow.board_no}&board_type=${knowhow.board_type}'">
+						</div>
 					</div>
 				</c:forEach>
 				</div><hr>
