@@ -274,6 +274,12 @@
 	font-size: large;
 }
 
+#sh_boardhits {
+	float:left;
+	font-weight: normal;
+	color: grey;
+}
+
 #sh_report {
 	float: right;
 	font-size: 15px;
@@ -421,7 +427,8 @@
 										<c:if test="${not empty houseWList[0].floor_area }">
 								/ ${houseWList[0].floor_area }  평  
 								</c:if>
-									</p>
+									</p><hr>
+									<span id="sh_boardhits">조회수 : ${houseWList[0].board_hits }</span>
 									<c:if test="${not empty loginUser }">
 										<a data-toggle="modal" data-target="#sh_reportModal"
 											id="sh_report">신고 <i class="far fa-angry"></i></a>

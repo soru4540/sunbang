@@ -281,6 +281,12 @@
 }
 
 #sh_boardhits {
+	float:left;
+	font-weight: normal;
+	color: grey;
+}
+
+#sh_boardhits {
     float:left;
     font-weight: normal;
     color: grey;
@@ -435,7 +441,7 @@
 								</c:if>
 								</p>
 								<hr>
-                            <span id="sh_boardhits">조회수 : ${knowHowPostList[0].board_hits }</span>
+                            	<span id="sh_boardhits">조회수 : ${photoList[0].board_hits }</span>
 								<c:if test="${not empty loginUser }">
 									<a data-toggle="modal" data-target="#sh_reportModal"
 										id="sh_report">신고 <i class="far fa-angry"></i></a>
