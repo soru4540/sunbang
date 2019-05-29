@@ -173,26 +173,51 @@
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+#jb_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+	display:none;
+}
+
+@media screen and (min-width: 800px) {
+  #jb_top {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	color: grey;
+	background-color: #f2f2f2;
+	border-color: #bee5eb;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
+
 </style>
 </head>
 <body>
 	<c:import url="../common/interiorHeader.jsp" />
 	<script type="text/javascript">
-		$(function() {						
-			
-			$(window).scroll(function() {
-				if ($(this).scrollTop() > 500) {
-					$('#MOVE_TOP_BTN').fadeIn();
+		$(function() {		
+						
+			$(window).scroll(function() {			
+				if ($(this).scrollTop() > 500) {				
+					$('#jb_top').fadeIn();
 				} else {
-					$('#MOVE_TOP_BTN').fadeOut();
+					$('#jb_top').fadeOut();
 				}
 			});
-
-			$("#MOVE_TOP_BTN").click(function() {
-				$('html, body').animate({
-					scrollTop : 0
-				}, 400);
-				return false;
+			
+			$("#jb_top").click(function() {
+				var offset = $('html').offset();
+				$("html, body").animate({
+					scrollTop : offset.top
+				}, 500);
 			});
 			
 			//필터 7개
@@ -457,7 +482,7 @@
 	</script>
 	<br>
 	<br>   
-	<div class="container" id="jb_filter2_container">
+	<div class="container" id="jb_filter2_container" style="min-height: 960px;">
 		<div class="row">		
 			<div class="col" align="center">
 				<button class="jb_filter2_filterBtn" id="jb_filter2_filter1">
@@ -585,10 +610,11 @@
 		<div class="row" id="list">
 		</div>
 		<br>
-		<div class="row">
-			<div class="col-md-12">
-				<a id="MOVE_TOP_BTN" href="#" style="color: #000;">TOP</a>
-			</div>
+		 <div class="row" id="jb_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
+		</div>
+	    </div>
 		</div>
 		<c:import url="../common/footer.jsp" />
 </body>
