@@ -55,7 +55,7 @@ public class AdminController {
 	// 관리자 페이지 표시
 	@RequestMapping("auhlistselect.do")
 	public ModelAndView adminPageView(ModelAndView mv) {
-		/* int chatCount = adminService.selectCountChat(); */
+		int chatCount = adminService.selectCountChat();
 
 		// 새로 가입한 기업회원 수
 		int newBUserCount = adminService.selectCountBUser();
@@ -69,6 +69,7 @@ public class AdminController {
 		if (rlist != null) {
 			mv.addObject("pcount", premiumCount);
 			mv.addObject("bucount", newBUserCount);
+			mv.addObject("ccount", chatCount);
 			mv.addObject("rlist", rlist);
 			mv.setViewName("admin/adminPage");
 		} else {

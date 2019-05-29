@@ -165,10 +165,9 @@
 	</select>
 
 	<select id="selectCountPremium" resultType="_int">
-		select
-		count(*) from
-		tb_premium where charge_date=(select to_char(sysdate,'yy/mm/dd') from
-		dual)
+		select count(*) 
+		from tb_premium 
+		where to_char(charge_date, 'yymmdd') = to_char(sysdate,'yymmdd')
 	</select>
 
 	<select id="selectBusinessDetail" parameterType="PremiumFull"
@@ -376,5 +375,13 @@
 			where
 			report_no = #{report_no}
 	</update>
+	
+	<select id="selectCountChat" resultType="_int">
+		select count(*) 
+		from tb_message m join tb_chat  c on m.chat_no = c.chat_no 
+		where c.user_no = 0 
+		and m.user_no<![CDATA[ > ]]>0 
+		and m.post_time between (select post_time from (select rownum rnum, message_no, post_time from (select * from tb_message where user_no=0 order by post_time desc) where rownum = 1)) and sysdate
+	</select>
 	
 </mapper>

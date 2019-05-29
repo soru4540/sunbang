@@ -35,6 +35,12 @@ margin: 10%;
 	margin: 5%
 }
 
+#hj_btn_filter.btn-success, #js_btn_subway.btn-success {
+    color: #fff;
+    background-color: #61c0bf;
+    border-color: #61c0bf;
+}
+
 .hj_slider_elements {
 	margin-top: 3%;
 	margin-bottom: 3%;
@@ -201,6 +207,7 @@ b {
 <script type="text/javascript">
 	$(document).ready(function() {
 		$("#hj_btn_filter").click(function() {
+			$("#js_subway").hide();
 			$("#hj_map").hide();
 			$("#hj_filter").show();
 			$("#hj_btn_filter").hide();
@@ -211,6 +218,26 @@ b {
 			$("#hj_filter").hide();
 			$("#hj_btn_filter").show();
 			$("#hj_btn_map").hide();
+		});
+
+		$("#js_btn_subway").click(function() {
+			$("#hj_filter").hide();
+			$("#hj_map").show();
+			if ($("#js_subway").is(":visible") == true) {
+				$("#js_subway").hide();
+			} else {
+				(function($) {
+					$(document).ready(function() {
+						$('img[usemap]').rwdImageMaps();
+					});
+				})(jQuery);
+				$("#js_subway").show();
+			}
+		});
+
+		$("#hj_map").click(function() {
+			$("#js_subway").hide();
+			window.scrollTo(0, 0);
 		});
 		if ($("#hj-checkbox7").is(":checked")) {
 			$('#hj_slider_deposit').show();
@@ -278,9 +305,38 @@ b {
 							<button type="button" id="hj_btn_map" class="btn btn-success">검색
 								필터</button>
 						</div>
+						<div class="btn">
+							<button type="button" id="js_btn_subway" class="btn btn-success">역으로검색</button>
+						</div>
 					</div>
 				</div>
 			</div>
+		</div>
+		<div style="max-height:920px;">
+		<div class="row" id="js_subway"
+			style="display: none; background: white; width: 100%; position: relative; padding-top: 85%; overflow: hidden;">
+			<img class="map-trans" alt="Map / Carte" usemap="#region-map"
+				src="${pageContext.request.contextPath }/files/admin/main/subway.png"
+				id="subwayimg"
+				style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; max-width: 100%; height: auto; margin:0 auto;">
+		</div>
+			<map name="region-map">
+				<area shape="rect" coords="672,619,685,632" href="#" alt="강남역" onclick="view('서울특별시 강남구 강남대로 지하 396')"/>
+				<area shape="rect" coords="196,350,226,363" href="#" alt="가양역" onclick="view('서울특별시 강서구 양천로 지하 485')"/>
+				<area shape="rect" coords="445,463,477,492" href="#" alt="용산역" onclick="view('서울 용산구 한강대로23길 55')"/>
+				<area shape="rect" coords="514,424,560,435" href="#" alt="숙대입구역" onclick="view('서울 용산구 갈월동 69-115')"/>
+				<area shape="rect" coords="789,736,809,755" href="#" alt="판교역" onclick="view('경기 성남시 분당구 판교역로 지하 160')"/>
+				<area shape="rect" coords="197,399,226,413" href="#" alt="염창역" onclick="view('서울 강서구 염창동 284-84')"/>
+				<area shape="rect" coords="58,487,97,504" href="#" alt="굴포천역" onclick="view('인천 부평구 갈산동 414')"/>
+				<area shape="rect" coords="510,391,540,415" href="#" alt="서울역" onclick="view('서울 용산구 한강대로 405')"/>
+				<area shape="rect" coords="326,298,346,338" href="#" alt="홍대입구역" onclick="view('서울 마포구 양화로 지하 160')"/>
+				<area shape="rect" coords="633,562,658,578" href="#" alt="고속터미널역" onclick="view('서울 서초구 신반포로 지하 188')"/>
+				<area shape="rect" coords="272,357,312,372" href="#" alt="합정역" onclick="view('서울 마포구 양화로 지하 55')"/>
+				<area shape="rect" coords="279,402,294,418" href="#" alt="당산역" onclick="view('서울 영등포구 당산로 229')"/>
+				<area shape="rect" coords="444,419,476,445" href="#" alt="효창공원앞역" onclick="view('서울 용산구 백범로 지하 287')"/>
+				<area shape="rect" coords="429,374,468,396" href="#" alt="공덕역" onclick="view('서울 마포구 마포대로 지하 100')"/>
+				<area shape="rect" coords="557,452,591,477" href="#" alt="이태원역" onclick="view('서울 용산구 이태원동 119-23')"/>
+			</map>
 		</div>
 
 		<div class="row" id="hj_filter" style="display: none;">
@@ -699,7 +755,25 @@ b {
 		};
 
 		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-
+		
+		//역으로 검색
+		function view(data){
+			$("#js_subway").hide();
+			var addr = data;
+			var geocoder = new daum.maps.services.Geocoder();
+			// 주소로 좌표를 검색합니다
+			geocoder.addressSearch(addr, function(result, status) {
+			    // 정상적으로 검색이 완료됐으면 
+			     if (status === daum.maps.services.Status.OK) {
+			        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
+			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+			        map.setCenter(coords);
+			        map.setLevel(4);
+			        getList();
+			    } 
+			});
+		}
+		
 		daum.maps.event.addListener(map, 'dragend', function() { //지도 드래그할때 작동       
 			getList();
 		});
@@ -1265,9 +1339,7 @@ b {
 			location.href = "rdetail.do?realty_no=" + realtyno;
 		}
 	</script>
-
-
 	<c:import url="../common/footer.jsp"></c:import>
-
+	<script src="${pageContext.request.contextPath }/resources/js/jquery.rwdImageMaps.min.js"></script>
 </body>
 </html>

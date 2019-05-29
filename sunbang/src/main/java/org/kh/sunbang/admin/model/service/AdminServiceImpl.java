@@ -130,5 +130,10 @@ public class AdminServiceImpl implements AdminService {
 	public int updateGuide(Guide guide) {
 		return adminDao.updateGuide(mybatisSession, guide);
 	}
+
+	@Override
+	public int selectCountChat() {
+		return adminDao.selectCountChat(mybatisSession);
+	}
 	
 }

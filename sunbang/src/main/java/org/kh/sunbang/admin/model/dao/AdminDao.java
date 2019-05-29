@@ -126,4 +126,9 @@ public class AdminDao {
 		return result;
 	}
 
+	public int selectCountChat(SqlSessionTemplate mybatisSession) {
+		int result = mybatisSession.selectOne("adminMapper.selectCountChat");
+		return result;
+	}
+
 }

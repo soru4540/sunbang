@@ -54,5 +54,7 @@ public interface AdminService {
 	int updateContentsStatus(Report report);
 
 	int updateGuide(Guide guide);
+
+	int selectCountChat();
 	
 }

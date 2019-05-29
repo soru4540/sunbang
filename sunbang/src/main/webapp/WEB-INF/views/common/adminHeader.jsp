@@ -26,7 +26,7 @@
 						<a class="dropdown-item" href="arlistselect.do?report_system=realty&page=1">부동산</a> 
 						<a class="dropdown-item" href="arlistselect.do?report_system=interior&page=1">인테리어</a>
 					</div></li>
-				<li class="nav-item"><a class="nav-link" href="#">1:1 상담</a></li>
+				<li class="nav-item"><a class="nav-link" href="cmyview.do">1:1 상담</a></li>
 				<li class="nav-item dropdown"><a
 					class="nav-link dropdown-toggle" href="#"
 					id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"

@@ -106,13 +106,15 @@ $(function() {
 
 			<div class="row">
 				<div class="col" id="col">
-					<a href="/sunbang/views/admin/reportView.jsp" id="icon"> <i
+					<a href="cmyview.do" id="icon"> <i
 						class="fas fa-comments fa-3x"></i><br> <br>1:1 상담<br>리스트
-						<span class="badge badge-danger float-right" id="count">3</span>
+					<c:if test="${ccount > 0}">
+						<span class="badge badge-danger float-right" id="count">${ccount }</span>
+					</c:if>
 					</a>
 				</div>
 				<div class="col" id="col">
-					<a href="/sunbang/views/admin/businessUserManagement.jsp" id="icon">
+					<a href="ablistselect.do?page=1" id="icon">
 						<i class="fas fa-user-tie fa-3x"></i><br> <br>신규<br>기업회원
 					</a> 
 					<c:if test="${bucount > 0}">
@@ -120,7 +122,7 @@ $(function() {
 					</c:if>
 				</div>
 				<div class="col" id="col">
-					<a href="/sunbang/views/admin/premiumManagement.jsp" id="icon">
+					<a href="aplistselect.do?page=1" id="icon">
 						<i class="fas fa-award fa-3x"></i><br> <br>프리미엄 <br>결제
 						내역
 					</a>
