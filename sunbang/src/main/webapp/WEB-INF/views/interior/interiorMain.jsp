@@ -129,18 +129,17 @@
 	}	
 	</script>
 	<br>
-	<br>
-	<br>
+	
 	<div class="container" id="jb_main_container">
 
 		<div class="row">
-			<div class="col-md-8">
-				<a href="#"><div class="hovereffect">
+			<div class="col-md-8 mt-5">
+				<a href="ibselect.do?board_no=${hbtop1.board_no}&board_type=${hbtop1.board_type}"><div class="hovereffect">
 					 	<img id="js_htop1" src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop1.post_data}"
 							style="width: 100%; height: 455px;"> 
 					</div></a>
 			</div>
-			<div class="col-md-4">
+			<div class="col-md-4 mt-5">
 				<div class="carousel slide" id="carousel-87480">
 					<ol class="carousel-indicators">
 						<li data-slide-to="0" data-target="#carousel-87480" class="active">
@@ -151,7 +150,7 @@
 					</ol>
 					<div class="carousel-inner">
 						<div class="carousel-item active">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(0).post_data}"
+							<a href="ibselect.do?board_no=${kbtop4.get(0).board_no}&board_type=${kbtop4.get(0).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(0).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>First Thumbnail label</h4>
@@ -159,9 +158,10 @@
 									quam. Donec id elit non mi porta gravida at eget metus. Nullam
 									id dolor id nibh ultricies vehicula ut id elit.</p>
 							</div>
+							</a>
 						</div>
 						<div class="carousel-item">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(1).post_data}"
+							<a href="ibselect.do?board_no=${kbtop4.get(1).board_no}&board_type=${kbtop4.get(1).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(1).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>Second Thumbnail label</h4>
@@ -169,9 +169,10 @@
 									quam. Donec id elit non mi porta gravida at eget metus. Nullam
 									id dolor id nibh ultricies vehicula ut id elit.</p>
 							</div>
+							</a>
 						</div>
 						<div class="carousel-item">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(2).post_data}"
+							<a href="ibselect.do?board_no=${kbtop4.get(2).board_no}&board_type=${kbtop4.get(2).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(2).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>Third Thumbnail label</h4>
@@ -179,9 +180,10 @@
 									quam. Donec id elit non mi porta gravida at eget metus. Nullam
 									id dolor id nibh ultricies vehicula ut id elit.</p>
 							</div>
+							</a>
 						</div>
 						<div class="carousel-item">
-							<img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(3).post_data}"
+							<a href="ibselect.do?board_no=${kbtop4.get(3).board_no}&board_type=${kbtop4.get(3).board_type}"><img class="d-block w-100" src="${pageContext.request.contextPath }/files/interior/interiorMain/${kbtop4.get(3).post_data}"
 								height="455px">
 							<div class="carousel-caption">
 								<h4>Third Thumbnail label</h4>
@@ -189,6 +191,7 @@
 									quam. Donec id elit non mi porta gravida at eget metus. Nullam
 									id dolor id nibh ultricies vehicula ut id elit.</p>
 							</div>
+							</a>
 						</div>
 					</div>
 					<a class="carousel-control-prev" href="#carousel-87480"
@@ -204,23 +207,23 @@
 		<hr color="#ff9198">
 		<br>	
 		<div class="row" id="jb_main_filter">
-			<div class="col-md-3" align="center">
+			<div class="col" align="center">
 				<a href="iblistselect.do?board_type=photograph"> <i
 					class="fas fa-camera-retro"
 					style="color: #ca9393; font-size: 65px;"></i><br> <br>
 					<h6>사진</h6> <br></a>
 			</div>
-			<div class="col-md-3" align="center">
+			<div class="col" align="center">
 				<a href="iblistselect.do?board_type=housewarming"><i class="fas fa-door-open"
 					style="color: #ca9393; font-size: 65px;"></i><br> <br>
 					<h6>집들이</h6> <br> </a>
 			</div>
-			<div class="col-md-3" align="center">
+			<div class="col" align="center">
 				<a href="iblistselect.do?board_type=knowhow"><i class="fas fa-tools"
 					style="color: #ca9393; font-size: 65px;"></i><br> <br>
 					<h6>노하우</h6> <br> </a>
 			</div>
-			<div class="col-md-3" align="center">
+			<div class="col" align="center">
 				<a href="#"><i
 					class="fas fa-book-reader" style="color: #ca9393; font-size: 65px;"></i><br>
 					<br>
@@ -239,8 +242,8 @@
 			</div>
 		</div>
 		<div class="row" id="jb_main_new">
-			<div class="col-md-4">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-4 mt-5">
+				<a href="ibselect.do?board_no=${hbtop3.get(0).board_no}&board_type=${hbtop3.get(0).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop3.get(0).post_data}"
 							style="width: 100%; height: 100%;">
@@ -251,8 +254,8 @@
 					</h6>
 				</a>
 			</div>
-			<div class="col-md-4">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-4 mt-5">
+				<a href="ibselect.do?board_no=${hbtop3.get(1).board_no}&board_type=${hbtop3.get(1).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop3.get(1).post_data}"
 							style="width: 100%; height: 100%;">
@@ -263,8 +266,8 @@
 					</h6>
 				</a>
 			</div>
-			<div class="col-md-4">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-4 mt-5">
+				<a href="ibselect.do?board_no=${hbtop3.get(2).board_no}&board_type=${hbtop3.get(2).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${hbtop3.get(2).post_data}"
 							style="width: 100%; height: 100%;">
@@ -278,7 +281,7 @@
 		</div>
 		<br>
 		<hr color="#ff9198">
-		<br>
+		<br>		
 		<div class="row">
 			<div class="col-md-6">
 				<h3>오늘의 BEST</h3>
@@ -288,32 +291,32 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(0).board_no}&board_type=${pbtop8.get(0).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(0).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(1).board_no}&board_type=${pbtop8.get(1).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(1).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(2).board_no}&board_type=${pbtop8.get(2).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(2).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(3).board_no}&board_type=${pbtop8.get(3).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(3).post_data}"
 							style="width: 100%; height: 100%;">
@@ -323,32 +326,32 @@
 		</div>
 		<br>
 		<div class="row">
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(4).board_no}&board_type=${pbtop8.get(4).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(4).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(5).board_no}&board_type=${pbtop8.get(5).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(5).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(6).board_no}&board_type=${pbtop8.get(6).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(6).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
 				</a>
 			</div>
-			<div class="col-md-3">
-				<a href="#">
+			<div class="col-6 col-md-4 col-lg-3 mt-5">
+				<a href="ibselect.do?board_no=${pbtop8.get(7).board_no}&board_type=${pbtop8.get(7).board_type}">
 					<div class="hovereffect">
 						<img src="${pageContext.request.contextPath }/files/interior/interiorMain/${pbtop8.get(7).post_data}"
 							style="width: 100%; height: 100%;">

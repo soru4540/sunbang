@@ -62,6 +62,23 @@
 font-size: 30px; font-family: a고딕14;
 }
 
+#jb_followlist_container a:link {
+	color: #000000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#jb_followlist_container a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+#jb_followlist_container a {
+	color: #000000;
+	font-family: a고딕14;
+	text-decoration: none;
+}
+
 @media screen and (max-width: 700px) {
 
 	#jb_follow_myprofile {
@@ -247,20 +264,22 @@ font-size: 30px; font-family: a고딕14;
 		
 	</script>
 	<br>
-	<div class="container">	
+	<div class="container" id="jb_followlist_container">	
 		<div class="row">
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
 				<table class="table">
 					<tr>
 						<td style="width:40%;"  align="right">
+							<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${fuser.user_no}">
 							<div class="jb_follow_profile">
 								<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG"
 									style="width: 200px; height: 200px; border-radius: 70%;">
 							</div>
+							</a>
 						</td>
 						<td style="width:60%;vertical-align: bottom;"  align="left">&nbsp;&nbsp;&nbsp;
-						<span id="jb_follow_myprofile">${fuser.nickname}</span>&nbsp;&nbsp;&nbsp;<span class="jb_follow_nickname" style="font-size: 22px;font-family: a고딕14;">${fuser.user_id}</span><br>
+						<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${fuser.user_no}"><span id="jb_follow_myprofile">${fuser.nickname}</span>&nbsp;&nbsp;&nbsp;<span class="jb_follow_nickname" style="font-size: 22px;font-family: a고딕14;">${fuser.user_id}</span></a><br>
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="font-size: 18px;opacity:0.6;font-family: a고딕14;">팔로우 : ${fuser.follow_count}&nbsp;&nbsp; 팔로잉 : ${fuser.following_count}</span>
 						</td>						
 					</tr>

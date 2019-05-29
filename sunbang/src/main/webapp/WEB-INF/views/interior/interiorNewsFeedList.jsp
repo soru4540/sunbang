@@ -13,6 +13,7 @@
 
 <style type="text/css">
 
+
 #jb_newsfeed_container a:link {
 	color: #000000;
 	text-decoration: none;
@@ -65,6 +66,96 @@
 	border-radius: 70%;
 }
 
+.jb_filter_btn {
+	display: inline-block;
+	font-family: a고딕15;
+	font-weight: 400;
+	height: 25px;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #ff9198;
+	border: 1px solid transparent;
+	padding: 3px 3px 3px 3px;
+	font-size: 1rem;
+	line-height: 1;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	margin-bottom: 5px;
+}
+
+.jb_filter_btn2 {
+	display: inline-block;
+	font-family: a고딕12;
+	font-weight: 400;
+	height: 25px;
+	color: black;
+	opacity:0.6;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #fff;
+	border: 1px solid transparent;
+	padding: 3px 3px 3px 3px;
+	font-size: 1rem;
+	line-height: 1;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	margin-bottom: 5px;
+}
+
+.jb_filter_btn3 {
+	display: inline-block;
+	font-family: a고딕12;
+	font-weight: 400;
+	height: 25px;
+	color: black;	
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: #fff;
+	border: 1px solid transparent;
+	padding: 3px 3px 3px 3px;
+	font-size: 1rem;
+	line-height: 1;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+	margin-bottom: 5px;
+}
+
+.jb_filter1_filterBtn {
+	display: inline-block;
+	font-weight: 400;
+	font-family: a고딕14;
+	color: #212529;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-color: transparent;
+	border: 1px solid #ff9198;
+	padding: .375rem .75rem;
+	font-size: 1rem;
+	line-height: 1.5;
+	border-radius: .25rem;
+	transition: color .15s ease-in-out, background-color .15s ease-in-out,
+		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+}
 .jb_filter1_filterBtn2 {
 	display: inline-block;
 	font-weight: 400;	
@@ -112,23 +203,6 @@ outline-style: none;
 	border-radius: .25rem;
 	transition: color .15s ease-in-out, background-color .15s ease-in-out,
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
-}
-
-
-@media screen and (max-width: 1400px) {
-
-	#jb_newsfeed_container #fix_con {
-		width: auto;
-		min-height: 0;
-		position: relative;
-		top: 0px;	
-	}
-	
-	#jb_newsfeed_container .col-md-9{
-	padding: 20px;
-	margin:20px;
-	}
-	
 }
 </style>
 </head>
@@ -223,7 +297,7 @@ outline-style: none;
 	 
 	$(window).scroll(function(){   //스크롤이 일정 하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.					  
 		if(page != 0){
-		if( $(window).scrollTop()+390 >= $(document).height() - $(window).height()){
+		if( $(window).scrollTop()+450 >= $(document).height() - $(window).height()){
 	          getList(page);
 	           page++;   		           
 	     } 
@@ -235,7 +309,7 @@ outline-style: none;
 	    $.ajax({
 	        type : "post",  
 	        dataType : "json", 
-	        data : {board_type: "photograph" ,page : pagenum, user_no: $("#i_user_no").val()},
+	        data : { page : pagenum, user_no: $("#i_user_no").val()},
 	        url : "inlistselect.do",
 	        success : function(returnData) {		    	        	
 	        	var objStr = JSON.stringify(returnData);	
@@ -254,11 +328,11 @@ outline-style: none;
 		            	}
 		            	for(var i in jsonObj.iblist){				        		            				            			            		
 		            	value += "<div class='row'><div class='col-md-2'></div><div class='col-md-8'>"
-						       + "<div class='jb_newsfeed_profile'><img src='${pageContext.request.contextPath }/files/interior/interiorMain/profile.PNG'>&nbsp;&nbsp;&nbsp;"
-						       + "<span style='font-size:22px; font-family: a고딕14;'>jsol123</span></div></div>"	
+						       + "<div class='jb_newsfeed_profile'><img src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.iblist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
+						       + "<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.iblist[i].user_id+"</span></div></div>"	
 							   + "<div class='col-md-2'></div></div>"
 							   + "<div class='row'><div class='col-md-2'></div><div class='col-md-8'><hr color=''#ffb6b9'>"						
-							   + "<a> <img src='${pageContext.request.contextPath }/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_newsfeed_img'></a><br>"									
+							   + "<a> <img src='${pageContext.request.contextPath }/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_newsfeed_img'></a><br>"									
 							   + "<h5>";
 								var count = 0
 	            				  for(var k in jsonObj.illist){
@@ -282,7 +356,7 @@ outline-style: none;
                                     +"<div class='modal-header'><h4 class='modal-title'>댓글</h4><button class='close' data-dismiss='modal'>&times;</button></div>"
                                     +"<div class='modal-body'><div class='row'><div class='col-md-12' id='replylist"+jsonObj.iblist[i].board_no+"'></div></div></div>"
                                     +"<div class='modal-footer' id='reply"+jsonObj.iblist[i].board_no+"'><img class='mr-3' src='https://www.layoutit.com/img/sports-q-c-64-64-8.jpg' />"
-    								+"<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
+    								+"<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'><input type='hidden' id='reference_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
     								+"<input type='button' class='jb_filter1_submitBtn' value='전송' onclick='addReply("+jsonObj.iblist[i].board_no+");'><p style='padding-left:1.5em;'></p></div></div></div></div>";
 		                 list_no++;                        
 		            	}
@@ -321,7 +395,7 @@ outline-style: none;
                     }                        
 					value += "<div class='media'><img class='mr-3' src='https://www.layoutit.com/img/sports-q-c-64-64-8.jpg' />"
 					 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
-					  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
+					  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 					   +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
 					   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 					    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
@@ -330,7 +404,7 @@ outline-style: none;
                     if(jsonObj.irlist[i].reply_lev == 2){
 					value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img src='https://www.layoutit.com/img/sports-q-c-64-64-2.jpg' /></a>"
 							+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
-							+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'>"
+							+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><a href='istory.do?user_no="+$("#i_user_no").val()+"&follower_no="+jsonObj.irlist[i].re_user_no+"'>@"+jsonObj.irlist[i].re_nickname+"</a>&nbsp;&nbsp;<span id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</span><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 							+"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
 					 if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 						    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'></div></div>";	   
@@ -349,13 +423,14 @@ outline-style: none;
 				}
               });		    
 	}
-
-		//댓글달기 클릭시 모달하단 입력창에 해당 댓글의 댓글달기로 변환	
-		function addReplyLine(e) {
-			var i = $("#board_no" + e).val();
-			$("#reply_lev" + i).val(2);
-			$("#origin_reply_no" + i).val($("#origin_reply_no" + e).val());
-		}
+	
+  //댓글달기 클릭시 모달하단 입력창에 해당 댓글의 댓글달기로 변환	
+  function addReplyLine(e){
+		var i = $("#board_no"+e).val();
+		$("#reply_lev"+i).val(2);
+		$("#origin_reply_no"+i).val($("#origin_reply_no"+e).val());		
+		$("#reference_reply_no"+i).val($("#reply_no"+e).val());
+	} 
 
 		//댓글추가
 		function addReply(e) {
@@ -468,7 +543,7 @@ outline-style: none;
 		<div class="row">
 			<div class="col-md-12">
 				<div class="row">		
-					<div class="col-md-3">					 				
+					<div class="col-md-2">					 				
 						    <div id="fix_con">													
 								<div class="jb_newsfeed_myprofile">
 									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/profile.PNG">
@@ -478,16 +553,14 @@ outline-style: none;
 							<a href="istory.do?user_no=0&follower_no=2" class="font-weight-bold" >
 							</c:if>
 							<c:if test="${!empty loginUser}">
-								<a href="istory.do?user_no=${loginUser.user_no}&follower_no=2" class="font-weight-bold" >
+								<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${loginUser.user_no}" class="font-weight-bold" >
 							</c:if>
-							한서은천재짱짱뿡뿡</a> <br><a href="ifollowlist.do?user_no=1"><span
-									style="font-family: a고딕14; opacity: 0.5;">팔로우 : 78 팔로잉 : 17</span></a><br>
-								<br>
-								<p>미니멀 라이프를 꿈꾸는 이를 위한 수납 노하우! 글씨가 넘쳐도 자동 줄바꿈이 됐으면 하는 작은 소원이
-									있다...</p>																																			
+							${fuser.nickname}<br>${fuser.user_id } ${fuser.user_name }</a> <br><a href="ifollowlist.do?user_no=1"><span
+									style="font-family: a고딕14; opacity: 0.5;">팔로우 : ${fuser.follow_count} 팔로잉 : ${fuser.following_count}</span></a><br>							
+																																						
 							</div>						
 					</div>			
-					<div class="col-md-9" id="list">						
+					<div class="col-md-10" id="list">						
 					</div>			
 				
 				</div>

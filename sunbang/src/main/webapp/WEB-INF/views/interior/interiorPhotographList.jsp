@@ -84,18 +84,6 @@
 	color: #f74265;
 }
 
-#jb_filter1_filter ul {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-}
-
-#jb_filter1_filter li {
-	margin: 0 60px 0 70px;
-	padding: 0 0 0 0;
-	border: 0;
-	float: left;
-}
 
 #jb_filter1_container a:link {
 	color: #000000;
@@ -252,15 +240,13 @@ outline-style: none;
 			$("#jb_filter1_items1").css("display", "none");
 			$("#jb_filter1_items2").css("display", "none");
 			$("#jb_filter1_items3").css("display", "none");
-			$("#jb_filter1_items4").css("display", "none");
-			$("#jb_filter1_items5").css("display", "none");
+			$("#jb_filter1_items4").css("display", "none");		
 			
 			//필터 클릭 체크 5개
 			var jb_filter1_click1 = 0;
 			var jb_filter1_click2 = 0;
 			var jb_filter1_click3 = 0;
 			var jb_filter1_click4 = 0;
-			var jb_filter1_click5 = 0;
 
 			$("#jb_filter1_filter1").click(function() {
 				if (jb_filter1_click1 == 0) {
@@ -270,9 +256,6 @@ outline-style: none;
 					jb_filter1_click2=0;
 					jb_filter1_click3=0;
 					jb_filter1_click4=0;
-					jb_filter1_click5=0;
-					jb_filter1_click6=0;
-					jb_filter1_click7=0;	
 				} else {
 					$(".jb_filter1_item").css("display", "none");
 					jb_filter1_click1=0;							
@@ -286,10 +269,7 @@ outline-style: none;
 					jb_filter1_click1=0;
 					jb_filter1_click2++;			
 					jb_filter1_click3=0;
-					jb_filter1_click4=0;
-					jb_filter1_click5=0;
-					jb_filter1_click6=0;
-					jb_filter1_click7=0;	
+					jb_filter1_click4=0;			
 				} else {
 					$(".jb_filter1_item").css("display", "none");
 					jb_filter1_click2=0;
@@ -304,10 +284,7 @@ outline-style: none;
 					jb_filter1_click1=0;
 					jb_filter1_click2=0;			
 					jb_filter1_click3++;
-					jb_filter1_click4=0;
-					jb_filter1_click5=0;
-					jb_filter1_click6=0;
-					jb_filter1_click7=0;	
+					jb_filter1_click4=0;			
 				} else {
 					$(".jb_filter1_item").css("display", "none");
 					jb_filter1_click3=0;					
@@ -321,32 +298,14 @@ outline-style: none;
 					jb_filter1_click1=0;
 					jb_filter1_click2=0;			
 					jb_filter1_click3=0;
-					jb_filter1_click4++;
-					jb_filter1_click5=0;
-					jb_filter1_click6=0;
-					jb_filter1_click7=0;	
+					jb_filter1_click4++;				
 				} else {
 					$(".jb_filter1_item").css("display", "none");					
 					jb_filter1_click4=0;				
 				}
 			});
 
-			$("#jb_filter1_filter5").click(function() {
-				if (jb_filter1_click5 == 0) {
-					$(".jb_filter1_item").css("display", "none");
-					$("#jb_filter1_items5").css("display", "");
-					jb_filter1_click1=0;
-					jb_filter1_click2=0;			
-					jb_filter1_click3=0;
-					jb_filter1_click4=0;
-					jb_filter1_click5++;
-					jb_filter1_click6=0;
-					jb_filter1_click7=0;	
-				} else {
-					$(".jb_filter1_item").css("display", "none");					
-					jb_filter1_click5=0;					
-				}
-			});				
+		
 			
 			if($("#keyword1").val()=="empty"){
 			$("#jb_filter_btn1").css("display","none");
@@ -360,10 +319,7 @@ outline-style: none;
 			if($("#keyword4").val()=="empty"){
 			$("#jb_filter_btn4").css("display","none");
 			}
-			if($("#keyword5").val()=="empty"){
-			$("#jb_filter_btn5").css("display","none");
-			}
-						
+				
 		});			
 		
 		//좋아요 홀수번째 클릭시 동작하는 좋아요 추가/삭제
@@ -488,7 +444,7 @@ outline-style: none;
 			            				+"<h6 align='left'>"
 			            			    +"<i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname
 			            				+"</h6>"
-			            				+"<a href='#'> <img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
+			            				+"<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
 			            				+"<h5 align='center'>";			            				
 			            				var count = 0
 			            				  for(var k in jsonObj.illist){
@@ -507,8 +463,8 @@ outline-style: none;
 			            	 value2 += "<div class='modal fade' id='jb_replyModal"+jsonObj.iblist[i].board_no+"'><div class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'><div class='modal-content'>"
                                         +"<div class='modal-header'><h4 class='modal-title'>댓글</h4><button class='close' data-dismiss='modal'>&times;</button></div>"
                                         +"<div class='modal-body'><div class='row'><div class='col-md-12' id='replylist"+jsonObj.iblist[i].board_no+"'></div></div></div>"
-                                        +"<div class='modal-footer' id='reply"+jsonObj.iblist[i].board_no+"'><img class='mr-3' src='https://www.layoutit.com/img/sports-q-c-64-64-8.jpg' />"
-        								+"<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
+                                        +"<div class='modal-footer' id='reply"+jsonObj.iblist[i].board_no+"'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />"
+        								+"<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'><input type='hidden' id='reference_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
         								+"<input type='button' class='jb_filter1_submitBtn' value='전송' onclick='addReply("+jsonObj.iblist[i].board_no+");'><p style='padding-left:1.5em;'></p></div></div></div></div>";
 			                 list_no++;                        
 			            	}
@@ -601,18 +557,18 @@ outline-style: none;
                         if(i !=0 && jsonObj.irlist[i-1].reply_lev == 2){
                         	value += "</div></div>";
                         }                        
-						value += "<div class='media'><img class='mr-3' src='https://www.layoutit.com/img/sports-q-c-64-64-8.jpg' />"
+						value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
 						 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
-						  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
+						  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 						   +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
 						   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 						    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
 						   }
                         }                             
                         if(jsonObj.irlist[i].reply_lev == 2){
-						value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img src='https://www.layoutit.com/img/sports-q-c-64-64-2.jpg' /></a>"
+						value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
 								+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
-								+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'>"
+								+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><a href='istory.do?user_no="+$("#i_user_no").val()+"&follower_no="+jsonObj.irlist[i].re_user_no+"'>@"+jsonObj.irlist[i].re_nickname+"</a>&nbsp;&nbsp;<span id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</span><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 								+"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
 						 if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 							    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'></div></div>";	   
@@ -636,7 +592,8 @@ outline-style: none;
       function addReplyLine(e){
 			var i = $("#board_no"+e).val();
 			$("#reply_lev"+i).val(2);
-			$("#origin_reply_no"+i).val($("#origin_reply_no"+e).val());						
+			$("#origin_reply_no"+i).val($("#origin_reply_no"+e).val());		
+			$("#reference_reply_no"+i).val($("#reply_no"+e).val());
 		} 
 		
 	  //댓글추가
@@ -646,7 +603,7 @@ outline-style: none;
     	  $.ajax({
 		        type : "post",  
 		        dataType : "json", 
-		        data : {board_no : e, reply_lev : $("#reply_lev"+e).val(), origin_reply_no : $("#origin_reply_no"+e).val(),reply_contents: $("#reply_contents"+e).val(),user_no :$("#i_user_no").val()},
+		        data : {board_no : e, reply_lev : $("#reply_lev"+e).val(), origin_reply_no : $("#origin_reply_no"+e).val(),reply_contents: $("#reply_contents"+e).val(),reference_reply_no: $("#reference_reply_no"+e).val() ,user_no :$("#i_user_no").val()},
 		        url : "irinsert.do",
 		        success : function(returndata) {
 		        	var i = returndata;
@@ -727,34 +684,25 @@ outline-style: none;
 	</c:if>
 	<div class="container" id="jb_filter1_container">
 		<div class="row">
-			<div class="col-md-12" id="jb_filter1_filter">
-				<ul>
-					<li class="nav-item dropdown">
-						<button class="jb_filter1_filterBtn" id="jb_filter1_filter1">
-							정렬 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter1_filterBtn" id="jb_filter1_filter2">
-							공간 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter1_filterBtn" id="jb_filter1_filter3">
-							평수 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter1_filterBtn" id="jb_filter1_filter4">
-							컬러 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter1_filterBtn" id="jb_filter1_filter5">
-							제품정보 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-				</ul>
+			<div class="col" align="center">
+				<button class="jb_filter1_filterBtn" id="jb_filter1_filter1">
+					정렬 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter1_filterBtn" id="jb_filter1_filter2">
+					공간 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter1_filterBtn" id="jb_filter1_filter3">
+					평수 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter1_filterBtn" id="jb_filter1_filter4">
+					컬러 <span style="color: #ff9198;">▼</span>
+				</button>
 			</div>
 		</div>
 		<div class="row">
@@ -792,13 +740,10 @@ outline-style: none;
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('레드');">레드</button>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('옐로우');">옐로우</button>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="jb_filter1_filterBtn2" onclick="addFilter4('#FFB6B9');">핑크</button>
-				</div>
-				<div class="jb_filter1_item" id="jb_filter1_items5">				
-					<button class="jb_filter1_filterBtn2" onclick="addFilter5('제품마크있는게시물만');">제품마크 있는 게시물만</button>
-				</div>
+				</div>			
 			</div>
 		</div>
-		<br>
+		
 		<div class="row">
 			<div class="col-md-12">
 			    <input type="hidden" id="keyword1" value="empty">
@@ -820,11 +765,7 @@ outline-style: none;
 				<button type="button" class="jb_filter_btn" id="jb_filter_btn4" onclick="delFilter(4);">
 					<span style="color: #fff;">컬러&nbsp;ⓧ</span>
 				</button>
-				&nbsp;&nbsp;
-				<input type="hidden" id="keyword5" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn5" onclick="delFilter(5);">
-					<span style="color: #fff;">제품정보&nbsp;ⓧ</span>
-				</button>
+				&nbsp;&nbsp;		
 			</div>
 		</div>
 		<hr color="#ff9198">			
