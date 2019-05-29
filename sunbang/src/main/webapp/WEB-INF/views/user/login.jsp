@@ -83,12 +83,12 @@ $(function(){
 	    $("#jw_uinsertform${c}").submit(function(){
 	    	var result1 = checkuid${c}();
 	    	var result2 = checknick${c}();
-	    	var result3 = checkpwd${c}();
+	    	var result3 = checkpwd${c}(); 
 	    	var result4 = checkrepwd${c}();
 	    	var result5 = emailcheck${c}();
 	    	var result6 = checkphoneresult${c}();
 	    	var result7 = capchaCheck${c}();
-	    	if(result1 == "" || result2 == "" || result3 == "" || result4 == "" || result5 == "" || result6 == "" || result7 == ""){
+	    	if(result1 == "" || result2 == ""  || result3 == ""  || result4 == "" || result5 == "" || result6 == "" || result7 == ""){
 	    		$("#jw_noinsertalert").show();
 	    		capcha${c}();
 	    		return false;
@@ -116,14 +116,14 @@ $(function(){
 		$("#jw_userback").css("z-index", 1);
 		$("#jw_loginfront").css("z-index", 0);
 		$("#jw_turnfooter").css("transition-delay", "0s");
-		$("#jw_turnfooter").css("margin-top", $(".container").height()+$("#jw_accountheight").height()+200);
+		$("#jw_turnfooter").css("margin-top", "600px");
 	});
 	$(".returnlogin").click(function(){
 		$("#jw_turn").css("transform", "rotateY(360deg)");
 		$("#jw_userback").css("z-index", 0);
 		$("#jw_loginfront").css("z-index", 1);
 		$("#jw_turnfooter").css("transition-delay", "0.3s");
-		$("#jw_turnfooter").css("margin-top", $(".container").height()+$("#jw_loginfront").height()+200);
+		$("#jw_turnfooter").css("margin-top", 0);
 	});
 	$(".widthchange").click(function(){
 		$("#jw_userback").css("width", "100%");
@@ -1008,7 +1008,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
         <div class="modal-footer border-0"><button type="button" id="jw_pwdinsertbtn" class="btn btn-lgreen" style="width:48%;">확인</button><button type="button" id="jw_alertpwddelbtn" class="btn btn-gray" style="width:48%;" data-dismiss="modal">취소</button></div></form></div>
 </div><div></div></div></div>
 
-<div class="container">
+<div class="container" style="min-height:900px;">
 
 <div id="jw_noinsertalert" class="alert alert-danger alert-dismissible fade show" style="z-index:5; position:fixed; right:10%; top:20%; display:none;"><button type="button" class="close" id="jw_noinsertbtn">&times;</button>
     <strong>가입 실패!</strong> 미입력된값을 입력해주세요. </div>
@@ -1134,7 +1134,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 <div id="jw_alertdiv" class="alert alert-success ualert"><button type="button" class="close" data-dismiss="alert">&times;</button><h4 class="alert-heading" style="font-weight:600;">${messagetitle }</h4>${message}</div></div>
 </div>
 
-<div id="jw_turnfooter" style="margin-top:700px;"><c:import url="../common/footer.jsp" /></div>
+<div id="jw_turnfooter"><c:import url="../common/footer.jsp" /></div>
 
 </body>
 </html>

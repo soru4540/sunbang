@@ -212,7 +212,7 @@ public class UserController {
 	@ResponseBody
 	public void capchakey(HttpServletResponse response) throws IOException {
 		String clientId = "kTR9HE2jFSzV6E2YixVE";
-		String clientSecret = "zviTx6zlQj";
+		String clientSecret = "N72imfXTab";
 		
 		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=0";
 		URL url = new URL(apiURL);
@@ -242,7 +242,7 @@ public class UserController {
 	@ResponseBody
 	public void capchaImage(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String clientId = "kTR9HE2jFSzV6E2YixVE";
-		String clientSecret = "zviTx6zlQj";
+		String clientSecret = "N72imfXTab";
 		
 		String apiURL = "https://openapi.naver.com/v1/captcha/ncaptcha.bin?key="+request.getParameter("key");
 		URL url = new URL(apiURL);
@@ -285,7 +285,7 @@ public class UserController {
 	@ResponseBody
 	public void capchaResult(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		String clientId = "kTR9HE2jFSzV6E2YixVE";
-		String clientSecret = "zviTx6zlQj";
+		String clientSecret = "N72imfXTab";
 		
 		String apiURL = "https://openapi.naver.com/v1/captcha/nkey?code=1&key="+request.getParameter("key")+"&value="+request.getParameter("value");
 		

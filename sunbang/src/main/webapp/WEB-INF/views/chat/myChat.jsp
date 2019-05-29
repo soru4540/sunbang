@@ -273,7 +273,7 @@ function chatmsgList(){
 						else if(jsonMObj.mlist[j].renew_filename != ""){outMlist +=jsonMObj.mlist[j].origin_filename+'<a href="files/chat/chatImages/'+jsonMObj.mlist[j].renew_filename+'" download="'+jsonMObj.mlist[j].origin_filename+'"><span class="btn btn-lgreen px-2">다운로드</span></a>';}
 						
 						outMlist +="</div><span class='mr-1' style='float:right;'>"+jsonMObj.mlist[j].post_time+"<br><span class='mdel' id='jw_mdel"+jsonMObj.mlist[j].message_no+"'>&times;</span></span><span class='ml-1 readc' style='float:right;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
-						$("#jw_scroll"+jsonObj.clist[i].chat_no).scrollTop($("#jw_mlista"+jsonObj.clist[i].chat_no).height());
+						$("#jw_scroll"+jsonObj.clist[i].chat_no).scrollTop($("#jw_mlista"+jsonObj.clist[i].chat_no).height()+130);
 						}
 					}
 					$("#jw_mlista"+jsonObj.clist[i].chat_no).html(outMlist);

@@ -8,18 +8,7 @@
 <title>선방</title>
 <script type="text/javascript">
 $(function(){
-	$("#sh_chat_btn_1").click(function(){
-		
-		<c:if test='${!empty param.user_no}'>
-		
-		$("#jw_mlistout").toggle();
-		</c:if>
-		<c:if test='${empty param.user_no}'>
-		
-		alert('로그인하시오');
-		</c:if>
-	})
-	$("#sh_chat_btn_2").click(function(){
+	$("#coopenbtn").click(function(){
 		
 		<c:if test='${!empty param.user_no}'>
 		
@@ -98,21 +87,6 @@ $(function(){
 			}
 		});
 		return reresult;
-	}
-	
-	function insertchat(){
-		$.ajax({
-			url: "cinsert.do",
-			type: "get",
-			data: {user_no : ${param.user_no}, two_user_no: ${param.realty_user_no}, realty_no: ${param.realty_no}},
-			dataType: "text",
-			async: false,
-			success: function(result){
-			},
-			error: function(){
-				console.warn("insertchat X");
-			}
-		});
 	}
 	
 	$("#jw_msgbtn").click(function(){
@@ -343,7 +317,7 @@ div ::-webkit-scrollbar-thumb {
 	bottom: 50px;
 	right:0;
 	z-index:3;
-	display:none;
+	/* display:none; */
 }
 .readc {
 	color: white;
