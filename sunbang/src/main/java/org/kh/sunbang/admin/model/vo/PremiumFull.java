@@ -31,7 +31,7 @@ public class PremiumFull implements java.io.Serializable {
 	private int business_user_no;	//기업회원번호
 	private String office_name;	//중개사무소명
 	private String office_regist_no;	//중개등록번호
-	private long business_license_no;	//사업자등록번호
+	private String business_license_no;	//사업자등록번호
 	private String office_address;	//중개사무소주소
 	private String office_phone;		//대표전화번호
 	private String status_agreement;	//가입승인상태
@@ -43,7 +43,7 @@ public class PremiumFull implements java.io.Serializable {
 			String charged_status, Date refund_date, int user_no, String user_type, String user_profile, String user_id,
 			String nickname, String user_name, String email, String phone, String password, Date join_date,
 			Date update_date, int user_status, String reason_leave, int login_num, int business_user_no,
-			String office_name, String office_regist_no, long business_license_no, String office_address,
+			String office_name, String office_regist_no, String business_license_no, String office_address,
 			String office_phone, String status_agreement, String premium_status) {
 		super();
 		this.charge_no = charge_no;
@@ -260,11 +260,11 @@ public class PremiumFull implements java.io.Serializable {
 		this.office_regist_no = office_regist_no;
 	}
 
-	public long getBusiness_license_no() {
+	public String getBusiness_license_no() {
 		return business_license_no;
 	}
 
-	public void setBusiness_license_no(long business_license_no) {
+	public void setBusiness_license_no(String business_license_no) {
 		this.business_license_no = business_license_no;
 	}
 
@@ -317,5 +317,7 @@ public class PremiumFull implements java.io.Serializable {
 				+ business_license_no + ", office_address=" + office_address + ", office_phone=" + office_phone
 				+ ", status_agreement=" + status_agreement + ", premium_status=" + premium_status + "]";
 	}
+
+	
 	
 }

@@ -256,7 +256,7 @@
 			</div>
 			<div class="col" align="right">
 				<button class="btn btn-dark"
-					onclick="location.href='aulistselect.do'">관리자페이지로</button>
+					onclick="location.href='auhlistselect.do'">관리자페이지로</button>
 			</div>
 		</div>
 	</div>

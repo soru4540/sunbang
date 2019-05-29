@@ -41,10 +41,15 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 
-	// 이동
-	@RequestMapping(value = "test.do")
-	public String movetest() {
-		return "admin/guide/testUpload";
+	// 풋터 이동
+	@RequestMapping(value = "aboutus.do")
+	public String moveAboutus() {
+		return "admin/aboutus";
+	}
+	
+	@RequestMapping(value = "project.do")
+	public String moveProject() {
+		return "admin/project";
 	}
 
 	// 관리자 페이지 표시
@@ -79,9 +84,8 @@ public class AdminController {
 		return "admin/premium/premiumPayment";
 	}
 
-	// 신고
-	// 관리------------------------------------------------------------------------------
-	// 신고 관리 페이지
+	// 신고 관리------------------------------------------------------------------------------
+	// 신고 관리 리스트
 	@RequestMapping("arlistselect.do")
 	public ModelAndView selectReportList(Apaging page, ModelAndView mv, HttpServletRequest request) {
 		String keyword, selectval;
@@ -494,17 +498,6 @@ public class AdminController {
 			return "common/error";
 		}
 	}
-	
-	// 회원 완전 삭제
-		@RequestMapping(value = "audelete.do")
-		public String deleteUser(int user_no, HttpServletRequest request) {
-			int result = adminService.deleteUser(user_no);
-			if (result > 0) {
-				return "redirect:aulistselect.do?page=1";
-			} else {
-				return "common/error";
-			}
-		}
 
 	// 가이드
 	// ------------------------------------------------------------------------------

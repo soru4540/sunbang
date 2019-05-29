@@ -85,8 +85,8 @@
 			$("#status_agreement").val("미승인");
 		}else if(statusagreement == 'Y'){
 			$("#status_agreement").val("승인");
-		}else{
-			$("#status_agreement").val("경고")
+		}else if(statusagreement == 'N'){
+			$("#status_agreement").val("경고");
 		}
 		
 		var status_text = "";
@@ -251,11 +251,11 @@
 				</div>
 				<label class="col-sm-2 col-form-label">사업자등록번호</label>
 				<div class="col-sm">
-					<c:if test="${pref.business_license_no > 0}">
+					<c:if test="${!empty pref.business_license_no }">
 						<input type="text" class="form-control" id="business_license_no"
 							value="${pref.business_license_no }">
 					</c:if>
-					<c:if test="${pref.business_license_no == 0}">
+					<c:if test="${empty pref.business_license_no}">
 						<input type="text" class="form-control" id="business_license_no">
 					</c:if>
 				</div>

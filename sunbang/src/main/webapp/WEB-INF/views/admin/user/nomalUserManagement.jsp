@@ -134,7 +134,6 @@ function user_delete(data){
 						<th scope="col" width="200px;">상태</th>
 						<th scope="col" width="300px;">사유</th>
 						<th scope="col"></th>
-						<th scope="col" width="90px;">완전삭제</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -184,33 +183,7 @@ function user_delete(data){
 								<input type="hidden" class="btn btn-primary btn-sm" value="저장"
 								id="btn2${u.user_no }" onclick="update(${u.user_no })">
 							</td>
-							<td>
-								<c:if test="${u.user_status == 8}">
-									<input type="button" class="btn btn-danger btn-sm" id="js_user_delete${u.user_no }" value="삭제" data-toggle="modal" data-target="#exampleModal">
-								</c:if>
-								<c:if test="${u.user_status != 8}">
-									<input type="button" class="btn btn-danger btn-sm" id="js_user_delete${u.user_no }" value="삭제" disabled>
-								</c:if>
-							</td>
 						</tr>
-						<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
-								<div class="modal-content">
-									<div class="modal-header">
-										<h5 class="modal-title" id="exampleModalLabel">삭제 안내메세지</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
-									</div>
-									<div class="modal-body">[ ${u.user_id } ] 회원의 정보를 정말 삭제하시겠습니까?</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-secondary" data-dismiss="modal">취소</button>
-										<button type="button" class="btn btn-primary" 
-										onclick="location.href='audelete.do?user_no=${u.user_no }'">삭제</button>
-									</div>
-								</div>
-							</div>
-						</div>
 					</c:forEach>
 				</tbody>
 			</table>
@@ -336,7 +309,7 @@ function user_delete(data){
 				</nav>
 			</div>
 			<div class="col-sm" align="right">
-				<button class="btn btn-dark" onclick="history.go(-1);">관리자페이지로</button>
+				<button class="btn btn-dark" onclick="location.href='auhlistselect.do'">관리자페이지로</button>
 			</div>
 		</div>
 	</div>
