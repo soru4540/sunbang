@@ -49,7 +49,7 @@ function selSearch(){
 	}
 	var status = $("#selstatus").val();
 	location.href = "arlistselect.do?report_system=realty&selectval="+selectval+"&keyword="+status;
-}
+};
 $(function(){
 	$("#selBox").change(function(){
 		if($("#selBox").val()==0){

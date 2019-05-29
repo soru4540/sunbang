@@ -174,9 +174,9 @@
 						</div>
 					</div>
 				</li>&nbsp;&nbsp;
-				<c:if test="${!empty loginUser.user_profile }">
+				<c:if test="${!empty loginUser}">
 				<li class="nav-item"><a class="nav-link"
-					href="inewsfeed.do?user_no=1">뉴스피드</a></li>
+					href="inewsfeed.do?user_no=${loginUser.user_no}">뉴스피드</a></li>
 				<li class="nav-item"><a class="nav-link"
 					href="iwritepage.do">글쓰기</a></li>
 				</c:if>
@@ -199,18 +199,19 @@
 						<div class="dropdown-menu dropdown-menu-right dropdown-default" aria-labelledby="navbarDropdownMenuLink-333" id="js_pheader_dropdown">
 						<c:if test="${loginUser.user_type eq '일반회원' }"> <!-- 일반회원 -->
 							<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
+							<a class="dropdown-item" href="imyboard.do?user_no=${loginUser.user_no }"><i class="fas fa-book"></i> 나의 게시글</a>
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }"> <!-- 기업회원 -->
-							<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a> 
+							<a class="dropdown-item" href="umyuserview.do?business_user_no=${loginUser.business_user_no }"><i class="fas fa-user-edit"></i> 내 정보 수정</a>
+							<a class="dropdown-item" href="imyboard.do?user_no=${loginUser.user_no }"><i class="fas fa-book"></i> 나의 게시글</a> 
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
 							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
-							<a class="dropdown-item" href="rmylist.do?user_no=${loginUser.user_no }"><i class="far fa-copy"></i> 등록 매물 관리</a>
-							<a class="dropdown-item" href="#"><i class="fas fa-award"></i> 프리미엄 서비스</a>
+							<a class="dropdown-item" href="rmylist.do?user_no=${loginUser.user_no }"><i class="far fa-copy"></i> 등록 매물 관리</a>							
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_no == 0 }"> <!-- 관리자 -->

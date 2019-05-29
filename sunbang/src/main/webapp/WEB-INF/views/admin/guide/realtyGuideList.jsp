@@ -197,11 +197,6 @@
 								src="${pageContext.request.contextPath}/files/admin/guide/${guide.thumbnail }"
 								alt="Card image cap">
 						</c:if>
-						<c:if test="${empty guide.thumbnail }">
-							<img class="card-img-top"
-								src="https://mdbootstrap.com/img/Photos/Others/images/11.jpg"
-								alt="Card image cap">
-						</c:if>
 					</div>
 					<!-- Card content -->
 					<div class="card-body">

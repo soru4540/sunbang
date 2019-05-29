@@ -107,8 +107,18 @@
 				</div>
 				<label class="col-sm-2 col-form-label">게시판</label>
 				<div class="col-sm">
+					<c:if test="${report.reported_board == 'photograph'}">
 					<input type="text" class="form-control" id="report_no" disabled
-						style="background-color: white;" value="${report.reported_board }">
+						style="background-color: white;" value="사진">
+					</c:if>
+					<c:if test="${report.reported_board == 'housewarming'}">
+					<input type="text" class="form-control" id="report_no" disabled
+						style="background-color: white;" value="집들이">
+					</c:if>
+					<c:if test="${report.reported_board == 'knowhow'}">
+					<input type="text" class="form-control" id="report_no" disabled
+						style="background-color: white;" value="노하우">
+					</c:if>
 				</div>
 			</div>
 			<div class="form-group row">
@@ -193,7 +203,7 @@
 									<h5 class="modal-title" id="exampleModalLabel">인테리어 게시글 검수
 										안내 메세지</h5>
 								</div>
-								<div class="modal-body">정말 이 매물의 상태를 검수중으로 바꾸시겠습니까?</div>
+								<div class="modal-body" style="text-align:center;">정말 이 게시글의 상태를 검수중으로 바꾸시겠습니까?</div>
 								<div class="modal-footer">
 									<button type="button" class="btn btn-secondary"
 										data-dismiss="modal">취소</button>

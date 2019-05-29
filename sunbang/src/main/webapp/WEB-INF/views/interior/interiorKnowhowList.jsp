@@ -89,30 +89,50 @@
 	transition-delay: 0.08s;
 }
 
-#jb_filter3_container .col-md-2 img{
-margin:5px;
-padding:5px;
-border: 1px solid #ffb6b9;
+#jb_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+	display:none;
 }
+
+@media screen and (min-width: 800px) {
+  #jb_top {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	color: grey;
+	background-color: #f2f2f2;
+	border-color: #bee5eb;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
+
 </style>
 </head>
 <body>
 	<c:import url="../common/interiorHeader.jsp" />
 	<script type="text/javascript">
-		$(function() {
-			$(window).scroll(function() {
-				if ($(this).scrollTop() > 500) {
-					$('#MOVE_TOP_BTN').fadeIn();
+		$(function() {		
+			$(window).scroll(function() {			
+				if ($(this).scrollTop() > 500) {				
+					$('#jb_top').fadeIn();
 				} else {
-					$('#MOVE_TOP_BTN').fadeOut();
+					$('#jb_top').fadeOut();
 				}
 			});
 
-			$("#MOVE_TOP_BTN").click(function() {
-				$('html, body').animate({
-					scrollTop : 0
-				}, 400);
-				return false;
+			$("#jb_top").click(function() {
+				var offset = $('html').offset();
+				$("html, body").animate({
+					scrollTop : offset.top
+				}, 500);
 			});
 			
 			if ($("#keyword1").val() == "empty") {
@@ -173,8 +193,8 @@ border: 1px solid #ffb6b9;
 		            	}
 		            	for(var i in jsonObj.iblist){	
 		            		
-		            	value += "<div class='col-md-4'><a href='ibselect.do?board_no=3&board_type=knowhow'>"
-		            	       + "<img src='${pageContext.request.contextPath }/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter3_img'><br>"
+		            	value += "<div class='col-md-4'><a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'>"
+		            	       + "<img src='${pageContext.request.contextPath }/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter3_img'><br>"
 		    				   + "<h6 style='padding-top: 5px;'>리모델링</h6><h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6> </a></div>";				    					            		            					            		            
 		                 list_no++;                        
 		            	}
@@ -186,115 +206,173 @@ border: 1px solid #ffb6b9;
 	     });		    
     	} 
 
+	var jb_filter3_click1 = 0;
+	var jb_filter3_click2 = 0;
+	var jb_filter3_click3 = 0;
+	var jb_filter3_click4 = 0;
+	var jb_filter3_click5 = 0;
+	
 	 //필터 1
-	function addFilter1(e) {
-		$("#keyword1").val(e);
-		$("#jb_filter_btn1").css("display", "");			
-		$("#list").html("");
-		page = 1;
-		getList(page);
-        page++;   		
-	}
-	 //필터 2
-	function addFilter2(e) {
-		$("#keyword2").val(e);
-		$("#jb_filter_btn2").css("display", "");
-		$("#list").html("");
-		page = 1;
-		getList(page);
-        page++;   		
-	}
-	 //필터 3
-	function addFilter3(e) {
-		$("#keyword3").val(e);
-		$("#jb_filter_btn3").css("display", "");
-		$("#list").html("");
-		page = 1;
-		getList(page);
-        page++;   		
-	}
-	 //필터 4
-	function addFilter4(e) {
-		$("#keyword4").val(e);
-		$("#jb_filter_btn4").css("display", "");
-		$("#list").html("");
-		page = 1;
-		getList(page);
-        page++;   		
-	}
-    //필터 5
-	function addFilter5(e) {
-		$("#keyword5").val(e);
-		$("#jb_filter_btn5").css("display", "");
-		$("#list").html("");
-		page = 1;
-		getList(page);
-        page++;   		
-	}
-
-	//필터 제거
-	function delFilter(e){
-	    $("#keyword"+e).val("empty");				
-		$("#jb_filter_btn"+e).css("display", "none");
-		$("#list").html("");
-		page = 1;
-		getList(page);
-        page++;   		
-	}
-		
+	function addFilter1(e) {	
+		if (jb_filter3_click1 == 0) {
+			$(".filter3allbtn").css("border","0px");
+			$("#filter3btn1").css("border","1px solid #ffb6b9");
+			$(".keyword").val("empty");
+				$("#keyword1").val(e);
+				$("#list").html("");
+				page = 1;
+				getList(page);
+				page++;
+				jb_filter3_click1++;					
+			} else {
+				$(".filter3allbtn").css("border","0px");
+				$(".keyword").val("empty");			
+				$("#list").html("");
+				page = 1;
+				getList(page);
+				page++;
+				jb_filter3_click1--;
+				jb_filter3_click2=0;
+				jb_filter3_click3=0;
+				jb_filter3_click4=0;
+				jb_filter3_click5=0;		
+			}
+		}
+		//필터 2
+		function addFilter2(e) {
+			if (jb_filter3_click2 == 0) {
+			$(".filter3allbtn").css("border","0px");
+			$("#filter3btn2").css("border","1px solid #ffb6b9");
+			$(".keyword").val("empty");
+			$("#keyword2").val(e);
+			$("#list").html("");
+			page = 1;
+			getList(page);
+			page++;			
+			jb_filter3_click2++;			
+			}else{
+				$(".filter3allbtn").css("border","0px");
+				$(".keyword").val("empty");					
+				$("#list").html("");
+				page = 1;
+				getList(page);
+				page++;
+				jb_filter3_click2--;
+				jb_filter3_click1=0;
+				jb_filter3_click3=0;
+				jb_filter3_click4=0;
+				jb_filter3_click5=0;	
+			}
+		}
+		//필터 3
+		function addFilter3(e) {
+			if (jb_filter3_click3 == 0) {
+		    $(".filter3allbtn").css("border","0px");
+			$("#filter3btn3").css("border","1px solid #ffb6b9");
+			$(".keyword").val("empty");
+			$("#keyword3").val(e);
+			$("#list").html("");
+			page = 1;
+			getList(page);
+			page++;		
+			jb_filter3_click3++;			
+			}else{
+				$(".filter3allbtn").css("border","0px");
+				$(".keyword").val("empty");				
+				$("#list").html("");
+				page = 1;
+				getList(page);
+				page++;
+				jb_filter3_click3--;
+				jb_filter3_click1=0;
+				jb_filter3_click2=0;
+				jb_filter3_click4=0;
+				jb_filter3_click5=0;	
+			}
+		}
+		//필터 4
+		function addFilter4(e) {
+			if (jb_filter3_click4 == 0) {
+			$(".filter3allbtn").css("border","0px");
+			$("#filter3btn4").css("border","1px solid #ffb6b9");
+			$(".keyword").val("empty");
+			$("#keyword4").val(e);
+			$("#list").html("");
+			page = 1;
+			getList(page);
+			page++;			
+			jb_filter3_click4++;			
+			}else{
+				$(".filter3allbtn").css("border","0px");
+				$(".keyword").val("empty");				
+				$("#list").html("");
+				page = 1;
+				getList(page);
+				page++;
+				jb_filter3_click4--;
+				jb_filter3_click1=0;
+				jb_filter3_click2=0;
+				jb_filter3_click3=0;
+				jb_filter3_click5=0;	
+			}
+		}
+		//필터 5
+		function addFilter5(e) {
+			if (jb_filter3_click5 == 0) {
+			$(".filter3allbtn").css("border","0px");
+			$("#filter3btn5").css("border","1px solid #ffb6b9");
+			$(".keyword").val("empty");
+			$("#keyword5").val(e);
+			$("#list").html("");
+			page = 1;
+			getList(page);
+			page++;		
+			jb_filter3_click5++;	
+			}else{
+				$(".filter3allbtn").css("border","0px");
+				$(".keyword").val("empty");				
+				$("#list").html("");
+				page = 1;
+				getList(page);
+				page++;
+				jb_filter3_click5--;	
+				jb_filter3_click1=0;
+				jb_filter3_click2=0;
+				jb_filter3_click3=0;
+				jb_filter3_click4=0;	
+			}
+		}
 		
 	</script>
 	<br>
 	<br>
-	<div class="container" id="jb_filter3_container">
-		<div class="row" align="center">		
-				<div class="col-md-1"></div>
-				<div class="col-md-2"><img src="${pageContext.request.contextPath }/files/interior/interiorMain/kh1.PNG" onclick="addFilter1('리모델링');"></div>								
-				<div class="col-md-2"><img src="${pageContext.request.contextPath }/files/interior/interiorMain/kh2.PNG" onclick="addFilter2('꾸미기팁');"></div>
-				<div class="col-md-2"><img src="${pageContext.request.contextPath }/files/interior/interiorMain/kh3.PNG" onclick="addFilter3('지식백과');"></div>
-				<div class="col-md-2"><img src="${pageContext.request.contextPath }/files/interior/interiorMain/kh4.PNG" onclick="addFilter4('이거어때');"></div>	
-				<div class="col-md-2"><img src="${pageContext.request.contextPath }/files/interior/interiorMain/kh5.PNG" onclick="addFilter5('생활정보');"></div>				
-			<div class="col-md-1"></div>
+	<div class="container" id="jb_filter3_container" style="min-height: 960px;">
+		<div class="row" align="center">						
+		        <div class="col-md-1"></div>
+				<input type="hidden" class="keyword" id="keyword1" value="empty">
+				<div class="col-2 col-md-2"><img class="filter3allbtn" id="filter3btn1" src="${pageContext.request.contextPath }/files/interior/interiorMain/kh1.PNG" onclick="addFilter1('리모델링');"></div>	
+				<input type="hidden" class="keyword" id="keyword2" value="empty">										
+				<div class="col-2 col-md-2"  ><img class="filter3allbtn" id="filter3btn2" src="${pageContext.request.contextPath }/files/interior/interiorMain/kh2.PNG" onclick="addFilter2('꾸미기팁');"></div>
+				<input type="hidden" class="keyword" id="keyword3" value="empty">
+				<div class="col-2 col-md-2"><img class="filter3allbtn" id="filter3btn3" src="${pageContext.request.contextPath }/files/interior/interiorMain/kh3.PNG" onclick="addFilter3('지식백과');"></div>
+				<input type="hidden" class="keyword" id="keyword4" value="empty">
+				<div class="col-2 col-md-2"><img class="filter3allbtn" id="filter3btn4" src="${pageContext.request.contextPath }/files/interior/interiorMain/kh4.PNG" onclick="addFilter4('이거어때');"></div>
+				<input type="hidden" class="keyword" id="keyword5" value="empty">	
+				<div class="col-2 col-md-2"><img class="filter3allbtn" id="filter3btn5" src="${pageContext.request.contextPath }/files/interior/interiorMain/kh5.PNG" onclick="addFilter5('생활정보');"></div>
+				<div class="col-md-1"></div>						
 		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-12">
-			   <input type="hidden" id="keyword1" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn1" onclick="delFilter(1);">
-					<span style="color: #fff;">리모델링</span>&nbsp;<span>ⓧ</span>
-				</button>
-				&nbsp;&nbsp;
-				<input type="hidden" id="keyword2" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn2" onclick="delFilter(2);">
-					<span style="color: #fff;">꾸미기팁</span>&nbsp;<span>ⓧ</span>
-				</button>
-				&nbsp;&nbsp;
-				<input type="hidden" id="keyword3" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn3" onclick="delFilter(3);">
-					<span style="color: #fff;">지식백과</span>&nbsp;<span>ⓧ</span>
-				</button>
-				&nbsp;&nbsp;
-				<input type="hidden" id="keyword4" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn4" onclick="delFilter(4);">
-					<span style="color: #fff;">이거어때</span>&nbsp;<span>ⓧ</span>
-				</button>
-				&nbsp;&nbsp;
-				<input type="hidden" id="keyword5" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn5" onclick="delFilter(5);">
-					<span style="color: #fff;">생활정보</span>&nbsp;<span>ⓧ</span>
-				</button>
-			</div>
-		</div>
+		<br>		
 		<hr color="#ff9198">
 		<br>		
 		<div class="row" id="list">			
 		</div>
 		<br>
-		<div class="row">
-			<div class="col-md-12">
-				<a id="MOVE_TOP_BTN" href="#" style="color: #000;">TOP</a>
-			</div>
+		 <div class="row" id="jb_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
 		</div>
+	    </div>
+	    </div>
 		<c:import url="../common/footer.jsp" />
 </body>
 </html>

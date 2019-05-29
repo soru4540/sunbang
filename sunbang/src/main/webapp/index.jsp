@@ -175,6 +175,20 @@ $(function(){
 					+ errorthrown);
 		}
 	});
+	
+
+	 $.ajax({
+	    	url : "itop5.do",
+	    	type: "get",       
+	    	async: true,
+	        success : function(returnData) {		
+	        	/* 세션으로 받아옴 */
+				/* console.log(returnData); */			
+	        },error : function(jqXHR, textstatus, errorthrown) {
+				console.log("error : " + jqXHR + ", " + textstatus + ", "
+						+ errorthrown);
+			}
+	    });
 });
 $(function(){
 	$.ajax({
@@ -302,93 +316,31 @@ $(function(){
 		</div>
 		<hr id="js_index_hr">
 
-		<!-- 인기 인테리어 -->
+			<!-- 인기 인테리어 -->
 		<div id="js_index_row">
 			<p id="js_index_title">인테리어</p>
 			<span id="js_index_content">현재 인기 인테리어 Best5</span>
 		</div>
 		<div class="row" id="js_index_cardList">
+				<c:if test="${!empty iblist}">
+				<c:forEach items="${ iblist }" var="interior" varStatus="status">
 			<!-- card -->
 			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/16.jpg"
-					alt="Card image cap"> <!-- Card content -->
+				<a href="ibselect?board_no=${interior.board_no}&board_type=${interior.board_type}"><img class="card-img-top"
+					src="${pageContext.request.contextPath}/files/interior/interiorBoard/${interior.post_data}"> <!-- Card content -->
 					<div class="card-body">
 						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle">은은한 핑크빛이 드리운 두 번째
-							신혼집</h5>
+						<h5 class="card-title" id="js_index_ititle">${interior.board_title}</h5>
 						<!-- Text -->
 						<p class="card-text">
-							<i class="fas fa-user-circle"></i> 집이젛앙
+							<i class="fas fa-user-circle"></i> ${interior.nickname }
 						</p>
-						<p class="card-text" id="pcate">좋아요 164 · 조회 340</p>
+						<p class="card-text" id="pcate">좋아요 ${interior.like_count } · 조회 ${interior.board_hits }</p>
 					</div>
 				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/27.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle">온전한 휴식처 나의 집 _
-							평범한 일상속의 행복</h5>
-						<!-- Text -->
-						<p class="card-text">
-							<i class="fas fa-user-circle"></i> interior오월
-						</p>
-						<p class="card-text" id="pcate">좋아요 124 · 조회 356</p>
-					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/18.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle">밝고 편안한 분위기로 꾸민
-							25평아트 인테리어</h5>
-						<!-- Text -->
-						<p class="card-text">
-							<i class="fas fa-user-circle"></i> 누보디자인
-						</p>
-						<p class="card-text" id="pcate">좋아요 134 · 조회 180</p>
-					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/29.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle">'햇살 가득한 여유로움'
-							37PY 아파트 인테리어</h5>
-						<!-- Text -->
-						<p class="card-text">
-							<i class="fas fa-user-circle"></i> 일상을디자인하다
-						</p>
-						<p class="card-text" id="pcate">좋아요 124 · 조회 460</p>
-					</div>
-				</a>
-			</div>
-			<div class="card" id="js_index_card">
-				<a href="#"> <img class="card-img-top"
-					src="https://mdbootstrap.com/img/Photos/Others/images/11.jpg"
-					alt="Card image cap"> <!-- Card content -->
-					<div class="card-body">
-						<!-- Title -->
-						<h5 class="card-title" id="js_index_ititle">곡면 복도가 돋보이는, 차분한
-							48평 아파트 인테리어</h5>
-						<!-- Text -->
-						<p class="card-text">
-							<i class="fas fa-user-circle"></i> 허스크디자인
-						</p>
-						<p class="card-text" id="pcate">좋아요 114 · 조회 345</p>
-					</div>
-				</a>
-			</div>
+			</div>			
+			</c:forEach>
+			</c:if>
 		</div>
 
 		<!-- 인테리어 보러가기 버튼 -->

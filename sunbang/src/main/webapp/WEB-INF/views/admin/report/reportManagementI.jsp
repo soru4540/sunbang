@@ -8,6 +8,8 @@
 <link rel="shortcut icon" type="image⁄x-icon"
 	href="${pageContext.request.contextPath}/resources/images/logo1.PNG">
 <title>SUNBANG</title>
+<script type="text/javascript"
+	src="/sunbang/resources/js/jquery-3.3.1.min.js"></script>
 <style type="text/css">
 #js_interiorM_content {
 	max-width: 360px;
@@ -36,13 +38,40 @@ function detailView(data) {
 	var popupY= (window.screen.height/2) - (800/2);
 	window.open('ardetailselect.do?report_system=interior&report_no='+data, 'detailView',
 			'width=1000,height=760, left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');
-}
+};
 	
 function selSearch(){
-	var category = $("#selBox").val();
-	location.href = "arlistselect.do?report_system=interior&selectval=category&keyword="+category;
-}
+	var selectval = $("#selBox").val();
+	if(selectval == 0){
+		selectval = "report_status";
+	}else{
+		selectval = "contents_status";
+	}
+	var status = $("#selstatus").val();
+	location.href = "arlistselect.do?report_system=interior&selectval="+selectval+"&keyword="+status;
+};
 
+$(function(){
+	$("#selBox").change(function(){
+		if($("#selBox").val()==0){
+			$("#key").html("");
+			$("#key").html("<select class='custom-select' name='selstatus' id='selstatus'>"
+					+"<option value=''>상태선택</option>"
+					+"<option value='0'>미처리</option>"
+					+"<option value='1'>검수중</option>"
+					+"<option value='2'>처리완료</option></select>");
+		}
+		if($("#selBox").val()==1){
+			console.log("");
+			$("#key").html("selstatus");
+			$("#key").html("<select class='custom-select' name='selstatus' id='selstatus'>"
+					+"<option value=''>상태선택</option>"
+					+"<option value='0'>게시중</option>"
+					+"<option value='1'>검수중</option>"
+					+"<option value='2'>수정완료</option>></select>");
+		}
+	});
+});
 </script>
 </head>
 <body>
@@ -71,7 +100,11 @@ function selSearch(){
 						<tr>
 							<th scope="row">${r.report_no }</th>
 							<td>${r.category }</td>
-							<td>${r.reported_board }</td>
+							<td>
+								<c:if test="${r.reported_board == 'photograph'}">사진</c:if>
+								<c:if test="${r.reported_board == 'housewarming'}">집들이</c:if>
+								<c:if test="${r.reported_board == 'knowhow'}">노하우</c:if>
+							</td>
 							<td>${r.contents_no }</td>
 							<td id="js_interiorM_content"><a
 								href="javascript:detailView(${r.report_no });">${ r.contents}</a></td>
@@ -100,18 +133,27 @@ function selSearch(){
 			</table>
 		</div>
 		<div class="row" style="margin: 0 auto;">
-			<div class="col-sm">
-				<div class="row">
-					<select class="custom-select" name="selBox" id="selBox" style="min-width: 150px; max-width: 150px;">
-						<option value="">카테고리 선택</option>
-						<option value="허위글">허위글</option>
-						<option value="사진도용">사진도용</option>
-						<option value="부적절">부적절</option>
-						<option value="광고">광고</option>
-						<option value="기타">기타</option>
+		<div class="col-sm"
+				style="text-overflow: ellipsis; white-space: nowrap; min-width: 360px; max-width: 500px; height: 100%;">
+				<div class="row" style="padding:0px;">
+					<select class="custom-select" name="selBox" id="selBox"
+						style="min-width: 110px; max-width: 110px;">
+						<option value="">검색선택</option>
+						<option value="0">처리상태</option>
+						<option value="1">게시상태</option>
 					</select>
+					<div class="col" id="key" style="min-width: 110px; max-width: 110px; margin: 0 auto; padding: 0px;">
+						<select class='custom-select' name='selstatus' id='selstatus'>
+							<option value=''>상태선택</option>
+							<option value='0'>미처리</option>
+							<option value='1'>검수중</option>
+							<option value='2'>처리완료</option>
+						</select>
+					</div>
 					<button class="btn btn-info" onclick="selSearch();">검색</button>
-					<a class="dropdown-item" href="arlistselect.do?report_system=interior&page=1" style="width: 80px;">reset</a>
+					<a class="dropdown-item"
+						href="arlistselect.do?report_system=interior&page=1"
+						style="width: 80px;">reset</a>
 				</div>
 			</div>
 			<div class="col-sm" align="center" style="margin: 0 auto;">

@@ -419,7 +419,8 @@
 			<div class="text">
 				<!-- 내용 -->
 				<textarea class="form-control" id="post_contents0" rows="5"
-					wrap="hard" name="post_contents0" style="font-family: a고딕14;"></textarea>
+					wrap="hard" name="post_contents0" 
+					style="font-family: a고딕14;"></textarea>
 			</div>
 			<br>
 			<div class="row">

@@ -126,9 +126,4 @@ public class AdminDao {
 		return result;
 	}
 
-	public int deleteUser(SqlSessionTemplate mybatisSession, int user_no) {
-		int result = mybatisSession.delete("adminMapper.deleteUser", user_no);
-		return result;
-	}
-
 }

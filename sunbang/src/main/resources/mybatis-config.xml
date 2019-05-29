@@ -26,13 +26,12 @@
 		<typeAlias type="org.kh.sunbang.interior.model.vo.BoardFull" alias="BoardFull" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Board" alias="Board" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Post" alias="Post" />
-		<typeAlias type="org.kh.sunbang.interior.model.vo.Marker" alias="Marker" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.ReplyFull" alias="ReplyFull" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Reply" alias="Reply" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Like" alias="Like" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.FollowFull" alias="FollowFull" /> 	 
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Follow" alias="Follow" /> 
-		<typeAlias type="org.kh.sunbang.interior.model.vo.Ipaging" alias="Ipaging" /> 	 		
+		<typeAlias type="org.kh.sunbang.interior.model.vo.Ipaging" alias="Ipaging" /> 		 			
 		
 	</typeAliases>
 	<mappers>

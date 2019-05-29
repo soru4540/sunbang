@@ -173,25 +173,51 @@
 		border-color .15s ease-in-out, box-shadow .15s ease-in-out;
 }
 
+#jb_top {
+	width:100%;
+	height:30px;
+	color: grey;
+	background-color: #f2f2f2;
+	text-align:center;
+	margin: 2px;
+	cursor:pointer;
+	display:none;
+}
+
+@media screen and (min-width: 800px) {
+  #jb_top {
+	position: fixed;
+	top: 90%;
+	left: 90%;
+	width: 5%;
+	color: grey;
+	background-color: #f2f2f2;
+	border-color: #bee5eb;
+	border-radius: 5px;
+	padding:2px;
+  }
+}
+
 </style>
 </head>
 <body>
 	<c:import url="../common/interiorHeader.jsp" />
 	<script type="text/javascript">
-		$(function() {
-			$(window).scroll(function() {
-				if ($(this).scrollTop() > 500) {
-					$('#MOVE_TOP_BTN').fadeIn();
+		$(function() {		
+						
+			$(window).scroll(function() {			
+				if ($(this).scrollTop() > 500) {				
+					$('#jb_top').fadeIn();
 				} else {
-					$('#MOVE_TOP_BTN').fadeOut();
+					$('#jb_top').fadeOut();
 				}
 			});
-
-			$("#MOVE_TOP_BTN").click(function() {
-				$('html, body').animate({
-					scrollTop : 0
-				}, 400);
-				return false;
+			
+			$("#jb_top").click(function() {
+				var offset = $('html').offset();
+				$("html, body").animate({
+					scrollTop : offset.top
+				}, 500);
 			});
 			
 			//필터 7개
@@ -201,7 +227,7 @@
 			$("#jb_filter2_items4").css("display", "none");
 			$("#jb_filter2_items5").css("display", "none");
 			$("#jb_filter2_items6").css("display", "none");
-			$("#jb_filter2_items7").css("display", "none");
+		
 
 			//필터 클릭 체크 7개
 			var jb_filter2_click1 = 0;
@@ -210,7 +236,7 @@
 			var jb_filter2_click4 = 0;
 			var jb_filter2_click5 = 0;
 			var jb_filter2_click6 = 0;
-			var jb_filter2_click7 = 0;
+	
 			
 		
 		$("#jb_filter2_filter1").click(function() {
@@ -222,8 +248,7 @@
 					jb_filter2_click3=0;
 					jb_filter2_click4=0;
 					jb_filter2_click5=0;
-					jb_filter2_click6=0;
-					jb_filter2_click7=0;	
+					jb_filter2_click6=0;		
 				} else {
 					$(".jb_filter2_item").css("display", "none");
 					jb_filter2_click1=0;							
@@ -239,8 +264,7 @@
 					jb_filter2_click3=0;
 					jb_filter2_click4=0;
 					jb_filter2_click5=0;
-					jb_filter2_click6=0;
-					jb_filter2_click7=0;	
+					jb_filter2_click6=0;			
 				} else {
 					$(".jb_filter2_item").css("display", "none");
 					jb_filter2_click2=0;
@@ -257,8 +281,7 @@
 					jb_filter2_click3++;
 					jb_filter2_click4=0;
 					jb_filter2_click5=0;
-					jb_filter2_click6=0;
-					jb_filter2_click7=0;	
+					jb_filter2_click6=0;			
 				} else {
 					$(".jb_filter2_item").css("display", "none");
 					jb_filter2_click3=0;					
@@ -274,8 +297,7 @@
 					jb_filter2_click3=0;
 					jb_filter2_click4++;
 					jb_filter2_click5=0;
-					jb_filter2_click6=0;
-					jb_filter2_click7=0;	
+					jb_filter2_click6=0;				
 				} else {
 					$(".jb_filter2_item").css("display", "none");					
 					jb_filter2_click4=0;				
@@ -291,8 +313,7 @@
 					jb_filter2_click3=0;
 					jb_filter2_click4=0;
 					jb_filter2_click5++;
-					jb_filter2_click6=0;
-					jb_filter2_click7=0;	
+					jb_filter2_click6=0;			
 				} else {
 					$(".jb_filter2_item").css("display", "none");				
 					jb_filter2_click5=0;					
@@ -309,28 +330,10 @@
 					jb_filter2_click3=0;
 					jb_filter2_click4=0;
 					jb_filter2_click5=0;
-					jb_filter2_click6++;
-					jb_filter2_click7=0;	
+					jb_filter2_click6++;				
 				} else {
 					$(".jb_filter2_item").css("display", "none");				
 					jb_filter2_click6=0;					
-				}
-			});
-
-			$("#jb_filter2_filter7").click(function() {
-				if (jb_filter2_click7 == 0) {
-					$(".jb_filter2_item").css("display", "none");
-					$("#jb_filter2_items7").css("display", "");
-					jb_filter2_click1=0;
-					jb_filter2_click2=0;			
-					jb_filter2_click3=0;
-					jb_filter2_click4=0;
-					jb_filter2_click5=0;
-					jb_filter2_click6=0;
-					jb_filter2_click7++;	
-				} else {
-					$(".jb_filter2_item").css("display", "none");			
-					jb_filter2_click7=0;		
 				}
 			});
 
@@ -351,10 +354,7 @@
 			}
 			if ($("#keyword6").val() == "empty") {
 				$("#jb_filter_btn6").css("display", "none");
-			}
-			if ($("#keyword7").val() == "empty") {
-				$("#jb_filter_btn7").css("display", "none");
-			}
+			}		
 
 		});
 		
@@ -380,7 +380,7 @@
 		    $.ajax({
 		        type : "post",  
 		        dataType : "json", 
-		        data : {board_type: "housewarming" ,page : pagenum, keyword1 : $("#keyword1").val(),keyword2 : $("#keyword2").val(),keyword3 : $("#keyword3").val(),keyword4 :$("#keyword4").val() ,keyword5 :$("#keyword5").val(),keyword6 :$("#keyword6").val(),keyword7 :$("#keyword7").val() },
+		        data : {board_type: "housewarming" ,page : pagenum, keyword1 : $("#keyword1").val(),keyword2 : $("#keyword2").val(),keyword3 : $("#keyword3").val(),keyword4 :$("#keyword4").val() ,keyword5 :$("#keyword5").val(),keyword6 :$("#keyword6").val() },
 		        url : "ifilter2select.do",
 		        success : function(returnData) {		    
 		        	
@@ -399,7 +399,7 @@
 			            	}
 			            	for(var i in jsonObj.iblist){	
 			            		
-			            	value += "<div class='col-md-4' align='center'><a class='jb_filter_a' href='#'><div class='hovereffect'>"
+			            	value += "<div class='col-md-4' align='center'><a class='jb_filter_a' href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'><div class='hovereffect'>"
 			    				  +	"<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter2_img'></div><br>"
 			    				  + "<h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6>"
 			    				  + "<h6 style='opacity: 0.35;'>좋아요 : "+jsonObj.iblist[i].like_count+" 조회수 : "+jsonObj.iblist[i].board_hits+"</h6></a></div>";			            					            		            
@@ -467,15 +467,7 @@
 			getList(page);
 	        page++;   		
 		}
-		//필터 7
-		function addFilter7(e) {
-			$("#keyword7").val(e);
-			$("#jb_filter_btn7").css("display", "");
-			$("#list").html("");
-			page = 1;
-			getList(page);
-	        page++;   		
-		}
+	
 		
 		//필터 제거
 		function delFilter(e){
@@ -490,46 +482,37 @@
 	</script>
 	<br>
 	<br>   
-	<div class="container" id="jb_filter2_container">
-		<div class="row">
-			<div class="col-md-12">
-				<ul>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter1">
-							정렬 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter2">
-							주거형태 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter3">
-							평수 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter4">
-							예산 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter5">
-							스타일 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter6">
-							색상 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-					<li class="nav-item dropdown">
-						<button class="jb_filter2_filterBtn" id="jb_filter2_filter7">
-							제품정보 <span style="color: #ff9198;">▼</span>
-						</button>
-					</li>
-				</ul>
+	<div class="container" id="jb_filter2_container" style="min-height: 960px;">
+		<div class="row">		
+			<div class="col" align="center">
+				<button class="jb_filter2_filterBtn" id="jb_filter2_filter1">
+					정렬 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter2_filterBtn" id="jb_filter2_filter2">
+					주거형태 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter2_filterBtn" id="jb_filter2_filter3">
+					평수 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter2_filterBtn" id="jb_filter2_filter4">
+					예산 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter2_filterBtn" id="jb_filter2_filter5">
+					스타일 <span style="color: #ff9198;">▼</span>
+				</button>
+			</div>
+			<div class="col" align="center">
+				<button class="jb_filter2_filterBtn" id="jb_filter2_filter6">
+					색상 <span style="color: #ff9198;">▼</span>
+				</button>
 			</div>
 		</div>
 		<br>
@@ -583,15 +566,11 @@
 					<button class="jb_filter2_filterBtn2" onclick="addFilter6('블루');">블루</button>&nbsp;&nbsp;&nbsp;&nbsp; 
 					<button class="jb_filter2_filterBtn2" onclick="addFilter6('그린');">그린</button>&nbsp;&nbsp;&nbsp;&nbsp; 
 					<button class="jb_filter2_filterBtn2" onclick="addFilter6('레드');">레드</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="jb_filter1_filterBtn2" onclick="addFilter6('옐로우');">옐로우</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('옐로우');">옐로우</button>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#FFB6B9');">핑크</button>
-				</div>
-				<div class="jb_filter2_item" id="jb_filter2_items7">				
-					<button class="jb_filter2_filterBtn2" onclick="addFilter7('제품마크있는게시물만');">제품마크 있는 게시물만</button>
-				</div>
+				</div>				
 			</div>
-		</div>
-		<br>
+		</div>		
 		<div class="row">
 			<div class="col-md-12">
 			    <input type="hidden" id="keyword1" value="empty">
@@ -623,11 +602,7 @@
 				<button type="button" class="jb_filter_btn" id="jb_filter_btn6" onclick="delFilter(6);">
 					<span style="color: #fff;">색상&nbsp;ⓧ</span>
 				</button>
-				&nbsp;&nbsp;
-				<input type="hidden" id="keyword7" value="empty">
-				<button type="button" class="jb_filter_btn" id="jb_filter_btn7" onclick="delFilter(7);">
-					<span style="color: #fff;">제품정보&nbsp;ⓧ</span>
-				</button>
+				&nbsp;&nbsp;				
 			</div>
 		</div>
 		<hr color="#ff9198">
@@ -635,10 +610,11 @@
 		<div class="row" id="list">
 		</div>
 		<br>
-		<div class="row">
-			<div class="col-md-12">
-				<a id="MOVE_TOP_BTN" href="#" style="color: #000;">TOP</a>
-			</div>
+		 <div class="row" id="jb_top">
+		<div class="col-md-12">
+			<i class="fas fa-angle-double-up"></i>
+		</div>
+	    </div>
 		</div>
 		<c:import url="../common/footer.jsp" />
 </body>

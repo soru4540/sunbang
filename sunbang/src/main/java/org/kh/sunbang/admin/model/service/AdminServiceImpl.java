@@ -130,9 +130,5 @@ public class AdminServiceImpl implements AdminService {
 	public int updateGuide(Guide guide) {
 		return adminDao.updateGuide(mybatisSession, guide);
 	}
-
-	@Override
-	public int deleteUser(int user_no) {
-		return adminDao.deleteUser(mybatisSession, user_no);
-	}
+	
 }

@@ -47,8 +47,7 @@
 		<result property="business_user_no" column="business_user_no" />
 		<result property="office_name" column="office_name" />
 		<result property="office_regist_no" column="office_regist_no" />
-		<result property="business_license_no"
-			column="business_license_no" />
+		<result property="business_license_no" column="business_license_no" />
 		<result property="office_address" column="office_address" />
 		<result property="office_phone" column="office_phone" />
 		<result property="status_agreement" column="status_agreement" />
@@ -285,12 +284,6 @@
 		user_no = #{user_no}
 	</update>
 	
-	<delete id="deleteUser" parameterType="int">
-		delete 
-		from tb_user 
-		where user_no = #{user_no}
-	</delete>
-	
 	<select id="selectReportList" parameterType="Apaging" resultMap="resultReport">
 		select * 
 		from(select rownum rnum, report_no,
@@ -307,19 +300,17 @@
         	from tb_report r join tb_user u on r.user_no = u.user_no
         	join tb_board b on r.contents_no = b.board_no
         </if>
-        <if test="system =='user'">
-        	, u.user_status contents_status
-        	from tb_report r join tb_user u on r.user_no = u.user_no
-        </if>
         where report_system= #{system}
-        <if test="selectval == 'category'">
-        and category = #{keyword}
-        </if>
         <if test="selectval == 'report_status'">
         and report_status = #{keyword}
         </if>
         <if test="selectval == 'contents_status'">
-        and rt.realty_status = #{keyword}
+        	<if test="system =='realty'">
+        		and rt.realty_status = #{keyword}
+        	</if>
+        	<if test="system =='interior'">
+        		and b.board_status = #{keyword}
+        	</if>
         </if>
 		))
 	<![CDATA[

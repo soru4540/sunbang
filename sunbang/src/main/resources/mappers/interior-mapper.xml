@@ -4,6 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="interiorMapper">
 
+
 <resultMap type="BoardFull" id="resultBoardFull">
 	<id property="board_no" column="board_no"/>
 		<result property="board_type" column="board_type" />
@@ -25,19 +26,14 @@
 		<result property="post_no" column="post_no"/>
         <result property="post_keyword" column="post_keyword" />
         <result property="post_data" column="post_data" />
-        <result property="post_contents" column="post_contents" />
-        <result property="marker_no" column="marker_no"/>
-        <result property="product_image" column="product_image" />
-        <result property="cordi_x" column="cordi_x" />
-        <result property="cordi_y" column="cordi_y" />
-        <result property="product_url" column="product_url" />
+        <result property="post_contents" column="post_contents" />      
         <result property="user_no" column="user_no" />	
+        <result property="user_id" column="user_id" />	
         <result property="user_profile" column="user_profile" />
         <result property="nickname" column="nickname" />
         <result property="user_name" column="user_name" /> 
         <result property="like_count" column="like_count" /> 
-        <result property="follow_count" column="follow_count" /> 
-        
+        <result property="follow_count" column="follow_count" />         
 </resultMap>
 
 <resultMap type="Board" id="resultBoard">
@@ -69,31 +65,29 @@
    <result property="board_no" column="board_no" />      
 </resultMap>
 
-<resultMap type="Marker" id="resultMarker">
-    <id property="marker_no" column="marker_no"/>
-    <result property="product_image" column="product_image" />
-    <result property="cordi_x" column="cordi_x" />
-    <result property="cordi_y" column="cordi_y" />
-    <result property="product_url" column="product_url" />
-    <result property="post_no" column="post_no" />      
-</resultMap>
-
 <resultMap type="ReplyFull" id="resultReplyFull">
    <id property="reply_no" column="reply_no"/>
     <result property="reply_lev" column="reply_lev" />
     <result property="origin_reply_no" column="origin_reply_no" />
+    <result property="reference_reply_no" column="reference_reply_no"/>
     <result property="reply_contents" column="reply_contents" />   
     <result property="board_no" column="board_no" />   
     <result property="user_no" column="user_no" />	
     <result property="user_profile" column="user_profile" />
     <result property="nickname" column="nickname" />
     <result property="user_name" column="user_name" />  
+    <result property="re_reply_no" column="re_reply_no"/>
+    <result property="re_user_no" column="re_user_no" />	
+    <result property="re_user_profile" column="re_user_profile" />
+    <result property="re_nickname" column="re_nickname" />
+    <result property="re_user_name" column="re_user_name" />        
 </resultMap>
 
 <resultMap type="Reply" id="resultReply">
    <id property="reply_no" column="reply_no"/>
     <result property="reply_lev" column="reply_lev" />
     <result property="origin_reply_no" column="origin_reply_no" />
+    <result property="reference_reply_no" column="reference_reply_no"/>
     <result property="reply_contents" column="reply_contents" />
     <result property="user_no" column="user_no" />
     <result property="board_no" column="board_no" />   
@@ -135,7 +129,6 @@
     <result property="keyword4" column="keyword4" />
     <result property="keyword5" column="keyword5" />   
     <result property="keyword6" column="keyword6" />
-    <result property="keyword7" column="keyword7" />   
 </resultMap>
 
 <resultMap id="resultReport" type="Report">
@@ -151,7 +144,24 @@
 		<result property="user_no" column="user_no" />
 </resultMap>
 
-<!--  ///////////////////////////////////////////////////////JB/////////////////////////////////////////////////////// -->
+<!--  ///////////////////////////////////////////////////////진보/////////////////////////////////////////////////////// -->
+
+<!--  인테리어 TOP 5 -->
+<select id="selectInteriorTop5" resultMap="resultBoardFull">
+select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,like_count
+from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no)
+                  FROM tb_post
+                  GROUP BY board_no)               
+order by board_hits desc, like_count desc, board_no desc
+)
+<![CDATA[ where rownum <6 ]]>
+</select>
+
 
 <!-- 메인 집들이 top1 -->
 <select id="selectHbTop1" resultMap="resultBoardFull">
@@ -224,32 +234,18 @@ where <![CDATA[ rownum <9 ]]>
 <!-- 게시판등록 -->
 <insert id="insertBoard" parameterType="Board">
 <choose>
-<when test="board_type.equals('photograph')">
-	insert into tb_board
-	(board_no,board_type,category1,space,floor_area,color1,color2,color3,board_title,board_hits,board_date,board_status,user_no)
-	values(board_seq.nextval,#{board_type},#{category1},#{space},#{floor_area},#{color1},#{color2},#{color3},#{board_title},0,default,default,#{user_no})
+<when test="board_type.equals('photograph')"></when>
+<when test="board_type.equals('housewarming')"></when>
+<when test="board_type.equals('knowhow')">
+insert into tb_board (board_no,board_type,category1,category2,category3,board_title,board_hits,board_date,board_status,user_no) 
+values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{board_title},0,default,default,#{user_no})
 </when>
-	<when test="board_type.equals('housewarming')">
-		insert into tb_board
-		(board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,budget,style,board_hits,board_date,board_status,user_no)
-		values(board_seq.nextval,#{board_type},#{housing_type},#{floor_area},#{color1},#{color2},#{color3},#{board_title},#{budget},#{style},0,default,default,#{user_no})
-	</when>
-	<when test="board_type.equals('knowhow')">
-		insert into tb_board
-		(board_no,board_type,category1,category2,category3,board_title,board_hits,board_date,board_status,user_no)
-		values(board_seq.nextval,#{board_type},#{category1},#{category2},#{category3},#{board_title},0,default,default,#{user_no})
-	</when>
 </choose>
 </insert>
 
 <!-- 게시판번호 불러오기 -->
 <select id="selectBoardNo" parameterType="_int" resultType="_int">
 select max(board_no) from tb_board where user_no = #{user_no}
-</select>
-
-<!-- 게시물번호 불러오기 -->
-<select id="selectPostNo" parameterType="_int" resultType="_int">
-select max(post_no) from tb_post where board_no = #{board_no}
 </select>
 
 <!-- 게시물등록 -->
@@ -430,16 +426,18 @@ delete from tb_follow where follower_no = #{follower_no} and user_no = #{user_no
 
 <!-- 댓글 리스트 출력 -->
 <select id="selectReplyList" parameterType="_int" resultMap="resultReplyFull">
-select * from tb_reply
-left join tb_user using (user_no)
-where board_no = #{board_no}
+select * from tb_reply 
+left join tb_user using (user_no) 
+left join (select user_no re_user_no,reply_no re_reply_no,user_id re_user_id,nickname re_nickname,user_profile re_profile from tb_reply
+left join tb_user using (user_no)) on(reference_reply_no = re_reply_no)
+where board_no =95
 order by origin_reply_no asc, reply_lev asc, reply_no asc
 </select>
 
 <!-- 댓글 등록 -->
 <insert id="insertReply" parameterType="Reply">
 insert into tb_reply values(reply_seq.nextval,#{reply_lev},<if test="origin_reply_no == 0">reply_seq.currval,</if>
-<if test="origin_reply_no != 0">#{origin_reply_no},</if>#{reply_contents},#{user_no},#{board_no})
+<if test="origin_reply_no != 0">#{origin_reply_no},</if>#{reference_reply_no,jdbcType=INTEGER},#{reply_contents},#{user_no},#{board_no})
 </insert>
 
 <!-- 댓글 삭제 -->
@@ -464,16 +462,14 @@ insert into tb_report values (report_seq.nextval, #{report_system}, #{category},
 </insert>
 
 <!-- 게시판 수정페이지 출력 -->
-	<select id="selectBoardUpdateView" parameterType="_int"
-		resultMap="resultBoardFull">
-		select
-		board_no,board_type,space,housing_type,category1,category2,category3,floor_area,color1,color2,color3,board_title,budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents,marker_no,product_image,cordi_x,cordi_y,product_url,user_no
-		from tb_board
-		left join tb_post using(board_no)
-		left join tb_marker using(post_no)
-		where board_no = #{board_no}
-		order by post_no asc
-	</select>
+<select id="selectBoardUpdateView" parameterType="_int" resultMap="resultBoardFull">
+select board_no, board_type ,space, housing_type,category1, category2, category3, floor_area, color1, color2, color3,board_title,
+        budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents, user_no
+from tb_board
+left join tb_post using(board_no)
+where board_no = #{board_no}
+order by post_no asc
+</select>
 
 <!-- 게시판 수정 -->
 <update id="updateBoard" parameterType="Board">
@@ -551,46 +547,58 @@ where post_no in (SELECT MIN(post_no)
                   FROM tb_post
                   GROUP BY board_no)
 order by board_no desc)
-where search like '%' || #{keyword} || '%';
+where search like '%' || #{keyword} || '%'
 </select>
 
-<!--  ///////////////////////////////////////////////////////SE/////////////////////////////////////////////////////// -->
-<!-- 사진 detail 출력 -->
-<select id="selectPhotoList" parameterType="_int"  resultMap="resultBoardFull">
-select * from 
-(select row_number() over(order by board_no desc) as rnum, board_no,board_type,category1,space,floor_area,color1,color2,color3,board_title,board_hits,post_no,post_keyword,post_contents,post_data,board_date,board_status,user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+<!-- 뉴스피드 리스트 카운트 -->
+<select id="selectNewsFeedListCount" parameterType="Ipaging" resultType="_int">
+select count(*) from tb_board
+where user_no in (select user_no from tb_follow where follower_no = #{user_no} )
+</select>
+
+<select id="selectNewsFeedList" parameterType="Ipaging" resultMap="resultBoardFull">
+select * from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,space, housing_type, category1, category2, category3, floor_area, color1, color2, color3,
+budget,style,post_no,post_keyword,post_data, user_no, user_id, nickname,user_profile,nvl(like_count,0) like_count ,nvl(follow_count,0) follow_count
 from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
 left join(select count(follower_no) follow_count,user_no from tb_follow
 group by user_no) using(user_no)
-left join(select count(user_no) like_count,board_no from tb_like
-group by board_no) using(board_no))
-where board_no = #{board_no}
-order by post_no asc
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+and user_no in (select user_no from tb_follow where follower_no = #{user_no})
+order by board_no desc
+) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>
 
-<!-- 집들이 detail 출력 -->
-<select id="selectHouseWList" parameterType="_int" resultMap="resultBoardFull">
-select * from 
-(select row_number() over(order by board_no desc) as rnum, board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,budget,style,board_hits,post_no,post_keyword,post_contents,post_data,board_date,board_status,user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+<!-- 스토리 리스트 카운트 -->
+<select id="selectStoryListCount" parameterType="Ipaging" resultType="_int">
+select count(*) from tb_board
+where user_no = #{user_no}
+</select>
+
+<!-- 스토리 리스트 출력 -->
+<select id="selectStoryList" parameterType="Ipaging" resultMap="resultBoardFull">
+select * from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,space, housing_type, category1, category2, category3, floor_area, color1, color2, color3,
+budget,style,post_no,post_keyword,post_data, user_no, user_id, nickname,user_profile,nvl(like_count,0) like_count ,nvl(follow_count,0) follow_count
 from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
 left join(select count(follower_no) follow_count,user_no from tb_follow
 group by user_no) using(user_no)
-left join(select count(user_no) like_count,board_no from tb_like
-group by board_no) using(board_no))
-where board_no = #{board_no}
+left join(select count(user_no) like_count, board_no from tb_like
+group by board_no) using(board_no)
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+and user_no = #{user_no}
+order by board_no desc
+) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>
 
-<!-- 게시글 삭제 -->
-<delete id="deleteBoard" parameterType="_int">
-delete from tb_board where board_no = #{board_no}
-</delete>
 
 
 <!--  ///////////////////////////////////////////////////////성현/////////////////////////////////////////////////////// -->
+
 <!-- know detail 출력 -->
 <select id="selectKnowHowPostList" parameterType="_int"  resultMap="resultBoardFull">
 select *
@@ -631,4 +639,95 @@ where board_no = #{board_no}
 		where board_no = #{board_no}	
 </update>
 
+
+
+<!--  ///////////////////////////////////////////////////////서은/////////////////////////////////////////////////////// -->
+
+<!-- 사진 detail 출력 -->
+<select id="selectPhotoList" parameterType="_int"  resultMap="resultBoardFull">
+select * from 
+(select row_number() over(order by board_no desc) as rnum, board_no,board_type,category1,space,floor_area,color1,color2,color3,board_title,board_hits,post_no,post_keyword,post_contents,post_data,board_date,board_status,user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where board_no = #{board_no}
+order by post_no asc
+</select>
+
+<!-- 집들이 detail 출력 -->
+<select id="selectHouseWList" parameterType="_int" resultMap="resultBoardFull">
+select * from 
+(select row_number() over(order by board_no desc) as rnum, board_no,board_type,housing_type,floor_area,color1,color2,color3,board_title,budget,style,board_hits,post_no,post_keyword,post_contents,post_data,board_date,board_status,user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where board_no = #{board_no}
+</select>
+
+<!-- 해당 게시판 번호의 게시물 전체 삭제 -->
+<!-- 좋아요 삭제 -->
+<delete id="deleteAllLike" parameterType="_int">
+delete from tb_like where board_no = #{board_no}
+</delete>
+
+<!-- 게시물삭제 -->
+<delete id="deleteAllPost" parameterType="_int">
+	delete from tb_post where board_no = #{board_no}
+</delete>
+
+<!-- 게시판 삭제 -->
+<delete id="deleteBoard" parameterType="_int">
+delete from tb_board where board_no = #{board_no} 
+</delete>
+
+<!-- 내 방 목록 -->
+<select id="selectMyPhotograph" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and user_no = #{user_no} and board_type = 'photograph'
+order by rnum
+</select>
+
+<select id="selectMyHousewarming" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and user_no = #{user_no} and board_type = 'housewarming'
+order by rnum
+</select>
+
+<select id="selectMyKnowhow" parameterType="_int"  resultMap="resultBoardFull">
+select *
+from (select row_number() over(order by board_no desc) as rnum, board_no,board_title,board_type,board_hits,board_date,category1, category2, category3,post_no,post_keyword,post_contents,post_data, user_no, nickname,user_profile,nvl(like_count,0) like_count,nvl(follow_count,0) follow_count
+from tb_board
+left join tb_post using(board_no)
+left join tb_user using(user_no)
+left join(select count(follower_no) follow_count,user_no from tb_follow
+group by user_no) using(user_no)
+left join(select count(user_no) like_count,board_no from tb_like
+group by board_no) using(board_no))
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and user_no = #{user_no} and board_type = 'knowhow'
+order by rnum
+</select>
 </mapper>

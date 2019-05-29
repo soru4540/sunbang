@@ -314,6 +314,8 @@
 			<br>
 			<h4 align="center" style="font-family: a고딕15;">집들이 등록</h4>
 			<br> <input type="hidden" name="board_type" value="housewarming">
+			<input type="hidden" id="user_no" name="user_no"
+				value="${loginUser.user_no}">
 			<div class="row">
 				<input type="hidden" id="" name="post_keyword" value="cover">
 				<label style="font-family: a고딕14;">파일선택 <input type="file"

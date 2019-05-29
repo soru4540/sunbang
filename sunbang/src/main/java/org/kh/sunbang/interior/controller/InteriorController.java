@@ -4,9 +4,11 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -42,6 +44,15 @@ public class InteriorController {
    private InteriorService interiorService;
 	
 //-------------------------JB PART------------------------------------------------
+   //인테리어메인 이동 및 출력
+   @RequestMapping(value="itop5.do", produces="application/json")
+	public @ResponseBody List<BoardFull> selectInteriorTop5(HttpSession session) throws ParseException{
+		ArrayList<BoardFull> iblist = interiorService.selectInteriorTop5();
+		session.setAttribute("iblist", iblist);
+	    return iblist;
+	}
+   
+   
    //인테리어메인 이동 및 출력
   	@RequestMapping("interiormain.do")
   	public ModelAndView selectInteriorMain(ModelAndView mv) {
@@ -80,7 +91,7 @@ public class InteriorController {
   	}		
   	
   	
-  	/*//인테리어 검색 리스트 출력 
+  	//인테리어 검색 리스트 출력 
   	@RequestMapping(value = "isearchselect.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
   	@ResponseBody
   	public String selectSearchList(Ipaging ipaging, HttpServletResponse response) {  
@@ -88,9 +99,9 @@ public class InteriorController {
   		JSONArray jarray2 = new JSONArray();
   		JSONObject sendObj = new JSONObject();
   		try {
-  			int total_num = interiorService.selectSearchListCount(ipaging.getBoard_type()); // 데이터의 전체 갯수를 가져온다.
+  			int total_num = interiorService.selectSearchListCount(ipaging.getKeyword1()); // 데이터의 전체 갯수를 가져온다.
   			
-  			ArrayList<BoardFull> iblist = interiorService.selectSearchList(ipaging); // 조회한 데이터를 가져온다.
+  			ArrayList<BoardFull> iblist = interiorService.selectSearchList(ipaging.getKeyword1()); // 조회한 데이터를 가져온다.
   			for (BoardFull boardfull : iblist) {
   				// BoardFull 객체 저장용 json 객체를 생성
   				JSONObject jboardfull = new JSONObject();
@@ -125,7 +136,7 @@ public class InteriorController {
   		}
   		
   		return sendObj.toJSONString();
-  	}*/
+  	}
   		
   	//인테리어 게시판(사진,집들이,노하우)으로 이동 및 출력
   	@RequestMapping("iblistselect.do")
@@ -152,8 +163,7 @@ public class InteriorController {
   				int total_num = interiorService.selectListCount(ipaging.getBoard_type()); // 데이터의 전체 갯수를 가져온다.
   				int page = ipaging.getPage();
   				if (page == 1) {
-  					ipaging.setStart_num(1);
-  					if (total_num >= 16)
+  					ipaging.setStart_num(1);  				
   						ipaging.setEnd_num(16);
   				} else {
   					ipaging.setStart_num(page + ((7 * page) + 1)); // 17 25 33 
@@ -211,8 +221,7 @@ public class InteriorController {
   			int total_num = interiorService.selectListCount(ipaging.getBoard_type()); // 데이터의 전체 갯수를 가져온다.
   			int page = ipaging.getPage();
   			if (page == 1) {
-  				ipaging.setStart_num(1);
-  				if (total_num >= 12)
+  				ipaging.setStart_num(1);  				
   					ipaging.setEnd_num(12);
   			} else {
   				ipaging.setStart_num((page * 6)+1); // 13 19 25 
@@ -260,8 +269,7 @@ public class InteriorController {
   			int total_num = interiorService.selectListCount(ipaging.getBoard_type()); // 데이터의 전체 갯수를 가져온다.
   			int page = ipaging.getPage();
   			if (page == 1) {
-  				ipaging.setStart_num(1);
-  				if (total_num >= 12)
+  				ipaging.setStart_num(1);  				
   					ipaging.setEnd_num(12);
   			} else {
   				ipaging.setStart_num((page * 6)+1); // 13 19 25 
@@ -269,7 +277,7 @@ public class InteriorController {
   				if (ipaging.getEnd_num() >= total_num) {
   					ipaging.setEnd_num(total_num);
   				}
-  			}	
+  			}	  		
   			ArrayList<BoardFull> iblist = interiorService.selectBoardList(ipaging); // 조회한 데이터를 가져온다.
   			for (BoardFull boardfull : iblist) {
   				// BoardFull 객체 저장용 json 객체를 생성
@@ -360,41 +368,39 @@ public class InteriorController {
   	 	return result;
   	}
   	
+  	//스토리 페이지로 이동
   	@RequestMapping("istory.do")
   	public ModelAndView moveStoryList(ModelAndView mv,Follow follow) {		 	
+  		FollowFull fuser= interiorService.selectUserFollowFollowing(follow.getFollower_no());
   		int result = interiorService.selectCheckFollow(follow);
+  		mv.addObject("fuser", fuser);
   		mv.addObject("checkfollow", result);
   		mv.addObject("follower_no",follow.getFollower_no());
   		mv.setViewName("interior/interiorStoryList");
   		return mv;	
   	}
   	
+  	//스토리 리스트 출력
   	@RequestMapping(value="islistselect.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
   	@ResponseBody
   	public String selectStoryList(Ipaging ipaging, HttpServletResponse response) {		
-             	JSONArray jarray = new JSONArray();
+            JSONArray jarray = new JSONArray();
   			JSONArray jarray2 = new JSONArray();
-  			JSONObject sendObj = new JSONObject();
-  			ipaging.setKeyword1("empty");
-  			ipaging.setKeyword2("empty");
-  			ipaging.setKeyword3("empty");
-  			ipaging.setKeyword4("empty");
-  			ipaging.setKeyword5("empty");
+  			JSONObject sendObj = new JSONObject();  		 
   			try {
-  				int total_num = interiorService.selectListCount(ipaging.getBoard_type()); // 데이터의 전체 갯수를 가져온다.
+  				int total_num = interiorService.selectStoryListCount(ipaging); // 데이터의 전체 갯수를 가져온다.
   				int page = ipaging.getPage();
   				if (page == 1) {
-  					ipaging.setStart_num(1);
-  					if (total_num >= 12)
-  						ipaging.setEnd_num(12);
+  					ipaging.setStart_num(1);  					
+  					ipaging.setEnd_num(12);
   				} else {
   					ipaging.setStart_num((page * 6)+1); // 13 19 25 
   					ipaging.setEnd_num(((page + 1)* 6)); // 18 24 30
   					if (ipaging.getEnd_num() >= total_num) {
   						ipaging.setEnd_num(total_num);
   					}
-  				}	
-  				ArrayList<BoardFull> iblist = interiorService.selectBoardList(ipaging); // 조회한 데이터를 가져온다.
+  				}	  			
+  				ArrayList<BoardFull> iblist = interiorService.selectStoryList(ipaging); // 조회한 데이터를 가져온다.  			
   				for (BoardFull boardfull : iblist) {
   					// BoardFull 객체 저장용 json 객체를 생성
   					JSONObject jboardfull = new JSONObject();
@@ -439,13 +445,7 @@ public class InteriorController {
   		mv.addObject("fuser",fuser);
   		mv.setViewName("interior/interiorFollowList");
   		return mv;	
-  	}
-  	
-  	@RequestMapping("iflistselect.do")
-  	public ModelAndView selectFollowList(ModelAndView mv,@RequestParam(name="user_no") int user_no) {						
-  		mv.setViewName("interior/interiorFollowList");
-  		return mv;
-  	}
+  	}  	  	
   	
   	//유저 팔로우 리스트 출력
   	@RequestMapping(value="ifsearch.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
@@ -506,29 +506,26 @@ public class InteriorController {
   	}
   	
   	@RequestMapping("inewsfeed.do")
-  	public ModelAndView moveNewsFeedList(ModelAndView mv,@RequestParam(name="user_no") int user_no) {		 	 	
+  	public ModelAndView moveNewsFeedList(ModelAndView mv,@RequestParam(name="user_no") int user_no) {	
+  		FollowFull fuser= interiorService.selectUserFollowFollowing(user_no);
+  		mv.addObject("fuser",fuser);
   		mv.setViewName("interior/interiorNewsFeedList");
   		return mv;	
   	}
   	
+  	//뉴스피드 리스트 출력
   	@RequestMapping(value="inlistselect.do", method = RequestMethod.POST, produces = "text/plain;charset=UTF-8")
   	@ResponseBody
   	public String selectNewsFeedList(Ipaging ipaging, HttpServletResponse response) { 		 	 
   	            JSONArray jarray = new JSONArray();
   	 			JSONArray jarray2 = new JSONArray();
-  	 			JSONObject sendObj = new JSONObject();
-  	 			ipaging.setKeyword1("empty");
-  	 			ipaging.setKeyword2("empty");
-  	 			ipaging.setKeyword3("empty");
-  	 			ipaging.setKeyword4("empty");
-  	 			ipaging.setKeyword5("empty");
+  	 			JSONObject sendObj = new JSONObject();  	 			
   	 			try {
-  	 				int total_num = interiorService.selectListCount(ipaging.getBoard_type()); // 데이터의 전체 갯수를 가져온다.
+  	 				int total_num = interiorService.selectNewsFeedListCount(ipaging); // 데이터의 전체 갯수를 가져온다.
   	 				int page = ipaging.getPage();
   	 				if (page == 1) {
-  	 					ipaging.setStart_num(1);
-  	 					if (total_num >= 12)
-  	 						ipaging.setEnd_num(12);
+  	 					ipaging.setStart_num(1);  	 					
+  	 					ipaging.setEnd_num(12);
   	 				} else {
   	 					ipaging.setStart_num((page * 6)+1); // 13 19 25 
   	 					ipaging.setEnd_num(((page + 1)* 6)); // 18 24 30
@@ -536,7 +533,7 @@ public class InteriorController {
   	 						ipaging.setEnd_num(total_num);
   	 					}
   	 				}	
-  	 				ArrayList<BoardFull> iblist = interiorService.selectBoardList(ipaging); // 조회한 데이터를 가져온다.
+  	 				ArrayList<BoardFull> iblist = interiorService.selectNewsFeedList(ipaging); // 조회한 데이터를 가져온다.
   	 				for (BoardFull boardfull : iblist) {
   	 					// BoardFull 객체 저장용 json 객체를 생성
   	 					JSONObject jboardfull = new JSONObject();
@@ -548,6 +545,7 @@ public class InteriorController {
   	 					jboardfull.put("post_keyword", boardfull.getPost_keyword());
   	 					jboardfull.put("post_data", boardfull.getPost_data());
   	 					jboardfull.put("user_no", boardfull.getUser_no());
+  	 					jboardfull.put("user_id", boardfull.getUser_id());
   	 					jboardfull.put("nickname", boardfull.getNickname());
   	 					jboardfull.put("user_profile", boardfull.getUser_profile());
   	 					jboardfull.put("like_count", boardfull.getLike_count());
@@ -657,7 +655,7 @@ public class InteriorController {
   	    }
   			
   	    //게시판상세뷰 매핑으로
-  		return "redirect:ibselect.do?board_no="+board_no;		
+  		return "redirect:ibselect.do?board_no="+board_no+"&board_type="+board.getBoard_type();		
   	}	
   	
   	
@@ -724,6 +722,12 @@ public class InteriorController {
   			jreplyfull.put("user_id", replyfull.getUser_id());
   			jreplyfull.put("nickname", replyfull.getNickname());
   			jreplyfull.put("user_name", replyfull.getUser_name());
+  			jreplyfull.put("re_reply_no", replyfull.getRe_reply_no());
+  			jreplyfull.put("re_user_no", replyfull.getRe_user_no());
+  			jreplyfull.put("re_user_profile", replyfull.getRe_user_profile());
+  			jreplyfull.put("re_user_id", replyfull.getRe_user_id());
+  			jreplyfull.put("re_nickname", replyfull.getRe_nickname());
+  			jreplyfull.put("re_user_name", replyfull.getRe_user_name());
   			jarray.add(jreplyfull);			
   		}
   		}catch (Exception e) {
@@ -1053,7 +1057,7 @@ public class InteriorController {
   	 			
   	     	}
   	 		//수정후 수정뷰페이지로 이동 (곧 수정후 게시판 디테일로 이동하게 만들 예정)
-  	 		return "redirect:ibupdateview.do?board_no="+board.getBoard_no();	
+  	 		return "redirect:ibselect.do?board_no="+board.getBoard_no()+"&board_type="+board.getBoard_type();	
   		}
   	 	
   	 	 //게시물 삭제
@@ -1063,103 +1067,125 @@ public class InteriorController {
   			int result = interiorService.deletePost(post.getPost_no());
   		return result;
   		}
- 	
+  	 	
+  	 	
+  	 	
 //-------------------------서은 PART------------------------------------------------	
-	
-	
-	@RequestMapping("iwritepage.do")
-	public String moveWritePage() {
-		
-		return "interior/interiorWritePage";
-	}
-	
-	@RequestMapping("ibinsertview.do")
-	public String moveBoardInsertView(@RequestParam(name="board_type") String board_type){		
-	
-		if(board_type.equals("photograph")) {
-			 return "interior/interiorPhotographInsert";			
-			}else if(board_type.equals("housewarming")) {
-				 return "interior/interiorHousewarmingInsert";		
-			}else {
-				 return "interior/interiorKnowhowInsert";		
-			}
-	}	
-	
-		
-	@RequestMapping("ibupdateview.do")
-	public ModelAndView selectBoardUpdateView(ModelAndView mv, BoardFull boardfull) {
-	    ArrayList<BoardFull> iblist = interiorService.selectBoardUpdateView(boardfull.getBoard_no());
-		
-		if(boardfull.getBoard_type().equals("photograph")) {
-			 mv.addObject("iblist", iblist);
-			 mv.setViewName("interior/interiorPhotographUpdate");
-			 return mv;
-			}else if(boardfull.getBoard_type().equals("housewarming")) {
-			mv.addObject("iblist", iblist);
-			mv.setViewName("interior/interiorHousewarmingUpdate");
-			return mv;
-			}else {
-		    mv.addObject("iblist", iblist);
-			mv.setViewName("interior/interiorKnowhowUpdate");
-			return mv;
-			}
-	}
-	
-	
-	
-	// 게시글 삭제
-	@RequestMapping(value = "ibdelete.do", method = RequestMethod.POST)
-	public int deleteBoard(Board board, HttpServletRequest request) {
-		int result = interiorService.deleteBoard(board.getBoard_no());
-		return result;
-	}
-	
-			
-	
-	// 게시판 (사진, 집들이 노하우)상세로 이동
-	@RequestMapping("ibselect.do")
-	public ModelAndView selectBoard(ModelAndView mv, @RequestParam(name = "board_no") int board_no,
-			@RequestParam(name = "board_type") String board_type) {
+  		
+  		@RequestMapping("imyboard.do")
+  		public ModelAndView selectMyBoardPage(ModelAndView mv, @RequestParam(name="user_no") int user_no) {
+  			
+  			ArrayList<BoardFull> photograph = interiorService.selectMyPhotograph(user_no);
+  			ArrayList<BoardFull> housewarming = interiorService.selectMyHousewarming(user_no);
+  			ArrayList<BoardFull> knowhow = interiorService.selectMyKnowhow(user_no);
+  			
+  			if(photograph != null) {
+  				mv.addObject("photograph", photograph);
+  				mv.setViewName("interior/interiorMyBoard");			
+  			}
+  			
+  			if(housewarming != null) {
+  				mv.addObject("housewarming", housewarming);
+  				mv.setViewName("interior/interiorMyBoard");			
+  			}
+  			
+  			if(knowhow != null) {
+  				mv.addObject("knowhow", knowhow);
+  				mv.setViewName("interior/interiorMyBoard");			
+  			}
+  			return mv;  			
+  		}
+  		
+  		@RequestMapping("iwritepage.do")
+  		public String moveWritePage() {
+  			return "interior/interiorWritePage";
+  		}
 
-		if (board_type.equals("photograph")) {
-			ArrayList<BoardFull> photoList = interiorService.selectPhotoList(board_no);
-			if (photoList != null) {
-				interiorService.updateBoardHits(board_no);
-				mv.addObject("photoList", photoList);
-				mv.setViewName("interior/interiorPhotographDetail");
-			} else {
-				mv.addObject("message", "인테리어 사진 정보 상세 조회에 실패하였습니다.");
-				mv.setViewName("common/error");
-			}
-			return mv;
-		} else if (board_type.equals("housewarming")) {
-			ArrayList<BoardFull> houseWList = interiorService.selectHouseWList(board_no);
-			if (houseWList != null) {
-				interiorService.updateBoardHits(board_no);
-				mv.addObject("houseWList", houseWList);
-				mv.setViewName("interior/interiorHousewarmingDetail");
-			} else {
-				mv.addObject("message", "인테리어 집들이 정보 상세 조회에 실패하였습니다.");
-				mv.setViewName("common/error");
-			}
+  		@RequestMapping("ibinsertview.do")
+  		public String moveBoardInsertView(@RequestParam(name = "board_type") String board_type) {
+  			if (board_type.equals("photograph")) {
+  				return "interior/interiorPhotographInsert";
+  			} else if (board_type.equals("housewarming")) {
+  				return "interior/interiorHousewarmingInsert";
+  			} else {
+  				return "interior/interiorKnowhowInsert";
+  			}
+  		}
 
-			return mv;
-		} else {
-			// 성현
-			ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(board_no);
-			if (knowHowPostList != null) {
-				interiorService.updateBoardHits(board_no);
-				mv.addObject("knowHowPostList", knowHowPostList);
-				mv.setViewName("interior/interiorKnowhowDetail");
-			} else {
-				mv.addObject("message", "인테리어 노하우 정보 상세 조회에 실패하였습니다.");
-				mv.setViewName("common/error");
-			}
-			return mv;
-		}
-	}
-	
-	
+  		@RequestMapping("ibupdateview.do")
+  		public ModelAndView selectBoardUpdateView(ModelAndView mv, BoardFull boardfull) {
+  			  ArrayList<BoardFull> iblist = interiorService.selectBoardUpdateView(boardfull.getBoard_no());
+  		      
+  		      if(iblist.get(0).getBoard_type().equals("photograph")) {
+  		          mv.addObject("iblist", iblist);
+  		          mv.setViewName("interior/interiorPhotographUpdate");
+  		          return mv;
+  		         }else if(iblist.get(0).getBoard_type().equals("housewarming")) {
+  		         mv.addObject("iblist", iblist);
+  		         mv.setViewName("interior/interiorHousewarmingUpdate");
+  		         return mv;
+  		         }else {
+  		          mv.addObject("iblist", iblist);
+  		         mv.setViewName("interior/interiorKnowhowUpdate");
+  		         return mv;
+  		         }		
+  		}
+
+  		
+  		// 게시판 전체 삭제
+  		@RequestMapping("ibdelete.do")
+  		public String deleteBoard(Board board) {
+  			int result0 = interiorService.deleteAllLike(board.getBoard_no());
+  			int result1 = interiorService.deleteAllPost(board.getBoard_no());
+  			int result2 = interiorService.deleteBoard(board.getBoard_no());
+  			return "redirect:iblistselect.do?board_type=" + board.getBoard_type();
+  		}	
+
+  		
+
+  		// 게시판 (사진, 집들이 노하우)상세로 이동
+  		@RequestMapping("ibselect.do")
+  		public ModelAndView selectBoard(ModelAndView mv, @RequestParam(name = "board_no") int board_no,
+  				@RequestParam(name = "board_type") String board_type) {
+
+  			if (board_type.equals("photograph")) {
+  				ArrayList<BoardFull> photoList = interiorService.selectPhotoList(board_no);
+  				if (photoList != null) {
+  					interiorService.updateBoardHits(board_no);
+  					mv.addObject("photoList", photoList);
+  					mv.setViewName("interior/interiorPhotographDetail");
+  	                
+  				} else {
+  					mv.addObject("message", "인테리어 사진 정보 상세 조회에 실패하였습니다.");
+  					mv.setViewName("common/error");
+  				}
+  				return mv;
+  			} else if (board_type.equals("housewarming")) {
+  				ArrayList<BoardFull> houseWList = interiorService.selectHouseWList(board_no);
+  				if (houseWList != null) {
+  					interiorService.updateBoardHits(board_no);
+  					mv.addObject("houseWList", houseWList);
+  					mv.setViewName("interior/interiorHousewarmingDetail");
+  				} else {
+  					mv.addObject("message", "인테리어 집들이 정보 상세 조회에 실패하였습니다.");
+  					mv.setViewName("common/error");
+  				}
+
+  				return mv;
+  			} else {
+  				// 성현
+  				ArrayList<BoardFull> knowHowPostList = interiorService.selectKnowHowPostList(board_no);
+  				if (knowHowPostList != null) {
+  					mv.addObject("knowHowPostList", knowHowPostList);
+  					mv.setViewName("interior/interiorKnowhowDetail");
+  				} else {
+  					mv.addObject("message", "인테리어 노하우 정보 상세 조회에 실패하였습니다.");
+  					mv.setViewName("common/error");
+  				}
+  				return mv;
+  			}
+  		}
+  		
 //-------------------------성현 PART------------------------------------------------		
 	
 	//좋아요 체크
@@ -1196,7 +1222,7 @@ public class InteriorController {
     
     //신고체크
 	@RequestMapping(value="rkcheck.do", method=RequestMethod.POST)
-	public void selectRealtyReportCheck(@RequestBody String param, HttpServletResponse response) throws ParseException {
+	public void selectKnowhowReportCheck(@RequestBody String param, HttpServletResponse response) throws ParseException {
 		JSONParser jparser = new JSONParser();
 		JSONObject job = (JSONObject)jparser.parse(param);
 		

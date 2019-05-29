@@ -469,7 +469,7 @@
 						<div class="col">
 							<input type="hidden" id="" name="hidden_post_keyword"
 								value="cover"> <input type="hidden" id=""
-								name="post_keyword" value="empty"> <label>커버 업로드
+								name="post_keyword" value="empty"> <label>파일 선택
 								<input type="hidden" id="origin_post${status.index}"
 								name="origin_post${status.index}" value="${iblist.post_data}">
 								<input type="hidden" id="origin_post_data${status.index}"
@@ -556,21 +556,11 @@
 							<select class="floor_area" id="floor_area" name="floor_area"
 								style="width: 100%; height: 35px; font-family: a고딕14;">
 								<option value="">평수 선택</option>
-								<c:if test="${iblist.floor_area < 10 }">
-									<option value="9">10평 미만</option>
-								</c:if>
-								<c:if test="${iblist.floor_area >= 10 }">
-									<option value="10">10평 이상</option>
-								</c:if>
-								<c:if test="${lblist.floor_area >= 20}">
-									<option value="20">20평 이상</option>
-								</c:if>
-								<c:if test="${lblist.floor_area >= 30}">
-									<option value="30">30평 이상</option>
-								</c:if>
-								<c:if test="${lblist.floor_area >= 40}">
-									<option value="40">40평 이상</option>
-								</c:if>
+								<option value="9">10평 미만</option>
+								<option value="10">10평 이상</option>
+								<option value="20">20평 이상</option>
+								<option value="30">30평 이상</option>
+								<option value="40">40평 이상</option>
 							</select>
 						</div>
 					</div>
