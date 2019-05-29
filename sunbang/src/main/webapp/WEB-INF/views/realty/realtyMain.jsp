@@ -1213,7 +1213,7 @@ b {
 												}
 											} //checked if
 											values += 
-													"<div id='house' style='height:160x; cursor: pointer;' onClick=acd("
+													"<div id='house' style='height:160x; cursor: pointer;' onClick=abcd("
 													+ param[j].realty_no
 													+ ")><div id='hj_houseImages'>"
 													+ "<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
