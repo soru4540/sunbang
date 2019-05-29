@@ -16,7 +16,7 @@
 	<br>	<br><br><br><br>
 	<h4 align="center" style="font-weight: bold;">글쓰기</h4>	
 	<br><br><br><br>
-	<div class="container" style="text-align: center; height: 480px;">
+	<div class="container" style="text-align: center; height: 600px;">
 		<div class="row" style="text-align: center;">
 			<div class="col">			
 				<a href="ibinsertview.do?board_type=photograph"  style="color: #888;" >

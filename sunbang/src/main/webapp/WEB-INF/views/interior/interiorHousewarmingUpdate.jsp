@@ -502,37 +502,37 @@
 								style="width: 100%; height: 35px; font-family: a고딕14;" required>
 								<option value="">주거형태(필수)</option>
 								<c:if test=" ${iblist.housing_type == '원룸&오피스텔'}">
-									<option value="원룸&오피스텔">원룸&amp;오피스텔</option>
+									<option value="원룸&오피스텔" selected>원룸&amp;오피스텔</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type != '원룸&오피스텔'}">
 									<option value="원룸&오피스텔">원룸&amp;오피스텔</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type == '아파트'}">
-									<option value="아파트">아파트</option>
+									<option value="아파트" selected>아파트</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type != '아파트'}">
 									<option value="아파트">아파트</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type == '빌라&연립'}">
-									<option value="빌라&연립">빌라&amp;연립</option>
+									<option value="빌라&연립" selected>빌라&amp;연립</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type != '빌라&연립'}">
 									<option value="빌라&연립">빌라&amp;연립</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type == '단독주택'}">
-									<option value="단독주택">단독주택</option>
+									<option value="단독주택" selected>단독주택</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type != '단독주택'}">
 									<option value="단독주택">단독주택</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type == '사무공간'}">
-									<option value="사무공간">사무공간</option>
+									<option value="사무공간" selected>사무공간</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type != '사무공간'}">
 									<option value="사무공간">사무공간</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type == '사무공간'}">
-									<option value="사무공간">사무공간</option>
+									<option value="사무공간" selected>사무공간</option>
 								</c:if>
 								<c:if test=" ${iblist.housing_type != '사무공간'}">
 									<option value="사무공간">사무공간</option>
@@ -544,19 +544,34 @@
 							<select class="floor_area" id="floor_area" name="floor_area"
 								style="width: 100%; height: 35px; font-family: a고딕14;">
 								<option value="">평수 선택</option>
-								<c:if test="${iblist.floor_area < 10 }">
+								<c:if test="${iblist.floor_area == 9 }">
+									<option value="9" selected>10평 미만</option>
+								</c:if>
+								<c:if test="${iblist.floor_area != 9 }">
 									<option value="9">10평 미만</option>
 								</c:if>
-								<c:if test="${iblist.floor_area >= 10 }">
+								<c:if test="${iblist.floor_area == 10 }">
+									<option value="10" selected>10평 이상</option>
+								</c:if>
+								<c:if test="${iblist.floor_area != 10 }">
 									<option value="10">10평 이상</option>
 								</c:if>
-								<c:if test="${lblist.floor_area >= 20}">
+								<c:if test="${lblist.floor_area == 20}">
+									<option value="20" selected>20평 이상</option>
+								</c:if>
+								<c:if test="${lblist.floor_area != 20}">
 									<option value="20">20평 이상</option>
 								</c:if>
-								<c:if test="${lblist.floor_area >= 30}">
+								<c:if test="${lblist.floor_area == 30}">
+									<option value="30" selected>30평 이상</option>
+								</c:if>
+								<c:if test="${lblist.floor_area != 30}">
 									<option value="30">30평 이상</option>
 								</c:if>
-								<c:if test="${lblist.floor_area >= 40}">
+								<c:if test="${lblist.floor_area == 40}">
+									<option value="40" selected>40평 이상</option>
+								</c:if>
+								<c:if test="${lblist.floor_area != 40}">
 									<option value="40">40평 이상</option>
 								</c:if>
 							</select>
@@ -567,49 +582,49 @@
 								style="width: 100%; height: 35px; font-family: a고딕14;">
 								<option value="">스타일 선택</option>
 								<c:if test="${iblist.style == '모던'}">
-									<option value="모던">모던</option>
+									<option value="모던" selected>모던</option>
 								</c:if>
 								<c:if test="${iblist.style != '모던'}">
 									<option value="모던">모던</option>
 								</c:if>
 								<c:if test="${iblist.style == '미니멀&심플'}">
-									<option value="미니멀&심플">미니멀&amp;심플</option>
+									<option value="미니멀&심플" selected>미니멀&amp;심플</option>
 								</c:if>
 								<c:if test="${iblist.style != '미니멀&심플'}">
 									<option value="미니멀&심플">미니멀&amp;심플</option>
 								</c:if>
 								<c:if test="${iblist.style == '내추럴'}">
-									<option value="내추럴">내추럴</option>
+									<option value="내추럴" selected>내추럴</option>
 								</c:if>
 								<c:if test="${iblist.style != '내추럴'}">
 									<option value="내추럴">내추럴</option>
 								</c:if>
 								<c:if test="${iblist.style == '빈티지&레트로'}">
-									<option value="빈티지&레트로">빈티지&amp;레트로</option>
+									<option value="빈티지&레트로" selected>빈티지&amp;레트로</option>
 								</c:if>
 								<c:if test="${iblist.style != '빈티지&레트로'}">
 									<option value="빈티지&레트로">빈티지&amp;레트로</option>
 								</c:if>
 								<c:if test="${iblist.style == '클래식&앤틱'}">
-									<option value="클래식&앤틱">클래식&amp;앤틱</option>
+									<option value="클래식&앤틱" selected>클래식&amp;앤틱</option>
 								</c:if>
 								<c:if test="${iblist.style != '클래식&앤틱'}">
 									<option value="클래식&앤틱">클래식&amp;앤틱</option>
 								</c:if>
 								<c:if test="${iblist.style == '프렌치&프로방스'}">
-									<option value="프렌치&프로방스">프렌치&amp;프로방스</option>
+									<option value="프렌치&프로방스" selected>프렌치&amp;프로방스</option>
 								</c:if>
 								<c:if test="${iblist.style != '프렌치&프로방스'}">
 									<option value="프렌치&프로방스">프렌치&amp;프로방스</option>
 								</c:if>
 								<c:if test="${iblist.style == '러블리&로맨틱'}">
-									<option value="러블리&로맨틱">러블리&amp;로맨틱</option>
+									<option value="러블리&로맨틱" selected>러블리&amp;로맨틱</option>
 								</c:if>
 								<c:if test="${iblist.style != '러블리&로맨틱'}">
 									<option value="러블리&로맨틱">러블리&amp;로맨틱</option>
 								</c:if>
 								<c:if test="${iblist.style == '인더스트리얼'}">
-									<option value="인더스트리얼">인더스트리얼</option>
+									<option value="인더스트리얼" selected>인더스트리얼</option>
 								</c:if>
 								<c:if test="${iblist.style != '인더스트리얼'}">
 									<option value="인더스트리얼">인더스트리얼</option>
@@ -626,49 +641,49 @@
 								style="width: 100%; height: 35px; font-family: a고딕14;">
 								<option value="">전체 컬러 선택(필수)</option>
 								<c:if test="${iblist.color1 == '#d53736' }">
-									<option value="#d53736">RED</option>
+									<option value="#d53736" selected>RED</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#d53736' }">
 									<option value="#d53736">RED</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#fed144' }">
-									<option value="#fed144">YELLOW</option>
+									<option value="#fed144" selected>YELLOW</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#fed144' }">
 									<option value="#fed144">YELLOW</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#96d783' }">
-									<option value="#96d783">GREEN</option>
+									<option value="#96d783" selected>GREEN</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#96d783' }">
 									<option value="#96d783">GREEN</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#3d97dd' }">
-									<option value="#3d97dd">BLUE</option>
+									<option value="#3d97dd" selected>BLUE</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#3d97dd' }">
 									<option value="#3d97dd">BLUE</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#ee8a94' }">
-									<option value="#ee8a94">PINK</option>
+									<option value="#ee8a94" selected>PINK</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#ee8a94' }">
 									<option value="#ee8a94">PINK</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#fafafa' }">
-									<option value="#fafafa">WHITE</option>
+									<option value="#fafafa" selected>WHITE</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#fafafa' }">
 									<option value="#fafafa">WHITE</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#858585' }">
-									<option value="#858585">GRAY</option>
+									<option value="#858585" selected>GRAY</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#858585' }">
 									<option value="#858585">GRAY</option>
 								</c:if>
 								<c:if test="${iblist.color1 == '#000' }">
-									<option value="#000">BLACK</option>
+									<option value="#000" selected>BLACK</option>
 								</c:if>
 								<c:if test="${iblist.color1 != '#000' }">
 									<option value="#000">BLACK</option>
@@ -680,49 +695,49 @@
 								style="width: 100%; height: 35px; font-family: a고딕14;">
 								<option value="">벽 컬러 선택</option>
 								<c:if test="${iblist.color2 == '#d53736' }">
-									<option value="#d53736">RED</option>
+									<option value="#d53736" selected>RED</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#d53736' }">
-									<option value="#d53736">RED</option>
+									<option value="#d53736" >RED</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#fed144' }">
-									<option value="#fed144">YELLOW</option>
+									<option value="#fed144" selected>YELLOW</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#fed144' }">
 									<option value="#fed144">YELLOW</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#96d783' }">
-									<option value="#96d783">GREEN</option>
+									<option value="#96d783" selected>GREEN</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#96d783' }">
 									<option value="#96d783">GREEN</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#3d97dd' }">
-									<option value="#3d97dd">BLUE</option>
+									<option value="#3d97dd" selected>BLUE</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#3d97dd' }">
 									<option value="#3d97dd">BLUE</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#ee8a94' }">
-									<option value="#ee8a94">PINK</option>
+									<option value="#ee8a94" selected>PINK</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#ee8a94' }">
 									<option value="#ee8a94">PINK</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#fafafa' }">
-									<option value="#fafafa">WHITE</option>
+									<option value="#fafafa" selected>WHITE</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#fafafa' }">
 									<option value="#fafafa">WHITE</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#858585' }">
-									<option value="#858585">GRAY</option>
+									<option value="#858585" selected>GRAY</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#858585' }">
 									<option value="#858585">GRAY</option>
 								</c:if>
 								<c:if test="${iblist.color2 == '#000' }">
-									<option value="#000">BLACK</option>
+									<option value="#000" selected>BLACK</option>
 								</c:if>
 								<c:if test="${iblist.color2 != '#000' }">
 									<option value="#000">BLACK</option>
@@ -734,49 +749,49 @@
 								style="width: 100%; height: 35px; font-family: a고딕14;">
 								<option value="">바닥 컬러 선택</option>
 								<c:if test="${iblist.color3 == '#d53736' }">
-									<option value="#d53736">RED</option>
+									<option value="#d53736" selected>RED</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#d53736' }">
 									<option value="#d53736">RED</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#fed144' }">
-									<option value="#fed144">YELLOW</option>
+									<option value="#fed144" selected>YELLOW</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#fed144' }">
 									<option value="#fed144">YELLOW</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#96d783' }">
-									<option value="#96d783">GREEN</option>
+									<option value="#96d783" selected>GREEN</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#96d783' }">
 									<option value="#96d783">GREEN</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#3d97dd' }">
-									<option value="#3d97dd">BLUE</option>
+									<option value="#3d97dd" selected>BLUE</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#3d97dd' }">
 									<option value="#3d97dd">BLUE</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#ee8a94' }">
-									<option value="#ee8a94">PINK</option>
+									<option value="#ee8a94" selected>PINK</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#ee8a94' }">
 									<option value="#ee8a94">PINK</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#fafafa' }">
-									<option value="#fafafa">WHITE</option>
+									<option value="#fafafa" selected>WHITE</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#fafafa' }">
 									<option value="#fafafa">WHITE</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#858585' }">
-									<option value="#858585">GRAY</option>
+									<option value="#858585" selected>GRAY</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#858585' }">
 									<option value="#858585">GRAY</option>
 								</c:if>
 								<c:if test="${iblist.color3 == '#000' }">
-									<option value="#000">BLACK</option>
+									<option value="#000" selected>BLACK</option>
 								</c:if>
 								<c:if test="${iblist.color3 != '#000' }">
 									<option value="#000">BLACK</option>
