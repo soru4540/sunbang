@@ -649,7 +649,7 @@ border-radius: 5px;
 		        	$("#reply_lev"+i).val(1);
 		        	$("#origin_reply_no"+i).val(0);
 		        	$("#reply_contents"+i).val("");		 
-		        	$("#reference_reply_no"+i).val(0).val());
+		        
 				} 
 		        },error: function(){
 		        	

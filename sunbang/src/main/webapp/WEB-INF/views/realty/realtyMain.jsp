@@ -22,6 +22,13 @@
 	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=55d7db7b289215b9986b37fed37910b7&libraries=services,clusterer,drawing"></script>
 
 <style type="text/css">
+#hj_btn_filter.btn-success, #js_btn_subway.btn-success {
+    color: #fff;
+    background-color: #61c0bf;
+    border-color: #61c0bf;
+}
+
+
 #hj_realtyOption {
 	padding-left: 6%;
 }
@@ -33,12 +40,6 @@ margin: 10%;
 #hj_filter_setting {
 	padding-left: 5%;
 	margin: 5%
-}
-
-#hj_btn_filter.btn-success, #js_btn_subway.btn-success {
-    color: #fff;
-    background-color: #61c0bf;
-    border-color: #61c0bf;
 }
 
 .hj_slider_elements {
@@ -107,14 +108,13 @@ margin: 10%;
 	font-size: 16px;
 }
 
-#house {
+.house {
 	width: 96%;
-	height: 200px;
+	height: 250px;
 	background-color: white;
 	margin-left: 10px;
 	margin-right: 10px;
-	margin-top: 3%;
-	border: 1px solid #D5D5D5;
+	margin-top: 2%;
 	color: #343a40;
 	font-family: a고딕15;
 	font-size: 16px;
@@ -165,9 +165,15 @@ margin: 10%;
 	pointer-events: none;
 	color: #aaa;
 }
+#hj_btn_submit {
+	width:100px;
+	background-color: #61c0bf;
+	margin-right: 15px;
+}
 
 #hj_search_row {
 	margin: 8px;
+	
 }
 
 b {
@@ -195,11 +201,6 @@ b {
 	#hj_list {
 		min-width: 100%;
 		max-width: 100% !important;
-	}
-	
-
-	#house{
-	height: 240px;
 	}
 
 </style>
@@ -551,14 +552,12 @@ b {
 					<hr>
 					<div id="hj_filter_setting" border-top : 1pxsolidgray; padding-top:1%;>
 						<div style="float: left; margin-right: 2%;">
-							<h5>
-								<a href="#" ; onClick=doFiltering(); returnfalse;>검색</a>
-							</h5>
+							<button type="button" onClick=doFiltering(); id="hj_btn_submit" class="btn btn-success" returnfalse;>검색
+						</button>
 						</div>
 						<div>
-							<h5>
-								<a href="#" ; onClick=doUnchecked(); returnfalse;>초기화</a>
-							</h5>
+							<button type="button" onClick=doUnchecked(); id="hj_btn_submit" class="btn btn-success" returnfalse;>초기화
+						</button>
 						</div>
 					</div>
 				</div>
@@ -801,9 +800,13 @@ b {
 				if (inputs[x].type == 'checkbox') {
 					inputs[x].checked = false;
 				}
-
 			}
-			$('#hj_slider').hide();
+			
+			$('#hj_slider_deposit').hide();
+		
+			$('#hj_slider_month').hide();
+
+			$('#hj_slider_purchase').hide();
 
 			getList();
 		}
@@ -1105,6 +1108,10 @@ b {
 																		map : map, // 마커를 표시할 지도
 																		position : coords
 																	}); //marker 
+																	daum.maps.event.addListener(marker, 'click', function() {
+																	      
+																	      ttt(json[param].realty_no);  
+																	});
 
 															// 클러스터러에 마커들을 추가합니다
 															clusterer
@@ -1190,39 +1197,41 @@ b {
 												}
 											} //checked if
 											pvalues += 
-													"<div id='house' style='cursor: pointer; border:solid 3px #61c0bf;;' onClick=abcd("
-													+ param[j].realty_no
-													+ ")>"
-													+ "<div class='row'  style='background-color:#61c0bf; text-align: right; width:100%; margin:0 auto; padding: 1%;'><i class='fas fa-award' style='padding: 1%; color:white; width:100%;'> Premium</i></div>"
-													+ "<div id='hj_houseImages' style='margin-top:2%;' >"
-													+ "<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
-									+image
-									+"'/>"
-						
-													+ "</div>"
-													+ "<div id='hj_houseDetail'>"
-													+ "<a href=rdetail.do?realty_no="
-													+ param[j].realty_no
-													+ ">"
-													+ "<h4 id='hj_h4'>"
-													+ payment
-													+ "  "
-													+ charge
-													+ "</h4>"
-													+ "</a>"
-													+ "<h6>"
-													+ param[j].residential
-													+ "㎥"
-													+ "ㆍ"
-													+ param[j].realty_layers
-													+ "층</h6>"
-													+ "<h6 id='hj_h6_a'>"
-													+ param[j].road_address
-													+ "</h6>"
-													+ "<p id='hj_detail_title'>"
-													+ param[j].realty_detail_title
-													+ "</p>"
-													+ "</div></div></a>";
+												"<div class='house' id='hj_house"+
+												param[j].realty_no
+												+"' style='cursor: pointer; border:solid 3px #61c0bf;' onClick=abcd("
+												+ param[j].realty_no
+												+ ")>"
+												+ "<div class='row'  style='background-color:#61c0bf; text-align: right; width:100%; margin:0 auto; padding: 1%;'><i class='fas fa-award' style='padding: 1%; color:white; width:100%; margin-right:10px'> Premium</i></div>"
+												+ "<div id='hj_houseImages' >"
+												+ "<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+								+image
+								+"'/>"
+					
+												+ "</div>"
+												+ "<div id='hj_houseDetail'>"
+												+ "<a href=rdetail.do?realty_no="
+												+ param[j].realty_no
+												+ ">"
+												+ "<h4 id='hj_h4'>"
+												+ payment
+												+ "  "
+												+ charge
+												+ "</h4>"
+												+ "</a>"
+												+ "<h6>"
+												+ param[j].residential
+												+ "㎥"
+												+ "ㆍ"
+												+ param[j].realty_layers
+												+ "층</h6>"
+												+ "<h6 id='hj_h6_a'>"
+												+ param[j].road_address
+												+ "</h6>"
+												+ "<p id='hj_detail_title'>"
+												+ param[j].realty_detail_title
+												+ "</p>"
+												+ "</div></div></a>";
 										} /*premium if*/
 										else {
 											if (monthmax == 0
@@ -1287,10 +1296,12 @@ b {
 												}
 											} //checked if
 											values += 
-													"<div id='house' style='height:160x; cursor: pointer;' onClick=abcd("
-													+ param[j].realty_no
+												"<div class='house' id='hj_house"+
+												param[j].realty_no
+												+"' style='cursor: pointer; border:solid 3px #61c0bf; height:200px;' onClick=abcd("
+												+ param[j].realty_no
 													+ ")><div id='hj_houseImages'>"
-													+ "<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+													+ "<img class='d-block' style='height:135px; margin-top:2%' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/" 
 													+image
 													+"'/>"
 													+ "</div>"
@@ -1337,6 +1348,44 @@ b {
 		}//func
 		function abcd(realtyno) {
 			location.href = "rdetail.do?realty_no=" + realtyno;
+		}
+		function ttt(b) {			
+			$("#hj_housediv").scrollTop(0);
+			
+			var houseid = 'hj_house';
+			houseid += b;
+			
+			var objsh = document.getElementById("hj_housediv");
+			var sh = objsh.scrolltop = objsh.scrollHeight; //div 의  scroll 전체값;
+			var rp = $("#"+houseid).offset();
+			//console.log("div 전체 scroll value : " + sh);
+			//console.log("선택한 div의 위치값(position,top) : " + rp.top);
+			
+			$("#hj_housediv").animate({scrollTop:(rp.top)-500},0);
+			
+			
+			//------------------------------------------------------------- 하이라이트 on/off	
+			
+			var t =$("#"+houseid).css("box-shadow");
+			
+			
+			var house = document.getElementsByClassName("house");
+			
+			for (var x = 0; x < house.length; x++) {
+				
+				var id = $("#"+ house[x].id).css("box-shadow");
+				if(id != "3px solid rgb(97, 192, 191)") {
+					$("#"+house[x].id).css("box-shadow", "0px 0px 0px 0px #ffffff");			
+					}
+				}
+		    
+			if(t != "5px 5px 8px 0px #6c757d") {
+			$("#"+houseid).css("box-shadow", "5px 5px 8px 0px #6c757d");			
+			} else {
+			$("#"+houseid).css("box-shadow", "0px 0px 0px 0px #ffffff");
+			}
+			//-------------------------------------------------------------
+	
 		}
 	</script>
 	<c:import url="../common/footer.jsp"></c:import>
