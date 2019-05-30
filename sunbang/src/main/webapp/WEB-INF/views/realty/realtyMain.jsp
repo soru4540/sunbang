@@ -23,18 +23,17 @@
 
 <style type="text/css">
 #hj_btn_filter.btn-success, #js_btn_subway.btn-success {
-    color: #fff;
-    background-color: #61c0bf;
-    border-color: #61c0bf;
+	color: #fff;
+	background-color: #61c0bf;
+	border-color: #61c0bf;
 }
-
 
 #hj_realtyOption {
 	padding-left: 6%;
 }
 
 .col .custom-checkbox {
-margin: 10%;
+	margin: 10%;
 }
 
 #hj_filter_setting {
@@ -165,15 +164,15 @@ margin: 10%;
 	pointer-events: none;
 	color: #aaa;
 }
+
 #hj_btn_submit {
-	width:100px;
+	width: 100px;
 	background-color: #61c0bf;
 	margin-right: 15px;
 }
 
 #hj_search_row {
 	margin: 8px;
-	
 }
 
 b {
@@ -202,7 +201,7 @@ b {
 		min-width: 100%;
 		max-width: 100% !important;
 	}
-
+}
 </style>
 
 <script type="text/javascript">
@@ -313,30 +312,45 @@ b {
 				</div>
 			</div>
 		</div>
-		<div style="max-height:920px;">
-		<div class="row" id="js_subway"
-			style="display: none; background: white; width: 100%; position: relative; padding-top: 85%; overflow: hidden;">
-			<img class="map-trans" alt="Map / Carte" usemap="#region-map"
-				src="${pageContext.request.contextPath }/files/admin/main/subway.png"
-				id="subwayimg"
-				style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; max-width: 100%; height: auto; margin:0 auto;">
-		</div>
+		<div style="max-height: 920px;">
+			<div class="row" id="js_subway"
+				style="display: none; background: white; width: 100%; position: relative; padding-top: 85%; overflow: hidden;">
+				<img class="map-trans" alt="Map / Carte" usemap="#region-map"
+					src="${pageContext.request.contextPath }/resources/images/subway.png"
+					id="subwayimg"
+					style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; max-width: 100%; height: auto; margin: 0 auto;">
+			</div>
 			<map name="region-map">
-				<area shape="rect" coords="672,619,685,632" href="#" alt="강남역" onclick="view('서울특별시 강남구 강남대로 지하 396')"/>
-				<area shape="rect" coords="196,350,226,363" href="#" alt="가양역" onclick="view('서울특별시 강서구 양천로 지하 485')"/>
-				<area shape="rect" coords="445,463,477,492" href="#" alt="용산역" onclick="view('서울 용산구 한강대로23길 55')"/>
-				<area shape="rect" coords="514,424,560,435" href="#" alt="숙대입구역" onclick="view('서울 용산구 갈월동 69-115')"/>
-				<area shape="rect" coords="789,736,809,755" href="#" alt="판교역" onclick="view('경기 성남시 분당구 판교역로 지하 160')"/>
-				<area shape="rect" coords="197,399,226,413" href="#" alt="염창역" onclick="view('서울 강서구 염창동 284-84')"/>
-				<area shape="rect" coords="58,487,97,504" href="#" alt="굴포천역" onclick="view('인천 부평구 갈산동 414')"/>
-				<area shape="rect" coords="510,391,540,415" href="#" alt="서울역" onclick="view('서울 용산구 한강대로 405')"/>
-				<area shape="rect" coords="326,298,346,338" href="#" alt="홍대입구역" onclick="view('서울 마포구 양화로 지하 160')"/>
-				<area shape="rect" coords="633,562,658,578" href="#" alt="고속터미널역" onclick="view('서울 서초구 신반포로 지하 188')"/>
-				<area shape="rect" coords="272,357,312,372" href="#" alt="합정역" onclick="view('서울 마포구 양화로 지하 55')"/>
-				<area shape="rect" coords="279,402,294,418" href="#" alt="당산역" onclick="view('서울 영등포구 당산로 229')"/>
-				<area shape="rect" coords="444,419,476,445" href="#" alt="효창공원앞역" onclick="view('서울 용산구 백범로 지하 287')"/>
-				<area shape="rect" coords="429,374,468,396" href="#" alt="공덕역" onclick="view('서울 마포구 마포대로 지하 100')"/>
-				<area shape="rect" coords="557,452,591,477" href="#" alt="이태원역" onclick="view('서울 용산구 이태원동 119-23')"/>
+				<area shape="rect" coords="672,619,685,632" href="#" alt="강남역"
+					onclick="view('서울특별시 강남구 강남대로 지하 396')" />
+				<area shape="rect" coords="196,350,226,363" href="#" alt="가양역"
+					onclick="view('서울특별시 강서구 양천로 지하 485')" />
+				<area shape="rect" coords="445,463,477,492" href="#" alt="용산역"
+					onclick="view('서울 용산구 한강대로23길 55')" />
+				<area shape="rect" coords="514,424,560,435" href="#" alt="숙대입구역"
+					onclick="view('서울 용산구 갈월동 69-115')" />
+				<area shape="rect" coords="789,736,809,755" href="#" alt="판교역"
+					onclick="view('경기 성남시 분당구 판교역로 지하 160')" />
+				<area shape="rect" coords="197,399,226,413" href="#" alt="염창역"
+					onclick="view('서울 강서구 염창동 284-84')" />
+				<area shape="rect" coords="58,487,97,504" href="#" alt="굴포천역"
+					onclick="view('인천 부평구 갈산동 414')" />
+				<area shape="rect" coords="510,391,540,415" href="#" alt="서울역"
+					onclick="view('서울 용산구 한강대로 405')" />
+				<area shape="rect" coords="326,298,346,338" href="#" alt="홍대입구역"
+					onclick="view('서울 마포구 양화로 지하 160')" />
+				<area shape="rect" coords="633,562,658,578" href="#" alt="고속터미널역"
+					onclick="view('서울 서초구 신반포로 지하 188')" />
+				<area shape="rect" coords="272,357,312,372" href="#" alt="합정역"
+					onclick="view('서울 마포구 양화로 지하 55')" />
+				<area shape="rect" coords="279,402,294,418" href="#" alt="당산역"
+					onclick="view('서울 영등포구 당산로 229')" />
+				<area shape="rect" coords="444,419,476,445" href="#" alt="효창공원앞역"
+					onclick="view('서울 용산구 백범로 지하 287')" />
+				<area shape="rect" coords="429,374,468,396" href="#" alt="공덕역"
+					onclick="view('서울 마포구 마포대로 지하 100')" />
+				<area shape="rect" coords="557,452,591,477" href="#" alt="이태원역"
+					onclick="view('서울 용산구 이태원동 119-23')" />
 			</map>
 		</div>
 
@@ -498,10 +512,10 @@ b {
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" id="hj-checkAircond"
-									class="custom-control-input" name="airconditioner" value=1 /> <label
-									class="custom-control-label" for="hj-checkAircond">에어컨</label>
+									class="custom-control-input" name="airconditioner" value=1 />
+								<label class="custom-control-label" for="hj-checkAircond">에어컨</label>
 							</div>
-						</div>	
+						</div>
 						<!-- 3열 -->
 						<div class="col" id="hj_options">
 							<div class="custom-control custom-checkbox">
@@ -534,8 +548,8 @@ b {
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" id="hj-checkMicroWave"
-									class="custom-control-input" name="microwave" value=1 />
-								<label class="custom-control-label" for="hj-checkMicroWave">전자레인지</label>
+									class="custom-control-input" name="microwave" value=1 /> <label
+									class="custom-control-label" for="hj-checkMicroWave">전자레인지</label>
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" id="hj-checkRefrigerator"
@@ -544,20 +558,20 @@ b {
 							</div>
 							<div class="custom-control custom-checkbox">
 								<input type="checkbox" id="hj-checkLaundry"
-									class="custom-control-input" name="laundry_machine" value=1 /> <label
-									class="custom-control-label" for="hj-checkLaundry">세탁기</label>
+									class="custom-control-input" name="laundry_machine" value=1 />
+								<label class="custom-control-label" for="hj-checkLaundry">세탁기</label>
 							</div>
 						</div>
 					</div>
 					<hr>
-					<div id="hj_filter_setting" border-top : 1pxsolidgray; padding-top:1%;>
+					<div id="hj_filter_setting" border-top: 1pxsolidgray; padding-top:1%;>
 						<div style="float: left; margin-right: 2%;">
-							<button type="button" onClick=doFiltering(); id="hj_btn_submit" class="btn btn-success" returnfalse;>검색
-						</button>
+							<button type="button" onClick=doFiltering(); id="hj_btn_submit"
+								class="btn btn-success"returnfalse;>검색</button>
 						</div>
 						<div>
-							<button type="button" onClick=doUnchecked(); id="hj_btn_submit" class="btn btn-success" returnfalse;>초기화
-						</button>
+							<button type="button" onClick=doUnchecked(); id="hj_btn_submit"
+								class="btn btn-success"returnfalse;>초기화</button>
 						</div>
 					</div>
 				</div>
@@ -748,32 +762,34 @@ b {
 
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
-			center : new daum.maps.LatLng(37.56572628005628, 126.98773032243167), // 지도의 중심좌표
+			center : new daum.maps.LatLng(37.53901168181422, 126.9876894417558), // 지도의 중심좌표
 			level : 8
 		// 지도의 확대 레벨
 		};
 
 		var map = new daum.maps.Map(mapContainer, mapOption); // 지도를 표시할 div와  지도 옵션으로  지도를 생성합니다
-		
+
 		//역으로 검색
-		function view(data){
+		function view(data) {
 			$("#js_subway").hide();
 			var addr = data;
 			var geocoder = new daum.maps.services.Geocoder();
 			// 주소로 좌표를 검색합니다
-			geocoder.addressSearch(addr, function(result, status) {
-			    // 정상적으로 검색이 완료됐으면 
-			     if (status === daum.maps.services.Status.OK) {
-			        var coords = new daum.maps.LatLng(result[0].y, result[0].x);
-			        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-			        map.setCenter(coords);
-			        map.setLevel(4);
-			        getList();
-			    } 
-			});
+			geocoder.addressSearch(addr,
+					function(result, status) {
+						// 정상적으로 검색이 완료됐으면 
+						if (status === daum.maps.services.Status.OK) {
+							var coords = new daum.maps.LatLng(result[0].y,
+									result[0].x);
+							// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+							map.setCenter(coords);
+							map.setLevel(4);
+							getList();
+						}
+					});
 		}
-		
-		daum.maps.event.addListener(map, 'dragend', function() { //지도 드래그할때 작동       
+
+		daum.maps.event.addListener(map, 'dragend', function() { //지도 드래그할때 작동       	
 			getList();
 		});
 
@@ -800,14 +816,18 @@ b {
 				if (inputs[x].type == 'checkbox') {
 					inputs[x].checked = false;
 				}
+				//<input id="hj_area_slider" type="text"
+				//	data-slider-value="[0, 100]" data-slider-ticks="[0, 50, 100]"h
+				//	data-slider-lock-to-ticks="true" /><b>무제한</b>
 			}
 			
 			$('#hj_slider_deposit').hide();
-		
+
 			$('#hj_slider_month').hide();
 
 			$('#hj_slider_purchase').hide();
 
+			//$("hj_area_slider").slider('refresh');
 			getList();
 		}
 
@@ -855,26 +875,24 @@ b {
 			var purchasemax = purchaseMaxval;
 			var areamin = areaMinval;
 			var areamax = areaMaxval;
-			
-			
-			var elevator =0;
+
+			var elevator = 0;
 			var allowance_pet = 0;
-			var parking_lot= 0;
+			var parking_lot = 0;
 			var bidet = 0;
 			var builtin = 0;
 			var bed = 0;
 			var desk = 0;
 			var airconditioner = 0;
-			var balcony =0;
-			var loan_availability =0;
+			var balcony = 0;
+			var loan_availability = 0;
 			var tv = 0;
 			var induction = 0;
 			var door_lock = 0;
 			var microwave = 0;
 			var refrigerator = 0;
 			var laundry_machine = 0;
-			
-			
+
 			if ($('input[name="oneroom"]').is(':checked')) {
 				oneroom = $("input[name='oneroom']:checked").val();
 			} else {
@@ -919,92 +937,90 @@ b {
 			} else {
 				purchasemax = 0;
 			}
-			if($('input[name="elevator"]').is(':checked')) {
+			if ($('input[name="elevator"]').is(':checked')) {
 				elevator = 1;
 			} else {
 				elevator = 0;
 			}
-			if($('input[name="allowance_pet"]').is(':checked')) {
+			if ($('input[name="allowance_pet"]').is(':checked')) {
 				allowance_pet = 1;
 			} else {
 				allowance_pet = 0;
 			}
-			if($('input[name="parking_lot"]').is(':checked')) {
+			if ($('input[name="parking_lot"]').is(':checked')) {
 				parking_lot = 1;
 			} else {
 				parking_lot = 0;
 			}
-			if($('input[name="bidet"]').is(':checked')) {
+			if ($('input[name="bidet"]').is(':checked')) {
 				bidet = 1;
 			} else {
 				bidet = 0;
 			}
-			if($('input[name="builtin"]').is(':checked')) {
+			if ($('input[name="builtin"]').is(':checked')) {
 				builtin = 1;
 			} else {
 				builtin = 0;
 			}
-			if($('input[name="bed"]').is(':checked')) {
+			if ($('input[name="bed"]').is(':checked')) {
 				bed = 1;
 			} else {
 				bed = 0;
 			}
-			if($('input[name="desk"]').is(':checked')) {
+			if ($('input[name="desk"]').is(':checked')) {
 				desk = 1;
 			} else {
 				desk = 0;
 			}
-			if($('input[name="airconditioner"]').is(':checked')) {
+			if ($('input[name="airconditioner"]').is(':checked')) {
 				airconditioner = 1;
 			} else {
 				airconditioner = 0;
 			}
-			if($('input[name="balcony"]').is(':checked')) {
+			if ($('input[name="balcony"]').is(':checked')) {
 				balcony = 1;
 			} else {
 				balcony = 0;
 			}
-			if($('input[name="loan_availability"]').is(':checked')) {
+			if ($('input[name="loan_availability"]').is(':checked')) {
 				loan_availability = 1;
 			} else {
 				loan_availability = 0;
 			}
-			if($('input[name="tv"]').is(':checked')) {
+			if ($('input[name="tv"]').is(':checked')) {
 				tv = 1;
 			} else {
 				tv = 0;
 			}
-			if($('input[name="induction"]').is(':checked')) {
+			if ($('input[name="induction"]').is(':checked')) {
 				induction = 1;
 			} else {
 				induction = 0;
 			}
-			if($('input[name="door_lock"]').is(':checked')) {
+			if ($('input[name="door_lock"]').is(':checked')) {
 				door_lock = 1;
 			} else {
 				door_lock = 0;
 			}
-			if($('input[name="microwave"]').is(':checked')) {
+			if ($('input[name="microwave"]').is(':checked')) {
 				microwave = 1;
 			} else {
 				microwave = 0;
 			}
-			if($('input[name="refrigerator"]').is(':checked')) {
+			if ($('input[name="refrigerator"]').is(':checked')) {
 				refrigerator = 1;
 			} else {
 				refrigerator = 0;
 			}
-			if($('input[name="laundry_machine"]').is(':checked')) {
+			if ($('input[name="laundry_machine"]').is(':checked')) {
 				laundry_machine = 1;
 			} else {
 				laundry_machine = 0;
 			}
-			
-			
-			
 
 			var image = "";
-			$.ajax({
+			$
+					.ajax({
 						url : "rlist.do",
 						type : "post",
 						dataType : "json",
@@ -1037,7 +1053,7 @@ b {
 							door_lock : door_lock,
 							microwave : microwave,
 							refrigerator : refrigerator,
-							laundry_machine : laundry_machine 
+							laundry_machine : laundry_machine
 						},
 						success : function(data) {
 							clusterer.clear();
@@ -1108,10 +1124,14 @@ b {
 																		map : map, // 마커를 표시할 지도
 																		position : coords
 																	}); //marker 
-																	daum.maps.event.addListener(marker, 'click', function() {
-																	      
-																	      ttt(json[param].realty_no);  
-																	});
+															daum.maps.event
+																	.addListener(
+																			marker,
+																			'click',
+																			function() {
+
+																				ttt(json[param].realty_no);
+																			});
 
 															// 클러스터러에 마커들을 추가합니다
 															clusterer
@@ -1196,42 +1216,41 @@ b {
 													image = sample.png;
 												}
 											} //checked if
-											pvalues += 
-												"<div class='house' id='hj_house"+
-												param[j].realty_no
-												+"' style='cursor: pointer; border:solid 3px #61c0bf;' onClick=abcd("
-												+ param[j].realty_no
-												+ ")>"
-												+ "<div class='row'  style='background-color:#61c0bf; text-align: right; width:100%; margin:0 auto; padding: 1%;'><i class='fas fa-award' style='padding: 1%; color:white; width:100%; margin-right:10px'> Premium</i></div>"
-												+ "<div id='hj_houseImages' >"
-												+ "<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+											pvalues += "<div class='house' id='hj_house"
+													+ param[j].realty_no
+													+ "' style='cursor: pointer; border:solid 3px #61c0bf;' onClick=abcd("
+													+ param[j].realty_no
+													+ ")>"
+													+ "<div class='row'  style='background-color:#61c0bf; text-align: right; width:100%; margin:0 auto; padding: 1%;'><i class='fas fa-award' style='padding: 1%; color:white; width:100%; margin-right:10px'> Premium</i></div>"
+													+ "<div id='hj_houseImages' >"
+													+ "<img class='d-block' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
 								+image
 								+"'/>"
-					
-												+ "</div>"
-												+ "<div id='hj_houseDetail'>"
-												+ "<a href=rdetail.do?realty_no="
-												+ param[j].realty_no
-												+ ">"
-												+ "<h4 id='hj_h4'>"
-												+ payment
-												+ "  "
-												+ charge
-												+ "</h4>"
-												+ "</a>"
-												+ "<h6>"
-												+ param[j].residential
-												+ "㎥"
-												+ "ㆍ"
-												+ param[j].realty_layers
-												+ "층</h6>"
-												+ "<h6 id='hj_h6_a'>"
-												+ param[j].road_address
-												+ "</h6>"
-												+ "<p id='hj_detail_title'>"
-												+ param[j].realty_detail_title
-												+ "</p>"
-												+ "</div></div></a>";
+
+													+ "</div>"
+													+ "<div id='hj_houseDetail'>"
+													//+ "<a href=rdetail.do?realty_no="
+													//+ param[j].realty_no
+													//+ ">"
+													+ "<h4 id='hj_h4' style='color:rgb(97, 192, 191);'>"
+													+ payment
+													+ "  "
+													+ charge
+													+ "</h4>"
+													//+ "</a>"
+													+ "<h6>"
+													+ param[j].residential
+													+ "㎥"
+													+ "ㆍ"
+													+ param[j].realty_layers
+													+ "층</h6>"
+													+ "<h6 id='hj_h6_a'>"
+													+ param[j].road_address
+													+ "</h6>"
+													+ "<p id='hj_detail_title'>"
+													+ param[j].realty_detail_title
+													+ "</p>"
+													+ "</div></div></a>";
 										} /*premium if*/
 										else {
 											if (monthmax == 0
@@ -1295,26 +1314,25 @@ b {
 													image = sample.png;
 												}
 											} //checked if
-											values += 
-												"<div class='house' id='hj_house"+
-												param[j].realty_no
-												+"' style='cursor: pointer; border:solid 3px #61c0bf; height:200px;' onClick=abcd("
-												+ param[j].realty_no
+											values += "<div class='house' id='hj_house"
+													+ param[j].realty_no
+													+ "' style='cursor: pointer; border:solid 3px #61c0bf; height:180px;' onClick=abcd("
+													+ param[j].realty_no
 													+ ")><div id='hj_houseImages'>"
-													+ "<img class='d-block' style='height:135px; margin-top:2%' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/" 
-													+image
-													+"'/>"
+													+ "<img class='d-block' style='padding-top:1%; height:135px; margin-top:2%' src='${pageContext.request.contextPath }/files/realty/realtyNormalImages/"
+													+ image
+													+ "'/>"
 													+ "</div>"
 													+ "<div id='hj_houseDetail'>"
-													+ "<a href=rdetail.do?realty_no="
-													+ param[j].realty_no
-													+ ">"
-													+ "<h4 id='hj_h4'>"
+													//+ "<a href=rdetail.do?realty_no="
+													//+ param[j].realty_no
+													//+ ">"
+													+ "<h4 id='hj_h4' style='color:rgb(97, 192, 191);'>"
 													+ payment
 													+ "  "
 													+ charge
 													+ "</h4>"
-													+ "</a>"
+													//+ "</a>"
 													+ "<h6>"
 													+ param[j].residential
 													+ "㎥"
@@ -1349,46 +1367,45 @@ b {
 		function abcd(realtyno) {
 			location.href = "rdetail.do?realty_no=" + realtyno;
 		}
-		function ttt(b) {			
+		function ttt(b) {
 			$("#hj_housediv").scrollTop(0);
-			
+
 			var houseid = 'hj_house';
 			houseid += b;
-			
+
 			var objsh = document.getElementById("hj_housediv");
 			var sh = objsh.scrolltop = objsh.scrollHeight; //div 의  scroll 전체값;
-			var rp = $("#"+houseid).offset();
+			var rp = $("#" + houseid).offset();
 			//console.log("div 전체 scroll value : " + sh);
 			//console.log("선택한 div의 위치값(position,top) : " + rp.top);
-			
-			$("#hj_housediv").animate({scrollTop:(rp.top)-500},0);
-			
-			
+
+			$("#hj_housediv").animate({scrollTop : (rp.top) - 500}, 1);
+
 			//------------------------------------------------------------- 하이라이트 on/off	
-			
-			var t =$("#"+houseid).css("box-shadow");
-			
-			
+
+			var t = $("#" + houseid).css("box-shadow");
+
 			var house = document.getElementsByClassName("house");
-			
+
 			for (var x = 0; x < house.length; x++) {
-				
-				var id = $("#"+ house[x].id).css("box-shadow");
-				if(id != "3px solid rgb(97, 192, 191)") {
-					$("#"+house[x].id).css("box-shadow", "0px 0px 0px 0px #ffffff");			
-					}
+
+				var id = $("#" + house[x].id).css("box-shadow");
+				if (id != "3px solid rgb(97, 192, 191)") {
+					$("#" + house[x].id).css("box-shadow",
+							"0px 0px 0px 0px #ffffff");
 				}
-		    
-			if(t != "5px 5px 8px 0px #6c757d") {
-			$("#"+houseid).css("box-shadow", "5px 5px 8px 0px #6c757d");			
+			}
+
+			if (t != "5px 5px 8px 0px #6c757d") {
+				$("#" + houseid).css("box-shadow", "5px 5px 8px 0px #6c757d");
 			} else {
-			$("#"+houseid).css("box-shadow", "0px 0px 0px 0px #ffffff");
+				$("#" + houseid).css("box-shadow", "0px 0px 0px 0px #ffffff");
 			}
 			//-------------------------------------------------------------
-	
+
 		}
 	</script>
-	<c:import url="../common/footer.jsp"></c:import>
-	<script src="${pageContext.request.contextPath }/resources/js/jquery.rwdImageMaps.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath }/resources/js/jquery.rwdImageMaps.min.js"></script>
 </body>
 </html>
