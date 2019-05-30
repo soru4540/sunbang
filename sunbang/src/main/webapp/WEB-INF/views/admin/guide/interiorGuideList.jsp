@@ -108,6 +108,7 @@
 
 #js_iguide_cardList .card-img-top {
 	min-height: 240px;
+	width: 99.5%;
 }
 
 #js_iguide_cardList .card-title {

@@ -68,7 +68,6 @@
 		var report_no = ${report.report_no };
 		var contents_no = ${report.contents_no};
 		var contents_status =$("#contents_status").val();
-		//console.log('artsupdate.do?report_no='+report_no+'&contents_no='+contents_no+'&status='+data+"&contents_status="+contents_status);
 		location.href='artsupdate.do?report_system=realty&report_no='+report_no+'&contents_no='+contents_no+'&status='+data+"&contents_status="+contents_status;
 	}
 </script>

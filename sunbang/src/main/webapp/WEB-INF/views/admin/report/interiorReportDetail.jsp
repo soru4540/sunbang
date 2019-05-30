@@ -64,9 +64,9 @@
 	});
 	
 	function openView(){
-		var popupX = (window.screen.width/2) - (200/2);
-		var popupY= (window.screen.height/2) - (700/2);
-		window.open('rdetail.do?realty_no='+${report.report_no }, 'View',
+		var popupX = (window.screen.width/2) - (400/2);
+		var popupY= (window.screen.height/2) - (1200/2);
+		window.open("ibselect.do?board_no="+${report.contents_no}+"&board_type='${report.reported_board}+'", 'View',
 				'left='+ popupX + ', top='+ popupY + ', screenX='+ popupX + ', screenY= '+ popupY+',scrollbars=no');
 	}
 	
@@ -74,7 +74,6 @@
 		var report_no = ${report.report_no };
 		var contents_no = ${report.contents_no};
 		var contents_status =$("#contents_status").val();
-		//console.log('artsupdate.do?report_no='+report_no+'&contents_no='+contents_no+'&status='+data+"&contents_status="+contents_status);
 		location.href='artsupdate.do?report_system=interior&report_no='+report_no+'&contents_no='+contents_no+'&status='+data+"&contents_status="+contents_status;
 	}
 </script>

@@ -37,7 +37,7 @@
 	line-height: 1.8em;
 }
 
-#js_igdetail_p img {
+img {
 	max-width: 100%;
 }
 

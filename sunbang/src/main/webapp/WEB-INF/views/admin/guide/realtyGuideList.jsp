@@ -110,6 +110,7 @@
 
 #js_pguide_cardList .card-img-top {
 	min-height: 240px;
+	width: 99.5%;
 }
 
 #js_pguide_cardList .card-title {
