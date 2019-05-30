@@ -84,7 +84,9 @@ $(function(){
 	
 	$("#jw_nickchatin").click(function(){
 		if(${loginUser.user_no} == 0){
+			$("#jw_modalccclose").trigger("click");
 			$("#jw_chatdiv"+$("#jw_resultusernod").val()).show();
+			$("#jw_mlist"+$("#jw_resultusernod").val()).show();
 		}else{
 		$.ajax({
 			url: "cuserchatinsert.do",
@@ -699,7 +701,7 @@ cursor:pointer;
         <div class="modal-header"><h4 class="modal-title">유저랑 채팅하기</h4><button type="button" id="jw_usersearchclosebtn" class="close" data-dismiss="modal">&times;</button></div>
         <div class="modal-body"><div id="jw_nicksearchdiv"><input type="search" class="form-control" id="jw_nicksearchinput" placeholder="닉네임검색"></div>
         								<div id="jw_nickresultdiv" style="display:none;"><span id="jw_ninini"></span><span id='jw_nickreturn2' class='btn btn-lgreen' style='float:right'>뒤로가기</span></div></div><input type="hidden" id="jw_resultusernod" name="chat_no">
-        <div class="modal-footer border-0"><button type="button" id="jw_nicksearchbtn" class="btn btn-lgreen" style="width:48%;">검색하기</button><button type="button" id="jw_nickreturn" class="btn btn-lgreen" style="width:48%; display:none;">뒤로가기</button><button type="button" id="jw_nickchatin" class="btn btn-lgreen" style="width:48%; display:none;">채팅하기</button><button type="button" class="btn btn-gray" style="width:48%;" data-dismiss="modal">취소</button></div>
+        <div class="modal-footer border-0"><button type="button" id="jw_nicksearchbtn" class="btn btn-lgreen" style="width:48%;">검색하기</button><button type="button" id="jw_nickreturn" class="btn btn-lgreen" style="width:48%; display:none;">뒤로가기</button><button type="button" id="jw_nickchatin" class="btn btn-lgreen" style="width:48%; display:none;">채팅하기</button><button id="jw_modalccclose" type="button" class="btn btn-gray" style="width:48%;" data-dismiss="modal">취소</button></div>
   </div></div></div>
 
 <div class="container" style="min-height:900px;">
