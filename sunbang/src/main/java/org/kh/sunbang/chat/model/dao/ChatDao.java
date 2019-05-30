@@ -110,6 +110,10 @@ public class ChatDao {
 		return result;
 	}
 
+	public int selectOpenAdmin(SqlSessionTemplate session, int user_no) {
+		return session.selectOne("chatMapper.selectOpenAdmin", user_no);	
+	}
+
 
 
 

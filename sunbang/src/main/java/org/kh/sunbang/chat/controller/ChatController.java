@@ -29,6 +29,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import net.sf.json.JSONArray;
 
@@ -40,8 +41,14 @@ public class ChatController {
 	
 	// 채팅방
 	@RequestMapping("cmyview.do")
-	public String mychatView(){
-		return "chat/myChat";}
+	public ModelAndView mychatView(ModelAndView mv, HttpServletRequest request){
+		if(request.getParameter("user_no") !=null) {
+			int user_no = Integer.parseInt(request.getParameter("user_no"));
+			int result = chatService.selectOpenAdmin(user_no);
+			mv.addObject("openadmin", result);
+		}
+		mv.setViewName("chat/myChat");
+		return mv;}
 	
 	@RequestMapping("chatview.do")
 	public String mychatViews(){

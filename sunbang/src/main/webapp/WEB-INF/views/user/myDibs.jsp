@@ -183,7 +183,7 @@ opacity: 0.8;
 </div><div id="jw_ale${realty.dibs_no }" class="alert alert-success mt-5" style="display:none;"><strong>메모 등록!</strong> 메모내용등록하셨습니다</div></div></div>
 </c:forEach>
 
-<div class="container">
+<div class="container" style="min-height:900px;">
 	<div class="row" style="margin-top:10%; padding-bottom:10%;">
 	<div class="col-12"><span class="checktopout"><span class="checktop">찜</span> 찜목록</span></div>
 	<c:if test="${empty urealty}">

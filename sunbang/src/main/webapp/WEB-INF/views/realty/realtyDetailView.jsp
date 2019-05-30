@@ -257,6 +257,7 @@ $(function(){
 <!-- 채팅버튼 비활성화 -->
 <script type="text/javascript">
    $(function(){
+	   <c:url var="loginview" value="uloginview.do"><c:param name="pageuri" value="${requestScope['javax.servlet.forward.servlet_path']}?${requestScope['javax.servlet.forward.query_string']}" /></c:url>
 	   $("#sh_chat_btn_1").click(function(){
 			<c:if test='${!empty loginUser.user_no}'>
 			 if(${loginUser.user_no == realty.user_no }){
@@ -269,7 +270,10 @@ $(function(){
 			 }
 			</c:if>
 			<c:if test='${empty loginUser.user_no}'>
-			alert('로그인이 필요한 서비스입니다.');
+			var result2 = confirm('로그인이 필요한 서비스입니다.');
+			if(result2 = true){
+				location.href="${loginview}";
+			}
 			</c:if>
 		})
 		$("#sh_chat_btn_2").click(function(){
@@ -285,7 +289,10 @@ $(function(){
 			 }
 			</c:if>
 			<c:if test='${empty loginUser.user_no}'>
-			alert('로그인이 필요한 서비스입니다.');
+			var result4 = confirm('로그인이 필요한 서비스입니다.');
+			if(result4 = true){
+				location.href="${loginview}";
+			}
 			</c:if>
 		})
    });

@@ -279,7 +279,6 @@ $(function(){
 						data: {phone : $("#jw_pwdphone1").val()+"-"+$("#jw_pwdphone2").val()+"-"+$("#jw_pwdphone3").val()},
 						dataType: "text",
 						success: function(response){
-							alert(response);
 							$("#jw_valpwd").show().css("color", "green").html("회원정보가 일치합니다. 인증번호를 보냈습니다.");
 							$('#jw_pwdphoneresult').val(response);
 							$('#jw_resultuserno').val(user_no);
@@ -446,7 +445,6 @@ $("#jw_phonebtn${c}").click(function(){
 		dataType: "text",
 		success: function(response){
 			if($("#jw_phone${c}b").val() !="" && $("#jw_phone${c}c").val() !=""){
-			alert(response);
 			$("#jw_phone${c}a").attr("readonly", false);
 			$("#jw_phone${c}b").attr("readonly", false);
 			$("#jw_phone${c}c").attr("readonly", false);

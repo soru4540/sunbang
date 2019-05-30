@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,22 +40,17 @@
 					<ul class="list-unstyled">
 						<li>
 							<p>
-								<a href="#!">PROJECTS</a>
+								<a href="project.do">PROJECTS</a>
 							</p>
 						</li>
 						<li>
 							<p>
-								<a href="#!">ABOUT US</a>
+								<a href="aboutus.do">ABOUT US</a>
 							</p>
 						</li>
 						<li>
 							<p>
-								<a href="#!">BLOG</a>
-							</p>
-						</li>
-						<li>
-							<p>
-								<a href="#!">AWARDS</a>
+								<c:if test="${0 ne loginUser.user_no && !empty loginUser}"><a href="cmyview.do?user_no=${loginUser.user_no }">유저신고</a></c:if>
 							</p>
 						</li>
 					</ul>

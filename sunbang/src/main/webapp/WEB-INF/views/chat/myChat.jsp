@@ -109,7 +109,7 @@ $(function(){
 			data: {nickname: $("#jw_nicksearchinput").val()},
 			dataType: "text",
 			success: function(result){
-				if(result != 0){
+				if(result != 0 && result != ${loginUser.user_no}){
 					$("#jw_resultusernod").val(result);
 					$("#jw_nicksearchdiv").hide();
 					$("#jw_nickresultdiv").show();
@@ -120,7 +120,11 @@ $(function(){
 				}else{
 					$("#jw_nicksearchdiv").hide();
 					$("#jw_nickresultdiv").show();
-					$("#jw_ninini").html("<b>"+$("#jw_nicksearchinput").val()+"</b>닉네임가진 유저가 없습니다.");
+					if(result == ${loginUser.user_no}){
+					$("#jw_ninini").html("<b>"+$("#jw_nicksearchinput").val()+"</b> 자신과 채팅을 할수없습니다.");
+					}else{
+					$("#jw_ninini").html("<b>"+$("#jw_nicksearchinput").val()+"</b>닉네임가진 유저가 없습니다.");	
+					}
 					$("#jw_nicksearchbtn").hide();
 					$("#jw_nickchatin").hide();
 					$("#jw_nickreturn").show();
@@ -177,7 +181,7 @@ function chatmsgList(){
 				}else{
 			outClist += "<div class='chatdiv crdiv mt-2' id='jw_chatdiv"+jsonObj.clist[i].chat_no+"'>[<span class='chatType'>"+jsonObj.clist[i].chat_type+"</span>]<input type='hidden' id='jw_chattyped"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_type+"'><input type='hidden' id='jw_chatnamed"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_name +"'>";
 			if(jsonObj.clist[i].chat_type == '단체'){
-			outClist += jsonObj.clist[i].chat_name +"<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style='display:none;'></span><span class='btn-lgreen mr-2' style='float:right;'>나가기</span></div>";
+			outClist += jsonObj.clist[i].chat_name +"<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style='display:none;'></span><span id='jw_chatdeld"+jsonObj.clist[i].chat_no+"' class='btn-lgreen mr-2' style='float:right;'>나가기</span></div>";
 			}else if(jsonObj.clist[i].chat_type == '관리자'){
 				outClist +="<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style=''></span></div>";
 			}else{
@@ -211,6 +215,8 @@ function chatmsgList(){
 					var CU = JSON.parse(JSON.stringify(cuobj));
 					var outCulist = $("#jw_culist"+jsonObj.clist[i].chat_no).html();
 					var outCCCulist = $("#jw_ccculist"+jsonObj.clist[i].chat_no).html();
+					var outCCCCulist = $("#jw_chatnameddd"+jsonObj.clist[i].chat_no).html();					
+				
 					var redd= 0;
 					for(var j in CU.culist){
 						if(!$("#jw_c"+CU.culist[j].chat_no+"u"+CU.culist[j].user_no+"div").length){
@@ -228,8 +234,10 @@ function chatmsgList(){
 						if(!$("#jw_ccuserlis"+CU.culist[j].chat_no+"t"+CU.culist[j].user_no).length){
 							if(redd == 0){
 							outCCCulist +='<span id="jw_ccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';
+							outCCCCulist +='<span id="jw_ccccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';
 							}else{
-							outCCCulist +=',<span id="jw_ccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';		
+							outCCCulist +=',<span id="jw_ccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';
+							outCCCCulist +=',<span id="jw_ccccuserlis'+CU.culist[j].chat_no+'t'+CU.culist[j].user_no+'">'+CU.culist[j].nickname+'</span>';		
 							}
 						}
 						redd = redd+1;
@@ -237,6 +245,7 @@ function chatmsgList(){
 					}
 					$("#jw_culist"+jsonObj.clist[i].chat_no).html(outCulist);
 					$("#jw_ccculist"+jsonObj.clist[i].chat_no).html(outCCCulist);
+					$("#jw_chatnameddd"+jsonObj.clist[i].chat_no).html(outCCCCulist);
 					
 					/*  */
 					
@@ -397,7 +406,6 @@ setInterval(function(){chatmsgList();
  
  
 $("#jw_chatdiv${m}").click(function(event){
-	
 	if($("#jw_chattyped${m}").val() == "단체"){
 			$.ajax({
 				url: "chatchatcheck.do",
@@ -442,7 +450,10 @@ $("#jw_chatdeld${m}").click(function(event){
 		async: false,
 		data: {user_no: ${loginUser.user_no}, chat_no: ${m}},
 		success:function(){
+			if($("#jw_chattyped${m}").val() != "단체"){
 			$("#jw_chatdiv${m}").remove();
+			}
+			$("#jw_mlist${m}").remove();
 		},
 		error:function(){
 			
@@ -485,6 +496,10 @@ $("#jw_mdel${m}").click(function(){
 });
 </c:forEach>
 },1500);
+
+<c:if test="${!empty openadmin}">
+ $("#jw_mlist${openadmin}").show();
+</c:if>
 });
 </script>
 <style>
@@ -556,7 +571,7 @@ div ::-webkit-scrollbar-thumb {
 	text-overflow: ellipsis;
 	cursor: pointer;
 	overflow:hidden;
-	white-space: nowrap 
+	white-space: nowrap; 
 }
 
 .btn-lgreen {
@@ -674,7 +689,7 @@ cursor:pointer;
         <div class="modal-footer border-0"><button type="button" id="jw_nicksearchbtn" class="btn btn-lgreen" style="width:48%;">검색하기</button><button type="button" id="jw_nickreturn" class="btn btn-lgreen" style="width:48%; display:none;">뒤로가기</button><button type="button" id="jw_nickchatin" class="btn btn-lgreen" style="width:48%; display:none;">채팅하기</button><button type="button" class="btn btn-gray" style="width:48%;" data-dismiss="modal">취소</button></div>
   </div></div></div>
 
-<div class="container">
+<div class="container" style="min-height:900px;">
 	<div class="row" style="margin:10% 0;">
 	
 	
@@ -707,7 +722,7 @@ cursor:pointer;
 			<div class="col-12" style="padding: 1%; height: 50px; background:rgba(187,222,214,0.7); padding:3%;"><i class="fas fa-users">유저목록</i><span class="icon" id="jw_chatback${mcn }"><i class="fas fa-exchange-alt"></i></span></div>
 			<div class="jw_culist"id="jw_culist${mcn }" class="col-12" style="height: 650px; padding:0 4%; background: rgba(187,222,214,0.1); overflow:auto;"></div></div>
 		<div class="mlist" id="jw_mlist${mcn}" style="display:none;">
-		<div class="row" style="height: 50px; background:rgba(187,222,214,0.7);"><div class="col-12" style="padding: 1%;">채팅내역
+		<div class="row" style="height: 50px; background:rgba(187,222,214,0.7);"><div class="col-12" style="padding: 1%;"><span id="jw_chatnameddd${mcn }" style="white-space: nowrap; overflow:hidden; text-overflow: ellipsis; width:100px;"></span>
 			<%-- <span id="jw_bellps${mcn }"><span id="jw_bellon${mcn}"class="icon"><i class="fas fa-bell"></i></span></span> --%>
 			<span id="jw_userbtn${mcn }" class="icon mr-2"><i class="fas fa-users">유저목록</i></span></div></div>
 	<div id="jw_scroll${mcn }" class="row" style="height: 550px; padding:1%; background: rgba(187,222,214,0.1); overflow:auto;"><div id="jw_mlista${mcn }" class="col-12" style="overflow:auto;"></div></div>

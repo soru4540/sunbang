@@ -458,14 +458,25 @@ border:1px solid black;
 	<div class="modal-footer" style="border:0;"><input type="submit" class="btn btn-danger btn-block" value="회원탈퇴"></div>
 </div></form></div></div>
 
-<div class="container mb-5">
+<div class="container mb-5" style="min-height:900px;">
 <div class="row" style="margin-top:7%;"></div>
 <div class="row" id="jw_userpage">
 	<div class="col-12 mb-5"><div class="col-12 mx-auto" style="width:1000px;"><span class="font-weight-bold fa-2x"><i class="fas fa-user" style="background:#61C0BF; color:white; padding:1%; border-radius: 5px;"></i> </span><span style="font-size:28px; font-weight:600;">${loginUser.nickname} <small style="font-weight:600;">의 회원정보</small></span><span id="jw_uppbtn"class="btn btn-lgreen mt-1" style="float:right;">정보수정</span><span class="btn btn-lgreen mr-2 mt-1" data-toggle="modal" data-target="#jw_upPwd" data-backdrop="false" style="float:right;">비밀번호수정</span></div></div>
 <c:if test="${loginUser.user_type eq '일반회원' || loginUser.user_type eq '매도인'}">	
 	<div class="col-12"><div class="col-12 mx-auto" style="width:800px;">
 		<div class="d-flex"><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">프로필</div><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">회원분류</div><div class="card bg-light" style="padding: 8px 30px; width:33%;">회원등급</div></div>
-		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;"><c:if test="${!empty loginUser.user_profile}" ><img class="img-thumbnail" src="files/user/userImages/${loginUser.user_profile}" style="width:120px; height: 100px;"></c:if></div><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_type }</div><div style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_status }</div></div>
+		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;"><c:if test="${!empty loginUser.user_profile}" ><img class="img-thumbnail" src="files/user/userImages/${loginUser.user_profile}" style="width:120px; height: 100px;"></c:if></div><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_type }</div><div style="padding:15px 15px; width:33%; word-wrap:break-word;">
+		<c:choose>
+			<c:when test="${loginUser.user_status eq 0}">기본이용</c:when>
+			<c:when test="${loginUser.user_status eq 1}">부동산 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 2}">인테리어 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 3}">채팅 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 4}">부동산/인테리어 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 5}">인테리어/채팅 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 6}">부동산/채팅 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 7}">전체 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 9}">부동산 매물 권한없음</c:when>
+		</c:choose></div></div>
 		<div class="d-flex"><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">아이디</div><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">닉네임</div><div class="card bg-light" style="padding: 8px 30px; width:33%;">성명</div></div>
 		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_id}</div><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.nickname }</div><div style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_name }</div></div>
 		<div class="d-flex"><div class="card bg-light mr-2" style="padding: 8px 30px; width:50%;">전화번호</div><div class="card bg-light" style="padding: 8px 30px; width:50%;">이메일</div></div>
@@ -484,7 +495,18 @@ border:1px solid black;
 		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:100%; word-wrap:break-word;">${loginUser.office_address }</div></div></div>
 	<div class="col-12 col-lg-6">
 		<div class="d-flex"><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">프로필</div><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">회원분류<br><small>(프리미엄)</small></div><div class="card bg-light" style="padding: 8px 30px; width:33%;">회원등급</div></div>
-		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;"><c:if test="${!empty loginUser.user_profile}" ><img class="img-thumbnail" src="files/user/userImages/${loginUser.user_profile}" style="width:120px; height: 100px;"></c:if></div><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_type }<small>(${loginUser.premium_status })</small></div><div style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_status }</div></div>
+		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;"><c:if test="${!empty loginUser.user_profile}" ><img class="img-thumbnail" src="files/user/userImages/${loginUser.user_profile}" style="width:120px; height: 100px;"></c:if></div><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_type }<small>(${loginUser.premium_status })</small></div><div style="padding:15px 15px; width:33%; word-wrap:break-word;">
+			<c:choose>
+			<c:when test="${loginUser.user_status eq 0}">기본이용</c:when>
+			<c:when test="${loginUser.user_status eq 1}">부동산 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 2}">인테리어 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 3}">채팅 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 4}">부동산/인테리어 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 5}">인테리어/채팅 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 6}">부동산/채팅 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 7}">전체 블랙</c:when>
+			<c:when test="${loginUser.user_status eq 9}">부동산 매물 권한없음</c:when>
+			</c:choose></div></div>
 		<div class="d-flex"><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">아이디</div><div class="card bg-light mr-2" style="padding: 8px 30px; width:33%;">닉네임</div><div class="card bg-light" style="padding: 8px 30px; width:33%;">성명</div></div>
 		<div class="d-flex"><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_id}</div><div class="mr-2" style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.nickname }</div><div style="padding:15px 15px; width:33%; word-wrap:break-word;">${loginUser.user_name }</div></div>
 		<div class="d-flex"><div class="card bg-light mr-2" style="padding: 8px 30px; width:50%;">전화번호</div><div class="card bg-light" style="padding: 8px 30px; width:50%;">이메일</div></div>

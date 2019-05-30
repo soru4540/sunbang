@@ -106,6 +106,10 @@ WHERE USER_NO =#{user_no}  AND realty_no=#{realty_no}
 SELECT * FROM TB_CHAT WHERE CHAT_NO = #{chat_no} AND USER_NO = #{user_no}
 </select>
 
+<select id="selectOpenAdmin" parameterType="_int" resultType="_int">
+SELECT CHAT_NO FROM TB_CHAT WHERE CHAT_TYPE = '관리자' AND USER_NO = #{user_no}
+</select>
+
 <select id="selectCheckChattwo" parameterType="Chat" resultType="Chat">
 SELECT CHAT_NO FROM TB_CHAT
 WHERE USER_NO =#{user_no}  AND chat_type = '관리자'

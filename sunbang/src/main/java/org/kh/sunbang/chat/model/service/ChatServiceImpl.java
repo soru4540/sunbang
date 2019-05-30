@@ -25,6 +25,11 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public int selectOpenAdmin(int user_no) {
+		return chatDao.selectOpenAdmin(mybatisSession, user_no);
+	}
 
 	@Override
 	public ArrayList<Chat> selectMyListFilterChat(int userno) {
@@ -129,6 +134,7 @@ public class ChatServiceImpl implements ChatService{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 

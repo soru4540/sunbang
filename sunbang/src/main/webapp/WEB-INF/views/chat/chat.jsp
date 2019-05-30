@@ -379,7 +379,7 @@ div ::-webkit-scrollbar-thumb {
 <body>
 
 	<div class="row" ><div class="col-12"><div id="jw_mlistout" class="col-12">
-	<div class="row"><div class="col-12" style="padding: 1%; height: 50px; background-color: #61C0BF; color:white; padding:3%;">${param.title}</div></div>
+	<div class="row"><div class="col-12" style="text-overflow:ellipsis; overflow:hidden; white-space: nowrap; padding: 1%; height: 50px; background-color: #61C0BF; color:white; padding:3%;">${param.title}</div></div>
 	<div class="row" style="height: 450px; padding:1%; background: rgba(187,222,214,0.1); overflow:auto;"><div id="jw_mlista" class="col-12" style="overflow:auto;"></div></div>
 	<span class="imgps"><form id="jw_imgform"><label class="btn btn-lgrn ml-1" for="jw_cimg"><i class="far fa-image "></i></label><input type="file" id="jw_cimg"  name="message_image" accept="image/*" style="display: none;">
 		<input type="hidden" name="user_no" value="${loginUser.user_no}"><input type="hidden" name="chat_no" value="0"></form></span>

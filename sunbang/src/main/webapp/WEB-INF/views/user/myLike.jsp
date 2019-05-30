@@ -100,7 +100,7 @@ opacity: 0.8;
 <body>
 <c:import url="../common/interiorHeader.jsp"/>
 
-<div class="container">
+<div class="container" style="min-height:900px;">
 	<div class="row" style="margin-top:10%; padding-bottom:10%;">
 	<div class="col-12"><i class="fas fa-heart fhh"></i> <b class="hearttop">좋아요목록</b></div>
 	<c:if test="${empty uboard}">

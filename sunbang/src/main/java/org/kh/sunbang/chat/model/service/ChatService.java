@@ -31,6 +31,7 @@ public interface ChatService {
 	int insertUserChat(Chat chat);
 	Chat selectChatChatCheck(Chat chat);
 	int insertTeamChat(Chat chat);
+	int selectOpenAdmin(int user_no);
 	
 	
 }
