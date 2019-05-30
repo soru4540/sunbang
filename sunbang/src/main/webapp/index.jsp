@@ -144,6 +144,7 @@
 
 #js_index_card .card-img-top {
 	min-height: 140px;
+	max-height: 140px;
 }
 
 #pcate {
