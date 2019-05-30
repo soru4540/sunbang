@@ -382,6 +382,7 @@ and board_type= #{board_type} <if test="keyword2 != 'empty'"> and housing_type =
  ) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>
 
+
 <!-- 노하우게시판 리스트 출력 -->
 <select id="selectKnowhowList" parameterType="Ipaging" resultMap="resultBoardFull">
 	select * from (select row_number() over(order by board_no desc) as
