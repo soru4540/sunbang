@@ -285,6 +285,9 @@ public class InteriorController {
   				jboardfull.put("board_no", boardfull.getBoard_no());
   				jboardfull.put("board_title", boardfull.getBoard_title());
   				jboardfull.put("board_type", boardfull.getBoard_type());
+  				jboardfull.put("category1", boardfull.getCategory1());
+  				jboardfull.put("category2", boardfull.getCategory2());
+  				jboardfull.put("category3", boardfull.getCategory3());
   				jboardfull.put("board_hits", boardfull.getBoard_hits());
   				jboardfull.put("post_no", boardfull.getPost_no());
   				jboardfull.put("post_keyword", boardfull.getPost_keyword());
@@ -573,7 +576,7 @@ public class InteriorController {
   	 			return sendObj.toJSONString();
   	 		}
   	
-  	//게시판등록-노하우버전
+  	//게시판등록
   	@RequestMapping(value="ibinsert.do", method=RequestMethod.POST)
   	public String insertBoard(Board board, MultipartHttpServletRequest mrequest){			
   	    //게시판 등록
@@ -615,13 +618,19 @@ public class InteriorController {
   				post.setPost_contents(mrequest.getParameter("post_contents" + i));
   	        
   	        //게시물 키워드 소제목일 때
-  	        }else if(post_keyword[i].equals("strapline")){	        	
+  	        }else if(post_keyword[i].equals("strapline")){	   
+  	        	if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	        		continue;
+  	        	}
   	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	        //게시물 키워드 텍스트일 때	
   	        }else if(post_keyword[i].equals("text")){	        	
+  	        	if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	        		continue;
+  	        	}
   	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	        //게시물 키워드 사진일 때	
-  	        }else if(post_keyword[i].equals("photo")){
+  	        }else if(post_keyword[i].equals("photo")){  	        	
   				MultipartFile mf = mrequest.getFile("post_data" + i);
   				String originalFilename = mf.getOriginalFilename();
   				long fileSize = mf.getSize();
@@ -647,7 +656,17 @@ public class InteriorController {
   	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
            //게시물 키워드 구분선일 때
   	        }else if(post_keyword[i].equals("divisionline")){
-  	        	post.setPost_data(mrequest.getParameter("post_data"+i));	        	
+  	        	String value= "";
+  	        	if(mrequest.getParameter("post_data"+i).equals("solid")) {
+  	        		value = "1";
+  	        	}else if(mrequest.getParameter("post_data"+i).equals("dashed")) {
+  	        		value = "2";
+  	        	}else if(mrequest.getParameter("post_data"+i).equals("dotted")) {
+  	        		value = "3";
+  	        	}else if(mrequest.getParameter("post_data"+i).equals("double")) {
+  	        		value = "4";
+  	        	}
+  	        	post.setPost_data(value);	        	
   	        }
   	        
   	        resultpost += interiorService.insertPost(post);
@@ -813,9 +832,15 @@ public class InteriorController {
   	 	    	    	} 	 	    	
   	 	    	    //게시물이 소제목일 경우	
   	 	    	    }else if(hidden_post_keyword[i].equals("strapline")) {
+  	 	    	    	if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	 	  	        		continue;
+  	 	  	        	}
   	 	    	    	post.setPost_contents(mrequest.getParameter("hidden_post_contents"+i));
   	 	    	    //게시물이 텍스트일 경우
   	 	    	    }else if(hidden_post_keyword[i].equals("text")) {
+  	 	    	    	if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	 	  	        		continue;
+  	 	  	        	}
   	 	    	    	post.setPost_contents(mrequest.getParameter("hidden_post_contents"+i));
   	 	    	    //게시물이 사진일 경우
   	 	    	    }else if(hidden_post_keyword[i].equals("photo")) { 	 	    	    	
@@ -851,7 +876,17 @@ public class InteriorController {
   	 	    	    	post.setPost_contents(mrequest.getParameter("hidden_post_contents"+i));
   	 	    	    //게시물이 구분선일 경우 	
   	 	    	    }else if(hidden_post_keyword[i].equals("divisionline")) {
-  	 	    	    	post.setPost_data(mrequest.getParameter("hidden_post_data"+i)); 	 	    	    	 	 	    	    	
+  	 	    	    	String value= "";
+  	 	  	        	if(mrequest.getParameter("post_data"+i).equals("solid")) {
+  	 	  	        		value = "1";
+  	 	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dashed")) {
+  	 	  	        		value = "2";
+  	 	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dotted")) {
+  	 	  	        		value = "3";
+  	 	  	        	}else if(mrequest.getParameter("post_data"+i).equals("double")) {
+  	 	  	        		value = "4";
+  	 	  	        	}
+  	 	  	        	post.setPost_data(value);	     	 	    	    	 	 	    	    	
   	 	    	    } 	 	    
   	 				 //게시물 수정   
   	 	    		 resultpost += interiorService.updatePost(post); 	 	    
@@ -882,10 +917,16 @@ public class InteriorController {
   	 	 				post.setPost_contents(mrequest.getParameter("post_contents" + i));
   	 	 	        
   	 	 	        //게시물 키워드 소제목일 때
-  	 	 	        }else if(post_keyword[i].equals("strapline")){	        	
+  	 	 	        }else if(post_keyword[i].equals("strapline")){	  
+  	 	 	        if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	  	        		continue;
+  	  	        	}
   	 	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	 	        //게시물 키워드 텍스트일 때	
-  	 	 	        }else if(post_keyword[i].equals("text")){	        	
+  	 	 	        }else if(post_keyword[i].equals("text")){	
+  	 	 	        if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	  	        		continue;
+  	  	        	}
   	 	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	 	        //게시물 키워드 사진일 때	
   	 	 	        }else if(post_keyword[i].equals("photo")){
@@ -915,7 +956,17 @@ public class InteriorController {
   	 	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	          //게시물 키워드 구분선일 때
   	 	 	        }else if(post_keyword[i].equals("divisionline")){
-  	 	 	        	post.setPost_data(mrequest.getParameter("post_data"+i));	        	
+  	 	 	        String value= "";
+  	  	        	if(mrequest.getParameter("post_data"+i).equals("solid")) {
+  	  	        		value = "1";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dashed")) {
+  	  	        		value = "2";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dotted")) {
+  	  	        		value = "3";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("double")) {
+  	  	        		value = "4";
+  	  	        	}
+  	  	        	post.setPost_data(value);	    	        	
   	 	 	        }
   	 				 //게시물 수정   
   	 	 	        resultpost += interiorService.updatePost(post);
@@ -945,10 +996,16 @@ public class InteriorController {
   	 				post.setPost_contents(mrequest.getParameter("post_contents" + i));
   	 	        
   	 	        //게시물 키워드 소제목일 때
-  	 	        }else if(post_keyword[i].equals("strapline")){	        	
+  	 	        }else if(post_keyword[i].equals("strapline")){	     
+  	 	        	if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	  	        		continue;
+  	  	        	}
   	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	        //게시물 키워드 텍스트일 때	
-  	 	        }else if(post_keyword[i].equals("text")){	        	
+  	 	        }else if(post_keyword[i].equals("text")){	        
+  	 	        	if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	  	        		continue;
+  	  	        	}
   	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	        //게시물 키워드 사진일 때	
   	 	        }else if(post_keyword[i].equals("photo")){
@@ -977,7 +1034,17 @@ public class InteriorController {
   	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	          //게시물 키워드 구분선일 때
   	 	        }else if(post_keyword[i].equals("divisionline")){
-  	 	        	post.setPost_data(mrequest.getParameter("post_data"+i));	        	
+  	 	        	String value= "";
+  	  	        	if(mrequest.getParameter("post_data"+i).equals("solid")) {
+  	  	        		value = "1";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dashed")) {
+  	  	        		value = "2";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dotted")) {
+  	  	        		value = "3";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("double")) {
+  	  	        		value = "4";
+  	  	        	}
+  	  	        	post.setPost_data(value);	    	        	
   	 	        }
   	 	        //게시물 등록
   	 	        resultpost += interiorService.insertPost(post);
@@ -1016,10 +1083,16 @@ public class InteriorController {
   	 	 				post.setPost_contents(mrequest.getParameter("post_contents" + i));
   	 	 	        
   	 	 	        //게시물 키워드 소제목일 때
-  	 	 	        }else if(post_keyword[i].equals("strapline")){	        	
+  	 	 	        }else if(post_keyword[i].equals("strapline")){	    
+  	 	 	        if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	  	        		continue;
+  	  	        	}
   	 	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	 	        //게시물 키워드 텍스트일 때	
-  	 	 	        }else if(post_keyword[i].equals("text")){	        	
+  	 	 	        }else if(post_keyword[i].equals("text")){	 
+  	 	 	        if((mrequest.getParameter("post_contents"+i) == null || mrequest.getParameter("post_contents"+i).isEmpty())) {
+  	  	        		continue;
+  	  	        	}
   	 	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	 	        //게시물 키워드 사진일 때	
   	 	 	        }else if(post_keyword[i].equals("photo")){
@@ -1048,7 +1121,17 @@ public class InteriorController {
   	 	 	        	post.setPost_contents(mrequest.getParameter("post_contents"+i));
   	 	          //게시물 키워드 구분선일 때
   	 	 	        }else if(post_keyword[i].equals("divisionline")){
-  	 	 	        	post.setPost_data(mrequest.getParameter("post_data"+i));	        	
+  	 	 	        String value= "";
+  	  	        	if(mrequest.getParameter("post_data"+i).equals("solid")) {
+  	  	        		value = "1";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dashed")) {
+  	  	        		value = "2";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("dotted")) {
+  	  	        		value = "3";
+  	  	        	}else if(mrequest.getParameter("post_data"+i).equals("double")) {
+  	  	        		value = "4";
+  	  	        	}
+  	  	        	post.setPost_data(value);	    	        	
   	 	 	        }	 	 	       
   	 	 	        //게시물 등록
   	 	 	        resultpost += interiorService.insertPost(post);

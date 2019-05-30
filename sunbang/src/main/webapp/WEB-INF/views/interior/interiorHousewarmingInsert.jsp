@@ -93,6 +93,54 @@
 			$("#line2").css("display", "none");
 			$("#line3").css("display", "none");
 			$("#line4").css("display", "none");
+			
+			
+			$("#upload").bind("click",function() { 
+				 var img0 = $("#input_img0").val(); 
+				 if(img0==""){ 
+					 alert("커버 사진은 반드시 등록해야 합니다."); 
+	                 return false; 
+				 }
+				 var housing_type = $("#housing_type").val();
+				 if(housing_type ==""){
+					 alert("주거형태를 입력해주세요."); 
+	                 return false; 
+				 }
+				 var floor_area = $("#floor_area").val();
+				 if(floor_area=""){
+					 alert("평수를 입력해주세요."); 
+	                 return false; 
+				 }
+				 
+				 var style = $("#style").val();
+				 if(style=""){
+					 alert("스타일을 입력해주세요."); 
+	                 return false; 
+				 }
+				 
+				 var color1 = $("#color1").val();
+				 var color2 = $("#color2").val();
+				 var color3 = $("#color3").val();
+				 if(color1 == "" && color2 == "" && color3 == ""){
+					 alert("컬러  하나 이상 입력해야 합니다."); 
+	                 return false; 
+				 }
+				 var board_title= $("#board_title").val();
+				 if(board_title==""){ 
+					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+	                 return false; 	                 	                
+				 }			 
+				 var post_contents0 = $("#post_contents0").val();
+				 if(post_contents0==""){
+					 alert("게시물 내용을 입력해주세요."); 
+	                 return false; 
+				 }
+	               
+			         var str = $("#post_contents0").val(); 
+			         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			         $("#post_contents0").val(str);
+			         		    
+				}); 
 
 		});
 
@@ -270,41 +318,7 @@
 							"<br><input type='hidden' name='post_keyword' value='video'>동영상 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='width:100%;'><br><br>내용 : <textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
 		}
 
-		/* 		190522 03:52
-		 function addType(e) {
-		 $("#row" + e)
-		 .html(
-		 "<i class='fas fa-times-circle' id='insert_icon' onclick='delType("
-		 + e
-		 + ");'></i>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='소제목' onclick='addData1("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='텍스트' onclick='addData2("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;"
-		 + "<input type='button' class='insert_btn' value='사진' onclick='addData3("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button'  class='insert_btn' value='동영상' onclick='addData4("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;"
-		 + "<input type='button'  class='insert_btn' value='버튼' onclick='addData5("
-		 + e
-		 + ")'>&nbsp;&nbsp;&nbsp;<input type='button' class='insert_btn' value='구분선' onclick='addData6("
-		 + e + ")'>");
-		 $("#row" + (e + 1)).css("display", "");
-		 $("#line" + e).css("display", "");
 
-		 }	
-		 */
-
-		//클릭시 게시물 추가버튼으로 돌아감
-		/* function delType(e) {
-			$("#row" + e)
-					.html(
-							"<i class='fas fa-plus-circle' id='insert_icon' onclick='addType("
-									+ e
-									+ ");''></i>&nbsp;&nbsp;&nbsp;<span class='insert_line'>------------------------------------------</span>");
-			$("#rowdata" + e).html("");
-		} */
 	</script>
 	<br>
 	<br>
@@ -333,7 +347,7 @@
 			<div class="row">
 				<div class="col">
 					<select class="housing_type" id="housing_type" name="housing_type"
-						style="width: 100%; height: 35px; font-family: a고딕14;" required>
+						style="width: 100%; height: 35px; font-family: a고딕14;" >
 						<option value="">주거 형태(필수)</option>
 						<option value="원룸&오피스텔">원룸&amp;오피스텔</option>
 						<option value="아파트">아파트</option>
@@ -348,7 +362,7 @@
 					<select class="floor_area" id="floor_area" name="floor_area"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
 						<option value="">평수 선택</option>
-						<option value="10">10평 미만</option>
+						<option value="9">10평 미만</option>
 						<option value="10">10평 이상</option>
 						<option value="20">20평 미만</option>
 						<option value="30">30평 미만</option>
@@ -413,8 +427,8 @@
 			<br>
 			<div class="row">
 				<div class="col" style="font-family: a고딕14; ">				
-					<span >예산 : </span><input type="text" style="height: 35px; "
-						size="53" name="budget" id="budget" >&nbsp;원			
+					<span >예산 : </span><input type="number" style="height: 35px; "
+						size="53" name="budget" id="budget" required>&nbsp;원			
 				</div>
 				<br><br>
 			</div>
@@ -513,7 +527,7 @@
 			<br> <br>
 			<div class="row">
 				<div class="col" style="text-align: right;">
-					<input class="submit" type="submit" value="등&nbsp;록">
+					<input class="submit" id="upload" type="submit" value="등&nbsp;록">
 				</div>
 			</div>
 		</form>

@@ -140,11 +140,15 @@ font-size: 30px; font-family: a고딕14;
 							var value = "";						
 						for(var i in jsonObj.followlist){	
 							value += "<tr align='center'><td width='33%'><div class='jb_follow_profile'>"
-								    + "<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.followlist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
+								    + "<a href='istory.do?user_no="+${loginUser.user_no}+"&follower_no="+jsonObj.followlist[i].user_no+"'><img src='${pageContext.request.contextPath}/files/user/userImages/"+jsonObj.followlist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
 								    +"<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.followlist[i].user_id+"</span></div></td>"													
-						            +"<td width='33%' style='vertical-align: middle;'><span class='jb_follow_nickname'>"+jsonObj.followlist[i].nickname+"</span></td>"					
-						            +"<td width='33%' style='vertical-align: middle;'><input type='hidden' id='fuser_no"+i+"' value='"+jsonObj.followlist[i].user_no+"'><button type='button' class='btn btn-outline-danger' id='unfollow"+i+"' onclick='delFollow("+i+");'>X</button>"
-						            +"<button type='button' class='btn btn-outline-info' id='follow"+i+"' onclick='addFollow("+i+");' style='display:none;'>+</button></td></tr>";										
+						            +"<td width='33%' style='vertical-align: middle;'><span class='jb_follow_nickname'>"+jsonObj.followlist[i].nickname+"</span></a></td>"					
+						            +"<td width='33%' style='vertical-align: middle;'>";
+						            if(${loginUser.user_no} == ${fuser.user_no}){
+						            value += "<input type='hidden' id='fuser_no"+i+"' value='"+jsonObj.followlist[i].user_no+"'><button type='button' class='btn btn-outline-danger' id='unfollow"+i+"' onclick='delFollow("+i+");'>X</button>"
+						            +"<button type='button' class='btn btn-outline-info' id='follow"+i+"' onclick='addFollow("+i+");' style='display:none;'>+</button>";
+						            }
+						            value += "</td></tr>";										
 						}
 						$("#list").html(value);
 			        },error: function(returnData){			        	
@@ -273,7 +277,7 @@ font-size: 30px; font-family: a고딕14;
 						<td style="width:40%;"  align="right">
 							<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${fuser.user_no}">
 							<div class="jb_follow_profile">
-								<img src="${pageContext.request.contextPath }/files/interior/interiorMain/new1.PNG"
+								<img src="${pageContext.request.contextPath }/files/user/userImages/${fuser.user_profile}"
 									style="width: 200px; height: 200px; border-radius: 70%;">
 							</div>
 							</a>

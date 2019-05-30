@@ -62,6 +62,22 @@
     background-color: #fff;
 }
 
+@media screen and (max-width: 1400px) {
+
+	#jb_story_container #fix_con {
+		width: auto;
+		min-height: 0;
+		position: relative;
+		top: 0px;	
+	}
+	
+	#jb_story_container .col-md-9{
+	padding: 20px;
+	margin:20px;
+	}
+	
+}
+
 .jb_filter_btn {
 	display: inline-block;
 	font-family: a고딕15;
@@ -375,6 +391,12 @@ border-radius: 5px;
 							var jsonObj = JSON.parse(objStr);
 							var value = $("#list").html();
 							var value2 = $("#list2").html();
+							
+							if(jsonObj.iblist.length == 0){
+								value = "<div class='col'><br><br><br><br><br><br><br><h1 align='center'>조회된 게시물이 없습니다</h3></div>";
+								$("#list").html(value);		
+							}
+							
 							if (jsonObj.end_num == jsonObj.total_num) {
 								page = 0;
 							}
@@ -432,15 +454,15 @@ border-radius: 5px;
 												+ jsonObj.iblist[i].board_title
 												+ "</h5></div>";
 										value2 += "<div class='modal fade' id='jb_replyModal"+jsonObj.iblist[i].board_no+"'><div class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'><div class='modal-content'>"
-												+ "<div class='modal-header'><h4 class='modal-title'>댓글</h4><button class='close' data-dismiss='modal'>&times;</button></div>"
-												+ "<div class='modal-body'><div class='row'><div class='col-md-12' id='replylist"+jsonObj.iblist[i].board_no+"'></div></div></div>"
-												+ "<div class='modal-footer' id='reply"+jsonObj.iblist[i].board_no+"'><img class='mr-3' src='https://www.layoutit.com/img/sports-q-c-64-64-8.jpg' />"
-												+ "<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'><input type='hidden' id='reference_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
-												+ "<input type='button' class='jb_story_submitBtn' value='전송' onclick='addReply("
-												+ jsonObj.iblist[i].board_no
-												+ ");'><p style='padding-left:1.5em;'></p></div></div></div></div>";
+                                        +"<div class='modal-header'><h4 class='modal-title'>댓글</h4><button class='close' data-dismiss='modal'>&times;</button></div>"
+                                        +"<div class='modal-body'><div class='row'><div class='col-md-12' id='replylist"+jsonObj.iblist[i].board_no+"'></div></div></div>"
+                                        +"<div class='modal-footer' id='reply"+jsonObj.iblist[i].board_no+"'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />"
+        								+"<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'><input type='hidden' id='reference_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
+        								+"<input type='button' class='jb_filter1_submitBtn' value='전송' onclick='addReply("+jsonObj.iblist[i].board_no+");'><p style='padding-left:1.5em;'></p></div></div></div></div>";
 										list_no++;
-									}
+									}									
+									
+									
 									$("#list").html(value);
 									$("#list2").html(value2);
 								}
@@ -472,19 +494,22 @@ border-radius: 5px;
 						
                         if(jsonObj.irlist[i].reply_lev == 1){	
                         	
-                        if(i !=0 && jsonObj.irlist[i-1].reply_lev == 2){
+                        if(i != 0 && (jsonObj.irlist[i-1].reply_lev == 2 || jsonObj.irlist[i-1].reply_lev == 1)){
                         	value += "</div></div>";
                         }                        
-						value += "<div class='media'><img class='mr-3' src='https://www.layoutit.com/img/sports-q-c-64-64-8.jpg' />"
-						 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
+                        
+						 value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
+						  + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 						  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
-						   +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
-						   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
+						  +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
+						 if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 						    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
 						   }
-                        }                             
+						   
+                        }              
+                        
                         if(jsonObj.irlist[i].reply_lev == 2){
-						value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img src='https://www.layoutit.com/img/sports-q-c-64-64-2.jpg' /></a>"
+						value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img class='mr_3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
 								+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 								+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><a href='istory.do?user_no="+$("#i_user_no").val()+"&follower_no="+jsonObj.irlist[i].re_user_no+"'>@"+jsonObj.irlist[i].re_nickname+"</a>&nbsp;&nbsp;<span id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</span><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 								+"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
@@ -514,39 +539,35 @@ border-radius: 5px;
 			$("#reference_reply_no"+i).val($("#reply_no"+e).val());
 		} 
 
-		//댓글추가
-		function addReply(e) {
-			if ($("#i_user_no").val() != 0) {
-				if ($("#reply_contents" + e).val() != "") {
-					$.ajax({
-						type : "post",
-						dataType : "json",
-						data : {
-							board_no : e,
-							reply_lev : $("#reply_lev" + e).val(),
-							origin_reply_no : $("#origin_reply_no" + e).val(),
-							reply_contents : $("#reply_contents" + e).val(),
-							user_no : $("#i_user_no").val()
-						},
-						url : "irinsert.do",
-						success : function(returndata) {
-							var i = returndata;
-							listReply(i);
-							$("#reply_lev" + i).val(1);
-							$("#origin_reply_no" + i).val(0);
-							$("#reply_contents" + i).val("");
-						},
-						error : function() {
-
-						}
-					});
-				} else {
-					alert("댓글을 입력해주세요!");
+      //댓글추가
+      function addReply(e){            	    	
+         if($("#i_user_no").val()!=0){
+    	  if($("#reply_contents"+e).val() != ""){
+    	  $.ajax({
+		        type : "post",  
+		        dataType : "json", 
+		        data : {board_no : e, reply_lev : $("#reply_lev"+e).val(), origin_reply_no : $("#origin_reply_no"+e).val(),reply_contents: $("#reply_contents"+e).val(),reference_reply_no: $("#reference_reply_no"+e).val() ,user_no :$("#i_user_no").val()},
+		        url : "irinsert.do",
+		        success : function(returndata) {
+		        	var i = returndata;
+		        	listReply(i);
+		        	$("#reply_lev"+i).val(1);
+		        	$("#origin_reply_no"+i).val(0);
+		        	$("#reply_contents"+i).val("");		
+		        	$("#reference_reply_no"+i).val(0);
+		        
+			
+		        },error: function(){
+		        	
 				}
-			} else {
-				alert("로그인 후 이용 가능합니다.");
-			}
-		}
+              });
+          }else{
+        	  alert("댓글을 입력해주세요!");
+          }
+         }else{
+        	 alert("로그인 후 이용 가능합니다.");
+         }
+      } 
 
 		//댓글 삭제
 		function delReply(e) {
@@ -676,15 +697,17 @@ border-radius: 5px;
 					<div class="col-md-3">					 				
 						    <div id="fix_con">													
 								<div class="jb_story_profile">
-									<img src="${pageContext.request.contextPath }/files/interior/interiorMain/profile.PNG">
+									<img src="${pageContext.request.contextPath }/files/user/userImages/${fuser.user_profile}">
 								</div>
 								<br>
-								<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${loginUser.user_no}" class="font-weight-bold">${fuser.nickname}<br>${fuser.user_id } ${fuser.user_name }</a> <br><a href="ifollowlist.do?user_no=1"><span
+								<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${fuser.user_no}" class="font-weight-bold">${fuser.nickname}<br>${fuser.user_id } ${fuser.user_name }</a> <br><a href="ifollowlist.do?user_no=${fuser.user_no}"><span
 									style="font-family: a고딕14; opacity: 0.5;">팔로우 : ${fuser.follow_count} 팔로잉 : ${fuser.following_count}</span></a><br>	
 								<br>								
-								<br>								
+								<br>	
+								    <c:if test="${follower_no != loginUser.user_no}">							
 									<c:if test="${checkfollow != 1}"><button type="button" class="btn btn-outline-info" id="follow_btn1" onclick="addFollow(${follower_no});">팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn2" style="display:none;" onclick="delFollow(${follower_no});">언팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
-									<c:if test="${checkfollow == 1}"><button type="button" class="btn btn-outline-info" id="follow_btn2" onclick="delFollow(${follower_no});">언팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn1" style="display:none;" onclick="addFollow(${follower_no});">팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>																																		
+									<c:if test="${checkfollow == 1}"><button type="button" class="btn btn-outline-info" id="follow_btn2" onclick="delFollow(${follower_no});">언팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn1" style="display:none;" onclick="addFollow(${follower_no});">팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+									</c:if>																																		
 							</div>						
 					    </div>					    					    
 					  <div class="col-md-9">				

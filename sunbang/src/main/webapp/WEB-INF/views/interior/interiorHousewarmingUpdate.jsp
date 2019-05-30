@@ -102,6 +102,56 @@
 		//게시물추가버튼 숨김
 		$(function() {
 			$("#input_img0").on("change", handleImgFileSelect0);
+			
+			$("#upload").bind("click",function() { 
+				if($("#origin_post0").val() == 'empty'){
+					var img0 = $("#input_img0").val(); 
+					 if(img0==""){ 
+						 alert("커버 사진은 반드시 등록해야 합니다."); 
+		                 return false; 
+					 }
+					}
+				 var housing_type = $("#housing_type").val();
+				 if(housing_type ==""){
+					 alert("주거형태를 입력해주세요."); 
+	                 return false; 
+				 }
+				 var floor_area = $("#floor_area").val();
+				 if(floor_area=""){
+					 alert("평수를 입력해주세요."); 
+	                 return false; 
+				 }
+				 
+				 var style = $("#style").val();
+				 if(style=""){
+					 alert("스타일을 입력해주세요."); 
+	                 return false; 
+				 }
+				 
+				 var color1 = $("#color1").val();
+				 var color2 = $("#color2").val();
+				 var color3 = $("#color3").val();
+				 if(color1 == "" && color2 == "" && color3 == ""){
+					 alert("컬러  하나 이상 입력해야 합니다."); 
+	                 return false; 
+				 }
+				 var board_title= $("#board_title").val();
+				 if(board_title==""){ 
+					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+	                 return false; 	                 	                
+				 }			 
+				 var post_contents0 = $("#post_contents0").val();
+				 if(post_contents0==""){
+					 alert("게시물 내용을 입력해주세요."); 
+	                 return false; 
+				 }
+	               
+			         var str = $("#post_contents0").val(); 
+			         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			         $("#post_contents0").val(str);
+			         		    
+				}); 
+			
 		});
 
 		//파일업로드하면 아래화면에 출력 메소드(커버)
@@ -501,40 +551,40 @@
 							 <select class="housing_type"  id="housing_type" name="housing_type"
 								style="width: 100%; height: 35px; font-family: a고딕14;" required>
 								<option value="">주거형태(필수)</option>
-								<c:if test=" ${iblist.housing_type == '원룸&오피스텔'}">
+								<c:if test="${iblist.housing_type == '원룸&오피스텔'}">
 									<option value="원룸&오피스텔" selected>원룸&amp;오피스텔</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type != '원룸&오피스텔'}">
+								<c:if test="${iblist.housing_type != '원룸&오피스텔'}">
 									<option value="원룸&오피스텔">원룸&amp;오피스텔</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type == '아파트'}">
+								<c:if test="${iblist.housing_type == '아파트'}">
 									<option value="아파트" selected>아파트</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type != '아파트'}">
+								<c:if test="${iblist.housing_type != '아파트'}">
 									<option value="아파트">아파트</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type == '빌라&연립'}">
+								<c:if test="${iblist.housing_type == '빌라&연립'}">
 									<option value="빌라&연립" selected>빌라&amp;연립</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type != '빌라&연립'}">
+								<c:if test="${iblist.housing_type != '빌라&연립'}">
 									<option value="빌라&연립">빌라&amp;연립</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type == '단독주택'}">
+								<c:if test="${iblist.housing_type == '단독주택'}">
 									<option value="단독주택" selected>단독주택</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type != '단독주택'}">
+								<c:if test="${iblist.housing_type != '단독주택'}">
 									<option value="단독주택">단독주택</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type == '사무공간'}">
+								<c:if test="${iblist.housing_type == '사무공간'}">
 									<option value="사무공간" selected>사무공간</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type != '사무공간'}">
+								<c:if test="${iblist.housing_type != '사무공간'}">
 									<option value="사무공간">사무공간</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type == '사무공간'}">
+								<c:if test="${iblist.housing_type == '사무공간'}">
 									<option value="사무공간" selected>사무공간</option>
 								</c:if>
-								<c:if test=" ${iblist.housing_type != '사무공간'}">
+								<c:if test="${iblist.housing_type != '사무공간'}">
 									<option value="사무공간">사무공간</option>
 								</c:if>
 							</select>
@@ -542,7 +592,7 @@
 						&nbsp;&nbsp;
 						<div class="col">
 							<select class="floor_area" id="floor_area" name="floor_area"
-								style="width: 100%; height: 35px; font-family: a고딕14;">
+								style="width: 100%; height: 35px; font-family: a고딕14;" required>
 								<option value="">평수 선택</option>
 								<c:if test="${iblist.floor_area == 9 }">
 									<option value="9" selected>10평 미만</option>
@@ -804,7 +854,7 @@
 						<div class="col">
 							<span style="font-family: a고딕14;">예산 : </span><input type="text"
 								size="53" name="board_title" id="board_title"
-								style="width: 96%;" value="${iblist.budget}">
+								style="width: 96%;" value="${iblist.budget}" required>
 						</div>
 					</div>
 					<br>

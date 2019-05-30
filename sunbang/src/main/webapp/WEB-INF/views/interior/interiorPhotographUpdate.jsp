@@ -102,6 +102,48 @@
 		//게시물추가버튼 숨김
 		$(function() {
 			$("#input_img0").on("change", handleImgFileSelect0);
+			
+			$("#upload").bind("click",function() { 
+				if($("#origin_post0").val() == 'empty'){
+				var img0 = $("#input_img0").val(); 
+				 if(img0==""){ 
+					 alert("커버 사진은 반드시 등록해야 합니다."); 
+	                 return false; 
+				 }
+				}
+				 var space = $("#space").val();
+				 if(space ==""){
+					 alert("공간을 입력해주세요."); 
+	                 return false; 
+				 }
+				 var floor_area = $("#floor_area").val();
+				 if(floor_area==""){
+					 alert("평수를 입력해주세요."); 
+	                 return false; 
+				 }			
+				 var color1 = $("#color1").val();
+				 var color2 = $("#color2").val();
+				 var color3 = $("#color3").val();
+				 if(color1 == "" && color2 == "" && color3 == ""){
+					 alert("컬러  하나 이상 입력해야 합니다."); 
+	                 return false; 
+				 }
+				 var board_title= $("#board_title").val();
+				 if(board_title==""){ 
+					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+	                 return false; 	                 	                
+				 }			 
+				 var post_contents0 = $("#post_contents0").val();
+				 if(post_contents0==""){
+					 alert("게시물 내용을 입력해주세요."); 
+	                 return false; 
+				 }
+	               
+			         var str = $("#post_contents0").val(); 
+			         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			         $("#post_contents0").val(str);
+			         		    
+				}); 
 		});
 
 		//파일업로드하면 아래화면에 출력 메소드(커버)
@@ -902,7 +944,7 @@
 			</c:if>
 			<div class="row">
 				<div class="col" style="text-align: right;">
-					<input class="submit" type="submit" value="수&nbsp;정">
+					<input class="submit" id="upload" type="submit" value="수&nbsp;정">
 				</div>
 			</div>
 		</form>

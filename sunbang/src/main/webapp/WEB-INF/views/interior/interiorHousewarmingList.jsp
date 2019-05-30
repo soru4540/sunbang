@@ -386,7 +386,13 @@
 		        	
 		        	var objStr = JSON.stringify(returnData);	
 					var jsonObj = JSON.parse(objStr);							
-						var value = $("#list").html();						
+						var value = $("#list").html();			
+						
+						if(jsonObj.iblist.length == 0){
+							value = "<div class='col' align='center'><br><br><br><br><br><br><br><h1>조회된 게시물이 없습니다.</h3></div>";
+							$("#list").html(value);		
+						}
+						
 						 if (jsonObj.end_num == jsonObj.total_num){
 							 page = 0;
 						 }
@@ -558,16 +564,16 @@
 					<button class="jb_filter2_filterBtn2" onclick="addFilter5('프렌치&프로방스');">프렌치&프로방스</button>
 					<button class="jb_filter2_filterBtn2" onclick="addFilter5('러블리&로맨틱');">러블리&로맨틱</button>&nbsp;&nbsp;&nbsp;&nbsp; 
 					<button class="jb_filter2_filterBtn2" onclick="addFilter5('인더스트리얼');">인더스트리얼</button>&nbsp;&nbsp;&nbsp;&nbsp;				
-				</div>
+				</div>					
 				<div class="jb_filter2_item" id="jb_filter2_items6">				
-					<button class="jb_filter2_filterBtn2" onclick="addFilter6('그레이');">그레이</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#fafafa');">그레이</button>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#FFF');">화이트</button>&nbsp;&nbsp;&nbsp;&nbsp;
 					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#000');">블랙</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="jb_filter2_filterBtn2" onclick="addFilter6('블루');">블루</button>&nbsp;&nbsp;&nbsp;&nbsp; 
-					<button class="jb_filter2_filterBtn2" onclick="addFilter6('그린');">그린</button>&nbsp;&nbsp;&nbsp;&nbsp; 
-					<button class="jb_filter2_filterBtn2" onclick="addFilter6('레드');">레드</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="jb_filter2_filterBtn2" onclick="addFilter6('옐로우');">옐로우</button>&nbsp;&nbsp;&nbsp;&nbsp;
-					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#FFB6B9');">핑크</button>
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#3d97dd');">블루</button>&nbsp;&nbsp;&nbsp;&nbsp; 
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#96d783');">그린</button>&nbsp;&nbsp;&nbsp;&nbsp; 
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#d53736');">레드</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('#fed144');">옐로우</button>&nbsp;&nbsp;&nbsp;&nbsp;
+					<button class="jb_filter2_filterBtn2" onclick="addFilter6('##ee8a94');">핑크</button>
 				</div>				
 			</div>
 		</div>		

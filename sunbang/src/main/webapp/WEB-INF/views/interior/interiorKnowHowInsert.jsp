@@ -92,7 +92,37 @@ color:#ff9198;
 			$("#line2").css("display", "none");
 			$("#line3").css("display", "none");
 			$("#line4").css("display", "none");		
-
+						
+						
+			$('#upload').bind("click",function() { 
+			 var img0 = $("#input_img0").val(); 
+			 if(img0==""){ 
+				 alert("커버 사진은 반드시 등록해야 합니다."); 
+                 return false; 
+			 }
+			 var category1 = $("#category1").val();
+			 var category2 = $("#category2").val();
+			 var category3 = $("#category3").val();
+			 if(category1 == "" && category2 == "" && category3 == ""){
+				 alert("카테고리는 하나 이상 입력해야 합니다."); 
+                 return false; 
+			 }
+			 var board_title= $("#jb_khinsert_title").val();
+			 if(board_title==""){ 
+				 alert("노하우 제목은 반드시 입력해야 합니다."); 
+                 return false; 
+			 }	
+			 var post_contents0 = $("#post_contents0").val();
+			 if(post_contents0==""){
+				 alert("게시물 내용을 입력해주세요."); 
+                 return false; 
+			 }
+               
+		         var str = $("#post_contents0").val(); 
+		         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		         $("#post_contents0").val(str);
+		         		    
+			}); 
 	});	
 	
 	//파일업로드하면 아래화면에 출력 메소드(커버)
@@ -207,10 +237,7 @@ color:#ff9198;
 	
 		//클릭시 게시물 추가항목들 생성
 		function addType(e) {
-
-			$("#row" + e)
-					.html(
-							"<i class='fas fa-times-circle' id='jb_khinsert_icon' onclick='delType("
+			$("#row" + e).html("<i class='fas fa-times-circle' id='jb_khinsert_icon' onclick='delType("
 									+ e
 									+ ");'></i>&nbsp;&nbsp;&nbsp;<input type='button' class='jb_khinsert_btn' value='소제목' onclick='addData1("
 									+ e
@@ -242,29 +269,38 @@ color:#ff9198;
 			$("#rowdata" + e).html(
 					"<input type='hidden' name='post_keyword' value='empty'>");
 		}
+		
 		//클릭시 소제목 입력창 생성
 		function addData1(e) {
-			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='strapline'>소제목 : <br><input type='text'  class='' id='' name='post_contents"+e+"' size='100' style='width:100%;'>");
+		$("#rowdata" + e).html("<br><input type='hidden' name='post_keyword' value='strapline'>소제목 : <br><input type='text' id='post_contents"+e+"' name='post_contents"+e+"' size='100' style='width:100%;'>");		
 		}
 		//클릭시 텍스트 입력창 생성
-		function addData2(e) {
-			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='text'>내용 : <br><textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none; width:100%;'></textarea>");
+		function addData2(e) {			
+			$("#rowdata" + e).html("<br><input type='hidden' name='post_keyword' value='text'>내용 : <br><textarea id='post_contents"+e+"' name='post_contents"+e+"' rows='5' cols='101' style='resize: none; width:100%;'></textarea>");
+			$(function(){
+				$('#upload').bind("click",function() { 
+				var str = $("#post_contents"+e).val(); 
+		         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		         $("#post_contents"+e).val(str);
+				});
+			});
 		}
 		//클릭시 사진 입력창 생성
 		function addData3(e) {
-			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='photo'><label style='font-family:a고딕14;'>파일 선택<input type='file' id='input_img" + e + "' name='post_data" + e + "'></label><br><div class='row' style='background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; margin: 0 auto; padding-top: 30px; padding-bottom: 30px; max-width: inherit;'>"
+			$("#rowdata" + e).html("<br><input type='hidden' name='post_keyword' value='photo'><label style='font-family:a고딕14;'>파일 선택<input type='file' id='input_img" + e + "' name='post_data" + e + "'></label><br><div class='row' style='background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; margin: 0 auto; padding-top: 30px; padding-bottom: 30px; max-width: inherit;'>"
 									+ "<img id='img"
 									+ e
-									+ "' style='min-height:540px; max-height:100%; margin: 0 auto; max-width: inherit; '></div><br><br>내용 : <textarea id='' name='post_contents" + e +"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
+									+ "' style='min-height:540px; max-height:100%; margin: 0 auto; max-width: inherit; '></div><br><br>내용 : <textarea id='post_contents" + e +"' name='post_contents" + e +"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
+			$(function(){
+				$('#upload').bind("click",function() { 
+				var str = $("#post_contents"+e).val(); 
+		         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		         $("#post_contents"+e).val(str);
+				});
+			});
 			if (e == 1) {
 				$(function() {
-					$("#input_img" + e).on("change", handleImgFileSelect1);
+					$("#input_img" + e).on("change", handleImgFileSelect1);					
 				});
 			} else if (e == 2) {
 				$(function() {
@@ -288,22 +324,33 @@ color:#ff9198;
 		function addData4(e) {
 			$("#rowdata" + e)
 			.html(
-					"<br><input type='hidden' name='post_keyword' value='video'>동영상 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='width:100%;'><br><br>내용 : <textarea id='' name='post_contents"+e+"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
+					"<br><input type='hidden' name='post_keyword' value='video'>동영상 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100' style='width:100%;'><br><br>내용 : <textarea id='post_contents"+e+"' name='post_contents"+e+"' rows='5' cols='101' style='resize: none;border: 1px solid #ff9198; width:100%;'></textarea>");
+			$(function(){
+				$('#upload').bind("click",function() { 
+				var str = $("#post_contents"+e).val(); 
+		         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		         $("#post_contents"+e).val(str);
+				});
+			});
 		}
 		//클릭시 버튼 입력창 생성
 		function addData5(e) {
 			$("#rowdata" + e)
 					.html(
-							"<br><input type='hidden' name='post_keyword' value='button'>버튼 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100'style='width:100%;'><br><br>내용 : <input type='text' id='' name='post_contents"+e+"' size='100' style='width:95.6%;'>");
+							"<br><input type='hidden' name='post_keyword' value='button'>버튼 URL 링크를 입력해주세요 : <br><input type='text' id='' name='post_data"+e+"' size='100'style='width:100%;'><br><br>버튼 문구 : <input type='text' id='post_contents"+e+"' name='post_contents"+e+"' size='100' style='width:95.6%;'>");
+			$(function(){
+				$('#upload').bind("click",function() { 
+				var str = $("#post_contents"+e).val(); 
+		         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+		         $("#post_contents"+e).val(str);
+				});
+			});
 		}
 		//클릭시 구분선 입력창 생성
 		function addData6(e) {
 			$("#rowdata" + e)
-					.html(
-							"<br><input type='hidden' name='post_keyword' value='divisionline'><select class='' id='divisionline"+e+"' name='post_data"+e+"' style='width:300px;'><option value='solid' selected>실선</option><option value='dashed'>파선</option><option value='dotted'>점선</option>"
-									+ "<option value='double'>두줄</option></select><br><br><hr id='hrline"
-									+ e
-									+ "' style='border:3px solid #ffb6b9;width:70%;'>");
+					.html("<br><input type='hidden' name='post_keyword' value='divisionline'><select class='' id='divisionline"+e+"' name='post_data"+e+"' style='width:300px;'><option value='solid' selected>실선</option><option value='dashed'>파선</option><option value='dotted'>점선</option>"
+									+ "<option value='double'>두줄</option></select><br><br><hr id='hrline"+ e + "' style='border:3px solid #ffb6b9;width:70%;'>");
 			if (e == 1) {
 				$(function() {
 					$("#divisionline" + e).on(
@@ -430,10 +477,8 @@ color:#ff9198;
 	<br>
 	<div class="row">
 		<div class="col">
-		<textarea id="" name="post_contents0" rows="5" cols="101" 
-		style="resize: none; font-family: a고딕14; width:100%;">
-봄 햇살이 따뜻하게 내리쬐는 날, 소파에서 나른하게 쉬는 모습을 상상만해도 기분이 좋아집니다. 이사철이다 혼수철이다 해서 가구 할인도 많이 하는 것 같은데! 이번 기회에 소파 하나 장만해볼까 싶으시다면 이번 콘텐츠 묶음을 꼭 봐주세요. 막막한 여러분을 위해 기초부터 디테일까지 잘 안내해드릴 콘텐츠를 모아봤어요.
-</textarea>
+		<textarea id="post_contents0" name="post_contents0" rows="5" cols="101" 
+		style="resize: none; font-family: a고딕14; width:100%;resize: none;" ></textarea>
 		</div>
 	</div>	
 	<br>
@@ -444,10 +489,10 @@ color:#ff9198;
 				</div>
 			</div>
 			<div class="row">
-				<div class="col" width="100%" id="row1">
+				<div class="col" id="row1">
 					<i class="fas fa-plus-circle" id="jb_khinsert_icon"
 						onclick="addType(1);"></i>&nbsp;&nbsp;&nbsp;<span
-						class="jb_khinsert_line">------------------------------------------</span>
+						class="jb_khinsert_line">------------------------------------------------</span>
 				</div>
 			</div>
 			<div class="row">
@@ -464,7 +509,7 @@ color:#ff9198;
 				<div class="col" width="100%" id="row2">
 					<i class="fas fa-plus-circle" id="jb_khinsert_icon"
 						onclick="addType(2);"></i>&nbsp;&nbsp;&nbsp;<span
-						class="jb_khinsert_line">------------------------------------------</span>
+						class="jb_khinsert_line">------------------------------------------------</span>
 				</div>
 			</div>
 			<div class="row">
@@ -481,7 +526,7 @@ color:#ff9198;
 				<div class="col" id="row3" style="width:100%;">
 					<i class="fas fa-plus-circle" id="jb_khinsert_icon"
 						onclick="addType(3);"></i>&nbsp;&nbsp;&nbsp;<span
-						class="jb_khinsert_line">------------------------------------------</span>
+						class="jb_khinsert_line">------------------------------------------------</span>
 				</div>
 			</div>
 			<div class="row">
@@ -499,7 +544,7 @@ color:#ff9198;
 				<div class="col" style="width:100%;" id="row4">
 					<i class="fas fa-plus-circle" id="jb_khinsert_icon"
 						onclick="addType(4);"></i>&nbsp;&nbsp;&nbsp;<span
-						class="jb_khinsert_line">------------------------------------------</span>
+						class="jb_khinsert_line">------------------------------------------------</span>
 				</div>
 			</div>
 			<div class="row">
@@ -516,7 +561,7 @@ color:#ff9198;
 				<div class="col-md-8" style="width:100%;" id="row5">
 					<i class="fas fa-plus-circle" id="jb_khinsert_icon"
 						onclick="addType(5);"></i>&nbsp;&nbsp;&nbsp;<span
-						class="jb_khinsert_line">------------------------------------------</span>
+						class="jb_khinsert_line">------------------------------------------------</span>
 				</div>
 			</div>
 			<div class="row">
@@ -525,7 +570,7 @@ color:#ff9198;
 			<br><br>
 			<div class="row">
 				<div class="col">
-					<input class="submit" type="submit" value="등&nbsp;록">
+					<input id="upload" class="submit" type="submit" value="등&nbsp;록">
 				</div>
 			</div>
 		</form>

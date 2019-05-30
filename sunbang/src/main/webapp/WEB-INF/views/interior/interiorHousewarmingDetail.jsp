@@ -164,11 +164,10 @@
 </script>
 <!-- 팔로우 -->
 <script type="text/javascript">
-	$(function() {
-		if (loginUser != empty) {
+	$(function() {	
 			var user_no = ${loginUser.user_no};
 			var follower_no = ${houseWList[0].user_no};
-		}
+	
 		$.ajax({
 			url : "ifcheck.do",
 			data : {
@@ -591,13 +590,15 @@ border-radius: 5px;
 								<div class="col-md-12">
 									<br>
 									<p id="sh_category" name="category">
-										<c:if test="${not empty houseWList[0].space }">
-								${houseWList[0].space }  
+							<c:if test="${not empty houseWList[0].housing_type }">
+								${houseWList[0].housing_type }  
 								</c:if>
 										<c:if test="${not empty houseWList[0].floor_area }">
 								/ ${houseWList[0].floor_area }  평  
 								</c:if>
 									</p>
+                                    	<hr>
+									<span id="sh_boardhits">조회수 : ${houseWList[0].board_hits }</span>  
 									<c:if test="${not empty loginUser }">
 										<a data-toggle="modal" data-target="#sh_reportModal"
 											id="sh_report">신고 <i class="far fa-angry"></i></a>
@@ -722,8 +723,11 @@ border-radius: 5px;
 										<td><c:if test="${not empty houseWList[0].floor_area }">${houseWList[0].floor_area }</c:if> 평</td>										
 									</tr>
 									<tr>
-										<th>예산</th>										
-										<td><c:if test="${not empty houseWList[0].budget }">${houseWList[0].budget }</c:if> 원</td>										
+										<th>예산</th>
+										<td><c:if test="${not empty houseWList[0].budget }">
+												<fmt:formatNumber value="${houseWList[0].budget}"
+													pattern="#,###" />
+											</c:if> 원</td>
 									</tr>
 									<tr>
 										<th>스타일</th>										
@@ -798,17 +802,20 @@ border-radius: 5px;
 										
 				                        if(jsonObj.irlist[i].reply_lev == 1){	
 				                        	
-				                        if(i !=0 && jsonObj.irlist[i-1].reply_lev == 2){
+				                        if(i != 0 && (jsonObj.irlist[i-1].reply_lev == 2 || jsonObj.irlist[i-1].reply_lev == 1)){
 				                        	value += "</div></div>";
 				                        }                        
-										value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
-										 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
+				                        
+										 value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
+										  + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 										  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
-										   +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
-										   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
+										  +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
+										 if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 										    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
 										   }
-				                        }                             
+										   
+				                        }              
+				                        
 				                        if(jsonObj.irlist[i].reply_lev == 2){
 										value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img class='mr_3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
 												+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
@@ -840,7 +847,7 @@ border-radius: 5px;
 							$("#reference_reply_no"+i).val($("#reply_no"+e).val());
 						} 
 						
-					  //댓글추가
+				      //댓글추가
 				      function addReply(e){            	    	
 				         if($("#i_user_no").val()!=0){
 				    	  if($("#reply_contents"+e).val() != ""){
@@ -854,7 +861,10 @@ border-radius: 5px;
 						        	listReply(i);
 						        	$("#reply_lev"+i).val(1);
 						        	$("#origin_reply_no"+i).val(0);
-						        	$("#reply_contents"+i).val("");		        
+						        	$("#reply_contents"+i).val("");		
+						        	$("#reference_reply_no"+i).val(0);
+						        
+							
 						        },error: function(){
 						        	
 								}

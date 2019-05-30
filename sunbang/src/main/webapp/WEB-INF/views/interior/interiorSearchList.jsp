@@ -462,6 +462,29 @@ height:50px;
 width:50px;
 border-radius: 5px;
 }
+
+
+#list1_1 a:link {
+	color: #000000;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+#list1_1 a:visited {
+	color: #000000;
+	text-decoration: none;
+}
+
+#list1_1 a:active {
+	color: #000000;
+	font-family: a고딕15;
+	text-decoration: none;
+}
+
+.jb_result:hover{
+cursor:pointer;
+}
+
 </style>
 </head>
 <body>
@@ -533,14 +556,14 @@ border-radius: 5px;
             				  }			              							            		
                  list1 += "<a data-toggle='modal' data-target='#jb_replyModal"+jsonObj.iblist[i].board_no+"' id='jb_reply' onclick='openReplyModal("+jsonObj.iblist[i].board_no+");'><i class='far fa-comment'></i></a>&nbsp;&nbsp;&nbsp;&nbsp;<span style='font-size: large; opacity: 0.4;''>조회 : "+jsonObj.iblist[i].board_hits+"</span>"
    	                       + "</h5><h5 align='center'>"+jsonObj.iblist[i].board_title+"</h5></div>";
-            	 list1_1 += "<div class='modal fade' id='jb_replyModal"+jsonObj.iblist[i].board_no+"'><div class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'><div class='modal-content'>"
+            	 list1_1 +=  "<div class='modal fade' id='jb_replyModal"+jsonObj.iblist[i].board_no+"'><div class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'><div class='modal-content'>"
                  +"<div class='modal-header'><h4 class='modal-title'>댓글</h4><button class='close' data-dismiss='modal'>&times;</button></div>"
                  +"<div class='modal-body'><div class='row'><div class='col-md-12' id='replylist"+jsonObj.iblist[i].board_no+"'></div></div></div>"
                  +"<div class='modal-footer' id='reply"+jsonObj.iblist[i].board_no+"'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />"
 					+"<input type='text' class='textline'id='reply_contents"+jsonObj.iblist[i].board_no+"'><p style='padding-left:1.5em;'></p><input type='hidden' id='board_no"+jsonObj.iblist[i].board_no+"' value='"+jsonObj.iblist[i].board_no+"'><input type='hidden' id='reply_lev"+jsonObj.iblist[i].board_no+"' value='1'><input type='hidden' id='origin_reply_no"+jsonObj.iblist[i].board_no+"' value='0'><input type='hidden' id='reference_reply_no"+jsonObj.iblist[i].board_no+"' value='0'>"
-					+"<input type='button' class='jb_filter1_submitBtn' value='전송' onclick='addReply("+jsonObj.iblist[i].board_no+");'><p style='padding-left:1.5em;'></p></div></div></div></div>";
-            	 list_no++;    		
-            	 list1_count++;
+					+"<input type='button' class='jb_filter1_submitBtn' value='전송' onclick='addReply("+jsonObj.iblist[i].board_no+");'><p style='padding-left:1.5em;'></p></div></div></div></div>";            		
+            	    list_no++;
+					list1_count++;
 					}else if(jsonObj.iblist[i].board_type == "housewarming" ){
 						list2 += "<div class='col-md-4' align='center'><a class='jb_filter_a' href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'><div class='hovereffect'>"
 	    				  +	"<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter2_img'></div><br>"
@@ -646,7 +669,10 @@ border-radius: 5px;
 		}
 	}
 
-
+	//모달 open시 동작(댓글 리스트 출력)
+	function openReplyModal(e) {
+		listReply(e);
+	}
 	
 	//댓글 리스트 출력
 	function listReply(boardnum){		
@@ -664,19 +690,22 @@ border-radius: 5px;
 					
                     if(jsonObj.irlist[i].reply_lev == 1){	
                     	
-                    if(i !=0 && jsonObj.irlist[i-1].reply_lev == 2){
+                    if(i != 0 && (jsonObj.irlist[i-1].reply_lev == 2 || jsonObj.irlist[i-1].reply_lev == 1)){
                     	value += "</div></div>";
                     }                        
-					value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
-					 + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
+                    
+					 value += "<div class='media'><img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' />"
+					  + "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 					  +"<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><div id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</div><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
-					   +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
-					   if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
+					  +"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
+					 if(jsonObj.irlist[i].user_no == $("#i_user_no").val()){
 					    value += "<input class='jb_filter_btn2' type='button' value='댓글수정' onclick='changeReply("+jsonObj.irlist[i].reply_no+");'><input class='jb_filter_btn2' type='button' value='댓글삭제' onclick='delReply("+jsonObj.irlist[i].reply_no+");'>";	   
 					   }
-                    }                             
+					   
+                    }              
+                    
                     if(jsonObj.irlist[i].reply_lev == 2){
-					value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
+					value +=	"<div class='media mt-3'><a class='pr-3' href='#'><img class='mr_3' src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.irlist[i].user_profile+"' /></a>"
 							+ "<div class='media-body'><h5 class='mt-0'>"+jsonObj.irlist[i].nickname+"</h5>"
 							+ "<h6><input type='hidden' id='reply_contents_return"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_contents+"'><a href='istory.do?user_no="+$("#i_user_no").val()+"&follower_no="+jsonObj.irlist[i].re_user_no+"'>@"+jsonObj.irlist[i].re_nickname+"</a>&nbsp;&nbsp;<span id='reply_contents_line"+jsonObj.irlist[i].reply_no+"'>"+jsonObj.irlist[i].reply_contents+"</span><h6><input type='hidden' id='board_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].board_no+"'><input type='hidden' id='origin_reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].origin_reply_no+"'><input type='hidden' id='reply_no"+jsonObj.irlist[i].reply_no+"' value='"+jsonObj.irlist[i].reply_no+"'>"
 							+"<input class='jb_filter_btn2' type='button' value='댓글달기' onclick='addReplyLine("+jsonObj.irlist[i].reply_no+");'>";
@@ -705,33 +734,36 @@ border-radius: 5px;
 		$("#origin_reply_no"+i).val($("#origin_reply_no"+e).val());		
 		$("#reference_reply_no"+i).val($("#reply_no"+e).val());
 	} 
-	
-  //댓글추가
-  function addReply(e){            	    	
-     if($("#i_user_no").val()!=0){
-	  if($("#reply_contents"+e).val() != ""){
-	  $.ajax({
-	        type : "post",  
-	        dataType : "json", 
-	        data : {board_no : e, reply_lev : $("#reply_lev"+e).val(), origin_reply_no : $("#origin_reply_no"+e).val(),reply_contents: $("#reply_contents"+e).val(),user_no :$("#i_user_no").val()},
-	        url : "irinsert.do",
-	        success : function(returndata) {
-	        	var i = returndata;
-	        	listReply(i);
-	        	$("#reply_lev"+i).val(1);
-	        	$("#origin_reply_no"+i).val(0);
-	        	$("#reply_contents"+i).val("");		        
-	        },error: function(){
-	        	
-			}
-          });
-      }else{
-    	  alert("댓글을 입력해주세요!");
-      }
-     }else{
-    	 alert("로그인 후 이용 가능합니다.");
-     }
-  } 
+	  
+   //댓글추가
+      function addReply(e){            	    	
+         if($("#i_user_no").val()!=0){
+    	  if($("#reply_contents"+e).val() != ""){
+    	  $.ajax({
+		        type : "post",  
+		        dataType : "json", 
+		        data : {board_no : e, reply_lev : $("#reply_lev"+e).val(), origin_reply_no : $("#origin_reply_no"+e).val(),reply_contents: $("#reply_contents"+e).val(),reference_reply_no: $("#reference_reply_no"+e).val() ,user_no :$("#i_user_no").val()},
+		        url : "irinsert.do",
+		        success : function(returndata) {
+		        	var i = returndata;
+		        	listReply(i);
+		        	$("#reply_lev"+i).val(1);
+		        	$("#origin_reply_no"+i).val(0);
+		        	$("#reply_contents"+i).val("");		
+		        	$("#reference_reply_no"+i).val(0);
+		        
+			
+		        },error: function(){
+		        	
+				}
+              });
+          }else{
+        	  alert("댓글을 입력해주세요!");
+          }
+         }else{
+        	 alert("로그인 후 이용 가능합니다.");
+         }
+      } 
 	
   //댓글 삭제
   function delReply(e){
@@ -783,13 +815,34 @@ border-radius: 5px;
 	 $("#reply_contents_line"+e).html($("#reply_contents_return"+e).val());
  }
   
+ var key1 =0;
+ var key2 =0;
+ var key3 =0;
  function displayList(e){
-	 if(e ==1){
-		$("#list1").css("display","");
+	 if(e == 1){
+		 if(key1 == 0){
+		 $("#list1").css("display","");
+		 key1++;
+		 }else{
+		 $("#list1").css("display","none");
+	      key1--;
+		 }		
 	 }else if(e ==2){
-		 $("#list2").css("display",""); 
+		 if(key2 == 0){
+			 $("#list2").css("display","");
+			 key2++;
+			 }else{
+			 $("#list2").css("display","none");
+		      key2--;
+			 }		
 	 }else if(e ==3){
-		 $("#list3").css("display","");
+		 if(key3 == 0){
+			 $("#list3").css("display","");
+			 key3++;
+			 }else{
+			 $("#list3").css("display","none");
+		      key3--;
+			 }		
      }
  }
   </script> 
@@ -809,7 +862,7 @@ border-radius: 5px;
   </div>
   <div class="row">
     <div class="col">
-      <span style="font-size:x-large;font-family: a고딕13;" onclick="displayList(1);">사진_Photograph ( <span id="list1_count"></span> ) </span>
+      <span class="jb_result" style="font-size:x-large;font-family: a고딕13;" onclick="displayList(1);">사진_Photograph ( <span id="list1_count"></span> ) </span>
        <hr>
     </div>
   </div>
@@ -821,7 +874,7 @@ border-radius: 5px;
   </div>     
   <div class="row">
     <div class="col">
-     <span style="font-size:x-large;font-family: a고딕13;" onclick="displayList(2);">집들이_HouseWarming ( <span id="list2_count"></span> )</span>
+     <span class="jb_result" style="font-size:x-large;font-family: a고딕13;" onclick="displayList(2);">집들이_HouseWarming ( <span id="list2_count"></span> )</span>
        <hr>
     </div>
   </div>
@@ -830,7 +883,7 @@ border-radius: 5px;
   </div>   
   <div class="row">
     <div class="col">
-      <span style="font-size:x-large;font-family: a고딕13;" onclick="displayList(3);">노하우_KnowHow  ( <span id="list3_count"></span> )</span>
+      <span class="jb_result" style="font-size:x-large;font-family: a고딕13;" onclick="displayList(3);">노하우_KnowHow  ( <span id="list3_count"></span> )</span>
        <hr>
     </div>
   </div>

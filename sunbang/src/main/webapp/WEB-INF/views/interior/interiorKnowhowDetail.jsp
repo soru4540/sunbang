@@ -507,22 +507,24 @@ $(function(){
 								<c:if test="${knowHowPostList.post_keyword == 'button' }">
 									<br><br>
 									<div class="sh_knowhow_content_btn">
-										<button onclick="window.open('${knowHowPostList.post_data}')">${knowHowPostList.post_contents }</button>
+										<button onclick="window.open('${knowHowPostList.post_data}')"><c:if test="${knowHowPostList.post_contents != null }">${knowHowPostList.post_contents}</c:if>
+										<c:if test="${knowHowPostList.post_contents == null }">U R L _ B U T T O N</c:if>
+										</button>
 									</div>
 									<br><br>
 								</c:if>
 								
 								<c:choose>
-									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == 1}">
+									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == '1'}">
 										<hr style="border:2px solid #ffb6b9; width:90%;">
 									</c:when>
-									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == 2}">
+									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == '2'}">
 										<hr style="border:2px dashed #ffb6b9; width:90%;">
 									</c:when>
-									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == 3}">
+									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == '3'}">
 										<hr style="border:2px dotted #ffb6b9; width:90%;">
 									</c:when>
-									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == 4}">
+									<c:when test="${knowHowPostList.post_keyword == 'divisionline' && knowHowPostList.post_data == '4'}">
 										<hr style="border:3px double #ffb6b9; width:90%;">
 									</c:when>
 								</c:choose>								

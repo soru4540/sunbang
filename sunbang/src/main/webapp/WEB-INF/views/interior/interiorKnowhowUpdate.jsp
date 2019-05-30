@@ -81,7 +81,39 @@
 	<script type="text/javascript">
 	//게시물추가버튼 숨김
 	$(function(){
-		   $("#input_img0").on("change",handleImgFileSelect0);				   			
+		   $("#input_img0").on("change",handleImgFileSelect0);	
+		   
+			$('#upload').bind("click",function() { 
+				if($("#origin_post0").val() == 'empty'){
+					var img0 = $("#input_img0").val(); 
+					 if(img0==""){ 
+						 alert("커버 사진은 반드시 등록해야 합니다."); 
+		                 return false; 
+					 }
+					}
+				 var category1 = $("#category1").val();
+				 var category2 = $("#category2").val();
+				 var category3 = $("#category3").val();
+				 if(category1 == "" && category2 == "" && category3 == ""){
+					 alert("카테고리는 하나 이상 입력해야 합니다."); 
+	                 return false; 
+				 }
+				 var board_title= $("#jb_khinsert_title").val();
+				 if(board_title==""){ 
+					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+	                 return false; 
+				 }	
+				 var post_contents0 = $("#post_contents0").val();
+				 if(post_contents0==""){
+					 alert("게시물 내용을 입력해주세요."); 
+	                 return false; 
+				 }
+	               
+			         var str = $("#post_contents0").val(); 
+			         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			         $("#post_contents0").val(str);
+			         		    
+				}); 
 	});	
 	
 	//파일업로드하면 아래화면에 출력 메소드(커버)

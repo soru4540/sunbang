@@ -180,7 +180,13 @@
 	        success : function(returnData) {		    	        	
 	        	var objStr = JSON.stringify(returnData);	
 				var jsonObj = JSON.parse(objStr);							
-					var value = $("#list").html();						
+					var value = $("#list").html();		
+					
+					if(jsonObj.iblist.length == 0){
+						value = "<div class='col' align='center'><br><br><br><br><br><br><br><h1>조회된 게시물이 없습니다.</h3></div>";
+						$("#list").html(value);		
+					}
+					
 					 if (jsonObj.end_num == jsonObj.total_num){
 						 page = 0;
 					 }
@@ -195,7 +201,17 @@
 		            		
 		            	value += "<div class='col-md-4'><a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'>"
 		            	       + "<img src='${pageContext.request.contextPath }/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter3_img'><br>"
-		    				   + "<h6 style='padding-top: 5px;'>리모델링</h6><h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6> </a></div>";				    					            		            					            		            
+		    				   + "<h6 style='padding-top: 5px;'>";
+		    				   if(jsonObj.iblist[i].category1 != null){
+		    					   value += jsonObj.iblist[i].category1+" ";		    					   
+		    				   }
+		    				   if(jsonObj.iblist[i].category2 != null){
+		    					   value += jsonObj.iblist[i].category2+" ";
+		    				   }
+		    				   if(jsonObj.iblist[i].category3 != null){
+		    					   value += jsonObj.iblist[i].category3;
+		    				   }
+		    				   value += "</h6><h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6> </a></div>";				    					            		            					            		            
 		                 list_no++;                        
 		            	}
 		            	$("#list").html(value);					           

@@ -440,7 +440,7 @@ select * from tb_reply
 left join tb_user using (user_no) 
 left join (select user_no re_user_no,reply_no re_reply_no,user_id re_user_id,nickname re_nickname,user_profile re_user_profile from tb_reply
 left join tb_user using (user_no)) on(reference_reply_no = re_reply_no)
-where board_no =95
+where board_no = #{board_no}
 order by origin_reply_no asc, reply_lev asc, reply_no asc
 </select>
 
@@ -577,7 +577,7 @@ group by user_no) using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
 group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
-and user_no in (select user_no from tb_follow where follower_no = #{user_no})
+and user_no in (select follower_no from tb_follow where user_no = #{user_no})
 order by board_no desc
 ) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>
@@ -622,6 +622,7 @@ group by user_no) using(user_no)
 left join(select count(user_no) like_count,board_no from tb_like
 group by board_no) using(board_no))
 where board_no = #{board_no}
+order by post_no
 </select>
 
 <select id="selectKnowhowLikeCheck" parameterType="Like" resultType="int">

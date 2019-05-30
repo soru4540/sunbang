@@ -93,6 +93,46 @@
 			$("#line2").css("display", "none");
 			$("#line3").css("display", "none");
 			$("#line4").css("display", "none");
+			
+			$("#upload").bind("click",function() { 
+				 var img0 = $("#input_img0").val(); 
+				 if(img0==""){ 
+					 alert("커버 사진은 반드시 등록해야 합니다."); 
+	                 return false; 
+				 }
+				 var space = $("#space").val();
+				 if(space ==""){
+					 alert("공간을 입력해주세요."); 
+	                 return false; 
+				 }
+				 var floor_area = $("#floor_area").val();
+				 if(floor_area==""){
+					 alert("평수를 입력해주세요."); 
+	                 return false; 
+				 }			
+				 var color1 = $("#color1").val();
+				 var color2 = $("#color2").val();
+				 var color3 = $("#color3").val();
+				 if(color1 == "" && color2 == "" && color3 == ""){
+					 alert("컬러  하나 이상 입력해야 합니다."); 
+	                 return false; 
+				 }
+				 var board_title= $("#board_title").val();
+				 if(board_title==""){ 
+					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+	                 return false; 	                 	                
+				 }			 
+				 var post_contents0 = $("#post_contents0").val();
+				 if(post_contents0==""){
+					 alert("게시물 내용을 입력해주세요."); 
+	                 return false; 
+				 }
+	               
+			         var str = $("#post_contents0").val(); 
+			         str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+			         $("#post_contents0").val(str);
+			         		    
+				}); 
 
 		});
 
@@ -334,8 +374,8 @@
 			<div class="row">
 				<div class="col">
 					<select class="color" id="color1" name="color1"
-						style="width: 100%; height: 35px; font-family: a고딕14;"required>
-						<option value="">전체 컬러 선택(필수)</option>
+						style="width: 100%; height: 35px; font-family: a고딕14;">
+						<option value="">전체 컬러 선택</option>
 						<option value="#d53736">RED</option>
 						<option value="#fed144">YELLOW</option>
 						<option value="#96d783">GREEN</option>
@@ -472,7 +512,7 @@
 			<br> <br>
 			<div class="row">
 				<div class="col" style="text-align: right;">
-					<input class="submit" type="submit" value="등&nbsp;록">
+					<input class="submit" id="upload" type="submit" value="등&nbsp;록">
 				</div>
 			</div>
 		</form>
