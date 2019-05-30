@@ -466,14 +466,7 @@ color:#ff9198;
 	     <span style="font-family: a고딕14;">제목 : </span><input type="text" 
 	     size="53" name="board_title" id="jb_khinsert_title" style="width: 96%;">		
 		</div>
-	</div>
-	<br>
-	<div class="row">
-		<div class="col">
-		<input type="hidden" id="user_no" name="user_no" value="${loginUser.user_no}">
-		<h5 style="font-family:a고딕14;"><i class="far fa-grin"></i>&nbsp;&nbsp;닉네임</h5>
-		</div>
-	</div>
+	</div>	
 	<br>
 	<div class="row">
 		<div class="col">

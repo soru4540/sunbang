@@ -119,7 +119,7 @@
 				 }
 				 var board_title= $("#board_title").val();
 				 if(board_title==""){ 
-					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+					 alert("사진 제목은 반드시 입력해야 합니다."); 
 	                 return false; 	                 	                
 				 }			 
 				 var post_contents0 = $("#post_contents0").val();

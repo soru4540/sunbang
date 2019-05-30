@@ -127,7 +127,7 @@
 				 }
 				 var board_title= $("#board_title").val();
 				 if(board_title==""){ 
-					 alert("노하우 제목은 반드시 입력해야 합니다."); 
+					 alert("집들이 제목은 반드시 입력해야 합니다."); 
 	                 return false; 	                 	                
 				 }			 
 				 var post_contents0 = $("#post_contents0").val();
@@ -390,37 +390,43 @@
 			<div class="col">
 					<select class="color" id="color1" name="color1"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
-						<option value="">전체 컬러 선택(필수)</option>
-						<option value="#d53736" >RED</option>
-						<option value="#fed144" >YELLOW</option>
-						<option value="#96d783" >GREEN</option>
-						<option value="#3d97dd" >BLUE</option>
-						<option value="#ee8a94" >PINK</option>
+						<option value="">전체 컬러 선택</option>
+						<option value="#d53736">RED</option>
+						<option value="#fed144">YELLOW</option>
+						<option value="#96d783">GREEN</option>
+						<option value="#3d97dd">BLUE</option>
+						<option value="#ee8a94">PINK</option>
 						<option value="#fafafa">WHITE</option>
+						<option value="#fff">GRAY</option>
+						<option value="#000">BLACK</option>
 					</select>
 				</div>
 				<div class="col">
 					<select class="color" id="color2" name="color2"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
-						<option value="">벽 컬러 선택</option>
-						<option value="#d53736" >RED</option>
-						<option value="#fed144" >YELLOW</option>
-						<option value="#96d783" >GREEN</option>
-						<option value="#3d97dd" >BLUE</option>
-						<option value="#ee8a94" >PINK</option>
+							<option value="">벽 컬러 선택</option>
+						<option value="#d53736">RED</option>
+						<option value="#fed144">YELLOW</option>
+						<option value="#96d783">GREEN</option>
+						<option value="#3d97dd">BLUE</option>
+						<option value="#ee8a94">PINK</option>
 						<option value="#fafafa">WHITE</option>
+						<option value="#fff">GRAY</option>
+						<option value="#000">BLACK</option>
 					</select>
 				</div>
 				<div class="col">
 					<select class="color" id="color3" name="color3"
 						style="width: 100%; height: 35px; font-family: a고딕14;">
-						<option value="">바닥 컬러 선택</option>
-						<option value="#d53736" >RED</option>
-						<option value="#fed144" >YELLOW</option>
-						<option value="#96d783" >GREEN</option>
-						<option value="#3d97dd" >BLUE</option>
-						<option value="#ee8a94" >PINK</option>
+				       <option value="">바닥 컬러 선택</option>
+						<option value="#d53736">RED</option>
+						<option value="#fed144">YELLOW</option>
+						<option value="#96d783">GREEN</option>
+						<option value="#3d97dd">BLUE</option>
+						<option value="#ee8a94">PINK</option>
 						<option value="#fafafa">WHITE</option>
+						<option value="#fff">GRAY</option>
+						<option value="#000">BLACK</option>
 					</select>
 				</div>
 			</div>

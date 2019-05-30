@@ -642,16 +642,7 @@
 								size="53" name="board_title" id="jb_khinsert_title"
 								value="${iblist.board_title }" style="width:96%;">
 						</div>
-					</div>
-					<br>
-					<div class="row">
-						<div class="col">
-							<input type="hidden" id="user_no" name="user_no" value="2">
-							<h5>
-								<i class="far fa-grin"></i>&nbsp;&nbsp;닉네임
-							</h5>
-						</div>
-					</div>
+					</div>								
 					<br>
 					<div class="row">
 						<div class="col">
