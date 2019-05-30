@@ -312,7 +312,7 @@ $(function(){
 		<!-- 부동산 보러가기 버튼 -->
 		<div id="js_index_row">
 			<button type="button" class="btn btn-success"
-				style="background-color: #61c0bf; border-color: #61c0bf;">인기매물
+				style="background-color: #61c0bf; border-color: #61c0bf;" onclick="location.href='realtymain.do'">인기매물
 				보러가기</button>
 		</div>
 		<hr id="js_index_hr">
@@ -347,7 +347,7 @@ $(function(){
 		<!-- 인테리어 보러가기 버튼 -->
 		<div id="js_index_row">
 			<button type="button" class="btn btn-danger"
-				style="background-color: #ffb6b9; border-color: #ffb6b9;">인기
+				style="background-color: #ffb6b9; border-color: #ffb6b9;" onclick="location.href='interiormain.do'">인기
 				인테리어 보러가기</button>
 		</div>
 		<br> <br> <br> <br> <br> <br> <br>
