@@ -1062,6 +1062,7 @@ b {
 							var realty = "";
 							var jsonStr = JSON.stringify(data);
 							var json = JSON.parse(jsonStr);
+							if(json.length > 0) {
 							for ( var i in json) {
 
 								var a = json[i].realty_status;
@@ -1072,6 +1073,14 @@ b {
 									count++;
 								}
 							}//for
+							} else{	 // 조회된 결과가 없을때
+								$("#hj_housediv").html("");
+								$("#hj_jsonLength")
+										.html(
+												"<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
+														+ "조회된 결과가 없습니다"
+														+ "</div>");
+							}
 							function marking(param) {
 								var bounds = map.getBounds();
 								var swLatlng = bounds.getSouthWest();
@@ -1153,7 +1162,8 @@ b {
 								var length = param.length;
 								var jsonLength = "<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
 										+ "조건에 맞는 방 " + length + " 개 </div>";
-								if (json != null) {
+										
+								if (param.length > 0) {
 									for ( var j in param) {
 										if (param[j].premium == 'Y') {
 											if (monthmax == 0
@@ -1349,15 +1359,7 @@ b {
 									} //for
 									pvalues += values;
 									$("#hj_housediv").html(pvalues);
-									$("#hj_jsonLength").html(jsonLength)
-								}// if json != null
-								else { // 조회된 결과가 없을때
-									$("#hj_housediv").html("");
-									$("#hj_jsonLength")
-											.html(
-													"<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
-															+ "조회된 결과가 없습니다"
-															+ "</div>");
+									$("#hj_jsonLength").html(jsonLength);
 								}
 							}//list func
 
