@@ -388,7 +388,7 @@
 					var jsonObj = JSON.parse(objStr);							
 						var value = $("#list").html();			
 						
-						if(jsonObj.iblist.length == 0){
+						if(pagenum ==0 && jsonObj.iblist.length == 0){
 							value = "<div class='col' align='center'><br><br><br><br><br><br><br><h1>조회된 게시물이 없습니다.</h3></div>";
 							$("#list").html(value);		
 						}
