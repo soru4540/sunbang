@@ -682,6 +682,7 @@ group by user_no) using(user_no)
 left join(select count(user_no) like_count,board_no from tb_like
 group by board_no) using(board_no))
 where board_no = #{board_no}
+order by post_no asc
 </select>
 
 <!-- 해당 게시판 번호의 게시물 전체 삭제 -->
