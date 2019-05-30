@@ -97,8 +97,8 @@ public class ChatServiceImpl implements ChatService{
 	}
 
 	@Override
-	public User selectUserChat(String nickname) {
-		return chatDao.selectUserChat(mybatisSession, nickname);
+	public User selectUserChat(String nickname, String check) {
+		return chatDao.selectUserChat(mybatisSession, nickname, check);
 	}
 	
 	@Override

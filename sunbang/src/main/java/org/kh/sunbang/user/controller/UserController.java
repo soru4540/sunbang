@@ -188,6 +188,9 @@ public class UserController {
 		profile.transferTo(new File(savePath + "\\" + user_profile));
 		user.setUser_profile(user_profile);
 		}
+		if(profile.isEmpty()) {
+			user_profile = "guests.jpg";
+		}
 		
 		user.setPhone(phone);
 		user.setUser_profile(user_profile);
@@ -369,11 +372,13 @@ public class UserController {
 			user_profile =request.getParameter("checkimg");
 		}
 		if(request.getParameter("resultimg").equals("none")) {
-			user_profile = null;
 			File file = new File(savePath+"/"+request.getParameter("checkimg"));
 			if(file.exists() == true) {
+				if(request.getParameter("checkimg") != "guests.jpg") {
 				file.delete();
+				}
 			}
+			user_profile = "guests.jpg";
 		}
 		if(request.getParameter("resultimg").equals("true")) {
 		if(!profile.isEmpty()) {
@@ -490,7 +495,7 @@ public class UserController {
 				+ "&mode=" + encoder.encode("1".getBytes())
 				+ "&smsType=S";
 		
-		postParams += "&testflag="+encoder.encode("Y".getBytes());
+		/*postParams += "&testflag="+encoder.encode("Y".getBytes());*/
         
         con.setDoOutput(true);
         OutputStream os = con.getOutputStream();

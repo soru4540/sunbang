@@ -79,8 +79,12 @@ public class ChatDao {
 		return session.delete("chatMapper.deleteChatBlock", chatBlock);
 		}
 	
-	public User selectUserChat(SqlSessionTemplate session, String nickname) {
-		return session.selectOne("chatMapper.selectUserChat", nickname);	
+	public User selectUserChat(SqlSessionTemplate session, String nickname, String check) {
+		if(check.equals("user")) {
+		return session.selectOne("chatMapper.selectUserChat", nickname);
+		}else {
+			return session.selectOne("chatMapper.selectChatNo", nickname);	
+		}
 	}
 	
 	public int insertUserChat(SqlSessionTemplate session, Chat chat) {

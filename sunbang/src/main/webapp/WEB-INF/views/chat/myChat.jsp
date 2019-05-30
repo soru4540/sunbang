@@ -83,6 +83,9 @@ $(function(){
 	});
 	
 	$("#jw_nickchatin").click(function(){
+		if(${loginUser.user_no} == 0){
+			$("#jw_chatdiv"+$("#jw_resultusernod").val()).show();
+		}else{
 		$.ajax({
 			url: "cuserchatinsert.do",
 			type: "get",
@@ -100,16 +103,18 @@ $(function(){
 				console.warn("cuserchatinsert X");
 			}
 		});
+		}
 	});
 	
 	$("#jw_nicksearchbtn").click(function(){
 		$.ajax({
 			url: "cselectuser.do",
 			type: "get",
-			data: {nickname: $("#jw_nicksearchinput").val()},
+			<c:if test="${loginUser.user_no eq 0}"> data: {nickname: $("#jw_nicksearchinput").val(), check: "chat"},</c:if>
+			<c:if test="${loginUser.user_no ne 0}"> data: {nickname: $("#jw_nicksearchinput").val(), check: "user"},</c:if>
 			dataType: "text",
 			success: function(result){
-				if(result != 0 && result != ${loginUser.user_no}){
+				if(result != -1 && result != ${loginUser.user_no}){
 					$("#jw_resultusernod").val(result);
 					$("#jw_nicksearchdiv").hide();
 					$("#jw_nickresultdiv").show();
@@ -177,7 +182,15 @@ function chatmsgList(){
 		for(var i in jsonObj.clist){
 			
 			if(!$("#jw_chatdiv"+jsonObj.clist[i].chat_no).length){
-				if(${loginUser.user_no} == 0 && jsonObj.clist[i].message_count == 0){
+				if(${loginUser.user_no} == 0 && jsonObj.clist[i].message_count == 0 && jsonObj.clist[i].chat_type != '단체'){
+					outClist += "<div class='chatdiv crdiv mt-2' id='jw_chatdiv"+jsonObj.clist[i].chat_no+"' style='display:none;'>[<span class='chatType'>"+jsonObj.clist[i].chat_type+"</span>]<input type='hidden' id='jw_chattyped"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_type+"'><input type='hidden' id='jw_chatnamed"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_name +"'>";
+					if(jsonObj.clist[i].chat_type == '단체'){
+					outClist += jsonObj.clist[i].chat_name +"<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style='display:none;'></span><span id='jw_chatdeld"+jsonObj.clist[i].chat_no+"' class='btn-lgreen mr-2' style='float:right;'>나가기</span></div>";
+					}else if(jsonObj.clist[i].chat_type == '관리자'){
+						outClist +="<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style=''></span></div>";
+					}else{
+					outClist +="<span class='ccculist' id='jw_ccculist"+jsonObj.clist[i].chat_no+"' style=''></span><span id='jw_chatdeld"+jsonObj.clist[i].chat_no+"' class='btn-lgreen mr-2' style='float:right;'>나가기</span></div>";	
+					}
 				}else{
 			outClist += "<div class='chatdiv crdiv mt-2' id='jw_chatdiv"+jsonObj.clist[i].chat_no+"'>[<span class='chatType'>"+jsonObj.clist[i].chat_type+"</span>]<input type='hidden' id='jw_chattyped"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_type+"'><input type='hidden' id='jw_chatnamed"+jsonObj.clist[i].chat_no+"' value='"+jsonObj.clist[i].chat_name +"'>";
 			if(jsonObj.clist[i].chat_type == '단체'){
@@ -281,7 +294,7 @@ function chatmsgList(){
 							else if(jsonMObj.mlist[j].message_image != ""){outMlist +="<img src='files/chat/chatImages/"+jsonMObj.mlist[j].message_image+"' style='width:200px; height: 200px;'>";}
 							else if(jsonMObj.mlist[j].renew_filename != ""){outMlist +=jsonMObj.mlist[j].origin_filename+'<a href="files/chat/chatImages/'+jsonMObj.mlist[j].renew_filename+'" download="'+jsonMObj.mlist[j].origin_filename+'"><span class="btn btn-lgreen px-2">다운로드</span></a>';}
 							
-						outMlist +="</div><span class='ml-1' style='float:left;'>"+jsonMObj.mlist[j].post_time+"</span><span class='ml-1 readc' style='float:left;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
+						outMlist +="</div><span class='ml-1' style='float:left;'>"+jsonMObj.mlist[j].post_time+"</span></div>";}
 						if(${loginUser.user_no} == jsonMObj.mlist[j].user_no){
 						outMlist +="<div id='jw_Umsg"+jsonMObj.mlist[j].message_no+"' class='mb-1 Ruser' style='width:100%; text-align:right;'>"+jsonMObj.mlist[j].nickname+"</div>"+
 						"<div id='jw_Muser"+jsonMObj.mlist[j].message_no+"' class='mb-1 Rchat' style='width:100%; overflow:auto;'><div class='Rballon'>";
@@ -290,7 +303,7 @@ function chatmsgList(){
 						else if(jsonMObj.mlist[j].message_image != ""){outMlist +="<img src='files/chat/chatImages/"+jsonMObj.mlist[j].message_image+"' style='width:200px; height: 200px;'>";}
 						else if(jsonMObj.mlist[j].renew_filename != ""){outMlist +=jsonMObj.mlist[j].origin_filename+'<a href="files/chat/chatImages/'+jsonMObj.mlist[j].renew_filename+'" download="'+jsonMObj.mlist[j].origin_filename+'"><span class="btn btn-lgreen px-2">다운로드</span></a>';}
 						
-						outMlist +="</div><span class='mr-1' style='float:right;'>"+jsonMObj.mlist[j].post_time+"<br><span class='mdel' id='jw_mdel"+jsonMObj.mlist[j].message_no+"'>&times;</span></span><span class='ml-1 readc' style='float:right;'>"+jsonMObj.mlist[j].read_count+"+</span></div>";}
+						outMlist +="</div><span class='mr-1' style='float:right;'>"+jsonMObj.mlist[j].post_time+"<br><span class='mdel' id='jw_mdel"+jsonMObj.mlist[j].message_no+"'>&times;</span></span></div>";}
 						$("#jw_mlista"+jsonObj.clist[i].chat_no).html(outMlist);
 						$("#jw_scroll"+jsonObj.clist[i].chat_no).scrollTop($("#jw_mlista"+jsonObj.clist[i].chat_no).height());
 						}
@@ -341,7 +354,7 @@ function chatmsgList(){
 				alert("실패");
 			}});
 			}else{
-				alert("빈값 못보냄");
+				alert("메세지를 입력하고 전송해주세요.");
 			}
 		});
 		

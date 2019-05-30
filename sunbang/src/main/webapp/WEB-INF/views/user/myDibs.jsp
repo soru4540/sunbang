@@ -191,7 +191,7 @@ opacity: 0.8;
 	</c:if>
 	<c:forEach var="realty" items="${urealty }">
 	<div id="jw_dibsdiv${realty.dibs_no }" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card border-0"><div class="card-img-top"><div class="img-overlay"><i class="far fa-calendar-check" > <b>입주가능일 <c:if test="${realty.move_available_date eq '0'}">즉시입주</c:if> <c:if test="${realty.move_available_date eq '1'}">날짜협의</c:if> </b></i><i class="far fa-clipboard" data-toggle="modal" data-target="#jw_myModal${realty.dibs_no }"> <b>메모</b></i><span class="check"><i class="far fa-eye"> <b>${realty.realty_hits }</b></i> 찜 (${realty.dibs_count })</span><span class="ddddel" id="jw_deldib${realty.dibs_no }" >&times;</span></div><img src="${pageContext.request.contextPath }/files/realty/realtyNormalImages/${realty.realty_image1}" style="width:100%; height:auto;"></div>
-		<a href="rdetail.do?realty_no=${realty.realty_no }" style="text-decoration:none; color:#777;"><div class="card-body" style="text-align:left;">${realty. realty_type}<br><b>${realty.realty_detail_title }</b><br><c:if test="${!empty realty.user_profile }"><img src="files/user/userImages/${realty.user_profile }" class="rounded-circle" style="width:20px; height:20px;"></c:if>${realty.nickname }<br>면적 : ${realty.residential }</a></div></div></div>
+		<a href="rdetail.do?realty_no=${realty.realty_no }" style="text-decoration:none; color:#777;"><div class="card-body" style="text-align:left;">${realty. realty_type}<br><b>${realty.realty_detail_title }</b><br><c:if test="${!empty realty.user_profile }"><img src="files/user/userImages/${realty.user_profile }" class="rounded-circle" style="width:20px; height:20px;"></c:if>${realty.nickname }</a></div></div></div>
 	</c:forEach>
 	</div>
 </div>

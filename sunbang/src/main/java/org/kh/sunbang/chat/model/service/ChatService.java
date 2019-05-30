@@ -27,7 +27,7 @@ public interface ChatService {
 	int insertMessageImg(Message message);
 	int insertMessageFile(Message message);
 	Chat selectCheckChat(Chat chat_no);
-	User selectUserChat(String nickname);
+	User selectUserChat(String nickname, String check);
 	int insertUserChat(Chat chat);
 	Chat selectChatChatCheck(Chat chat);
 	int insertTeamChat(Chat chat);

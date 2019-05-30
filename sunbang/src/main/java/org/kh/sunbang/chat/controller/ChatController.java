@@ -197,8 +197,9 @@ public class ChatController {
 	@ResponseBody
 	public int selectUserChat(HttpServletRequest request) {
 		String nickname = request.getParameter("nickname");
-		User result = chatService.selectUserChat(nickname);
-		int rresult = 0;
+		String check = request.getParameter("check");
+		User result = chatService.selectUserChat(nickname, check);
+		int rresult = -1;
 		if(result != null) {
 			rresult = result.getUser_no();
 		}
