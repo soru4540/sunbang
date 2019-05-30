@@ -202,7 +202,7 @@
 							<a class="dropdown-item" href="imyboard.do?user_no=${loginUser.user_no }"><i class="fas fa-book"></i> 나의 게시글</a>
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
-							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
+							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 채팅</a>
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>
 						<c:if test="${loginUser.user_type eq '매도인' or loginUser.user_type eq '공인중개사' }"> <!-- 기업회원 -->
@@ -210,7 +210,7 @@
 							<a class="dropdown-item" href="imyboard.do?user_no=${loginUser.user_no }"><i class="fas fa-book"></i> 나의 게시글</a> 
 							<a class="dropdown-item" href="umydibs.do?user_no=${loginUser.user_no }"><i class="far fa-check-circle"></i> 찜보기</a> 
 							<a class="dropdown-item" href="umylike.do?user_no=${loginUser.user_no }"><i class="far fa-heart"></i> 좋아요</a>
-							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 1:1 상담내역</a>
+							<a class="dropdown-item" href="cmyview.do"><i class="far fa-comments"></i> 채팅</a>
 							<a class="dropdown-item" href="rmylist.do?user_no=${loginUser.user_no }"><i class="far fa-copy"></i> 등록 매물 관리</a>							
 							<a class="dropdown-item" href="ulogout.do?uri=2"> 로그아웃</a>
 						</c:if>

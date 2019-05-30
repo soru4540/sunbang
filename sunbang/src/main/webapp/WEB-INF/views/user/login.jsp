@@ -1121,7 +1121,7 @@ input[type="number"]::-webkit-outer-spin-button, input[type="number"]::-webkit-i
 			<div class="card-body" style="padding:1%; height:100px"><div id="jw_capcha4" style="width:100%; height:100%;"></div><span id="jw_capreturn4" class="capreturn"><i class="fas fa-undo"></i></span></div>
 			<div class="card-footer form-group" style="background:white; border:0; padding: 0 3%; padding-top:1%;"><input type="hidden" id="jw_ckey4" name="key"><input type="text" id="jw_cvalue4" class="form-control" name="value"></div></div><div id="jw_capfaildiv4" class="invalid-feedback pl-2"></div></div>
 			<div class="form-group"><input type="button" id="jw_loginbtntwo" class="btn btn-block btn-lg btn-green" value="로그인"></div>
-			<div class="custom-control custom-checkbox" style="font-size: 13px;"><input type="checkbox" id="jw_logincheck"class="custom-control-input" name="logincheck" value="cookie" style="display:none;"><label for="jw_logincheck" class="custom-control-label" style="cursor:pointer;">로그인 상태 유지</label></div></form>
+			<div class="custom-control custom-checkbox" style="font-size: 13px;"><input type="checkbox" id="jw_loginchecktwo"class="custom-control-input" name="logincheck" value="cookie" style="display:none;"><label for="jw_loginchecktwo" class="custom-control-label" style="cursor:pointer;">로그인 상태 유지</label></div></form>
 			
 			<div class="d-flex justify-content-between mb-3 mt-3" style="border-top:1px solid #ddd; padding-top:5%;">
 				<div class="btn btn-lgreen" data-toggle="modal" data-target="#jw_findId">아이디 찾기</div>
