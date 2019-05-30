@@ -176,11 +176,15 @@ font-size: 30px; font-family: a고딕14;
 							    var value = "";						
 								for(var i in jsonObj.followinglist){	
 									value += "<tr align='center'><td width='33%'><div class='jb_follow_profile'>"
-									    + "<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.followinglist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
-									    +"<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.followinglist[i].user_id+"</span></div></td>"													
+										 + "<a href='istory.do?user_no="+${loginUser.user_no}+"&follower_no="+jsonObj.followinglist[i].user_no+"'><img src='${pageContext.request.contextPath}/files/user/userImages/"+jsonObj.followinglist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
+										    +"<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.followinglist[i].user_id+"</span></div></td>"																					            															
 							            +"<td width='33%' style='vertical-align: middle;'><span class='jb_follow_nickname'>"+jsonObj.followinglist[i].nickname+"</span></td>"					
-							            +"<td width='33%' style='vertical-align: middle;'><input type='hidden' id='ffollower_no"+i+"' value='"+jsonObj.followinglist[i].follower_no+"'><button type='button' class='btn btn-outline-danger' id='unfollowing"+i+"' onclick='delFollowing("+i+");'>X</button>"
-							            +"<button type='button' class='btn btn-outline-info' id='following"+i+"' onclick='addFollowing("+i+");' style='display:none;'>+</button></td></tr>";	
+							            +"<td width='33%' style='vertical-align: middle;'>";
+							            if(${loginUser.user_no} == ${fuser.user_no}){
+							            value += "<input type='hidden' id='ffollower_no"+i+"' value='"+jsonObj.followinglist[i].follower_no+"'><button type='button' class='btn btn-outline-danger' id='unfollowing"+i+"' onclick='delFollowing("+i+");'>X</button>"
+							            +"<button type='button' class='btn btn-outline-info' id='following"+i+"' onclick='addFollowing("+i+");' style='display:none;'>+</button></td></tr>";
+							            }
+										value += "</td></tr>";	
 								}
 								$("#list2").html(value);
 					        },error: function(returnData){			        	

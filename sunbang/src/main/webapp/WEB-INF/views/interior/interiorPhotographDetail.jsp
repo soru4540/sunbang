@@ -941,8 +941,12 @@ border-radius: 10px;
 						</div>
 					</div>
 					<div class='modal-footer' id='reply${photoList[0].board_no}'>
-						<img class='mr-3'
-							src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />
+						<c:if test="${!empty loginUser}">
+						<img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />
+						</c:if>
+						<c:if test="${empty loginUser}">
+						<img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/guest.png' />
+						</c:if>
 						<input type='text' class='textline'
 							id='reply_contents${photoList[0].board_no}'>
 						<p style='padding-left: 1.5em;'></p>

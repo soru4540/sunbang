@@ -392,10 +392,10 @@ border-radius: 5px;
 							var value = $("#list").html();
 							var value2 = $("#list2").html();
 							
-							if(pagenum ==0 && jsonObj.iblist.length == 0){
+							if(pagenum ==1 && jsonObj.iblist.length == 0){
 								value = "<div class='col' align='center'><br><br><br><br><br><br><br><h1>조회된 게시물이 없습니다.</h3></div>";
 								$("#list").html(value);		
-							}
+							}	
 							
 							if (jsonObj.end_num == jsonObj.total_num) {
 								page = 0;

@@ -386,7 +386,7 @@ border-radius: 5px;
 	 
 	$(window).scroll(function(){   //스크롤이 일정 하단 으로 내려가면 리스트를 조회하고 page를 증가시킨다.					  
 		if(page != 0){
-		if( $(window).scrollTop()+450 >= $(document).height() - $(window).height()){
+		if( $(window).scrollTop()+650 >= $(document).height() - $(window).height()){
 	          getList(page);
 	           page++;   		           
 	     } 
@@ -406,7 +406,7 @@ border-radius: 5px;
 					var value = $("#list").html();
 					var value2 = $("#list2").html();
 					
-					if(pagenum ==0 && jsonObj.iblist.length == 0){
+					if(pagenum ==1 && jsonObj.iblist.length == 0){
 						value = "<div class='col' align='center'><br><br><br><br><br><br><br><h1>조회된 게시물이 없습니다.</h3></div>";
 						$("#list").html(value);		
 					}
