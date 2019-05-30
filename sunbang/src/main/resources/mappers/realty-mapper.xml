@@ -4,205 +4,214 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="realtyMapper">
 
-   <resultMap id="resultRealty" type="Realty">
-      <id property="realty_no" column="realty_no"/>
-      <result property="registdate" column="registdate" />
-      <result property="renewdate" column="renewdate" />
-      <result property="realty_hits" column="realty_hits" />
-      <result property="realty_status" column="realty_status" />
-      <result property="realty_type" column="realty_type" />
-      <result property="building_type" column="building_type" />
-      <result property="road_address" column="road_address" />
-      <result property="land_lot" column="land_lot" />
-      <result property="detail_address" column="detail_address" />
-      
-      <result property="month_lease" column="month_lease" />
-      <result property="deposit" column="deposit" />
-      <result property="payback_deposit_lease" column="payback_deposit_lease" />
-      <result property="purchase" column="purchase" />
-      <result property="residential" column="residential" />
-      <result property="exclusive_area" column="exclusive_area" />
-      <result property="building_layers" column="building_layers" />
-      <result property="realty_layers" column="realty_layers" />
-      <result property="heatting_system" column="heatting_system" />
-      <result property="move_available_date" column="move_available_date" />
-      
-      <result property="management_pay" column="management_pay" />
-      <result property="parking_lot" column="parking_lot" />
-      <result property="elevator" column="elevator" />
-      <result property="builtin" column="builtin" />
-      <result property="allowance_pet" column="allowance_pet" />
-      <result property="balcony" column="balcony" />
-      <result property="loan_availability" column="loan_availability" />
-      <result property="structure" column="structure" />
-      <result property="airconditioner" column="airconditioner" />
-      <result property="laundry_machine" column="laundry_machine" />
-      
-      <result property="bed" column="bed" />
-      <result property="desk" column="desk" />
-      <result property="closet" column="closet" />
-      <result property="tv" column="tv" />
-      <result property="gasrange" column="gasrange" />
-      <result property="shoe_shelf" column="shoe_shelf" />
-      <result property="refrigerator" column="refrigerator" />
-      <result property="induction" column="induction" />
-      <result property="microwave" column="microwave" />
-      <result property="door_lock" column="door_lock" />
-      
-      <result property="bidet" column="bidet" />
-      <result property="realty_detail_title" column="realty_detail_title" />
-      <result property="realty_detail_comment" column="realty_detail_comment" />
-      <result property="realty_image1" column="realty_image1" />
-      <result property="realty_image2" column="realty_image2" />
-      <result property="realty_image3" column="realty_image3" />
-      <result property="realty_image4" column="realty_image4" />
-      <result property="realty_image5" column="realty_image5" />
-      <result property="realty_image6" column="realty_image6" />
-      <result property="realty_image7" column="realty_image7" />
-      
-      <result property="realty_image8" column="realty_image8" />
-      <result property="image360" column="image360" />
-      <result property="user_no" column="user_no" />
-   
-   </resultMap>
-	
-		   <resultMap id="resultPRealty" type="PRealty">
-      <id property="realty_no" column="realty_no"/>
-      <result property="registdate" column="registdate" />
-      <result property="renewdate" column="renewdate" />
-      <result property="realty_hits" column="realty_hits" />
-      <result property="realty_status" column="realty_status" />
-      <result property="realty_type" column="realty_type" />
-      <result property="building_type" column="building_type" />
-      <result property="road_address" column="road_address" />
-      <result property="land_lot" column="land_lot" />
-      <result property="detail_address" column="detail_address" />
-      
-      <result property="month_lease" column="month_lease" />
-      <result property="deposit" column="deposit" />
-      <result property="payback_deposit_lease" column="payback_deposit_lease" />
-      <result property="purchase" column="purchase" />
-      <result property="residential" column="residential" />
-      <result property="exclusive_area" column="exclusive_area" />
-      <result property="building_layers" column="building_layers" />
-      <result property="realty_layers" column="realty_layers" />
-      <result property="heatting_system" column="heatting_system" />
-      <result property="move_available_date" column="move_available_date" />
-      
-      <result property="management_pay" column="management_pay" />
-      <result property="parking_lot" column="parking_lot" />
-      <result property="elevator" column="elevator" />
-      <result property="builtin" column="builtin" />
-      <result property="allowance_pet" column="allowance_pet" />
-      <result property="balcony" column="balcony" />
-      <result property="loan_availability" column="loan_availability" />
-      <result property="structure" column="structure" />
-      <result property="airconditioner" column="airconditioner" />
-      <result property="laundry_machine" column="laundry_machine" />
-      
-      <result property="bed" column="bed" />
-      <result property="desk" column="desk" />
-      <result property="closet" column="closet" />
-      <result property="tv" column="tv" />
-      <result property="gasrange" column="gasrange" />
-      <result property="shoe_shelf" column="shoe_shelf" />
-      <result property="refrigerator" column="refrigerator" />
-      <result property="induction" column="induction" />
-      <result property="microwave" column="microwave" />
-      <result property="door_lock" column="door_lock" />
-      
-      <result property="bidet" column="bidet" />
-      <result property="realty_detail_title" column="realty_detail_title" />
-      <result property="realty_detail_comment" column="realty_detail_comment" />
-      <result property="realty_image1" column="realty_image1" />
-      <result property="realty_image2" column="realty_image2" />
-      <result property="realty_image3" column="realty_image3" />
-      <result property="realty_image4" column="realty_image4" />
-      <result property="realty_image5" column="realty_image5" />
-      <result property="realty_image6" column="realty_image6" />
-      <result property="realty_image7" column="realty_image7" />
-      
-      <result property="realty_image8" column="realty_image8" />
-      <result property="image360" column="image360" />
-      <result property="user_no" column="user_no" />
-      <result property="premium" column="premium_status"/>
-   </resultMap>
-   
-	<resultMap id="resultFRealty" type="FRealty"><!-- 필터링/ 미완성 -->
-   	<id property="oneroom" column="realty_type"/>
-   	<result property="tworoom" column="realty_type"/>
-   	<result property="threeroom" column="realty_type"/>
-   	<result property="apartment" column="realty_type"/>
-   	<result property="officetel" column="realty_type"/>   	
-   	<result property="min_monthly" column="month_lease"/>
-   	<result property="max_monthly" column="month_lease"/>
-   	<result property="min_payback;" column="payback_deposit_lease"/>
-   	<result property="max_payback;" column="payback_deposit_lease"/>   	
-   	<result property="min_purchase;" column="purchase"/>
-   	<result property="max_purchase;" column="purchase"/>
-   	<result property="elevator" column="elevator"/>
-   	<result property="allowance_pet" column="allowance_pet"/>
-   	<result property="parking_lot" column="parking_lot"/>
-   	<result property="bidet" column="bidet"/>
-   	<result property="builtin" column="builtin"/>
-   	<result property="bed" column="bed"/>
-   	<result property="desk" column="desk"/>
-   	<result property="airconditioner" column="airconditioner"/>
-   	<result property="balcony" column="balcony"/>
-   	<result property="loan_availability" column="loan_availability"/>
-   	<result property="induction" column="induction"/>
-   	<result property="door_lock" column="door_lock"/>
-   	<result property="microwave" column="microwave"/>
-   	<result property="refrigerator" column="refrigerator"/>
-   	<result property="laundry_machine" column="laundry_machine"/>
-   </resultMap>
-   <resultMap id="resultDibs" type="Dibs">
-      <result property="dibs_no" column="dibs_no" />
-      <result property="memo" column="memo" />
-      <result property="user_no" column="user_no" />
-      <result property="realty_no" column="realty_no" />
-   </resultMap>
-   
-   <resultMap id="resultReport" type="report">
-      <id property="report_no" column="report_no" />
-      <result property="report_system" column="report_system" />
-      <result property="category" column="category" />
-      <result property="reported_board" column="reported_board" />
-      <result property="contents_no" column="contents_no" />
-      <result property="contents" column="contents" />
-      <result property="report_date" column="report_date" />
-      <result property="handle_date" column="handle_date" />
-      <result property="report_status" column="report_status" />
-      <result property="user_no" column="user_no" />
-   </resultMap>
-   
-	<resultMap type="User" id="resultUser">
-		<id property="user_no" column="user_no"/>
-		<result property="user_type" column="user_type"/>
-		<result property="user_profile" column="user_profile"/>
-		<result property="user_id" column="user_id"/>
-		<result property="nickname" column="nickname"/>
-		<result property="user_name" column="user_name"/>
-		<result property="email" column="email"/>
-		<result property="phone" column="phone"/>
-		<result property="password" column="password"/>
-		<result property="join_date" column="join_date"/>
-		<result property="update_date" column="update_date"/>
-		<result property="user_status" column="user_status"/>
-		<result property="reason_leave" column="reason_leave"/>
-		<result property="login_num" column="login_num"/>
-		<result property="business_user_no" column="business_user_no"/>
-		<result property="office_name" column="office_name"/>
-		<result property="office_regist_no" column="office_regist_no"/>
-		<result property="business_license_no" column="business_license_no"/>
-		<result property="office_address" column="office_address"/>
-		<result property="office_phone" column="office_phone"/>
-		<result property="status_agreement" column="status_agreement"/>
-		<result property="premium_status" column="premium_status"/>
+	<resultMap id="resultRealty" type="Realty">
+		<id property="realty_no" column="realty_no" />
+		<result property="registdate" column="registdate" />
+		<result property="renewdate" column="renewdate" />
+		<result property="realty_hits" column="realty_hits" />
+		<result property="realty_status" column="realty_status" />
+		<result property="realty_type" column="realty_type" />
+		<result property="building_type" column="building_type" />
+		<result property="road_address" column="road_address" />
+		<result property="land_lot" column="land_lot" />
+		<result property="detail_address" column="detail_address" />
+
+		<result property="month_lease" column="month_lease" />
+		<result property="deposit" column="deposit" />
+		<result property="payback_deposit_lease"
+			column="payback_deposit_lease" />
+		<result property="purchase" column="purchase" />
+		<result property="residential" column="residential" />
+		<result property="exclusive_area" column="exclusive_area" />
+		<result property="building_layers" column="building_layers" />
+		<result property="realty_layers" column="realty_layers" />
+		<result property="heatting_system" column="heatting_system" />
+		<result property="move_available_date"
+			column="move_available_date" />
+
+		<result property="management_pay" column="management_pay" />
+		<result property="parking_lot" column="parking_lot" />
+		<result property="elevator" column="elevator" />
+		<result property="builtin" column="builtin" />
+		<result property="allowance_pet" column="allowance_pet" />
+		<result property="balcony" column="balcony" />
+		<result property="loan_availability" column="loan_availability" />
+		<result property="structure" column="structure" />
+		<result property="airconditioner" column="airconditioner" />
+		<result property="laundry_machine" column="laundry_machine" />
+
+		<result property="bed" column="bed" />
+		<result property="desk" column="desk" />
+		<result property="closet" column="closet" />
+		<result property="tv" column="tv" />
+		<result property="gasrange" column="gasrange" />
+		<result property="shoe_shelf" column="shoe_shelf" />
+		<result property="refrigerator" column="refrigerator" />
+		<result property="induction" column="induction" />
+		<result property="microwave" column="microwave" />
+		<result property="door_lock" column="door_lock" />
+
+		<result property="bidet" column="bidet" />
+		<result property="realty_detail_title"
+			column="realty_detail_title" />
+		<result property="realty_detail_comment"
+			column="realty_detail_comment" />
+		<result property="realty_image1" column="realty_image1" />
+		<result property="realty_image2" column="realty_image2" />
+		<result property="realty_image3" column="realty_image3" />
+		<result property="realty_image4" column="realty_image4" />
+		<result property="realty_image5" column="realty_image5" />
+		<result property="realty_image6" column="realty_image6" />
+		<result property="realty_image7" column="realty_image7" />
+
+		<result property="realty_image8" column="realty_image8" />
+		<result property="image360" column="image360" />
+		<result property="user_no" column="user_no" />
+
 	</resultMap>
-	
+
+	<resultMap id="resultPRealty" type="PRealty">
+		<id property="realty_no" column="realty_no" />
+		<result property="registdate" column="registdate" />
+		<result property="renewdate" column="renewdate" />
+		<result property="realty_hits" column="realty_hits" />
+		<result property="realty_status" column="realty_status" />
+		<result property="realty_type" column="realty_type" />
+		<result property="building_type" column="building_type" />
+		<result property="road_address" column="road_address" />
+		<result property="land_lot" column="land_lot" />
+		<result property="detail_address" column="detail_address" />
+
+		<result property="month_lease" column="month_lease" />
+		<result property="deposit" column="deposit" />
+		<result property="payback_deposit_lease"
+			column="payback_deposit_lease" />
+		<result property="purchase" column="purchase" />
+		<result property="residential" column="residential" />
+		<result property="exclusive_area" column="exclusive_area" />
+		<result property="building_layers" column="building_layers" />
+		<result property="realty_layers" column="realty_layers" />
+		<result property="heatting_system" column="heatting_system" />
+		<result property="move_available_date"
+			column="move_available_date" />
+
+		<result property="management_pay" column="management_pay" />
+		<result property="parking_lot" column="parking_lot" />
+		<result property="elevator" column="elevator" />
+		<result property="builtin" column="builtin" />
+		<result property="allowance_pet" column="allowance_pet" />
+		<result property="balcony" column="balcony" />
+		<result property="loan_availability" column="loan_availability" />
+		<result property="structure" column="structure" />
+		<result property="airconditioner" column="airconditioner" />
+		<result property="laundry_machine" column="laundry_machine" />
+
+		<result property="bed" column="bed" />
+		<result property="desk" column="desk" />
+		<result property="closet" column="closet" />
+		<result property="tv" column="tv" />
+		<result property="gasrange" column="gasrange" />
+		<result property="shoe_shelf" column="shoe_shelf" />
+		<result property="refrigerator" column="refrigerator" />
+		<result property="induction" column="induction" />
+		<result property="microwave" column="microwave" />
+		<result property="door_lock" column="door_lock" />
+
+		<result property="bidet" column="bidet" />
+		<result property="realty_detail_title"
+			column="realty_detail_title" />
+		<result property="realty_detail_comment"
+			column="realty_detail_comment" />
+		<result property="realty_image1" column="realty_image1" />
+		<result property="realty_image2" column="realty_image2" />
+		<result property="realty_image3" column="realty_image3" />
+		<result property="realty_image4" column="realty_image4" />
+		<result property="realty_image5" column="realty_image5" />
+		<result property="realty_image6" column="realty_image6" />
+		<result property="realty_image7" column="realty_image7" />
+
+		<result property="realty_image8" column="realty_image8" />
+		<result property="image360" column="image360" />
+		<result property="user_no" column="user_no" />
+		<result property="premium" column="premium_status" />
+	</resultMap>
+
+	<resultMap id="resultFRealty" type="FRealty"><!-- 필터링/ 미완성 -->
+		<id property="oneroom" column="realty_type" />
+		<result property="tworoom" column="realty_type" />
+		<result property="threeroom" column="realty_type" />
+		<result property="apartment" column="realty_type" />
+		<result property="officetel" column="realty_type" />
+		<result property="min_monthly" column="month_lease" />
+		<result property="max_monthly" column="month_lease" />
+		<result property="min_payback;" column="payback_deposit_lease" />
+		<result property="max_payback;" column="payback_deposit_lease" />
+		<result property="min_purchase;" column="purchase" />
+		<result property="max_purchase;" column="purchase" />
+		<result property="elevator" column="elevator" />
+		<result property="allowance_pet" column="allowance_pet" />
+		<result property="parking_lot" column="parking_lot" />
+		<result property="bidet" column="bidet" />
+		<result property="builtin" column="builtin" />
+		<result property="bed" column="bed" />
+		<result property="desk" column="desk" />
+		<result property="airconditioner" column="airconditioner" />
+		<result property="balcony" column="balcony" />
+		<result property="loan_availability" column="loan_availability" />
+		<result property="induction" column="induction" />
+		<result property="door_lock" column="door_lock" />
+		<result property="microwave" column="microwave" />
+		<result property="refrigerator" column="refrigerator" />
+		<result property="laundry_machine" column="laundry_machine" />
+	</resultMap>
+	<resultMap id="resultDibs" type="Dibs">
+		<result property="dibs_no" column="dibs_no" />
+		<result property="memo" column="memo" />
+		<result property="user_no" column="user_no" />
+		<result property="realty_no" column="realty_no" />
+	</resultMap>
+
+	<resultMap id="resultReport" type="report">
+		<id property="report_no" column="report_no" />
+		<result property="report_system" column="report_system" />
+		<result property="category" column="category" />
+		<result property="reported_board" column="reported_board" />
+		<result property="contents_no" column="contents_no" />
+		<result property="contents" column="contents" />
+		<result property="report_date" column="report_date" />
+		<result property="handle_date" column="handle_date" />
+		<result property="report_status" column="report_status" />
+		<result property="user_no" column="user_no" />
+	</resultMap>
+
+	<resultMap type="User" id="resultUser">
+		<id property="user_no" column="user_no" />
+		<result property="user_type" column="user_type" />
+		<result property="user_profile" column="user_profile" />
+		<result property="user_id" column="user_id" />
+		<result property="nickname" column="nickname" />
+		<result property="user_name" column="user_name" />
+		<result property="email" column="email" />
+		<result property="phone" column="phone" />
+		<result property="password" column="password" />
+		<result property="join_date" column="join_date" />
+		<result property="update_date" column="update_date" />
+		<result property="user_status" column="user_status" />
+		<result property="reason_leave" column="reason_leave" />
+		<result property="login_num" column="login_num" />
+		<result property="business_user_no" column="business_user_no" />
+		<result property="office_name" column="office_name" />
+		<result property="office_regist_no" column="office_regist_no" />
+		<result property="business_license_no"
+			column="business_license_no" />
+		<result property="office_address" column="office_address" />
+		<result property="office_phone" column="office_phone" />
+		<result property="status_agreement" column="status_agreement" />
+		<result property="premium_status" column="premium_status" />
+	</resultMap>
+
 	<resultMap type="BoardFull" id="resultBoardFull">
-	<id property="board_no" column="board_no"/>
+		<id property="board_no" column="board_no" />
 		<result property="board_type" column="board_type" />
 		<result property="space" column="space" />
 		<result property="housing_type" column="housing_type" />
@@ -218,38 +227,42 @@
 		<result property="style" column="style" />
 		<result property="board_hits" column="board_hits" />
 		<result property="board_date" column="board_date" />
-		<result property="board_status" column="board_status" />		
-		<result property="post_no" column="post_no"/>
-        <result property="post_keyword" column="post_keyword" />
-        <result property="post_data" column="post_data" />
-        <result property="post_contents" column="post_contents" />
-        <result property="marker_no" column="marker_no"/>
-        <result property="product_image" column="product_image" />
-        <result property="cordi_x" column="cordi_x" />
-        <result property="cordi_y" column="cordi_y" />
-        <result property="product_url" column="product_url" />
-        <result property="user_no" column="user_no" />	
-        <result property="user_profile" column="user_profile" />
-        <result property="nickname" column="nickname" />
-        <result property="user_name" column="user_name" /> 
-        <result property="like_count" column="like_count" /> 
-        <result property="follow_count" column="follow_count" /> 
+		<result property="board_status" column="board_status" />
+		<result property="post_no" column="post_no" />
+		<result property="post_keyword" column="post_keyword" />
+		<result property="post_data" column="post_data" />
+		<result property="post_contents" column="post_contents" />
+		<result property="marker_no" column="marker_no" />
+		<result property="product_image" column="product_image" />
+		<result property="cordi_x" column="cordi_x" />
+		<result property="cordi_y" column="cordi_y" />
+		<result property="product_url" column="product_url" />
+		<result property="user_no" column="user_no" />
+		<result property="user_profile" column="user_profile" />
+		<result property="nickname" column="nickname" />
+		<result property="user_name" column="user_name" />
+		<result property="like_count" column="like_count" />
+		<result property="follow_count" column="follow_count" />
 	</resultMap>
 
-<!-- 성현///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+	<!-- 성현///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
-	<select id="selectRealtyDetailView" parameterType="Realty" resultMap="resultRealty">
+	<select id="selectRealtyDetailView" parameterType="Realty"
+		resultMap="resultRealty">
 		select * from tb_realty
 		where realty_no = #{realty_no}
 	</select>
-	
-	<select id="selectUserInfo" parameterType="User" resultMap="resultUser">
+
+	<select id="selectUserInfo" parameterType="User"
+		resultMap="resultUser">
 		select * from tb_business
 		join tb_user using(user_no)
-		where user_no=#{user_no}
+		where
+		user_no=#{user_no}
 	</select>
-	
-	<select id="selectRecommendInteriorTop5" parameterType="BoardFull" resultMap="resultBoardFull">
+
+	<select id="selectRecommendInteriorTop5"
+		parameterType="BoardFull" resultMap="resultBoardFull">
 		<![CDATA[ select board_no,board_type,board_hits,post_no,post_data, user_no,like_count,housing_type,floor_area,style
 		from (select board_no,board_type,board_hits,post_no,post_data, user_no,nvl(like_count,0) like_count,housing_type,floor_area,style from tb_board
 		left join tb_post using(board_no)
@@ -264,8 +277,9 @@
 		where rownum < 5 and floor_area <= #{exclusive_area} + 5 and floor_area >= #{exclusive_area} - 5
 		and housing_type like '%' ||  #{realty_type} || '%'	]]>
 	</select>
-	
-	<select id="selectRecommendInterior" parameterType="BoardFull" resultMap="resultBoardFull">
+
+	<select id="selectRecommendInterior" parameterType="BoardFull"
+		resultMap="resultBoardFull">
 		<![CDATA[ select board_no,board_type,board_hits,post_no,post_data, user_no,like_count,housing_type,floor_area,style
 		from (select board_no,board_type,board_hits,post_no,post_data, user_no,nvl(like_count,0) like_count,housing_type,floor_area,style from tb_board
 		left join tb_post using(board_no)
@@ -278,240 +292,364 @@
 		and board_type='housewarming'            
 		order by board_hits desc, like_count desc, board_no desc)
 		where rownum < 5 ]]>
-	</select>	
-	
+	</select>
+
 	<select id="selectRealtyNo" parameterType="int" resultType="int">
-		select max(realty_no) from tb_realty 
+		select max(realty_no) from tb_realty
 		where user_no = #{user_no}
 	</select>
-	
-	<select id="selectDibsCount" parameterType="int" resultType="int">
+
+	<select id="selectDibsCount" parameterType="int"
+		resultType="int">
 		select count(*) from tb_dibs
 		where realty_no = #{realty_no}
 	</select>
-	
-	<select id="selectDibsCheck" parameterType="Dibs" resultType="int">
+
+	<select id="selectDibsCheck" parameterType="Dibs"
+		resultType="int">
 		select count(*) from tb_dibs
-		where realty_no = #{realty_no} and user_no = #{user_no}		
+		where realty_no = #{realty_no}
+		and user_no = #{user_no}
 	</select>
-	
+
 	<insert id="insertDibs" parameterType="Dibs">
 		insert into tb_dibs
-		values (dibs_seq.nextval, #{memo,jdbcType=VARCHAR}, #{user_no}, #{realty_no})
+		values
+		(dibs_seq.nextval, #{memo,jdbcType=VARCHAR}, #{user_no}, #{realty_no})
 	</insert>
-	
+
 	<delete id="deleteDibs" parameterType="Dibs">
 		delete from tb_dibs
-		where realty_no = #{realty_no} and user_no = #{user_no}
+		where
+		realty_no = #{realty_no} and user_no = #{user_no}
 	</delete>
-	
-	<select id="selectRealtyReportCheck" parameterType="Report" resultType="int">
+
+	<select id="selectRealtyReportCheck" parameterType="Report"
+		resultType="int">
 		select count(*) from tb_report
-		where user_no = #{user_no} and contents_no = #{contents_no}
+		where user_no = #{user_no}
+		and contents_no = #{contents_no}
 	</select>
-	
+
 	<insert id="insertRealtyReport" parameterType="Report">
-		insert into tb_report
-		values (report_seq.nextval, 'realty', '허위매물', null, #{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
+		insert into
+		tb_report
+		values (report_seq.nextval, 'realty', '허위매물', null,
+		#{contents_no}, #{contents}, sysdate, null, 0, #{user_no})
 	</insert>
-	
+
 	<update id="updateRealtyHits" parameterType="int">
 		update tb_realty
-		set realty_hits = realty_hits + 1
+		set
+		realty_hits = realty_hits + 1
 		where realty_no = #{realty_no}
 	</update>
-	
-	<insert id="insertRealty" parameterType="Realty" useGeneratedKeys="true">
+
+	<insert id="insertRealty" parameterType="Realty"
+		useGeneratedKeys="true">
 		insert into tb_realty
-		values (realty_seq.nextval, default, default, default, default, #{realty_type}, #{building_type,jdbcType=VARCHAR}, #{road_address}, #{land_lot}, #{detail_address},
-		        #{month_lease,jdbcType=INTEGER}, #{deposit,jdbcType=INTEGER}, #{payback_deposit_lease,jdbcType=INTEGER}, #{purchase,jdbcType=INTEGER}, #{residential,jdbcType=INTEGER}, #{exclusive_area,jdbcType=INTEGER}, #{building_layers}, #{realty_layers}, #{heatting_system}, #{move_available_date},
-		        #{management_pay,jdbcType=INTEGER}, #{parking_lot,jdbcType=VARCHAR}, #{elevator}, #{builtin}, #{allowance_pet}, #{balcony}, #{loan_availability}, #{structure}, #{airconditioner}, #{laundry_machine},
-		        #{bed}, #{desk}, #{closet}, #{tv}, #{gasrange}, #{shoe_shelf}, #{refrigerator}, #{induction}, #{microwave}, #{door_lock},
-		        #{bidet}, #{realty_detail_title,jdbcType=VARCHAR}, #{realty_detail_comment,jdbcType=VARCHAR}, #{realty_image1,jdbcType=VARCHAR}, #{realty_image2,jdbcType=VARCHAR}, #{realty_image3,jdbcType=VARCHAR}, #{realty_image4,jdbcType=VARCHAR}, #{realty_image5,jdbcType=VARCHAR}, #{realty_image6,jdbcType=VARCHAR}, #{realty_image7,jdbcType=VARCHAR},
-		        #{realty_image8,jdbcType=VARCHAR}, #{image360,jdbcType=VARCHAR}, #{user_no})
+		values (realty_seq.nextval,
+		default, default, default, default, #{realty_type},
+		#{building_type,jdbcType=VARCHAR}, #{road_address}, #{land_lot},
+		#{detail_address},
+		#{month_lease,jdbcType=INTEGER}, #{deposit,jdbcType=INTEGER},
+		#{payback_deposit_lease,jdbcType=INTEGER},
+		#{purchase,jdbcType=INTEGER}, #{residential,jdbcType=INTEGER},
+		#{exclusive_area,jdbcType=INTEGER}, #{building_layers},
+		#{realty_layers}, #{heatting_system}, #{move_available_date},
+		#{management_pay,jdbcType=INTEGER}, #{parking_lot,jdbcType=VARCHAR},
+		#{elevator}, #{builtin}, #{allowance_pet}, #{balcony},
+		#{loan_availability}, #{structure}, #{airconditioner},
+		#{laundry_machine},
+		#{bed}, #{desk}, #{closet}, #{tv}, #{gasrange}, #{shoe_shelf},
+		#{refrigerator}, #{induction}, #{microwave}, #{door_lock},
+		#{bidet}, #{realty_detail_title,jdbcType=VARCHAR},
+		#{realty_detail_comment,jdbcType=VARCHAR},
+		#{realty_image1,jdbcType=VARCHAR}, #{realty_image2,jdbcType=VARCHAR},
+		#{realty_image3,jdbcType=VARCHAR}, #{realty_image4,jdbcType=VARCHAR},
+		#{realty_image5,jdbcType=VARCHAR}, #{realty_image6,jdbcType=VARCHAR},
+		#{realty_image7,jdbcType=VARCHAR},
+		#{realty_image8,jdbcType=VARCHAR}, #{image360,jdbcType=VARCHAR}, #{user_no})
 	</insert>
-	
-	<select id="selectRealtyCount" parameterType="int" resultType="int">
+
+	<select id="selectRealtyCount" parameterType="int"
+		resultType="int">
 		select count(*) from tb_realty
-		where user_no = #{user_no} and realty_status != '삭제' and realty_status != '완전삭제'
+		where user_no = #{user_no}
+		and realty_status != '삭제' and realty_status != '완전삭제'
 	</select>
-	
-	<select id="selectRealtyMyListView" resultMap="resultRealty" useCache="true">
+
+	<select id="selectRealtyMyListView" resultMap="resultRealty"
+		useCache="true">
 		select * from tb_realty
-		where user_no = #{user_no} and realty_status != '삭제' and realty_status != '완전삭제' 
+		where user_no = #{user_no} and
+		realty_status != '삭제' and realty_status != '완전삭제'
 		order by realty_no desc
 	</select>
-	
+
 	<update id="updateRealtyMyListDelete" parameterType="Realty">
-		update tb_realty
+		update
+		tb_realty
 		set realty_status = #{realty_status},
-		realty_detail_comment = #{realty_detail_comment,jdbcType=VARCHAR}
-		where realty_no = #{realty_no}
+		realty_detail_comment =
+		#{realty_detail_comment,jdbcType=VARCHAR}
+		where realty_no =
+		#{realty_no}
 	</update>
-	
+
 	<update id="updateRealtyStatus" parameterType="Realty">
 		update tb_realty
 		set realty_status = #{realty_status}
-		where realty_no = #{realty_no}	
+		where realty_no = #{realty_no}
 	</update>
-	
+
 	<update id="updateRealty" parameterType="Realty">
 		update tb_realty
-		set renewdate = default,
+		set
+		renewdate = default,
 		realty_status = #{realty_status},
-		realty_type = #{realty_type},
+		realty_type =
+		#{realty_type},
 		building_type = #{building_type,jdbcType=VARCHAR},
 		road_address = #{road_address},
 		land_lot = #{land_lot},
-		detail_address  = #{detail_address},
+		detail_address =
+		#{detail_address},
 		month_lease = #{month_lease,jdbcType=INTEGER},
 		deposit = #{deposit,jdbcType=INTEGER},
-		payback_deposit_lease = #{payback_deposit_lease,jdbcType=INTEGER},
-		purchase = #{purchase,jdbcType=INTEGER},
-		residential = #{residential,jdbcType=INTEGER},
-		exclusive_area = #{exclusive_area,jdbcType=INTEGER},
-		building_layers = #{building_layers},
+		payback_deposit_lease =
+		#{payback_deposit_lease,jdbcType=INTEGER},
+		purchase =
+		#{purchase,jdbcType=INTEGER},
+		residential =
+		#{residential,jdbcType=INTEGER},
+		exclusive_area =
+		#{exclusive_area,jdbcType=INTEGER},
+		building_layers =
+		#{building_layers},
 		realty_layers = #{realty_layers},
-		heatting_system = #{heatting_system},
+		heatting_system =
+		#{heatting_system},
 		move_available_date = #{move_available_date},
 		management_pay = #{management_pay,jdbcType=INTEGER},
-		parking_lot = #{parking_lot,jdbcType=VARCHAR},
+		parking_lot =
+		#{parking_lot,jdbcType=VARCHAR},
 		elevator = #{elevator},
-		builtin = #{builtin},
+		builtin =
+		#{builtin},
 		allowance_pet = #{allowance_pet},
 		balcony = #{balcony},
 		loan_availability = #{loan_availability},
 		structure = #{structure},
 		airconditioner = #{airconditioner},
-		laundry_machine = #{laundry_machine},
+		laundry_machine =
+		#{laundry_machine},
 		bed = #{bed},
 		desk = #{desk},
 		closet = #{closet},
-		tv = #{tv},
+		tv =
+		#{tv},
 		gasrange = #{gasrange},
 		shoe_shelf = #{shoe_shelf},
-		refrigerator = #{refrigerator},
+		refrigerator =
+		#{refrigerator},
 		induction = #{induction},
 		microwave = #{microwave},
 		door_lock = #{door_lock},
 		bidet = #{bidet},
-		realty_detail_title = #{realty_detail_title,jdbcType=VARCHAR},
-		realty_detail_comment = #{realty_detail_comment,jdbcType=VARCHAR},
-		realty_image1 = #{realty_image1,jdbcType=VARCHAR},
-		realty_image2 = #{realty_image2,jdbcType=VARCHAR},
-		realty_image3 = #{realty_image3,jdbcType=VARCHAR},
-		realty_image4 = #{realty_image4,jdbcType=VARCHAR},
-		realty_image5 = #{realty_image5,jdbcType=VARCHAR},
-		realty_image6 = #{realty_image6,jdbcType=VARCHAR},
-		realty_image7 = #{realty_image7,jdbcType=VARCHAR},
-		realty_image8 = #{realty_image8,jdbcType=VARCHAR},
-		image360 = #{image360,jdbcType=VARCHAR}
+		realty_detail_title =
+		#{realty_detail_title,jdbcType=VARCHAR},
+		realty_detail_comment =
+		#{realty_detail_comment,jdbcType=VARCHAR},
+		realty_image1 =
+		#{realty_image1,jdbcType=VARCHAR},
+		realty_image2 =
+		#{realty_image2,jdbcType=VARCHAR},
+		realty_image3 =
+		#{realty_image3,jdbcType=VARCHAR},
+		realty_image4 =
+		#{realty_image4,jdbcType=VARCHAR},
+		realty_image5 =
+		#{realty_image5,jdbcType=VARCHAR},
+		realty_image6 =
+		#{realty_image6,jdbcType=VARCHAR},
+		realty_image7 =
+		#{realty_image7,jdbcType=VARCHAR},
+		realty_image8 =
+		#{realty_image8,jdbcType=VARCHAR},
+		image360 =
+		#{image360,jdbcType=VARCHAR}
 		where realty_no = #{realty_no}
 	</update>
 
 	<!-- 형진///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
-   
-<select id="selectFilteredList" parameterType="FRealty"  resultMap="resultPRealty">
-   		select REALTY_NO,REGISTDATE,RENEWDATE,REALTY_HITS,REALTY_STATUS,REALTY_TYPE,BUILDING_TYPE,ROAD_ADDRESS,LAND_LOT,DETAIL_ADDRESS,MONTH_LEASE,DEPOSIT,
-   		PAYBACK_DEPOSIT_LEASE,PURCHASE,RESIDENTIAL,EXCLUSIVE_AREA,BUILDING_LAYERS,REALTY_LAYERS,HEATTING_SYSTEM,MOVE_AVAILABLE_DATE,MANAGEMENT_PAY,
-   		PARKING_LOT,ELEVATOR,BUILTIN,ALLOWANCE_PET,BALCONY,LOAN_AVAILABILITY,STRUCTURE,AIRCONDITIONER,LAUNDRY_MACHINE,BED,DESK,CLOSET,TV,GASRANGE,SHOE_SHELF,REFRIGERATOR,INDUCTION,MICROWAVE,DOOR_LOCK,
-   		BIDET,REALTY_DETAIL_TITLE,REALTY_DETAIL_COMMENT,REALTY_IMAGE1,REALTY_IMAGE2,REALTY_IMAGE3,REALTY_IMAGE4,REALTY_IMAGE5,REALTY_IMAGE6,REALTY_IMAGE7,REALTY_IMAGE8,IMAGE360,
-   		premium_status 
-   		from tb_realty
-   		left join tb_user using(user_no)
-   		left join tb_business using(user_no)
-   		  <where>
-   			<if test="oneroom != 'toto'">
-   				OR realty_type=#{oneroom}
-   			</if>
-   			<if test="tworoom != 'toto'">
-   				OR realty_type=#{tworoom}
-   			</if>
-   			<if test="threeroom != 'toto'">
-   				OR realty_type=#{threeroom}
-   			</if>
-   			 <if test="apartment != 'toto'">
-   				OR realty_type=#{apartment}
-   			</if>
-   			 <if test="officetel != 'toto'">
-   				OR realty_type=#{officetel}
-   			</if>
-   			
-   			
-   			<if test="max_monthly != 0">
-   				or month_lease <![CDATA[>]]> #{min_monthly} and month_lease <![CDATA[ <= ]]> #{max_monthly}
-   			</if>
-   			<if test="max_payback != 0">
-   				or payback_deposit_lease <![CDATA[ >]]> #{min_payback} and payback_deposit_lease <![CDATA[ <= ]]> #{max_payback} 
-   			</if>
-   			<if test="max_purchase != 0">
-   				or purchase <![CDATA[ > ]]> #{min_purchase} and purchase  <![CDATA[ <= ]]> #{max_purchase} 
-   			</if>
-   			
-   			
-   			<if test="max_area == 100" >
-   				AND residential <![CDATA[>=]]> #{min_area}
-   			</if>
-   			<if test="max_area != 100">
-   				AND residential <![CDATA[>=]]> #{min_area} and RESIDENTIAL <![CDATA[<=]]> #{max_area}
-   			</if>
-   			
-   			<if test="elevator != 0" >
-   				and elevator = 1
-   			</if>
-   			<if test="allowance_pet  != 0" >
-   				and allowance_pet  = 1
-   			</if>
-   			<if test="parking_lot  != 0" >
-   				and parking_lot != '0'
-   			</if>
-   			<if test="bidet != 0" >
-   				and bidet = 1
-   			</if>
-   			<if test="builtin != 0" >
-   				and builtin = 1
-   			</if>
-   			<if test="bed != 0" >
-   				and bed = 1
-   			</if>
-   			<if test="desk != 0" >
-   				and desk = 1
-   			</if>
-   			<if test="airconditioner != 0" >
-   				and airconditioner = 1
-   			</if>
-   			<if test="balcony != 0" >
-   				and balcony = 1
-   			</if>
-   			<if test="tv != 0" >
-   				and tv = 1
-   			</if>
-   			<if test="induction != 0" >
-   				and induction = 1
-   			</if>
-   			<if test="door_lock != 0" >
-   				and door_lock = 1
-   			</if>
-   			<if test="microwave != 0" >
-   				and microwave = 1
-   			</if>
-   			<if test="refrigerator != 0" >
-   				and refrigerator = 1
-   			</if>
-   			<if test="laundry_machine != 0" >
-   				and laundry_machine = 1
-   			</if>
-   			
-   			</where>
-   </select>
-	
+
+	<select id="selectFilteredList" parameterType="FRealty"
+		resultMap="resultPRealty">
+		select
+		REALTY_NO,REGISTDATE,RENEWDATE,REALTY_HITS,REALTY_STATUS,REALTY_TYPE,BUILDING_TYPE,ROAD_ADDRESS,LAND_LOT,DETAIL_ADDRESS,MONTH_LEASE,DEPOSIT,
+		PAYBACK_DEPOSIT_LEASE,PURCHASE,RESIDENTIAL,EXCLUSIVE_AREA,BUILDING_LAYERS,REALTY_LAYERS,HEATTING_SYSTEM,MOVE_AVAILABLE_DATE,MANAGEMENT_PAY,
+		PARKING_LOT,ELEVATOR,BUILTIN,ALLOWANCE_PET,BALCONY,LOAN_AVAILABILITY,STRUCTURE,AIRCONDITIONER,LAUNDRY_MACHINE,BED,DESK,CLOSET,TV,GASRANGE,SHOE_SHELF,REFRIGERATOR,INDUCTION,MICROWAVE,DOOR_LOCK,
+		BIDET,REALTY_DETAIL_TITLE,REALTY_DETAIL_COMMENT,REALTY_IMAGE1,REALTY_IMAGE2,REALTY_IMAGE3,REALTY_IMAGE4,REALTY_IMAGE5,REALTY_IMAGE6,REALTY_IMAGE7,REALTY_IMAGE8,IMAGE360,
+		premium_status
+		from tb_realty
+		left join tb_user using(user_no)
+		left join
+		tb_business using(user_no)
+
+
+
+
+		<where>
+			<if test="oneroom != 'toto'">
+				OR realty_type=#{oneroom}
+			</if>
+			<if test="tworoom != 'toto'">
+				OR realty_type=#{tworoom}
+			</if>
+			<if test="threeroom != 'toto'">
+				OR realty_type=#{threeroom}
+			</if>
+			<if test="apartment != 'toto'">
+				OR realty_type=#{apartment}
+			</if>
+			<if test="officetel != 'toto'">
+				OR realty_type=#{officetel}
+			</if>
+
+			<if
+				test="oneroom != 'toto' || tworoom !='toto' || threeroom != 'toto' || officetel != 'toto' || apartment != 'toto'">
+				AND(
+
+				<if test="max_monthly != 0">
+					month_lease <![CDATA[>]]>
+					#{min_monthly} and month_lease <![CDATA[ <= ]]>
+					#{max_monthly}
+				</if>
+				<choose>
+					<when test="max_monthly != 0">
+						<if test="max_payback != 0">
+							OR payback_deposit_lease <![CDATA[ >]]>
+							#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+							#{max_payback}
+						</if>
+					</when>
+					<otherwise>
+						payback_deposit_lease <![CDATA[ >]]>
+						#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+						#{max_payback}
+					</otherwise>
+				</choose>
+
+				<choose>
+					<when test="max_monthly != 0 || paybakc_deposit_lease != 0">
+						<if test="max_payback != 0">
+							OR payback_deposit_lease <![CDATA[ >]]>
+							#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+							#{max_payback}
+						</if>
+					</when>
+					<otherwise>
+						payback_deposit_lease <![CDATA[ >]]>
+						#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+						#{max_payback}
+					</otherwise>
+				</choose>
+				)
+			</if>
+
+			<if
+				test="oneroom == 'toto' and tworoom =='toto' and threeroom == 'toto' and officetel == 'toto' and apartment == 'toto'">
+				<if test="max_monthly != 0">
+					or month_lease <![CDATA[>]]>
+					#{min_monthly} and month_lease <![CDATA[ <= ]]>
+					#{max_monthly}
+				</if>
+				<if test="max_payback != 0">
+					or payback_deposit_lease <![CDATA[ >]]>
+					#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+					#{max_payback}
+				</if>
+				<if test="max_purchase != 0">
+					or purchase <![CDATA[ > ]]>
+					#{min_purchase} and purchase  <![CDATA[ <= ]]>
+					#{max_purchase}
+				</if>
+
+			</if>
+
+
+
+
+			<if test="max_area == 100">
+				AND residential <![CDATA[>=]]>
+				#{min_area}
+			</if>
+			<if test="max_area != 100">
+				AND residential <![CDATA[>=]]>
+				#{min_area} and RESIDENTIAL <![CDATA[<=]]>
+				#{max_area}
+			</if>
+
+			<if test="elevator != 0">
+				and elevator = 1
+			</if>
+			<if test="allowance_pet  != 0">
+				and allowance_pet = 1
+			</if>
+			<if test="parking_lot  != 0">
+				and parking_lot != '0'
+			</if>
+			<if test="bidet != 0">
+				and bidet = 1
+			</if>
+			<if test="builtin != 0">
+				and builtin = 1
+			</if>
+			<if test="bed != 0">
+				and bed = 1
+			</if>
+			<if test="desk != 0">
+				and desk = 1
+			</if>
+			<if test="airconditioner != 0">
+				and airconditioner = 1
+			</if>
+			<if test="balcony != 0">
+				and balcony = 1
+			</if>
+			<if test="tv != 0">
+				and tv = 1
+			</if>
+			<if test="induction != 0">
+				and induction = 1
+			</if>
+			<if test="door_lock != 0">
+				and door_lock = 1
+			</if>
+			<if test="microwave != 0">
+				and microwave = 1
+			</if>
+			<if test="refrigerator != 0">
+				and refrigerator = 1
+			</if>
+			<if test="laundry_machine != 0">
+				and laundry_machine = 1
+			</if>
+
+		</where>
+	</select>
+
 	<!-- 진솔 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 	<select id="selectTop5" resultMap="resultRealty" useCache="true">
 		select *
 		from tb_realty where realty_no in (select realty_no
-		from ( select rownum, realty_no
-		from (select (select count(*) from tb_dibs b where realty_no= r.realty_no)
-		count, realty_no from tb_realty r order by 1 desc)
+		from (
+		select rownum, realty_no
+		from (select (select count(*) from tb_dibs b
+		where realty_no= r.realty_no)
+		count, realty_no from tb_realty r order
+		by 1 desc)
 		where rownum<![CDATA[ <= ]]>5
 		)
 		)
