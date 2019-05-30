@@ -184,7 +184,7 @@ function request_pay(){
 <body>
 <c:import url="../../common/realtyHeader.jsp" />
 <br><br><br><br>
-<div class="container">
+<div class="container" style="min-height:960px;">
 	<div class="row" id="sh_pay_title">
 		<div class="col-md-12">
 			<h3>선방 프리미엄 서비스</h3>
