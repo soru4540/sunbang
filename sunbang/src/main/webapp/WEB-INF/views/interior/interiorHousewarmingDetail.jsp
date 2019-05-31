@@ -780,8 +780,8 @@ border-radius: 5px;
 							<hr style="border: 1px solid lightgray;">
 							<br> <br>
 							
-								<script type="text/javascript">
-								//모달 open시 동작(댓글 리스트 출력)
+						<script type="text/javascript">
+						//모달 open시 동작(댓글 리스트 출력)
 						function openReplyModal(e){
 							listReply(e);
 						}
@@ -930,7 +930,7 @@ border-radius: 5px;
 							
 					         	<!-- 댓글창 오픈 -->			
 									<div class="col-sm-offset-2 col-sm-12">
-										<button type="button" class="repSubmit btn btn-success" data-toggle='modal' data-target='#jb_replyModal${photoList[0].board_no}' id='jb_reply' onclick='openReplyModal(${photoList[0].board_no});'>댓글</button>
+										<button type="button" class="repSubmit btn btn-success" data-toggle='modal' data-target='#jb_replyModal${houseWList[0].board_no}' id='jb_reply' onclick='openReplyModal(${houseWList[0].board_no});'>댓글</button>
 									</div>
 							<br> <br> <br> 
 						</div>
@@ -953,7 +953,7 @@ border-radius: 5px;
 		<input type="hidden" id="i_user_no" value="${loginUser.user_no}">
 	</c:if>
 	<div class="row" id="list2">
-		<div class='modal fade' id='jb_replyModal${photoList[0].board_no}'>
+		<div class='modal fade' id='jb_replyModal${houseWList[0].board_no}'>
 			<div
 				class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'>
 				<div class='modal-content'>
@@ -963,11 +963,11 @@ border-radius: 5px;
 					</div>
 					<div class='modal-body'>
 						<div class='row'>
-							<div class='col-md-12' id='replylist${photoList[0].board_no}'></div>
+							<div class='col-md-12' id='replylist${houseWList[0].board_no}'></div>
 						</div>
 					</div>										
 					
-					<div class='modal-footer' id='reply${photoList[0].board_no}'>
+					<div class='modal-footer' id='reply${houseWList[0].board_no}'>
 						<c:if test="${!empty loginUser}">
 						<img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/${loginUser.user_profile}' />
 						</c:if>
@@ -975,16 +975,16 @@ border-radius: 5px;
 						<img class='mr-3' src='${pageContext.request.contextPath }/files/user/userImages/guest.png' />
 						</c:if>
 						<input type='text' class='textline'
-							id='reply_contents${photoList[0].board_no}'>
+							id='reply_contents${houseWList[0].board_no}'>
 						<p style='padding-left: 1.5em;'></p>
-						<input type='hidden' id='board_no${photoList[0].board_no}'
-							value='${photoList[0].board_no}'><input type='hidden'
-							id='reply_lev${photoList[0].board_no}' value='1'> <input
-							type='hidden' id='origin_reply_no${photoList[0].board_no}'
+						<input type='hidden' id='board_no${houseWList[0].board_no}'
+							value='${houseWList[0].board_no}'><input type='hidden'
+							id='reply_lev${houseWList[0].board_no}' value='1'> <input
+							type='hidden' id='origin_reply_no${houseWList[0].board_no}'
 							value='0'><input type='hidden'
-							id='reference_reply_no${photoList[0].board_no}' value='0'>
+							id='reference_reply_no${houseWList[0].board_no}' value='0'>
 						<input type='button' class='jb_filter1_submitBtn' value='전송'
-							onclick='addReply(${photoList[0].board_no});'>
+							onclick='addReply(${houseWList[0].board_no});'>
 						<p style='padding-left: 1.5em;'></p>
 					</div>
 				</div>
