@@ -1,6 +1,8 @@
 package org.kh.sunbang.admin.controller;
 
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,7 +50,41 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value = "project.do")
-	public String moveProject() {
+	public String moveProject(HttpServletResponse response, HttpServletRequest request) {
+		
+		FileInputStream fis = null;
+		BufferedOutputStream bos = null;
+
+		try {
+			String pdfFileName = request.getSession().getServletContext().getRealPath("/files/admin/project.pdf");
+
+			File pdfFile = new File(pdfFileName);
+
+			// 클라이언트 브라우져에서 바로 보는 방법(헤더 변경)
+			response.setContentType("application/pdf");
+
+			// 파일 읽고 쓰는 건 일반적인 Write방식이랑 동일합니다. 다만 reponse 출력 스트림 객체에 write.
+			fis = new FileInputStream(pdfFile);
+
+			int size = fis.available(); // 지정 파일에서 읽을 수 있는 바이트 수를 반환
+			byte[] buf = new byte[size]; // 버퍼설정
+			int readCount = fis.read(buf);
+			response.flushBuffer();
+			bos = new BufferedOutputStream(response.getOutputStream());
+			bos.write(buf, 0, readCount);
+			bos.flush();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if (fis != null)
+					fis.close(); // close는 꼭! 반드시!
+				if (bos != null)
+					bos.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		return "admin/project";
 	}
 
