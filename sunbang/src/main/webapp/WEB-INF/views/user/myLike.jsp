@@ -107,7 +107,7 @@ opacity: 0.8;
 	<div class="col-12" style="text-align:center; font-size: 30px; color: rgba(255, 182, 185, 0.8) ; font-weight: 800; padding:15% 0;"><hr>좋아요목록이 없습니다.<hr></div>
 	</c:if>
 	<c:forEach var="board" items="${uboard}">
-	<div id="jw_likediv${board.like_no}" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card ca border-0"><div class="card-img-top cit"><div class="img-overlay"><span class="fh"><i class="far fa-eye"> <b>${board.board_hits }</b></i> <i class="far fa-heart"> <b>${board.like_count }</b></i></span><span class="ddddel" id="jw_likedel${board.like_no }">&times;</span></div><img src="${pageContext.request.contextPath }/files/interior/interiorMain/${board.post_data }" style="width:100%; height: 200px;"></div>
+	<div id="jw_likediv${board.like_no}" class="col-6 col-md-4 col-lg-3 mt-5"><div class="card ca border-0"><div class="card-img-top cit"><div class="img-overlay"><span class="fh"><i class="far fa-eye"> <b>${board.board_hits }</b></i> <i class="far fa-heart"> <b>${board.like_count }</b></i></span><span class="ddddel" id="jw_likedel${board.like_no }">&times;</span></div><img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${board.post_data }" style="width:100%; height: 200px;"></div>
 		<a href="ibselect.do?board_no=${board.board_no }&board_type=${board.board_type}" style="text-decoration:none; color:#333;"><div class="card-body cd" style="text-align:left;"><b style="color:red;">${board.board_type }</b>
 		<br><b>${board.board_title }</b><br><c:if test="${!empty board.user_profile }"><img src="files/user/userImages/${board.user_profile }" class="rounded-circle" style="width:20px; height:20px;"></c:if>${board.nickname}</div></a></div></div>
 	</c:forEach>
