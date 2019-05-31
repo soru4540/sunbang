@@ -482,7 +482,7 @@
 		where realty_no = #{realty_no}
 	</update>
 
-	<!-- 형진///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+		<!-- 형진///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
 	<select id="selectFilteredList" parameterType="FRealty"
 		resultMap="resultPRealty">
@@ -494,31 +494,76 @@
 		premium_status
 		from tb_realty
 		left join tb_user using(user_no)
-		left join
-		tb_business using(user_no)
+		left join tb_business using(user_no)
 
 
 
 
 		<where>
-			<if test="oneroom != 'toto'">
-				OR realty_type=#{oneroom}
+		<if test="oneroom != 'toto' or tworoom !='toto' or threeroom != 'toto' or officetel != 'toto' or apartment != 'toto'">
+		(
+			<if test="oneroom != 'toto' ">
+				realty_type=#{oneroom}
 			</if>
+			
+			<choose>
+			<when test="tworoom != 'toto' and oneroom == 'toto'">
+				realty_type=#{tworoom}
+			</when>
+			<when test="oneroom != 'toto'">
 			<if test="tworoom != 'toto'">
-				OR realty_type=#{tworoom}
+				or realty_type=#{tworoom}
 			</if>
-			<if test="threeroom != 'toto'">
-				OR realty_type=#{threeroom}
-			</if>
+			</when>
+			<otherwise> </otherwise>
+			</choose>
+			
+			<choose>
+			<when test="oneroom =='toto' and tworoom == 'toto'">
+				<if test="threeroom != 'toto' ">
+			 realty_type=#{threeroom}
+			 </if>
+			</when>
+			<when test="oneroom != 'toto' or tworoom != 'toto'">
+			<if test="threeroom != 'toto' ">
+			 or realty_type=#{threeroom}
+			 </if>
+			</when>
+			<otherwise> </otherwise>
+			</choose>
+			
+			<choose>
+			<when test="oneroom =='toto' and tworoom == 'toto' and threeroom == 'toto'">
+				<if test="apartment != 'toto'">
+			 	realty_type=#{apartment}
+			 </if>
+			</when>
+			<when test="oneroom !='toto' or tworoom != 'toto' or threeroom != 'toto'">
 			<if test="apartment != 'toto'">
-				OR realty_type=#{apartment}
-			</if>
-			<if test="officetel != 'toto'">
-				OR realty_type=#{officetel}
-			</if>
-
+			 	or realty_type=#{apartment}
+			 </if>
+			</when>
+			<otherwise> </otherwise>
+			</choose>
+			
+			<choose>
+			<when test="oneroom =='toto' and tworoom == 'toto' and threeroom == 'toto' and officetel =='toto'">
+				<if test="officetel != 'toto'">
+				realty_type=#{officetel}
+				</if>
+			</when>
+			<when test="oneroom != 'toto' or tworoom != 'toto' or threeroom != 'toto'">
+				<if test="officetel != 'toto'">
+				or realty_type=#{officetel}
+				</if>
+			</when>
+			<otherwise> </otherwise>
+			</choose>
+			)
+		</if>
 			<if
-				test="oneroom != 'toto' || tworoom !='toto' || threeroom != 'toto' || officetel != 'toto' || apartment != 'toto'">
+				test="(oneroom !='toto' or tworoom != 'toto' or threeroom != 'toto' or officetel !='toto' or apartment != 'toto') and
+				(max_monthly != 0 or max_payback != 0 or max_purchase != 0)">
 				AND(
 
 				<if test="max_monthly != 0">
@@ -527,60 +572,86 @@
 					#{max_monthly}
 				</if>
 				<choose>
-					<when test="max_monthly != 0">
-						<if test="max_payback != 0">
+					<when test="max_monthly != 0 and max_payback != 0">
 							OR payback_deposit_lease <![CDATA[ >]]>
 							#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
-							#{max_payback}
-						</if>
+							#{max_payback}						
 					</when>
-					<otherwise>
+					<when test="max_monthly == 0 and max_payback != 0">
 						payback_deposit_lease <![CDATA[ >]]>
 						#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
 						#{max_payback}
+					</when>
+					<otherwise>
+					
 					</otherwise>
 				</choose>
 
 				<choose>
-					<when test="max_monthly != 0 || paybakc_deposit_lease != 0">
-						<if test="max_payback != 0">
-							OR payback_deposit_lease <![CDATA[ >]]>
-							#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
-							#{max_payback}
-						</if>
+					<when test="max_monthly != 0 or max_payback != 0">				
+							OR purchase <![CDATA[ >]]>
+							#{min_purchase} and purchase <![CDATA[ <= ]]>
+							#{max_purchase}
+					</when>
+					<when test="max_monthly== 0 and max_payback == 0 ">
+					<if test="max_purchase > 0">
+						purchase <![CDATA[ >]]>
+							#{min_purchase} and purchase <![CDATA[ <= ]]>
+							#{max_purchase}
+					</if>		
 					</when>
 					<otherwise>
-						payback_deposit_lease <![CDATA[ >]]>
-						#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
-						#{max_payback}
+					
 					</otherwise>
 				</choose>
 				)
 			</if>
+				
+							<if
+				test="(oneroom =='toto' and tworoom == 'toto' and threeroom == 'toto' and officetel =='toto' and apartment =='toto') and (max_monthly != 0 or max_payback != 0 or max_purchase != 0)">
+				
 
-			<if
-				test="oneroom == 'toto' and tworoom =='toto' and threeroom == 'toto' and officetel == 'toto' and apartment == 'toto'">
 				<if test="max_monthly != 0">
-					or month_lease <![CDATA[>]]>
+					month_lease <![CDATA[>]]>
 					#{min_monthly} and month_lease <![CDATA[ <= ]]>
 					#{max_monthly}
 				</if>
-				<if test="max_payback != 0">
-					or payback_deposit_lease <![CDATA[ >]]>
-					#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
-					#{max_payback}
-				</if>
-				<if test="max_purchase != 0">
-					or purchase <![CDATA[ > ]]>
-					#{min_purchase} and purchase  <![CDATA[ <= ]]>
-					#{max_purchase}
-				</if>
+				<choose>
+					<when test="max_monthly != 0 and max_payback != 0">
+							OR payback_deposit_lease <![CDATA[ >]]>
+							#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+							#{max_payback}						
+					</when>
+					<when test="max_monthly == 0 and max_payback != 0">
+						payback_deposit_lease <![CDATA[ >]]>
+						#{min_payback} and payback_deposit_lease <![CDATA[ <= ]]>
+						#{max_payback}
+					</when>
+					<otherwise>
+					
+					</otherwise>
+				</choose>
 
+				<choose>
+					<when test="max_monthly != 0 or max_payback != 0">				
+							OR purchase <![CDATA[ >]]>
+							#{min_purchase} and purchase <![CDATA[ <= ]]>
+							#{max_purchase}
+					</when>
+					<when test="max_monthly== 0 and max_payback == 0 ">
+					<if test="max_purchase > 0">
+						purchase <![CDATA[ >]]>
+							#{min_purchase} and purchase <![CDATA[ <= ]]>
+							#{max_purchase}
+					</if>		
+					</when>
+					<otherwise>
+					
+					</otherwise>
+				</choose>
+				
 			</if>
-
-
-
-
+							
 			<if test="max_area == 100">
 				AND residential <![CDATA[>=]]>
 				#{min_area}
@@ -590,7 +661,7 @@
 				#{min_area} and RESIDENTIAL <![CDATA[<=]]>
 				#{max_area}
 			</if>
-
+			
 			<if test="elevator != 0">
 				and elevator = 1
 			</if>

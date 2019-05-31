@@ -826,8 +826,8 @@ b {
 			$('#hj_slider_month').hide();
 
 			$('#hj_slider_purchase').hide();
-
-			//$("hj_area_slider").slider('refresh');
+			
+		
 			getList();
 		}
 
@@ -854,6 +854,7 @@ b {
 
 					// 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
 					map.setBounds(bounds);
+					getList();
 				}
 			}
 		}
@@ -1064,7 +1065,6 @@ b {
 							var json = JSON.parse(jsonStr);
 							if(json.length > 0) {
 							for ( var i in json) {
-
 								var a = json[i].realty_status;
 								if (a != "완전삭제" && a != "숨기기" && a != "삭제"
 										&& a != "검수중" && a != "수정완료") {
@@ -1360,6 +1360,13 @@ b {
 									pvalues += values;
 									$("#hj_housediv").html(pvalues);
 									$("#hj_jsonLength").html(jsonLength);
+								} else{	 // 조회된 결과가 없을때
+									$("#hj_housediv").html("");
+									$("#hj_jsonLength")
+											.html(
+													"<div style='background-color: white; width: 100%; height: 50px; padding-top: 10px; border-top: 1px solid #D5D5D5; color: #343a40; font-family: a고딕15; font-size: 16pt;'>"
+															+ "조회된 결과가 없습니다"
+															+ "</div>");
 								}
 							}//list func
 
