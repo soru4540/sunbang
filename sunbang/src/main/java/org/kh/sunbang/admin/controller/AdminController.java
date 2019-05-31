@@ -178,6 +178,7 @@ public class AdminController {
 		String report_system = request.getParameter("report_system");
 		String contents_status = request.getParameter("contents_status");
 		int contents_no = 0;
+		
 		if (request.getParameter("contents_no") != null) {
 			contents_no = Integer.parseInt(request.getParameter("contents_no"));
 		}
@@ -190,7 +191,16 @@ public class AdminController {
 		if (report_system.equals("realty")) {
 			if (report_status == 1) {
 				report.setContents_status("검수중");
-			} else {
+			} 
+			else if (report_status == 2){
+				if (contents_status.equals("검수중")) {
+					report.setContents_status("광고중");
+				}
+				else if (contents_status.equals("수정완료")) {
+					report.setContents_status("광고중");
+				}
+			}
+			else {
 				if (contents_status.equals("검수중")) {
 					report.setContents_status("광고중");
 				}
@@ -212,6 +222,9 @@ public class AdminController {
 			result2 = adminService.updateReportStatus(report);
 		} else {
 			if (contents_status.equals("검수중")) {
+				result1 = adminService.updateContentsStatus(report);
+			}
+			else if (contents_status.equals("수정완료")) {
 				result1 = adminService.updateContentsStatus(report);
 			}
 			result2 = adminService.updateReportStatus(report);

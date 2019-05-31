@@ -78,6 +78,8 @@
 		report_date, handle_date, report_status, u.user_no, u.user_id
 		from
 		tb_report r join tb_user u on r.user_no = u.user_no
+		where report_status != 2 
+		order by report_no desc
 	</select>
 
 	<select id="selectGuideAllList" parameterType="String"
@@ -85,13 +87,15 @@
 		select * from tb_guide
 		where guide_system = #{guide_system}
 		and guide_status = 1
+		order by guide_no desc
 	</select>
 
 	<select id="selectGuideList" parameterType="String"
 		resultMap="resultGuide">
 		select * from tb_guide
-		where category = #{category} and
-		guide_status = 1
+		where category = #{category} 
+		and guide_status = 1
+		order by guide_no desc
 	</select>
 
 	<select id="selectGuideDetail" parameterType="int"
@@ -233,6 +237,7 @@
 	<![CDATA[
 	where rnum >= #{page} and rnum <= #{limit}
 	]]>
+	order by business_user_no desc
 	</select>
 
 	<update id="updateBusinessStatus" parameterType="PremiumFull">
@@ -315,6 +320,7 @@
 	<![CDATA[
 	where rnum >= #{page} and rnum <= #{limit}
 	]]>
+	order by report_no desc
 	</select>
 	
 	<select id="selectReportDetail" parameterType="Report" resultMap="resultReport">

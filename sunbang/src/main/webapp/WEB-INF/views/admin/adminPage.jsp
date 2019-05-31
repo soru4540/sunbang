@@ -11,11 +11,13 @@
 <title>SUNBANG</title>
 <style type="text/css">
 #js_apage_tb {
-	min-height: 400px;
+	min-height: 385px;
 	white-space: nowrap;
 	overflow: auto;
 	border: 1px solid lightgray;
 	text-align: center;
+	overflow-y: auto;
+    max-height: 385px;
 }
 
 .js_apage_content {
