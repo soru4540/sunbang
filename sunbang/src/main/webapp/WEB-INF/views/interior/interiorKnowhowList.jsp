@@ -121,7 +121,7 @@
 	<script type="text/javascript">
 		$(function() {		
 			$(window).scroll(function() {			
-				if ($(this).scrollTop() > 500) {				
+				if ($(this).scrollTop() > 400) {				
 					$('#jb_top').fadeIn();
 				} else {
 					$('#jb_top').fadeOut();
@@ -132,7 +132,7 @@
 				var offset = $('html').offset();
 				$("html, body").animate({
 					scrollTop : offset.top
-				}, 500);
+				}, 400);
 			});
 			
 			if ($("#keyword1").val() == "empty") {

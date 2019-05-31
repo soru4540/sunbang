@@ -257,7 +257,7 @@ border-radius: 5px;
 <script type="text/javascript">
 		$(function() {		
 			$(window).scroll(function() {			
-				if ($(this).scrollTop() > 500) {			
+				if ($(this).scrollTop() > 400) {			
 					$('#jb_top').fadeIn();
 				} else {
 					$('#jb_top').fadeOut();
@@ -268,7 +268,7 @@ border-radius: 5px;
 				var offset = $('html').offset();
 				$("html, body").animate({
 					scrollTop : offset.top
-				}, 500);
+				}, 400);
 			});
 			
 			//필터 5개
@@ -481,7 +481,7 @@ border-radius: 5px;
 			            		var list_no = 16 + ((pagenum-2)*8);				            	
 			            	}
 			            	for(var i in jsonObj.iblist){				           
-			            	value += "<div class='col-md-3'>"
+			            	value += "<div class='col-6 col-md-3 mt-5'>"
 			            				+"<h6 align='left'>"
 			            			    +"<i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname
 			            				+"</h6>"

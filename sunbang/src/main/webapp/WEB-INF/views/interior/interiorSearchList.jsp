@@ -536,11 +536,11 @@ cursor:pointer;
 				var list3_count = 0;
 				for(var i in jsonObj.iblist){			
 					if(jsonObj.iblist[i].board_type == "photograph"){
-						list1 += "<div class='col-md-3'>"
+						list1 += "<div class='col-6 col-md-3 mt-1'>"
             				+"<h6 align='left'>"
             			    +"<i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname
             				+"</h6>"
-            				+"<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
+            				+"<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
             				+"<h5 align='center'>";			            				
             				var count = 0
             				  for(var k in jsonObj.illist){
@@ -570,13 +570,13 @@ cursor:pointer;
             	    list_no++;
 					list1_count++;
 					}else if(jsonObj.iblist[i].board_type == "housewarming" ){
-						list2 += "<div class='col-md-4' align='center'><a class='jb_filter_a' href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'><div class='hovereffect'>"
-	    				  +	"<img src='${pageContext.request.contextPath}/files/interior/interiorMain/"+jsonObj.iblist[i].post_data+"' class='jb_filter2_img'></div><br>"
+						list2 += "<div class='col-6 col-md-4 mt-1' align='center'><a class='jb_filter_a' href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'><div class='hovereffect'>"
+	    				  +	"<img src='${pageContext.request.contextPath}/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter2_img'></div><br>"
 	    				  + "<h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6>"
 	    				  + "<h6 style='opacity: 0.35;'>좋아요 : "+jsonObj.iblist[i].like_count+" 조회수 : "+jsonObj.iblist[i].board_hits+"</h6></a></div>";
 						list2_count++;
 					}else if(jsonObj.iblist[i].board_type == "knowhow" ){
-						list3 += "<div class='col-md-4'><a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'>"
+						list3 += "<div class='col-6 col-md-4 mt-1'><a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'>"
 	            	       + "<img src='${pageContext.request.contextPath }/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter3_img'><br>"
 	    				   + "<h6 style='padding-top: 5px;'>리모델링</h6><h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6> </a></div>";
 						list3_count++;
@@ -861,12 +861,12 @@ cursor:pointer;
   <div class="container" id="jb_search_container" style="min-height: 960px;">
   <div class="row">
     <div class="col">
-      <h3>검색 결과</h3>
-      <hr>
+      <h3>검색 결과</h3>   
+      <hr>  
     </div>
   </div>
   <div class="row">
-    <div class="col">
+    <div class="col"> 
       <span class="jb_result" style="font-size:x-large;font-family: a고딕13;" onclick="displayList(1);">사진_Photograph ( <span id="list1_count"></span> ) </span>
        <hr>
     </div>
@@ -874,11 +874,11 @@ cursor:pointer;
   <div class="row" id="list1" style="display:none;">
    
   </div> 
-   <div class="row" id="list1_1">
-   
-  </div>     
+    
+ 
   <div class="row">
     <div class="col">
+    <hr>
      <span class="jb_result" style="font-size:x-large;font-family: a고딕13;" onclick="displayList(2);">집들이_HouseWarming ( <span id="list2_count"></span> )</span>
        <hr>
     </div>
@@ -886,14 +886,19 @@ cursor:pointer;
    <div class="row" id="list2" style="display:none;">
     
   </div>   
+   <hr>  
   <div class="row">
     <div class="col">
+   
       <span class="jb_result" style="font-size:x-large;font-family: a고딕13;" onclick="displayList(3);">노하우_KnowHow  ( <span id="list3_count"></span> )</span>
        <hr>
     </div>
   </div>
    <div class="row" id="list3" style="display:none;">
     
+  </div>   
+   <div class="row" id="list1_1">
+   
   </div>   
  <div class="row" id="jb_top">
 		<div class="col-md-12">

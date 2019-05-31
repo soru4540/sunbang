@@ -851,11 +851,12 @@
 					</div>
 					<br>
 					<div class="row">
-						<div class="col">
-							<span style="font-family: a고딕14;">예산 : </span><input type="text"
-								size="53" name="board_title" id="board_title"
-								style="width: 96%;" value="${iblist.budget}" required>
+						<div class="col" style="font-family: a고딕14;">
+							<span>예산 : </span><input type="number" style="height: 35px;"
+								size="53" name="budget" id="budget" required>&nbsp;원
 						</div>
+						<br>
+						<br>
 					</div>
 					<br>
 					<div class="row">

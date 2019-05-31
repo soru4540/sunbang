@@ -157,7 +157,8 @@ left join(select count(user_no) like_count,board_no from tb_like
 group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no)
                   FROM tb_post
-                  GROUP BY board_no)               
+                  GROUP BY board_no)  
+and board_status = 0             
 order by board_hits desc, like_count desc, board_no desc
 )
 <![CDATA[ where rownum <6 ]]>
@@ -175,7 +176,8 @@ group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no)
                   FROM tb_post
                   GROUP BY board_no)
-      and board_type='housewarming'            
+      and board_type='housewarming'     
+and board_status = 0               
 order by board_hits desc, like_count desc, board_no desc
 )
 where rownum =1
@@ -193,6 +195,7 @@ where post_no in (SELECT MIN(post_no)
                   FROM tb_post
                   GROUP BY board_no)
       and board_type='knowhow'            
+and board_status = 0        
 order by board_hits desc, like_count desc, board_no desc
 )
 where <![CDATA[ rownum <5 ]]>
@@ -200,8 +203,8 @@ where <![CDATA[ rownum <5 ]]>
 
 <!-- 메인 집들이 top3 -->
 <select id="selectHbTop3" resultMap="resultBoardFull">
-select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no,user_id, nickname,user_profile,like_count
-from (select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_id,user_profile,nvl(like_count,0) like_count from tb_board
+select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no,user_id, nickname,user_profile,like_count
+from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_id,user_profile,nvl(like_count,0) like_count from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
@@ -209,7 +212,8 @@ group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no)
                   FROM tb_post
                   GROUP BY board_no)
-      and board_type='housewarming'            
+      and board_type='housewarming'   
+and board_status = 0                 
 order by board_hits desc, like_count desc, board_no desc
 )
 where <![CDATA[  rownum <4 ]]>
@@ -217,8 +221,8 @@ where <![CDATA[  rownum <4 ]]>
 
 <!-- 메인 사진 top8 -->
 <select id="selectPbTop8" resultMap="resultBoardFull">
- select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no,user_id, nickname,user_profile,like_count
-from (select board_no,board_type,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_id,user_profile,nvl(like_count,0) like_count from tb_board
+ select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no,user_id, nickname,user_profile,like_count
+from (select board_no,board_type,board_title,board_hits,post_no,post_keyword,post_data, user_no, nickname,user_id,user_profile,nvl(like_count,0) like_count from tb_board
 left join tb_post using(board_no)
 left join tb_user using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
@@ -226,7 +230,8 @@ group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no)
                   FROM tb_post
                   GROUP BY board_no)
-      and board_type='photograph'            
+      and board_type='photograph'         
+and board_status = 0           
 order by board_hits desc, like_count desc, board_no desc
 )
 where <![CDATA[ rownum <9 ]]>
@@ -279,7 +284,7 @@ left join(select count(follower_no) follow_count,user_no from tb_follow
 group by user_no) using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
 group by board_no) using(board_no)
-where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and board_status = 0  
 and board_type= #{board_type} <if test="keyword2 != 'empty'"> and space = #{keyword2} </if>
     <choose>
     <when test="keyword3 != 'empty' and keyword3 == '10평미만'"> 
@@ -321,7 +326,7 @@ left join(select count(follower_no) follow_count,user_no from tb_follow
 group by user_no) using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
 group by board_no) using(board_no)
-where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
+where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) and board_status = 0  
 and board_type= #{board_type} <if test="keyword2 != 'empty'"> and housing_type = #{keyword2} </if>
  <choose>
     <when test="keyword3 != 'empty' and keyword3 == '10평미만'"> 
@@ -398,8 +403,8 @@ and board_type= #{board_type} <if test="keyword2 != 'empty'"> and housing_type =
 	group by user_no) using(user_no)
 	left join(select count(user_no) like_count, board_no from tb_like
 	group by board_no) using(board_no)
-	where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
-	and board_type= #{board_type}
+	where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no) 
+	and board_type= #{board_type} and board_status = 0  
 	<if test="keyword1 != 'empty'"> and (category1 = #{keyword1} or category2 = #{keyword1} or category3 = #{keyword1})</if>
 	<if test="keyword2 != 'empty'"> and (category1 = #{keyword2} or category2 = #{keyword2} or category3 = #{keyword2})</if>
 	<if test="keyword3 != 'empty'"> and (category1 = #{keyword3} or category2 = #{keyword3} or category3 = #{keyword3})</if>
@@ -557,6 +562,7 @@ group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no)
                   FROM tb_post
                   GROUP BY board_no)
+and board_status = 0                    
 order by board_no desc)
 where search like '%' || #{keyword} || '%'
 </select>
@@ -564,7 +570,7 @@ where search like '%' || #{keyword} || '%'
 <!-- 뉴스피드 리스트 카운트 -->
 <select id="selectNewsFeedListCount" parameterType="Ipaging" resultType="_int">
 select count(*) from tb_board
-where user_no in (select user_no from tb_follow where follower_no = #{user_no} )
+where  user_no in (select user_no from tb_follow where follower_no = #{user_no} ) and board_status = 0  
 </select>
 
 <select id="selectNewsFeedList" parameterType="Ipaging" resultMap="resultBoardFull">
@@ -579,6 +585,7 @@ left join(select count(user_no) like_count, board_no from tb_like
 group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
 and user_no in (select follower_no from tb_follow where user_no = #{user_no})
+and board_status = 0  
 order by board_no desc
 ) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>
@@ -586,7 +593,7 @@ order by board_no desc
 <!-- 스토리 리스트 카운트 -->
 <select id="selectStoryListCount" parameterType="Ipaging" resultType="_int">
 select count(*) from tb_board
-where user_no = #{user_no}
+where user_no = #{user_no} and board_status = 0  
 </select>
 
 <!-- 스토리 리스트 출력 -->
@@ -601,7 +608,7 @@ group by user_no) using(user_no)
 left join(select count(user_no) like_count, board_no from tb_like
 group by board_no) using(board_no)
 where post_no in (SELECT MIN(post_no) FROM tb_post GROUP BY board_no)
-and user_no = #{user_no}
+and user_no = #{user_no} and board_status = 0  
 order by board_no desc
 ) where <![CDATA[ rnum >= #{start_num} and rnum <= #{end_num} ]]>
 </select>

@@ -80,6 +80,7 @@
 
 .jb_filter2_img {
 	width: 100%;
+	height: 230px;
 	border-radius: .75rem;
 	margin-bottom: 5px;
 }
@@ -206,7 +207,7 @@
 		$(function() {		
 						
 			$(window).scroll(function() {			
-				if ($(this).scrollTop() > 500) {				
+				if ($(this).scrollTop() > 400) {				
 					$('#jb_top').fadeIn();
 				} else {
 					$('#jb_top').fadeOut();
@@ -217,7 +218,7 @@
 				var offset = $('html').offset();
 				$("html, body").animate({
 					scrollTop : offset.top
-				}, 500);
+				}, 400);
 			});
 			
 			//필터 7개

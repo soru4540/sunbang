@@ -41,7 +41,7 @@
 
 .jb_newsfeed_img {
 	width: 100%;
-	height: 70%;
+	height: 530px;
 	border-radius: .75rem;
 	margin-bottom: 5px;
 }
@@ -426,7 +426,7 @@ border-radius: 5px;
 						       + "<a href='istory.do?user_no="+${loginUser.user_no}+"&follower_no="+jsonObj.iblist[i].user_no+"'><div class='jb_newsfeed_profile'><img src='${pageContext.request.contextPath }/files/user/userImages/"+jsonObj.iblist[i].user_profile+"'>&nbsp;&nbsp;&nbsp;"
 						       + "<span style='font-size:22px; font-family: a고딕14;'>"+jsonObj.iblist[i].user_id+"</span></a></div></div>"	
 							   + "<div class='col-md-2'></div></div>"
-							   + "<div class='row'><div class='col-md-2'></div><div class='col-md-8'><hr color=''#ffb6b9'>"						
+							   + "<div class='row'><div class='col-md-2'></div><div class='col-md-8'><hr>"						
 							   + "<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath }/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_newsfeed_img'></a><br>"									
 							   + "<h5>";
 								var count = 0
@@ -443,8 +443,8 @@ border-radius: 5px;
 	            				  }			            							            		
 	                          value += "<a data-toggle='modal' data-target='#jb_replyModal"+jsonObj.iblist[i].board_no+"' id='jb_reply' onclick='openReplyModal("+jsonObj.iblist[i].board_no+");'><i class='far fa-comment'></i></a>"
 	            	          + "</h5><h6 style='opacity: 0.4;'>"+jsonObj.iblist[i].board_hits+"명이 봤고 "+jsonObj.iblist[i].like_count+"명이 좋아합니다</h6>"									
-							   + "<h5>첨으로 올려보는 내방 사진</h5>"
-							   + "<hr color='#ffb6b9'></div><div class='col-md-2'></div></div>";							
+							   + "<h5>"+jsonObj.iblist[i].board_title+"</h5>"
+							   + "<hr><br></div><div class='col-md-2'></div></div>";							
 																																			
 		            			
 		            	 value2 += "<div class='modal fade' id='jb_replyModal"+jsonObj.iblist[i].board_no+"'><div class='modal-dialog modal-dialog-scrollable modal-xl modal-dialog-centered'><div class='modal-content'>"
