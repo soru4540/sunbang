@@ -42,6 +42,7 @@
 	width: 100%;
 	height: 70%;
 	border-radius: .75rem;
+	margin-top: 5px;
 	margin-bottom: 5px;
 }
 
@@ -254,6 +255,11 @@ width:50px;
 border-radius: 5px;
 }
 
+.jb_follow_profile img {
+	width: 30px;
+	height: 30px;
+	border-radius: 70%;
+}
 </style>
 </head>
 <body>
@@ -408,11 +414,10 @@ border-radius: 5px;
 										var list_no = 16 + ((pagenum - 2) * 8);
 									}
 									for ( var i in jsonObj.iblist) {
-										value += "<div class='col-md-4'>"
-												+ "<h6 align='left'>"
-												+ "<i class='far fa-user-circle'></i>&nbsp;"
-												+ jsonObj.iblist[i].nickname
-												+ "</h6>"
+										value += "<div class='col-6 col-md-4 mt-5'>"											
+												+"<div class='jb_follow_profile'>"
+					        					+"<img src='${pageContext.request.contextPath}/files/user/userImages/"+jsonObj.iblist[i].user_profile+"'>&nbsp;&nbsp;"
+					        					+"<span style='font-size:18px; font-family: a고딕12;vertical-align:middle;'>"+jsonObj.iblist[i].nickname+"</span></div>"
 												+ "<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_story_img'></a><br>"
 												+ "<h5 align='center'>";
 										var count = 0
@@ -707,11 +712,10 @@ border-radius: 5px;
 								<br>
 								<a href="istory.do?user_no=${loginUser.user_no}&follower_no=${fuser.user_no}" class="font-weight-bold">${fuser.nickname}<br>${fuser.user_id } ${fuser.user_name }</a> <br><a href="ifollowlist.do?user_no=${fuser.user_no}"><span
 									style="font-family: a고딕14; opacity: 0.5;">팔로우 : ${fuser.follow_count} 팔로잉 : ${fuser.following_count}</span></a><br>	
-								<br>								
-								<br>	
+								<br>												
 								    <c:if test="${follower_no != loginUser.user_no}">							
-									<c:if test="${checkfollow != 1}"><button type="button" class="btn btn-outline-info" id="follow_btn1" onclick="addFollow(${follower_no});">팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn2" style="display:none;" onclick="delFollow(${follower_no});">언팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
-									<c:if test="${checkfollow == 1}"><button type="button" class="btn btn-outline-info" id="follow_btn2" onclick="delFollow(${follower_no});">언팔로우</button><button type="button" class="btn btn-outline-info" id="follow_btn1" style="display:none;" onclick="addFollow(${follower_no});">팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+									<c:if test="${checkfollow != 1}"><button type="button" class="btn btn-outline-info" id="follow_btn1" onclick="addFollow(${follower_no});">팔로우</button><button type="button" class="btn btn-outline-Basic" id="follow_btn2" style="display:none;border:1px solid;" onclick="delFollow(${follower_no});">팔로잉</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
+									<c:if test="${checkfollow == 1}"><button type="button" style="border: 1px solid;" class="btn btn-outline-Basic" id="follow_btn2" onclick="delFollow(${follower_no});">팔로잉</button><button type="button" class="btn btn-outline-info" id="follow_btn1" style="display:none;" onclick="addFollow(${follower_no});">팔로우</button>&nbsp;&nbsp;&nbsp;&nbsp;</c:if>
 									</c:if>																																		
 							</div>						
 					    </div>					    					    

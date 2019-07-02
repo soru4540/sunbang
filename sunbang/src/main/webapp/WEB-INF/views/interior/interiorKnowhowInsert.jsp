@@ -565,7 +565,11 @@ color:#ff9198;
 				<div class="col">
 					<input id="upload" class="submit" type="submit" value="등&nbsp;록">
 				</div>
+				<div class="col">
+					<input class="submit" type="button" value="취&nbsp;소">
+				</div>
 			</div>
+			
 		</form>
 	<br>
 		<br>

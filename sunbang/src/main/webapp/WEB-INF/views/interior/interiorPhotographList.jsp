@@ -114,6 +114,7 @@
 	width: 100%;
 	height: 70%;
 	border-radius: .75rem;
+	margin-top:5px;
 	margin-bottom: 5px;
 }
 
@@ -247,6 +248,12 @@ border-radius: 5px;
 height:50px;
 width:50px;
 border-radius: 5px;
+}
+
+.jb_follow_profile img {
+	width: 30px;
+	height: 30px;
+	border-radius: 70%;
 }
 
 </style>
@@ -482,9 +489,9 @@ border-radius: 5px;
 			            	}
 			            	for(var i in jsonObj.iblist){				           
 			            	value += "<div class='col-6 col-md-3 mt-5'>"
-			            				+"<h6 align='left'>"
-			            			    +"<i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname
-			            				+"</h6>"
+			            				+"<div class='jb_follow_profile'>"
+			        					+"<img src='${pageContext.request.contextPath}/files/user/userImages/"+jsonObj.iblist[i].user_profile+"'>&nbsp;&nbsp;"
+			        					+"<span style='font-size:18px; font-family: a고딕12;vertical-align:middle;'>"+jsonObj.iblist[i].nickname+"</span></div>"
 			            				+"<a href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'> <img src='${pageContext.request.contextPath}/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter1_img'></a><br>"
 			            				+"<h5 align='center'>";			            				
 			            				var count = 0

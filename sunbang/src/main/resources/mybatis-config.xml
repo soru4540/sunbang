@@ -23,7 +23,7 @@
 		<typeAlias type="org.kh.sunbang.admin.model.vo.PremiumFull" alias="PremiumFull" />
 		<typeAlias type="org.kh.sunbang.admin.model.vo.Apaging" alias="Apaging" />
 		
-		<typeAlias type="org.kh.sunbang.interior.model.vo.BoardFull" alias="BoardFull" />
+	    <typeAlias type="org.kh.sunbang.interior.model.vo.BoardFull" alias="BoardFull" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Board" alias="Board" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.Post" alias="Post" />
 		<typeAlias type="org.kh.sunbang.interior.model.vo.ReplyFull" alias="ReplyFull" />

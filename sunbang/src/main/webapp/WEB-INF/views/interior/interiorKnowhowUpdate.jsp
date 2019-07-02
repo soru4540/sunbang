@@ -65,6 +65,26 @@
 	overflow: hidden;
 }
 
+.upBtn {
+	background-color: white;
+	color: skyblue;
+	border: #ffa0a8;
+	width: 45px;
+	height: 40px;
+	font-size: 17px;
+	font-family: a고딕15;
+}
+
+.delBtn {
+	background-color: white;
+	color: orange;
+	border: #ffa0a8;
+	width: 45px;
+	height: 40px;
+	font-size: 17px;
+	font-family: a고딕15;
+}
+
 .submit {
 	background-color: #ffa0a8;
 	color: white;
@@ -664,10 +684,10 @@
 						<input type="hidden" id="post_no${status.index}" name="post_no"
 							value="${iblist.post_no}">
 						<div class="col" style="width:100%;" id="loaddata${status.index}">
-							<button class="" type="button"
+							<button class="upBtn" type="button"
 								onclick="changeRow(${status.index})">수정</button>
 							&nbsp;&nbsp;&nbsp;
-							<button class="" type="button" onclick="delPost(${status.index})">삭제</button>
+							<button class="delBtn" type="button" onclick="delPost(${status.index})">삭제</button>
 							<br>
 							<c:if test="${iblist.post_keyword == 'strapline'}">
 								<br>
@@ -700,9 +720,12 @@
 								<br>
 								<div class="row">
 									<div class="col">
+									     <div align="center"
+						style="background-color: #fbfbfb; height: 600px; width: 100%; text-align: center; padding-top: 30px; padding-bottom: 30px;">
 										<img id="hidden_img${status.index}"
 											style="max-height: 100%; min-height: 540px; max-width: inherit;"
-											src="${pageContext.request.contextPath }/files/interior/interiorBoard/${iblist.post_data}"><br>
+											src="${pageContext.request.contextPath }/files/interior/interiorBoard/${iblist.post_data}">
+											</div>											
 										<br>내용 :
 										<textarea id="" name="hidden_post_contents${status.index}"
 											rows="5" cols="101"
@@ -837,6 +860,9 @@
 			<div class="row">
 				<div class="col">
 					<input class="submit" type="submit" value="수 정">
+				</div>
+				<div class="col">
+					<input class="submit" type="button" value="취 소">
 				</div>
 			</div>
 		</form>

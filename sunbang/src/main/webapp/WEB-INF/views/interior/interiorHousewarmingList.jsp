@@ -96,17 +96,17 @@
 	border-radius: .75rem;
 }
 
-#jb_filter2_container .hovereffect img {
+#jb_filter2_container .hovereffect .jb_filter2_img {
 	display: block;
 	position: relative;
 	-webkit-transition: all .3s linear;
 	transition: all .3s linear;
 }
 
-.jb_filter_a:hover img {
-	-ms-transform: scale(1.15);
-	-webkit-transform: scale(1.15);
-	transform: scale(1.15);
+.jb_filter_a:hover .jb_filter2_img {
+	-ms-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
 }
 
 
@@ -197,6 +197,12 @@
 	border-radius: 5px;
 	padding:2px;
   }
+}
+
+.jb_follow_profile img {
+	width: 30px;
+	height: 30px;
+	border-radius: 70%;
 }
 
 </style>
@@ -408,8 +414,11 @@
 			            		
 			            	value += "<div class='col-md-4' align='center'><a class='jb_filter_a' href='ibselect.do?board_no="+jsonObj.iblist[i].board_no+"&board_type="+jsonObj.iblist[i].board_type+"'><div class='hovereffect'>"
 			    				  +	"<img src='${pageContext.request.contextPath}/files/interior/interiorBoard/"+jsonObj.iblist[i].post_data+"' class='jb_filter2_img'></div><br>"
-			    				  + "<h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6>"
-			    				  + "<h6 style='opacity: 0.35;'>좋아요 : "+jsonObj.iblist[i].like_count+" 조회수 : "+jsonObj.iblist[i].board_hits+"</h6></a></div>";			            					            		            
+			    				  + "<h5>"+jsonObj.iblist[i].board_title+"</h5>"
+			    				  +"<div class='jb_follow_profile'>"
+		        				  +"<img src='${pageContext.request.contextPath}/files/user/userImages/"+jsonObj.iblist[i].user_profile+"'>&nbsp;&nbsp;"
+		        				  +"<span style='font-size:18px; font-family: a고딕12;vertical-align:middle;'>"+jsonObj.iblist[i].nickname+"</span></div>"
+			    				  + "<h6 style='opacity: 0.35;margin-top:5px;'>좋아요 : "+jsonObj.iblist[i].like_count+" 조회수 : "+jsonObj.iblist[i].board_hits+"</h6></a></div>";			            					            		            
 			                 list_no++;                        
 			            	}
 			            	$("#list").html(value);					           

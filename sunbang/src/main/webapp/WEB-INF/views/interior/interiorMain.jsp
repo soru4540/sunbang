@@ -106,7 +106,7 @@
 
 #jb_main_container #jb_main_new .hovereffect {
 	width: 100%;
-	height: 90%;
+	height: 240px;
 	float: left;
 	overflow: hidden;
 	position: relative;
@@ -121,11 +121,75 @@
 	transition: all .3s linear;
 }
 
-#jb_main_container a:hover .hovereffect img {
-	-ms-transform: scale(1.15);
-	-webkit-transform: scale(1.15);
-	transform: scale(1.15);
+#jb_main_container a:hover .hovereffect .img {
+	-ms-transform: scale(1.1);
+	-webkit-transform: scale(1.1);
+	transform: scale(1.1);
 }
+
+.jb_follow_profile img {
+	width: 30px;
+	height: 30px;
+	border-radius: 70%;
+}
+
+
+.cover_img{
+     position: absolute;
+     top:84%;
+     left:3%;                 	                                                       
+     z-index: 2;    
+}
+
+.cover_img_profile {
+    width: 30px;
+	height: 30px;
+	border-radius: 80%;
+}
+
+.cover_content{
+     position: absolute;
+     top:85%;
+     left:18%;                                                                   
+     font-size: 15px;
+     color: white;
+     z-index: 2;    
+}
+
+.cover_top_img{
+     position: absolute;
+     top:89%;
+     left:4%;                 	                                                       
+     z-index: 2;    
+}
+
+.cover_top_img_profile {
+    width: 30px;
+	height: 30px;
+	border-radius: 80%;
+}
+
+.cover_top_content{
+     position: absolute;
+     top:90%;
+     left:10%;                                                                   
+     font-size: 15px;
+     color: white;
+     z-index: 2;    
+}
+
+.cover_top_title{
+     position: absolute;
+     top:79%;
+     left:3%;                                                                   
+     font-size: 30px;
+     color: white;
+     z-index: 2;    
+}
+
+
+
+
 </style>
 </head>
 <body>
@@ -145,8 +209,11 @@
 		<div class="row">
 			<div class="col-md-8 mt-5" id="js_col_htop1">
 				<a href="ibselect.do?board_no=${hbtop1.board_no}&board_type=${hbtop1.board_type}"><div class="hovereffect">
-					 	<img id="js_htop1" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop1.post_data}"
+					 	<img class="img" id="js_htop1" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop1.post_data}"
 							style="width: 100%; height: 455px;"> 
+							<div class="cover_top_title">${hbtop1.board_title}</div>
+						   <div class="cover_top_img"><img class="cover_top_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${hbtop1.user_profile}"></img></div>
+						<div class="cover_top_content">${hbtop1.nickname}</div>	
 					</div></a>
 			</div>
 			<div class="col-md-4 mt-5">
@@ -248,37 +315,37 @@
 			<div class="col-6 col-md-4 col-lg-4 mt-5">
 				<a href="ibselect.do?board_no=${hbtop3.get(0).board_no}&board_type=${hbtop3.get(0).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop3.get(0).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop3.get(0).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
-					<h5>${hbtop3.get(0).board_title}</h5>
-					<h6>
-						<i class="far fa-user-circle"></i>&nbsp;${hbtop3.get(0).nickname}
-					</h6>
+					<span style="font-size:24px; font-family: a고딕12;">${hbtop3.get(0).board_title}</span>
+					<div class="jb_follow_profile">
+					<img src="${pageContext.request.contextPath}/files/user/userImages/${hbtop3.get(0).user_profile}">&nbsp;&nbsp;
+					<span style="font-size:22px; font-family: a고딕12;vertical-align:middle;">${hbtop3.get(0).nickname}</span></div>				
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-4 mt-5">
 				<a href="ibselect.do?board_no=${hbtop3.get(1).board_no}&board_type=${hbtop3.get(1).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop3.get(1).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop3.get(1).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
-					<h5>${hbtop3.get(1).board_title}</h5>
-					<h5>
-						<i class="far fa-user-circle"></i>&nbsp;${hbtop3.get(1).nickname}
-					</h5>
+				<span style="font-size:24px; font-family: a고딕12;">${hbtop3.get(1).board_title}</span>
+					<div class="jb_follow_profile">
+					<img src="${pageContext.request.contextPath}/files/user/userImages/${hbtop3.get(1).user_profile}">&nbsp;&nbsp;
+					<span style="font-size:22px; font-family: a고딕12;vertical-align:middle;">${hbtop3.get(1).nickname}</span></div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-4 mt-5">
 				<a href="ibselect.do?board_no=${hbtop3.get(2).board_no}&board_type=${hbtop3.get(2).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop3.get(2).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${hbtop3.get(2).post_data}"
 							style="width: 100%; height: 100%;">
 					</div>
-					<h5>${hbtop3.get(2).board_title}</h5>
-					<h5>
-						<i class="far fa-user-circle"></i>&nbsp;${hbtop3.get(2).nickname}
-					</h5>
+					<span style="font-size:24px; font-family: a고딕12;">${hbtop3.get(2).board_title}</span>
+					<div class="jb_follow_profile">
+					<img src="${pageContext.request.contextPath}/files/user/userImages/${hbtop3.get(2).user_profile}">&nbsp;&nbsp;
+					<span style="font-size:22px; font-family: a고딕12;vertical-align:middle;">${hbtop3.get(2).nickname}</span></div>
 				</a>
 			</div>
 		</div>
@@ -297,32 +364,40 @@
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(0).board_no}&board_type=${pbtop8.get(0).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(0).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(0).post_data}"
 							style="width: 100%; height: 100%;">
+						<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(0).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(0).nickname}</div>	
 					</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(1).board_no}&board_type=${pbtop8.get(1).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(1).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(1).post_data}"
 							style="width: 100%; height: 100%;">
+						<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(1).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(1).nickname}</div>	
 					</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(2).board_no}&board_type=${pbtop8.get(2).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(2).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(2).post_data}"
 							style="width: 100%; height: 100%;">
+								<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(2).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(2).nickname}</div>	
 					</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(3).board_no}&board_type=${pbtop8.get(3).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(3).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(3).post_data}"
 							style="width: 100%; height: 100%;">
+								<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(3).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(3).nickname}</div>	
 					</div>
 				</a>
 			</div>
@@ -332,33 +407,41 @@
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(4).board_no}&board_type=${pbtop8.get(4).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(4).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(4).post_data}"
 							style="width: 100%; height: 100%;">
+								<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(4).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(4).nickname}</div>	
 					</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(5).board_no}&board_type=${pbtop8.get(5).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(5).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(5).post_data}"
 							style="width: 100%; height: 100%;">
+								<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(5).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(5).nickname}</div>	
 					</div>
-				</a>
+				</a> 
 			</div>
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(6).board_no}&board_type=${pbtop8.get(6).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(6).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(6).post_data}"
 							style="width: 100%; height: 100%;">
+								<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(6).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(6).nickname}</div>	
 					</div>
 				</a>
 			</div>
 			<div class="col-6 col-md-4 col-lg-3 mt-5">
 				<a href="ibselect.do?board_no=${pbtop8.get(7).board_no}&board_type=${pbtop8.get(7).board_type}">
 					<div class="hovereffect">
-						<img src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(7).post_data}"
+						<img class="img" src="${pageContext.request.contextPath }/files/interior/interiorBoard/${pbtop8.get(7).post_data}"
 							style="width: 100%; height: 100%;">
-					</div>
+								<div class="cover_img"><img class="cover_img_profile" src="${pageContext.request.contextPath}/files/user/userImages/${pbtop8.get(7).user_profile}"></img></div>
+						<div class="cover_content">${pbtop8.get(7).nickname}</div>	
+					</div> 
 				</a>
 			</div>
 		</div>

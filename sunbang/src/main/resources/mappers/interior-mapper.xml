@@ -548,7 +548,7 @@ where search like '%' || #{keyword} || '%'
 <select id="selectSearchList" parameterType="string" resultMap="resultBoardFull">
 select *
 from (select board_no,board_type,space, housing_type,category1, category2, category3, floor_area, color1, color2, color3,board_title,
-budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents, user_no,user_name,user_id, nickname,like_count,follow_count, space || housing_type ||category1 || category2 || category3 || floor_area||'평' || decode(color1,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색')
+budget,style,board_hits,board_status,post_no,post_keyword,post_data,post_contents, user_no,user_name,user_id,user_profile, nickname,like_count,follow_count, space || housing_type ||category1 || category2 || category3 || floor_area||'평' || decode(color1,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색')
 || decode(color2,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색') ||
 decode(color3,'#d53736','레드REDred빨강','#fed144','옐로우YELLOWyellow노랑','#96d783','그린GREENgreen녹색','#3d97dd','블루BLUEblue파랑','#ee8a94','핑크PINKpink분홍','#fafafa','화이트WHITEwhite흰색') || board_title ||
 budget||'원' || style ||decode(post_keyword,'video','동영상') || post_contents || user_id || nickname as search

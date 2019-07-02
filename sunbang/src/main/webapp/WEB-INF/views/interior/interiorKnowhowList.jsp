@@ -114,6 +114,12 @@
   }
 }
 
+.jb_follow_profile img {
+	width: 30px;
+	height: 30px;
+	border-radius: 70%;
+}
+
 </style>
 </head>
 <body>
@@ -211,7 +217,11 @@
 		    				   if(jsonObj.iblist[i].category3 != null){
 		    					   value += jsonObj.iblist[i].category3;
 		    				   }
-		    				   value += "</h6><h5>"+jsonObj.iblist[i].board_title+"</h5><h6><i class='far fa-user-circle'></i>&nbsp;"+jsonObj.iblist[i].nickname+"</h6> </a></div>";				    					            		            					            		            
+		    				   value += "</h6><h5>"+jsonObj.iblist[i].board_title+"</h5>"
+		    				   +"<div class='jb_follow_profile'>"
+	        				   +"<img src='${pageContext.request.contextPath}/files/user/userImages/"+jsonObj.iblist[i].user_profile+"'>&nbsp;&nbsp;"
+	        				   +"<span style='font-size:18px; font-family: a고딕12;vertical-align:middle;'>"+jsonObj.iblist[i].nickname+"</span></div>"
+		    				   +"</a></div>";				    					            		            					            		            
 		                 list_no++;                        
 		            	}
 		            	$("#list").html(value);					           
